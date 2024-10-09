@@ -10,4 +10,16 @@ L'application permet :
 - réalisation de statistique sur les données (moyenne par jour, semaine, pourcentage d'occupation des salles)
 - généré un rapport format pdf
 
+Équipe de dévelopemment :
+
+|             | email iut     | Identifiant Github | 
+|-------------|---------------|---------------|
+| Adrien | adrien.astier@iut-rodez.fr | Adrien Astier |
+| Noé | noe.arcier@iut-rodez.fr | Arcier Noé |
+| Lucas | lucas.boulouard@iut-rodez.fr | LucasBoulouard |
+| Samuel | samuel.lacam@iut-rodez.fr | SamuelLacam |
+| Alexandre   | alexandre.brouzes@iut-rodez.fr | Alexandreiut  | 
+
+
+Lien vers le dossier google drive : [Lien drive](https://drive.google.com/drive/folders/0ABZxIVAYBVO2Uk9PVA)
 
