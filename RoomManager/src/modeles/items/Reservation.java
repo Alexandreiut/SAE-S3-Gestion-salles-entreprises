@@ -3,10 +3,10 @@
  * BUT info2 2024-2025, aucun copyright
  */
 
-package items;
+package modeles.items;
 
 /**
- * représente une réservation représenté par un identifiant, une date,
+ * Objet réservation de salle représenté par un identifiant, une date,
  * une heure de début, une heure de fin, un objet de réservation, un nom d'nterlocuteur, 
  * un prénom d'interlocuteur, un numéro d'interlocuteur, un usage de la salle
  * une réservation est associé à un employé resevant, une activité et une salle 
@@ -66,9 +66,9 @@ public class Reservation {
      * @param activite activité réalisé lors de la réservation
      * @param salleReservee salle occupé par la réservation
      */
-    public Employe(String id, String date, String heureDebut, String heureFin,
+    public Reservation(String id, String date, String heureDebut, String heureFin,
     			   String objetReservation, String nomInterlocuteur, 
-    			   String prenomInterlocuteur, String numeroInterlocuteur,
+    			   String prenomInterlocuteur, int numeroInterlocuteur,
     			   String usageSalle, Employe reservant, Activite activite,
     			   Salle salleReservee) {
         
@@ -81,7 +81,7 @@ public class Reservation {
         this.prenomInterlocuteur = prenomInterlocuteur;
         this.numeroInterlocuteur = numeroInterlocuteur;
         this.usageSalle = usageSalle;
-        this.reservant = resevant;
+        this.reservant = reservant;
         this.activite = activite;
         this.salleReservee = salleReservee;
     }
@@ -139,7 +139,7 @@ public class Reservation {
      * @return le numéro de l'interlocuteur
      */
     public int getNumeroInterlocuteur() {
-        return nomInterlocuteur;
+        return numeroInterlocuteur;
     }
     
     /**

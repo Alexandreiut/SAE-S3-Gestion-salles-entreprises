@@ -3,7 +3,7 @@
  * BUT info2 2024-2025, aucun copyright
  */
 
-package items;
+package modeles.items;
 
 /**
  * représente un employé caractérisé par un identifiant, un nom,
