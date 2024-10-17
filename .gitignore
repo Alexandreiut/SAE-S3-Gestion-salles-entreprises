@@ -1,6 +1,5 @@
 # Eclipse #
 .apt_generated
-.classpath
 .factorypath
 .settings
 .springBeans
