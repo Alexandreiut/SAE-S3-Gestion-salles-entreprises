@@ -5,17 +5,24 @@
 
 package modeles.items;
 
+import java.io.Serializable;
+
+
 /**
  * représente une activité représenté par un identidiant et un nom.
  * @author Alexandre Brouzes
  */
-public class Activite {
-    
-    /* identifiant unique associé à une activité sur 8 
+public class Activite implements Serializable {
+	/**
+	 * Numéro de version pour la classe.
+	 */
+	private static final long serialVersionUID = 1L;
+	 
+    /** identifiant unique associé à une activité sur 8 
        caractères dont la première lettre est un A et les autres des chiffres */
     private String identifiant;
     
-    /* nom de la salle */
+    /** nom de la salle */
     private  String nom;
     
     /**

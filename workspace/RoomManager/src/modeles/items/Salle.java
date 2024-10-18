@@ -6,6 +6,8 @@
 package modeles.items;
 
 import java.util.ArrayList;
+import java.io.Serializable;
+
 
 /**
  * représente une salle représenté par un identifiant, un nom,
@@ -14,33 +16,37 @@ import java.util.ArrayList;
  * sur les ordinateurs et la présence d'imprimante.
  * @author Alexandre Brouzes
  */
-public class Salle {
+public class Salle implements Serializable {
+	/**
+	 * Numéro de version pour la classe.
+	 */
+	private static final long serialVersionUID = 1L;
     
-    /* identifiant unique associé à une salle sur 8 chiffres */
+    /** identifiant unique associé à une salle sur 8 chiffres */
     private int identifiant;
     
-    /* nom de la salle */
+    /** nom de la salle */
     private  String nom;
     
-    /* nombre de places assises dans la salle */
+    /** nombre de places assises dans la salle */
     private int capacite;
     
-    /* vrai si la salle dispose d'un vidéo projecteur, faux sinon */
+    /** vrai si la salle dispose d'un vidéo projecteur, faux sinon */
     private boolean videoProjecteur;
     
-    /*  vrai si la salle dispose d'un grand écran, faux sinon */
+    /**  vrai si la salle dispose d'un grand écran, faux sinon */
     private boolean ecranXxl;
     
-    /* nombre de pc que met à disposition la salle */
+    /** nombre de pc que met à disposition la salle */
     private int nombrePc;
     
-    /* type des pc (Ordinateur fixe, ordinateur portable, OS ...) */
+    /** type des pc (Ordinateur fixe, ordinateur portable, OS ...) */
     private String typePc;
     
-    /* liste de logiciel(s) installé(s) sur les pc de la salle */
+    /** liste de logiciel(s) installé(s) sur les pc de la salle */
     private ArrayList<String> logicielInstalle;
     
-    /* vrai si la salle dispose d'imprimante, faux sinon */
+    /** vrai si la salle dispose d'imprimante, faux sinon */
     private boolean imprimante;
     
     /**
