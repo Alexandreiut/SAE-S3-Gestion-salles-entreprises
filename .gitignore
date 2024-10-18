@@ -2,8 +2,11 @@
 .apt_generated
 .factorypath
 .settings
+.project
+.classpath
 .springBeans
 .sts4-cache
+.metadata
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
