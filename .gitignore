@@ -1,4 +1,5 @@
 # Eclipse #
+.metadata/
 .apt_generated
 .factorypath
 .settings
@@ -6,12 +7,12 @@
 .classpath
 .springBeans
 .sts4-cache
-.metadata
+
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 build.fxbuild
 
-# Fichier CSV et de sauvegarde SER (sérialisation)
+# Fichier CSV et de sauvegarde SER (sérialisation) #
 .csv
 .ser

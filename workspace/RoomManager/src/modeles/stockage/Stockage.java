@@ -5,6 +5,13 @@
 
 package modeles.stockage;
 
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import modeles.items.Salle;
@@ -112,5 +119,90 @@ public class Stockage {
     	listeReservations = listeASauvegarder;
     }
     
+    /**
+     * Sérialise dans un fichier les liste d'items stocké
+     * @param une chaîne contenant le chemin et le nom du fichier
+     * @return vrai si la sérialisation à été correctement effectué, false sinon
+     */
+    public boolean serialisation(String nomChemin) {
+    	// Liste sérialisé contenant tous les items
+        ArrayList<Object> listeObject = new ArrayList<>();
+        // Récupération de tous les items stockés
+        listeObject.addAll(listeSalles);
+        listeObject.addAll(listeActivites);
+        listeObject.addAll(listeEmployes);
+        listeObject.addAll(listeReservations);
+        
+        try {
+            // Création du fichier qui recevra les objets
+            File fichier = new File(nomChemin);
+            ObjectOutputStream fluxEcriture = new ObjectOutputStream(new FileOutputStream(fichier));
+            
+            // Écriture des objets dans le fichier
+            for (Object item : listeObject) {
+                fluxEcriture.writeObject(item);
+            }
+            
+            // Fermeture du fichier
+            fluxEcriture.close();
+            
+            // Bloque la modification du fichier
+            fichier.setReadOnly();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace(); 
+            return false;
+        }
+    }
+    
+    /**
+     * Désérialise depuis un fichier les données afin de les stocker
+     * @param une chaîne contenant le nom du fichier à consulter
+     * @return vrai si la désérialisation à été correctement effectué, false sinon
+     */
+     public boolean restauration(String nomFichier) {
+	     // liste contenant les items qui vont être sauvegardé
+    	    ArrayList<Salle> listeSallesDeserialisee = new ArrayList<>();
+    	    ArrayList<Activite> listeActivitesDeserialisee = new ArrayList<>();
+    	    ArrayList<Employe> listeEmployesDeserialisee = new ArrayList<>();
+    	    ArrayList<Reservation> listeReservationsDeserialisee = new ArrayList<>();
+	     try {
+	    	 // Récupération des données du .ser
+		     ObjectInputStream fluxLecture = new ObjectInputStream(
+		     new FileInputStream(nomFichier));     
+		     try {
+		    	 // lecture en continue tant que le fichier n'est pas totalement lu
+		         while (true) {
+		             if (fluxLecture.readObject() instanceof Salle) {
+		            	 listeSallesDeserialisee.add((Salle) fluxLecture.readObject());
+		             } else if (fluxLecture.readObject() instanceof Activite) {
+		            	 listeActivitesDeserialisee.add((Activite) fluxLecture.readObject()); 
+		             } else if (fluxLecture.readObject() instanceof Employe) {
+		            	 listeEmployesDeserialisee.add((Employe) fluxLecture.readObject());
+		             } else if (fluxLecture.readObject() instanceof Reservation) {
+		            	 listeReservationsDeserialisee.add((Reservation) fluxLecture.readObject());
+		             }
+		         }
+		     } catch (EOFException e) {
+		    	 // Arret de la lecture du fichier
+		     }  
+		     // fermeture du fichier
+		     fluxLecture.close();
+		     // Sauvegarde des nouvelles données
+		     setListeSalle(listeSallesDeserialisee);
+		     setListeActivite(listeActivitesDeserialisee);
+		     setListeEmploye(listeEmployesDeserialisee);
+		     setListeReservation(listeReservationsDeserialisee);
+		     return true;
+	     } catch (IOException e) { // Nom de fichier incorrect
+	    	 System.out.println("Problème d'accès au fichier " + nomFichier);
+	    	 return false;
+	     } catch (ClassNotFoundException e) { // echec de cast de donnée en items
+	    	 System.out.println("Problème lors de la lecture du fichier "
+	    			 + nomFichier);
+	    	 return false;
+	     }
+     }
+
     
 }
