@@ -6,7 +6,8 @@
 .classpath
 .springBeans
 .sts4-cache
-.metadata
+workspace/.metadata
+
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
