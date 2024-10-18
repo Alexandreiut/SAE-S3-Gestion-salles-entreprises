@@ -4,22 +4,28 @@
  */
 
 package modeles.items;
+import java.io.Serializable;
+
 
 /**
  * représente un employé caractérisé par un identifiant, un nom,
  * un prénom et un numéro de téléphone
  * @author Arcier Noé
  */
-public class Employe {
-    
-    /* identifiant sur 8 caractères composé de E suivi de 7 chiffres */
+public class Employe implements Serializable {
+	/**
+	 * Numéro de version pour la classe.
+	 */
+	private static final long serialVersionUID = 1L;
+	 
+    /** identifiant sur 8 caractères composé de E suivi de 7 chiffres */
     private String identifiant;
 
     private String nom;
 
     private String prenom;
 
-    /* numéro de téléphone en 4 chiffres */
+    /** numéro de téléphone en 4 chiffres */
     private int telephone;
 
     /**

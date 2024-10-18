@@ -5,6 +5,9 @@
 
 package modeles.items;
 
+import java.io.Serializable;
+
+
 /**
  * Objet réservation de salle représenté par un identifiant, une date,
  * une heure de début, une heure de fin, un objet de réservation, un nom d'nterlocuteur, 
@@ -12,43 +15,47 @@ package modeles.items;
  * une réservation est associé à un employé resevant, une activité et une salle 
  * @author Alexandre Brouzes
  */
-public class Reservation {
+public class Reservation implements Serializable {
+	/**
+	 * Numéro de version pour la classe.
+	 */
+	private static final long serialVersionUID = 1L;
     
-    /* identifiant unique associé à une réservation sur 8 caractères dont le premier 
+    /** identifiant unique associé à une réservation sur 8 caractères dont le premier 
        est un R et les autres des chiffres */
     private String identifiant;
     
-    /* date du jour de la réservation au format JJ/MM/AAAA */
+    /** date du jour de la réservation au format JJ/MM/AAAA */
     private String date;
 
-    /* heure de début de la réservation de la salle au format HH:MM */
+    /** heure de début de la réservation de la salle au format HH:MM */
     private String heureDebut;
 
-    /* heure de fin de la réservation de la salle au format HH:MM */
+    /** heure de fin de la réservation de la salle au format HH:MM */
     private String heureFin;
     
-    /* objet ou thème de la réservation */
+    /** objet ou thème de la réservation */
     private String objetReservation;
     
-    /* nom de la personne ayant demandé la réservation */
+    /** nom de la personne ayant demandé la réservation */
     private String nomInterlocuteur;
     
-    /* prénom de la personne ayant demandé la réservation */
+    /** prénom de la personne ayant demandé la réservation */
     private String prenomInterlocuteur;
     
-    /* numéro de téléphone de la personne ayant demandé la réservation */
+    /** numéro de téléphone de la personne ayant demandé la réservation */
     private int numeroInterlocuteur;
     
-    /* numéro de téléphone de la personne ayant demandé la réservation */
+    /** numéro de téléphone de la personne ayant demandé la réservation */
     private String usageSalle;
     
-    /* Employé ayant effectué la réservation */
+    /** Employé ayant effectué la réservation */
     private Employe reservant;
     
-    /* Activité de la réservation */
+    /** Activité de la réservation */
     private Activite activite;
     
-    /* Salle occupé pendant la réservation */
+    /** Salle occupé pendant la réservation */
     private Salle salleReservee;
     
     /**
