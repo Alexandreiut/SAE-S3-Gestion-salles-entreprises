@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.io.PrintWriter;
 
 public class Importateur {
@@ -53,29 +54,59 @@ public class Importateur {
 	 *  true si le transfert a été correctement transféré, false sinon
 	 * @return
 	 */
-	public String recevoirDonnee() {
+	public ArrayList<String> recevoirDonnee() {
 		
+		ArrayList<String> donnees = new ArrayList<>();
+        
+		String paquet;
 		
+		paquet = "";
+		while (!paquet.equals("FIN")) {
+			try {
+				donnees.add(input.readLine());
+			} catch (IOException e) {
+				
+			}
+        }
+		
+		return donnees;
 		
 	}
+	
 	/**
-	 * décrypte les données reçues et les convertis en objets qui seront stockés, true si le processus a correctement été effectué dans sa totalité,
+	 * décrypte les données reçues et les convertis
+	 * en objets qui seront stockés,
+	 * true si le processus a correctement été effectué dans sa totalité,
 	 * false sinon
 	 * @param donneAConvertir
 	 */
-	public convertirReponseDonnee(String[] donneAConvertir) {
+	public boolean convertirReponseDonnee(ArrayList<String> donneAConvertir) {
+		
+		// TODO créer fichiers csv à partir de données
 		
 		
-		
+		// TODO utiliser LecteurCSV et stockage pour créer objets
+		return false; //STUB
 	}
+	
 	
 	/**
 	 * 
 	 * @return
 	 */
-	public boolean envoiEntier() {
+	public boolean envoiEntier(int valeur) {
+		  try {
+	            PrintWriter output = new PrintWriter(socketClient.getOutputStream(), true);
+	            output.println(valeur); // Envoyer l'entier
+	            return true;
+	        } catch (IOException e) {
+	            return false;
+	        }
+	    
+		
 		
 	}
+	
 	
 	/**
 	 * 
@@ -83,7 +114,10 @@ public class Importateur {
 	 */
 	public int recevoirEntier() {
 		
+		return 0; //STUB
+		
 	}
+	
 	
 	/**
 	 * renvoie true si la connexion avec l'exportateur a été correctement fermée,
@@ -91,6 +125,9 @@ public class Importateur {
 	 * @return
 	 */
 	public boolean closeConnexion() {
+		
+		return false; //STUB
+		
 		
 	}
 	
