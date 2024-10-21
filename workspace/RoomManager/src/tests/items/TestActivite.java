@@ -18,11 +18,11 @@ public class TestActivite {
     private Activite activite4;
     private Activite activite5;
     private Activite activite6;
-    private ArrayList<Activite> activites; // Ne pas mettre static
+    private ArrayList<Activite> activites;
 
     @BeforeEach
     public void setUp() {
-        activites = new ArrayList<>(); // Initialisation de la liste
+        activites = new ArrayList<>(); // Initialisation de la liste simulant le stockage
         activite1 = new Activite("A0000001", "réunion");
         activite2 = new Activite("A0000002", "formation");
         activite3 = new Activite("A0000003", "entretien de la salle");
@@ -39,7 +39,7 @@ public class TestActivite {
 
     @Test
     public void testGetters() {
-        System.out.println("/********** Test de getter de la classe Activité **********/");
+        System.out.println("/********** Test de getter de la classe Activite **********/");
         for (Activite act : activites) {
             if (act.getIdentifiant().equals("A0000001")) {
                 assertTrue(act.getNom().equals("réunion"));
