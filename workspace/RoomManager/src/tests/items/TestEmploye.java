@@ -6,42 +6,24 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.JUnitCore;
 
 import modeles.items.Employe;
 
 public class TestEmploye {
-
-    private Employe employe1;
-    private Employe employe2;
-    private Employe employe3;
-    private Employe employe4;
-    private Employe employe5;
-    private Employe employe6;
-    private Employe employe7;
-    private Employe employe8;
     private ArrayList<Employe> employes; 
 
     @BeforeEach
     public void setUp() {
     	// Initialisation de la liste simulant une liste d'employé dans le stockage
         employes = new ArrayList<>();
-        employe1 = new Employe("E0000001", "Dupont", "Pierre",2614);
-        employe2 = new Employe("E0000002", "Lexpert", "Noemie",2614);
-        employe3 = new Employe("E0000003", "Dujardin", "Océane",2633);
-        employe4 = new Employe("E0000004", "Durand", "Bill",2696);
-        employe5 = new Employe("E0000005", "Dupont", "Max",-1);
-        employe6 = new Employe("E0000006", "Martin", "Martin",2678);
-        employe7 = new Employe("E0000007", "Legrand", "Jean-Pierre",2689);
-        employe8 = new Employe("E0000008", "Deneuve", "Zoé",2626);
-        employes.add(employe1);
-        employes.add(employe2);
-        employes.add(employe3);
-        employes.add(employe4);
-        employes.add(employe5);
-        employes.add(employe6);
-        employes.add(employe7);
-        employes.add(employe8);   
+        employes.add(new Employe("E0000001", "Dupont", "Pierre",2614));
+        employes.add(new Employe("E0000002", "Lexpert", "Noemie",2614));
+        employes.add(new Employe("E0000003", "Dujardin", "Océane",2633));
+        employes.add(new Employe("E0000004", "Durand", "Bill",2696));
+        employes.add(new Employe("E0000005", "Dupont", "Max",-1));
+        employes.add(new Employe("E0000006", "Martin", "Martin",2678));
+        employes.add(new Employe("E0000007", "Legrand", "Jean-Pierre",2689));
+        employes.add(new Employe("E0000008", "Deneuve", "Zoé",2626));   
     }
 
     @Test
@@ -61,8 +43,8 @@ public class TestEmploye {
             }            
         }
     }
-
-    public static void main(String[] args) {
-        JUnitCore.runClasses(TestEmploye.class); // Utiliser JUnitCore
+    
+    public ArrayList<Employe> getEmployes(){
+    	return employes;
     }
 }

@@ -21,7 +21,7 @@ public class Reservation implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
     
-    /** identifiant unique associé à une réservation sur 8 caractères dont le premier 
+    /** identifiant unique associé à une réservation sur 7 caractères dont le premier 
        est un R et les autres des chiffres */
     private String identifiant;
     
@@ -49,14 +49,14 @@ public class Reservation implements Serializable {
     /** numéro de téléphone de la personne ayant demandé la réservation */
     private String usageSalle;
     
-    /** Employé ayant effectué la réservation */
-    private Employe reservant;
+    /** identifiant de l'employé ayant effectué la réservation */
+    private String reservant;
     
-    /** Activité de la réservation */
-    private Activite activite;
+    /** identifiant de l'activité de la réservation */
+    private String activite;
     
-    /** Salle occupé pendant la réservation */
-    private Salle salleReservee;
+    /** identifiant de la salle occupé pendant la réservation */
+    private int salleReservee;
     
     /**
      * Constructeur de l'objet Réservation
@@ -76,8 +76,8 @@ public class Reservation implements Serializable {
     public Reservation(String id, String date, String heureDebut, String heureFin,
     			   String objetReservation, String nomInterlocuteur, 
     			   String prenomInterlocuteur, int numeroInterlocuteur,
-    			   String usageSalle, Employe reservant, Activite activite,
-    			   Salle salleReservee) {
+    			   String usageSalle, String reservant, String activite,
+    			   int salleReservee) {
         
         this.identifiant = id;
         this.date = date;
@@ -159,21 +159,21 @@ public class Reservation implements Serializable {
     /**
      * @return l'activité se déroulant lors de la réservation 
      */
-    public Activite getActivite() {
+    public String getActivite() {
         return activite;
     }
     
     /**
      * @return l'employé ayant effectué la réservation 
      */
-    public Employe getEmploye() {
+    public String getEmploye() {
         return reservant;
     }
     
     /**
      * @return la salle utilisé pour la réservation
      */
-    public Salle getSalle() {
+    public int getSalle() {
         return salleReservee;
     }
     
