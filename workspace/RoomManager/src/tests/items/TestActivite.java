@@ -6,35 +6,21 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.JUnitCore;
 
 import modeles.items.Activite;
 
 public class TestActivite {
-
-    private Activite activite1;
-    private Activite activite2;
-    private Activite activite3;
-    private Activite activite4;
-    private Activite activite5;
-    private Activite activite6;
     private ArrayList<Activite> activites;
 
     @BeforeEach
     public void setUp() {
         activites = new ArrayList<>(); // Initialisation de la liste simulant le stockage
-        activite1 = new Activite("A0000001", "réunion");
-        activite2 = new Activite("A0000002", "formation");
-        activite3 = new Activite("A0000003", "entretien de la salle");
-        activite4 = new Activite("A0000004", "prêt");
-        activite5 = new Activite("A0000005", "location");
-        activite6 = new Activite("A0000006", "autre");
-        activites.add(activite1);
-        activites.add(activite2);
-        activites.add(activite3);
-        activites.add(activite4);
-        activites.add(activite5);
-        activites.add(activite6);
+        activites.add(new Activite("A0000001", "réunion"));
+        activites.add(new Activite("A0000002", "formation"));
+        activites.add(new Activite("A0000003", "entretien de la salle"));
+        activites.add(new Activite("A0000004", "prêt"));
+        activites.add(new Activite("A0000005", "location"));
+        activites.add(new Activite("A0000006", "autre"));
     }
 
     @Test
@@ -61,8 +47,8 @@ public class TestActivite {
             }
         }
     }
-
-    public static void main(String[] args) {
-        JUnitCore.runClasses(TestActivite.class); // Utiliser JUnitCore
+    
+    public ArrayList<Activite> getActivites(){
+    	return activites;
     }
 }

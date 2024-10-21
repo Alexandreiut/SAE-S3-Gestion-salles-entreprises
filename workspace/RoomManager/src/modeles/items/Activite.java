@@ -7,8 +7,6 @@ package modeles.items;
 
 import java.io.Serializable;
 
-import org.junit.platform.commons.util.ToStringBuilder;
-
 
 /**
  * représente une activité représenté par un identidiant et un nom.
