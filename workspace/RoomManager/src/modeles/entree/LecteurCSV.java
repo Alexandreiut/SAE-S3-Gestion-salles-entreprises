@@ -1,5 +1,5 @@
 /*
- * LecteurCSV.java				17/10/2024
+ * LecteurCSV.java 17/10/2024
  * BUT Info2, 2024/2025, pas de copyright
  */
 
@@ -7,7 +7,6 @@ package modeles.entree;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,38 +32,26 @@ public class LecteurCSV {
 
 
 	/**
-	 * @param filePath le chemin du fichier 
+	 * @param filePath le chemin du fichier
 	 * @return Le contenu du fichier sous forme d'une liste de ligne.
-	 * @throws WrongFileFormatException si l'extension du fichier est incorrectes
-	 * @throws IOException 
+	 * @throws WrongFileFormatException si l'extension du fichier est incorrecte
+	 * @throws IOException
 	 */
 	public static ArrayList<String> getRessource(String filePath) throws WrongFileFormatException, IOException {
 
 		ArrayList<String> listeLignes = new ArrayList<String>();
 
-		if(getFileExtension(filePath) != ".csv") {
-			throw new WrongFileFormatException();
-		}
-
 		File file = new File(filePath);
 
-		FileReader fileReader;
-		try {
-			fileReader = new FileReader(file);
-			
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
+		FileReader fileReader = new FileReader(file);
+		BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-			for (String ligne = bufferedReader.readLine(); ligne != null; ligne = bufferedReader.readLine()) {
-				listeLignes.add(ligne);
-			}
-
-			bufferedReader.close();
-			fileReader.close();
-		} catch (FileNotFoundException e) {
-			throw new FileNotFoundException();
-		} catch (IOException e) {
-			throw new IOException();
+		for (String ligne = bufferedReader.readLine(); ligne != null; ligne = bufferedReader.readLine()) {
+			listeLignes.add(ligne);
 		}
+
+		bufferedReader.close();
+		fileReader.close();
 
 		for(String ligne : listeLignes) {
 			System.out.println(ligne);
@@ -78,8 +65,8 @@ public class LecteurCSV {
 	 * @param listeLigneFichier une ArrayList contenant toutes les lignes à lire
 	 * @return Une liste d'object, selon le lecteur utilisé.
 	 * @throws WrongFileFormatException si l'en-tête du fichier est incohérente
-	 * @throws LectureException 
-	 * @throws IOException 
+	 * @throws LectureException
+	 * @throws IOException
 	 */
 	public static ArrayList<Object> readFichier(ArrayList<String> listeLigneFichier) throws WrongFileFormatException, LectureException, IOException {
 
@@ -106,11 +93,11 @@ public class LecteurCSV {
 		//Fait l'appel en fonction de l'en-tête
 		switch(listeLigneFichier.get(0)) {
 
-		case EN_TETE_ACTIVITE : 
+		case EN_TETE_ACTIVITE :
 
 			return readActiviteCSV(listeLigneFichier);
 
-		case EN_TETE_EMPLOYE : 
+		case EN_TETE_EMPLOYE :
 
 			return readEmployeCSV(listeLigneFichier);
 
@@ -122,17 +109,19 @@ public class LecteurCSV {
 
 			return readReservationCSV(listeLigneFichier, listeEmploye, listeSalles, listeActivite);
 
-		case EN_TETE_SALLE : 
+		case EN_TETE_SALLE :
 
 			return readSalleCSV(listeLigneFichier);
 
-		default : 
+		default :
 			throw new WrongFileFormatException();
 		}
+
+
 	}
 
 	/**
-	 * 
+	 *
 	 * Créer une liste de salles, à partir des données de l'ArrayList
 	 * Ajoute une description du profil dans le log
 	 * @param listeLigneFichier une ArrayList contenant toutes les lignes à lire
@@ -143,7 +132,7 @@ public class LecteurCSV {
 
 		Salle salle;
 
-		int id; 
+		int id;
 		int capacite;
 		int nombrePc;
 
@@ -156,7 +145,7 @@ public class LecteurCSV {
 
 		String[] ligneSplit;
 
-		ArrayList<String> logicielInstalle;		
+		ArrayList<String> logicielInstalle;
 		ArrayList<Object> listeSalles = new ArrayList<Object>();
 
 		listeLigneFichier.remove(0);
@@ -173,7 +162,7 @@ public class LecteurCSV {
 			nombrePc = (ligneSplit.length > 5 && ligneSplit[5].matches("\\d+")) ? Integer.parseInt(ligneSplit[5]) : 0;
 			typePc = (ligneSplit.length > 6) ? ligneSplit[6] : "Type inconnu";
 
-			logicielInstalle = (ligneSplit.length > 7) ? 
+			logicielInstalle = (ligneSplit.length > 7) ?
 					new ArrayList<>(Arrays.asList(ligneSplit[7].split(","))) : new ArrayList<>();
 
 			imprimante = (ligneSplit.length > 8) && ligneSplit[8].equalsIgnoreCase("oui");
@@ -186,7 +175,7 @@ public class LecteurCSV {
 	}
 
 	/**
-	 * 
+	 *
 	 * Créer une liste de réservations, à partir des données de l'ArrayList
 	 * Ajoute une description du profil dans le log
 	 * @param listeLigneFichier une ArrayList contenant toutes les lignes à lire
@@ -196,56 +185,86 @@ public class LecteurCSV {
 	public static ArrayList<Object> readReservationCSV(ArrayList<String> listeLigneFichier, ArrayList<Object> listeEmploye,
 			ArrayList<Object> listeSalle, ArrayList<Object> listeActivite) throws LectureException { //INITIALEMENT PRIVATE
 
-        for (Object emp : listeEmploye) {
-            if (emp instanceof Employe) {
-            	listeIdEmploye.add(((Employe) emp).getIdentifiant());
-            }
-        }
-        for (Object act : listeActivite) {
-            if (act instanceof Activite) {
-            	listeIdActivite.add(((Activite) act).getNom());
-            }
-        }
-        for (Object sal : listeSalle) {
-            if (sal instanceof Employe) {
-            	listeIdSalle.add(((Salle) sal).getIdentifiant());
-            }
-        }	    
-	    
-	    for(String ligne : listeLigneFichier) {
-	        
-	        ligneSplit  = ligne.split(";");
-	        
-	        id = (ligneSplit.length > 0 && ligneSplit[0].length() > 1 && ligneSplit[0].charAt(0) == 'R') ? ligneSplit[0] : "Id inconnu";
-	        // Vérification de l'existance des identifiants relever par la lecture pour garder une cohérence	        
-	        salleReservee = (ligneSplit.length > 1 && ligneSplit[1].length() == 8 && ligneSplit[1].matches("\\d+")) ? Integer.parseInt(ligneSplit[2]) : -1;
-	        reservant = (ligneSplit.length > 2 && ligneSplit[2].length() == 7 && ligneSplit[2].charAt(0) == 'E') ? ligneSplit[2] : "Employé inconnu";
-	        activite = (ligneSplit.length > 3 && ligneSplit[3].length() > 1) ? ligneSplit[3] : "Activite inconnue";
-	        if(!listeIdSalle.contains(salleReservee)) {
-	        	throw new LectureException();
-	        }
-	        if(!listeIdEmploye.contains(reservant)) {
-	        	throw new LectureException();
-	        }
-	        if(!listeIdActivite.contains(activite)) {
-	        	throw new LectureException();
-	        }    
-	        // Récupération de l'ensemble des élément pour constituer une réservation
-	        date = (ligneSplit.length > 4 && ligneSplit[4].length() == 10 && ligneSplit[4].matches("\\d{2}/\\d{2}/\\d{4}")) ? ligneSplit[4] : "Date inconnu";
-	        heureDebut = (ligneSplit.length > 5 && ligneSplit[5].length() == 5 && ligneSplit[5].matches("\\d{2}h\\d{2}")) ? ligneSplit[5] : "Heure début inconnu";
-	        heureFin = (ligneSplit.length > 6 && ligneSplit[6].length() == 5 && ligneSplit[6].matches("\\d{2}h\\d{2}")) ? ligneSplit[6] : "Heure fin inconnu";
-	        objetReservation = (ligneSplit.length > 7 && ligneSplit[7].length() > 1) ? ligneSplit[7] : "Objet réservation inconnu";
-	        nomInterlocuteur = (ligneSplit.length > 8 && ligneSplit[8].length() > 1) ? ligneSplit[8] : "Nom inconnu";
-	        prenomInterlocuteur = (ligneSplit.length > 9 && ligneSplit[9].length() > 1) ? ligneSplit[9] : "Prenom inconnu";
-	        numeroInterlocuteur = (ligneSplit.length > 10 && ligneSplit[10].length() > 1 && ligneSplit[10].matches("\\d+")) ? Integer.parseInt(ligneSplit[10]) : 0000000000;
-	        usageSalle = (ligneSplit.length > 11 && ligneSplit[11].length() > 1) ? ligneSplit[11] : "Usage inconnu";
-	        
-	        reservation = new Reservation(id, date, heureDebut, heureFin, objetReservation, nomInterlocuteur, 
-	                prenomInterlocuteur, numeroInterlocuteur, usageSalle, reservant, activite, salleReservee);
-	        listeReservation.add((Object) reservation);
-	    }
-	    
-	    return listeReservation;
+		Reservation reservation;        
+
+		String activite;
+		String reservant;
+		int salleReservee;
+
+		String id;
+		String date;
+		String heureDebut;
+		String heureFin;
+		String objetReservation;
+		String nomInterlocuteur;
+		String prenomInterlocuteur;
+		String usageSalle;
+
+		int numeroInterlocuteur;
+
+		String[] ligneSplit;
+
+		ArrayList<Object> listeReservation = new ArrayList<Object>();
+
+		listeLigneFichier.remove(0);
+
+		// Cast des listes
+
+		ArrayList<String> listeIdEmploye = new ArrayList<>();
+		ArrayList<String> listeIdActivite = new ArrayList<>();
+		ArrayList<Integer> listeIdSalle = new ArrayList<>();
+
+		for (Object emp : listeEmploye) {
+			if (emp instanceof Employe) {
+				listeIdEmploye.add(((Employe) emp).getIdentifiant());
+			}
+		}
+		for (Object act : listeActivite) {
+			if (act instanceof Activite) {
+				listeIdActivite.add(((Activite) act).getNom());
+			}
+		}
+		for (Object sal : listeSalle) {
+			if (sal instanceof Employe) {
+				listeIdSalle.add(((Salle) sal).getIdentifiant());
+			}
+		}
+
+
+		for(String ligne : listeLigneFichier) {
+
+			ligneSplit  = ligne.split(";");
+
+			id = (ligneSplit.length > 0 && ligneSplit[0].length() > 1 && ligneSplit[0].charAt(0) == 'R') ? ligneSplit[0] : "Id inconnu";
+			// Vérification de l'existance des identifiants relever par la lecture pour garder une cohérence        
+			salleReservee = (ligneSplit.length > 1 && ligneSplit[1].length() == 8 && ligneSplit[1].matches("\\d+")) ? Integer.parseInt(ligneSplit[2]) : -1;
+			reservant = (ligneSplit.length > 2 && ligneSplit[2].length() == 7 && ligneSplit[2].charAt(0) == 'E') ? ligneSplit[2] : "Employé inconnu";
+			activite = (ligneSplit.length > 3 && ligneSplit[3].length() > 1) ? ligneSplit[3] : "Activite inconnue";
+			if(!listeIdSalle.contains(salleReservee)) {
+				throw new LectureException();
+			}
+			if(!listeIdEmploye.contains(reservant)) {
+				throw new LectureException();
+			}
+			if(!listeIdActivite.contains(activite)) {
+				throw new LectureException();
+			}    
+			// Récupération de l'ensemble des élément pour constituer une réservation
+			date = (ligneSplit.length > 4 && ligneSplit[4].length() == 10 && ligneSplit[4].matches("\\d{2}/\\d{2}/\\d{4}")) ? ligneSplit[4] : "Date inconnu";
+			heureDebut = (ligneSplit.length > 5 && ligneSplit[5].length() == 5 && ligneSplit[5].matches("\\d{2}h\\d{2}")) ? ligneSplit[5] : "Heure début inconnu";
+			heureFin = (ligneSplit.length > 6 && ligneSplit[6].length() == 5 && ligneSplit[6].matches("\\d{2}h\\d{2}")) ? ligneSplit[6] : "Heure fin inconnu";
+			objetReservation = (ligneSplit.length > 7 && ligneSplit[7].length() > 1) ? ligneSplit[7] : "Objet réservation inconnu";
+			nomInterlocuteur = (ligneSplit.length > 8 && ligneSplit[8].length() > 1) ? ligneSplit[8] : "Nom inconnu";
+			prenomInterlocuteur = (ligneSplit.length > 9 && ligneSplit[9].length() > 1) ? ligneSplit[9] : "Prenom inconnu";
+			numeroInterlocuteur = (ligneSplit.length > 10 && ligneSplit[10].length() > 1 && ligneSplit[10].matches("\\d+")) ? Integer.parseInt(ligneSplit[10]) : 0000000000;
+			usageSalle = (ligneSplit.length > 11 && ligneSplit[11].length() > 1) ? ligneSplit[11] : "Usage inconnu";
+
+			reservation = new Reservation(id, date, heureDebut, heureFin, objetReservation, nomInterlocuteur,
+					prenomInterlocuteur, numeroInterlocuteur, usageSalle, reservant, activite, salleReservee);
+			listeReservation.add((Object) reservation);
+		}
+
+		return listeReservation;
 	}
 
 
@@ -290,7 +309,7 @@ public class LecteurCSV {
 
 
 	/**
-	 * 
+	 *
 	 * Créer une liste d'activitées, à partir des données de l'ArrayList
 	 * Ajoute une description du profil dans le log
 	 * @param listeLigneFichier une ArrayList contenant toutes les lignes à lire
@@ -312,7 +331,7 @@ public class LecteurCSV {
 
 		for(String ligne : listeLigneFichier) {
 
-			ligneSplit  = ligne.split(";");		
+			ligneSplit  = ligne.split(";");
 
 			id = (ligneSplit.length > 0 && ligneSplit[0].length() == 8 && ligneSplit[0].charAt(0) == 'A') ? ligneSplit[0] : "Activite inconnu";
 			nom = (ligneSplit.length > 1 && ligneSplit[1].length() > 1) ? ligneSplit[1] : "Nom inconnu";
@@ -324,6 +343,82 @@ public class LecteurCSV {
 		return listeActivite;
 	}
 
+
+	/**
+	 *
+	 * @param listeEmploye
+	 * @param id
+	 * @return
+	 */
+	public static Employe getEmployeById(ArrayList<Object> listeEmploye, String id) {  //INITIALEMENT PRIVATE
+
+		ArrayList<Employe> listeEmployeConverti = new ArrayList<>();
+
+		for (Object obj : listeEmploye) {
+			if (obj instanceof Employe) {
+				listeEmployeConverti.add((Employe) obj);
+			} else {
+				System.out.println("Erreur: Un objet n'est pas du type Employe.");
+			}
+		}
+
+		for (Employe employe : listeEmployeConverti) {
+			if (employe.getIdentifiant().equals(id)) {
+				return employe;
+			}
+		}
+		return new Employe("Inconnu", "Nom inconnu", "Prenom inconnu", 0000);
+	}
+
+	/**
+	 *
+	 * @param listeSalle
+	 * @param id
+	 * @return
+	 */
+	public static Salle getSalleById(ArrayList<Object> listeSalle, String id) { //INITIALEMENT PRIVATE
+
+		ArrayList<Salle> listeSalleConverti = new ArrayList<>();
+
+		for (Object obj : listeSalle) {
+			if (obj instanceof Salle) {
+				listeSalleConverti.add((Salle) obj);
+			} else {
+				System.out.println("Erreur: Un objet n'est pas du type Salle.");
+			}
+		}
+
+		for (Salle salle : listeSalleConverti) {
+			if (salle.getIdentifiant() == Integer.parseInt(id)) {
+				return salle;
+			}
+		}
+		return new Salle(0, "Nom inconnu", 0, false, false, 0, "Indefini", null, false);
+	}
+
+	/**
+	 *
+	 */
+	public static Activite getActiviteById(ArrayList<Object> listeActivite, String id) { //INITIALEMENT PRIVATE
+
+		ArrayList<Activite> listeActiviteConverti = new ArrayList<>();
+
+		for (Object obj : listeActivite) {
+			if (obj instanceof Activite) {
+				listeActiviteConverti.add((Activite) obj);
+			} else {
+				System.out.println("Erreur: Un objet n'est pas du type Activite.");
+			}
+		}
+
+		for (Activite activite : listeActiviteConverti) {
+			if (activite.getIdentifiant().equals(id)) {
+				return activite;
+			}
+		}
+		return new Activite("Inconnu", "Nom inconnu");
+	}
+	
 	/**
 	 * 
 	 * @param filePath
