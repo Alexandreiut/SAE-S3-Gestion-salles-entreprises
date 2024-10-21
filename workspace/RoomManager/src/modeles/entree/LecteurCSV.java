@@ -8,7 +8,7 @@ package modeles.entree;
 import java.util.ArrayList;
 
 import modeles.erreur.LectureException;
-import modeles.erreur.WrongFileFormatException;
+//import modeles.erreur.WrongFileFormatException;
 import modeles.items.Activite;
 import modeles.items.Employe;
 import modeles.items.Reservation;
@@ -16,7 +16,7 @@ import modeles.items.Salle;
 
 /**
  * Classe outil pour la lecture des csv
- * @author Adrien ASTIER, Noé ARCIER, Lucas BOULOUARD
+ * @author Adrien ASTIER, Noï¿½ ARCIER, Lucas BOULOUARD
  */
 public class LecteurCSV {
 	
@@ -31,59 +31,59 @@ public class LecteurCSV {
 	 * @return Le contenu du fichier sous forme d'une liste de ligne.
 	 * @throws WrongFileFormatException si l'extension du fichier est incorrecte
 	 */
-	public static ArrayList<String> getRessource(String filePath) throws WrongFileFormatException {
-		return null;
-	}
+	//public static ArrayList<String> getRessource(String filePath) throws WrongFileFormatException {
+		//return null;
+	//}
 	
 	/**
-	 * Utilise le bon lecteur en fonction de la ligne d'en-tête lu
-	 * @param listeLigneFichier une ArrayList contenant toutes les lignes à lire
-	 * @return Une liste d'object, selon le lecteur utilisé.
-	 * @throws WrongFileFormatException si l'en-tête du fichier est incohérente
+	 * Utilise le bon lecteur en fonction de la ligne d'en-tï¿½te lu
+	 * @param listeLigneFichier une ArrayList contenant toutes les lignes ï¿½ lire
+	 * @return Une liste d'object, selon le lecteur utilisï¿½.
+	 * @throws WrongFileFormatException si l'en-tï¿½te du fichier est incohï¿½rente
 	 */
-	 public static ArrayList<Object> readFichier(ArrayList<String> listeLigneFichier) throws WrongFileFormatException {
-		return null;
-	}
+	 //public static ArrayList<Object> readFichier(ArrayList<String> listeLigneFichier) throws WrongFileFormatException {
+		//return null;
+	//}
 	
 	/**
-	 * Créer une liste de salles, à partir des données de l'ArrayList
+	 * Crï¿½er une liste de salles, ï¿½ partir des donnï¿½es de l'ArrayList
 	 * Ajoute une description du profil dans le log
-	 * @param listeLigneFichier une ArrayList contenant toutes les lignes à lire
+	 * @param listeLigneFichier une ArrayList contenant toutes les lignes ï¿½ lire
 	 * @return Une liste de salles.
-	 * @throws LectureException si données incohérentes
+	 * @throws LectureException si donnï¿½es incohï¿½rentes
 	 */
 	private static ArrayList<Salle> readSalleCSV(ArrayList<String> listeLigneFichier) throws LectureException {
 		return null;
 	}
 	
 	/**
-	 * Créer une liste de réservations, à partir des données de l'ArrayList
+	 * Crï¿½er une liste de rï¿½servations, ï¿½ partir des donnï¿½es de l'ArrayList
 	 * Ajoute une description du profil dans le log
-	 * @param listeLigneFichier une ArrayList contenant toutes les lignes à lire
-	 * @return Une liste de réservations.
-	 * @throws LectureException si données incohérentes
+	 * @param listeLigneFichier une ArrayList contenant toutes les lignes ï¿½ lire
+	 * @return Une liste de rï¿½servations.
+	 * @throws LectureException si donnï¿½es incohï¿½rentes
 	 */
 	private static ArrayList<Reservation> readReservationCSV(ArrayList<String> listeLigneFichier) throws LectureException {
 		return null;
 	}
 	
 	/**
-	 * Créer une liste d'employés, à partir des données de l'ArrayList
+	 * Crï¿½er une liste d'employï¿½s, ï¿½ partir des donnï¿½es de l'ArrayList
 	 * Ajoute une description du profil dans le log
-	 * @param listeLigneFichier une ArrayList contenant toutes les lignes à lire
-	 * @return Une liste d'employéss.
-	 * @throws LectureException si données incohérentes
+	 * @param listeLigneFichier une ArrayList contenant toutes les lignes ï¿½ lire
+	 * @return Une liste d'employï¿½ss.
+	 * @throws LectureException si donnï¿½es incohï¿½rentes
 	 */
 	private static ArrayList<Employe> readEmployeCSV(ArrayList<String> listeLigneFichier) throws LectureException {
 		return null;
 	}
 	
 	/**
-	 * Créer une liste d'activitées, à partir des données de l'ArrayList
+	 * Crï¿½er une liste d'activitï¿½es, ï¿½ partir des donnï¿½es de l'ArrayList
 	 * Ajoute une description du profil dans le log
-	 * @param listeLigneFichier une ArrayList contenant toutes les lignes à lire
-	 * @return Une liste d'activitées.
-	 * @throws LectureException si données incohérentes
+	 * @param listeLigneFichier une ArrayList contenant toutes les lignes ï¿½ lire
+	 * @return Une liste d'activitï¿½es.
+	 * @throws LectureException si donnï¿½es incohï¿½rentes
 	 */
 	private static ArrayList<Activite> readActiviteCSV(ArrayList<String> listeLigneFichier) throws LectureException {
 		return null;
