@@ -28,7 +28,7 @@ public class LecteurCSV {
 	/**
 	 * Contient les informations du retour des lectures
 	 */
-	private static String log;
+	public static String log;
 
 
 	/**
@@ -121,13 +121,14 @@ public class LecteurCSV {
 	}
 
 	/**
+	 * 
 	 * Créer une liste de salles, à partir des données de l'ArrayList
 	 * Ajoute une description du profil dans le log
 	 * @param listeLigneFichier une ArrayList contenant toutes les lignes à lire
 	 * @return Une liste de salles.
 	 * @throws LectureException si données incohérentes
 	 */
-	private static ArrayList<Object> readSalleCSV(ArrayList<String> listeLigneFichier) throws LectureException {
+	public static ArrayList<Object> readSalleCSV(ArrayList<String> listeLigneFichier) throws LectureException { //INITIALEMENT PRIVATE
 
 		Salle salle;
 
@@ -153,7 +154,7 @@ public class LecteurCSV {
 
 			ligneSplit  = ligne.split(";");
 
-			id = (ligneSplit.length > 0 && ligneSplit[0].matches("\\d+")) && ligneSplit[0].charAt(0) == '0' ? Integer.parseInt(ligneSplit[0]) : 0;
+			id = (ligneSplit.length > 0 && ligneSplit[0].matches("\\d+") && ligneSplit[0].charAt(0) == '0') ? Integer.parseInt(ligneSplit[0]) : 0;
 			nom = (ligneSplit.length > 1) ? ligneSplit[1] : "Nom inconnu";
 			capacite = (ligneSplit.length > 2 && ligneSplit[2].matches("\\d+")) ? Integer.parseInt(ligneSplit[2]) : 0;
 			videoProjecteur = (ligneSplit.length > 3) && ligneSplit[3].equalsIgnoreCase("oui");
@@ -174,14 +175,15 @@ public class LecteurCSV {
 	}
 
 	/**
+	 * 
 	 * Créer une liste de réservations, à partir des données de l'ArrayList
 	 * Ajoute une description du profil dans le log
 	 * @param listeLigneFichier une ArrayList contenant toutes les lignes à lire
 	 * @return Une liste de réservations.
 	 * @throws LectureException si données incohérentes
 	 */
-	private static ArrayList<Object> readReservationCSV(ArrayList<String> listeLigneFichier, ArrayList<Object> listeEmploye,
-			ArrayList<Object> listeSalles, ArrayList<Object> listeActivite) throws LectureException {
+	public static ArrayList<Object> readReservationCSV(ArrayList<String> listeLigneFichier, ArrayList<Object> listeEmploye,
+			ArrayList<Object> listeSalles, ArrayList<Object> listeActivite) throws LectureException { //INITIALEMENT PRIVATE
 	    
 	    Reservation reservation;        
 	    
@@ -235,13 +237,14 @@ public class LecteurCSV {
 
 
 	/**
+	 *
 	 * Créer une liste d'employés, à partir des données de l'ArrayList
 	 * Ajoute une description du profil dans le log
 	 * @param listeLigneFichier une ArrayList contenant toutes les lignes à lire
 	 * @return Une liste d'employéss.
 	 * @throws LectureException si données incohérentes
 	 */
-	private static ArrayList<Object> readEmployeCSV(ArrayList<String> listeLigneFichier) throws LectureException {
+	public static ArrayList<Object> readEmployeCSV(ArrayList<String> listeLigneFichier) throws LectureException { //INITIALEMENT PRIVATE
 	    
 	    Employe employe;
 	    
@@ -263,7 +266,7 @@ public class LecteurCSV {
 	        id = (ligneSplit.length > 0 && ligneSplit[0].length() == 7 && ligneSplit[0].charAt(0) == 'E') ? ligneSplit[0] : "Employe inconnu";
 	        nom = (ligneSplit.length > 1 && ligneSplit[1].length() > 1) ? ligneSplit[1] : "Nom inconnu";
 	        prenom = (ligneSplit.length > 2 && ligneSplit[2].length() > 1) ? ligneSplit[2] : "Prenom inconnu";
-	        tel = (ligneSplit.length > 3 && ligneSplit[3].length() == 4 && ligneSplit[3].matches("\\d+")) ? Integer.parseInt(ligneSplit[3]) : 0000;
+	        tel = (ligneSplit.length > 3 && ligneSplit[3].length() == 4 && ligneSplit[3].matches("\\d+")) ? Integer.parseInt(ligneSplit[3]) : -1;
 	        
 	        employe = new Employe(id, nom, prenom, tel);
 	        listeEmploye.add((Object) employe);
@@ -274,13 +277,14 @@ public class LecteurCSV {
 
 
 	/**
+	 * 
 	 * Créer une liste d'activitées, à partir des données de l'ArrayList
 	 * Ajoute une description du profil dans le log
 	 * @param listeLigneFichier une ArrayList contenant toutes les lignes à lire
 	 * @return Une liste d'activitées.
 	 * @throws LectureException si données incohérentes
 	 */
-	private static ArrayList<Object> readActiviteCSV(ArrayList<String> listeLigneFichier) throws LectureException {
+	public static ArrayList<Object> readActiviteCSV(ArrayList<String> listeLigneFichier) throws LectureException { //INITIALEMENT PRIVATE
 		
 		Activite activite;
 		
@@ -308,14 +312,19 @@ public class LecteurCSV {
 	}
 	
 	
-	
-	private static Employe getEmployeById(ArrayList<Object> listeEmploye, String id) {
+	/**
+	 * 
+	 * @param listeEmploye
+	 * @param id
+	 * @return
+	 */
+	public static Employe getEmployeById(ArrayList<Object> listeEmploye, String id) {  //INITIALEMENT PRIVATE
 		
 		ArrayList<Employe> listeEmployeConverti = new ArrayList<>();
 
 		for (Object obj : listeEmploye) {
 		    if (obj instanceof Employe) {
-		    	listeEmployeConverti.add((Employe) obj);  // Casting de l'objet en Employe
+		    	listeEmployeConverti.add((Employe) obj);
 		    } else {
 		        System.out.println("Erreur: Un objet n'est pas du type Employe.");
 		    }
@@ -329,13 +338,19 @@ public class LecteurCSV {
 	    return new Employe("Inconnu", "Nom inconnu", "Prenom inconnu", 0000);
 	}
 	
-	private static Salle getSalleById(ArrayList<Object> listeSalle, String id) {
+	/**
+	 * 
+	 * @param listeSalle
+	 * @param id
+	 * @return
+	 */
+	public static Salle getSalleById(ArrayList<Object> listeSalle, String id) { //INITIALEMENT PRIVATE
 		
 		ArrayList<Salle> listeSalleConverti = new ArrayList<>();
 		
 		for (Object obj : listeSalle) {
 		    if (obj instanceof Salle) {
-		    	listeSalleConverti.add((Salle) obj);  // Casting de l'objet en Employe
+		    	listeSalleConverti.add((Salle) obj);
 		    } else {
 		        System.out.println("Erreur: Un objet n'est pas du type Salle.");
 		    }
@@ -349,13 +364,16 @@ public class LecteurCSV {
 	    return new Salle(0, "Nom inconnu", 0, false, false, 0, "Indefini", null, false);
 	}
 	
-	private static Activite getActiviteById(ArrayList<Object> listeActivite, String id) {
+	/**
+	 * 
+	 */
+	public static Activite getActiviteById(ArrayList<Object> listeActivite, String id) { //INITIALEMENT PRIVATE
 		
 		ArrayList<Activite> listeActiviteConverti = new ArrayList<>();
 		
 		for (Object obj : listeActivite) {
 		    if (obj instanceof Activite) {
-		    	listeActiviteConverti.add((Activite) obj);  // Casting de l'objet en Employe
+		    	listeActiviteConverti.add((Activite) obj);
 		    } else {
 		        System.out.println("Erreur: Un objet n'est pas du type Activite.");
 		    }
@@ -367,27 +385,5 @@ public class LecteurCSV {
 	        }
 	    }
 	    return new Activite("Inconnu", "Nom inconnu");
-	}
-	
-	
-
-	/**
-	 * main
-	 * @throws IOException 
-	 * @throws WrongFileFormatException 
-	 * @throws LectureException 
-	 */
-	public static void main(String[] args) throws WrongFileFormatException, IOException, LectureException {
-
-		ArrayList<String> ressources = new ArrayList<String>();
-		ArrayList<Object> liste = new ArrayList<Object>();
-
-		ressources = getRessource("C:\\Users\\astie\\cours\\2024-2025\\sae\\s3\\salles 26_08_24 13_40.csv");
-
-		liste = readFichier(ressources);
-
-		for(Object element : liste) {
-			System.out.println(element);
-		}
 	}
 }

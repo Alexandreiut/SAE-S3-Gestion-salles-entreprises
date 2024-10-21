@@ -7,6 +7,8 @@ package modeles.items;
 
 import java.io.Serializable;
 
+import org.junit.platform.commons.util.ToStringBuilder;
+
 
 /**
  * représente une activité représenté par un identidiant et un nom.
@@ -47,5 +49,11 @@ public class Activite implements Serializable {
      */
     public String getNom() {
         return nom;
+    }
+    
+    @Override
+    public String toString() {
+		return ("Id : " + this.identifiant + ", Nom : " + this.nom);
+    	
     }
 }
