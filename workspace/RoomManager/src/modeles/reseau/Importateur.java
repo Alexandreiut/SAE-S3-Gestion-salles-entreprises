@@ -113,6 +113,7 @@ public class Importateur {
 	 * @return
 	 */
 	public int recevoirEntier() {
+		return 0; //stub
 		
 		return 0; //STUB
 		
@@ -125,6 +126,7 @@ public class Importateur {
 	 * @return
 	 */
 	public boolean closeConnexion() {
+		return true; //stub
 		
 		return false; //STUB
 		

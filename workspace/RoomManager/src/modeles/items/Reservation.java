@@ -175,5 +175,15 @@ public class Reservation implements Serializable {
      */
     public Salle getSalle() {
         return salleReservee;
-    }  
+    }
+    
+    @Override
+    public String toString() {
+    	return ("Id : " + this.identifiant + ", Date : " + this.date
+    			+ ", HeureDebut : " + this.heureDebut + ", HeureFin : " + this.heureFin
+    			+ ",\nObject : " + this.objetReservation + ", NomInterlo : " + this.nomInterlocuteur
+    			+ ", PrenomInterlo : " + this.prenomInterlocuteur + ", NumInterlo : " + this.numeroInterlocuteur
+    			+ ",\nUsage ? " + this.usageSalle + ", Reservant : " + this.reservant
+    			+ ", Activite  : " + this.activite + ", SalleReserv : " + this.salleReservee);
+    }
 }

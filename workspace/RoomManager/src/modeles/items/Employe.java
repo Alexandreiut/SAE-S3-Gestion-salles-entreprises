@@ -70,4 +70,10 @@ public class Employe implements Serializable {
     public int getTelephone() {
         return telephone;
     }
+    
+    @Override
+    public String toString() {
+    	return ("Id : " + this.identifiant + ", Nom : " + this.nom
+    			+ ", Prenom : " + this.prenom + ", tel : " + this.telephone);
+    }
 }
