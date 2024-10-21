@@ -40,24 +40,32 @@ public class LecteurCSV {
 	public static ArrayList<String> getRessource(String filePath) throws WrongFileFormatException, IOException {
 
 		ArrayList<String> listeLignes = new ArrayList<String>();
+		
+		if(!getFileExtension(filePath).equals("csv")) {
+			throw new WrongFileFormatException();
+		} 
 
-		File file = new File(filePath);
+		try {
+			File file = new File(filePath);
 
-		FileReader fileReader = new FileReader(file);
-		BufferedReader bufferedReader = new BufferedReader(fileReader);
+			FileReader fileReader = new FileReader(file);
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-		for (String ligne = bufferedReader.readLine(); ligne != null; ligne = bufferedReader.readLine()) {
-			listeLignes.add(ligne);
+			for (String ligne = bufferedReader.readLine(); ligne != null; ligne = bufferedReader.readLine()) {
+				listeLignes.add(ligne);
+			}
+
+			bufferedReader.close();
+			fileReader.close();
+
+			for(String ligne : listeLignes) {
+				System.out.println(ligne);
+			}
+
+			return listeLignes;
+		} catch (IOException e) {
+			throw new IOException();
 		}
-
-		bufferedReader.close();
-		fileReader.close();
-
-		for(String ligne : listeLignes) {
-			System.out.println(ligne);
-		}
-
-		return listeLignes;
 	}
 
 	/**
@@ -103,9 +111,9 @@ public class LecteurCSV {
 
 		case EN_TETE_RESERVATION :
 
-			ArrayList<Object> listeEmploye = readEmployeCSV(getRessource("C:\\Users\\astie\\cours\\2024-2025\\sae\\s3\\employes 26_08_24 13_40.csv"));
-			ArrayList<Object> listeSalles = readSalleCSV(getRessource("C:\\Users\\astie\\cours\\2024-2025\\sae\\s3\\salles 26_08_24 13_40.csv"));
-			ArrayList<Object> listeActivite = readActiviteCSV(getRessource("C:\\Users\\astie\\cours\\2024-2025\\sae\\s3\\activites 26_08_24 13_40.csv"));
+			ArrayList<Object> listeEmploye = readEmployeCSV(getRessource("/RoomManager/src/ressourcescsv/employes 26_08_24 13_40.csv"));
+			ArrayList<Object> listeSalles = readSalleCSV(getRessource("/RoomManager/src/ressourcescsv/salles 26_08_24 13_40.csv"));
+			ArrayList<Object> listeActivite = readActiviteCSV(getRessource("/RoomManager/src/ressourcescsv/activites 26_08_24 13_40.csv"));
 
 			return readReservationCSV(listeLigneFichier, listeEmploye, listeSalles, listeActivite);
 
@@ -341,82 +349,6 @@ public class LecteurCSV {
 		}
 
 		return listeActivite;
-	}
-
-
-	/**
-	 *
-	 * @param listeEmploye
-	 * @param id
-	 * @return
-	 */
-	public static Employe getEmployeById(ArrayList<Object> listeEmploye, String id) {  //INITIALEMENT PRIVATE
-
-		ArrayList<Employe> listeEmployeConverti = new ArrayList<>();
-
-		for (Object obj : listeEmploye) {
-			if (obj instanceof Employe) {
-				listeEmployeConverti.add((Employe) obj);
-			} else {
-				System.out.println("Erreur: Un objet n'est pas du type Employe.");
-			}
-		}
-
-		for (Employe employe : listeEmployeConverti) {
-			if (employe.getIdentifiant().equals(id)) {
-				return employe;
-			}
-		}
-		return new Employe("Inconnu", "Nom inconnu", "Prenom inconnu", 0000);
-	}
-
-	/**
-	 *
-	 * @param listeSalle
-	 * @param id
-	 * @return
-	 */
-	public static Salle getSalleById(ArrayList<Object> listeSalle, String id) { //INITIALEMENT PRIVATE
-
-		ArrayList<Salle> listeSalleConverti = new ArrayList<>();
-
-		for (Object obj : listeSalle) {
-			if (obj instanceof Salle) {
-				listeSalleConverti.add((Salle) obj);
-			} else {
-				System.out.println("Erreur: Un objet n'est pas du type Salle.");
-			}
-		}
-
-		for (Salle salle : listeSalleConverti) {
-			if (salle.getIdentifiant() == Integer.parseInt(id)) {
-				return salle;
-			}
-		}
-		return new Salle(0, "Nom inconnu", 0, false, false, 0, "Indefini", null, false);
-	}
-
-	/**
-	 *
-	 */
-	public static Activite getActiviteById(ArrayList<Object> listeActivite, String id) { //INITIALEMENT PRIVATE
-
-		ArrayList<Activite> listeActiviteConverti = new ArrayList<>();
-
-		for (Object obj : listeActivite) {
-			if (obj instanceof Activite) {
-				listeActiviteConverti.add((Activite) obj);
-			} else {
-				System.out.println("Erreur: Un objet n'est pas du type Activite.");
-			}
-		}
-
-		for (Activite activite : listeActiviteConverti) {
-			if (activite.getIdentifiant().equals(id)) {
-				return activite;
-			}
-		}
-		return new Activite("Inconnu", "Nom inconnu");
 	}
 	
 	/**
