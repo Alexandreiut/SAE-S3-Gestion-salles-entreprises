@@ -1,11 +1,10 @@
 .label-consultation {
-    /*-fx-font-family: Arial, sans-serif;*/
-    /*-fx-font-weight: bold; */
-    /*-fx-text-fill: #000000;  Texte noir */
+	
     -fx-background-color: #ffffff; /* Fond blanc */
     -fx-border-color: #00bfff; /* Bordure bleu clair */
-    -fx-border-width: 3px;
+    -fx-border-width: 4px;
     -fx-border-radius: 50px; /* Bords très arrondis */
     -fx-background-radius: 50px; /* Arrondi pour le fond également */
     -fx-padding: 5px 7px; /* Espacement interne pour le texte */
+	
 }
