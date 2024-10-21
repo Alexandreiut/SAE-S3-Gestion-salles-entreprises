@@ -42,7 +42,7 @@ public class LecteurCSV {
 		ArrayList<String> listeLignes = new ArrayList<String>();
 
 		File file = new File(filePath);
-
+		
 		FileReader fileReader = new FileReader(file);
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 
@@ -116,8 +116,6 @@ public class LecteurCSV {
 		default : 
 			throw new WrongFileFormatException();
 		}
-
-
 	}
 
 	/**
@@ -386,5 +384,4 @@ public class LecteurCSV {
 	    }
 	    return new Activite("Inconnu", "Nom inconnu");
 	}
-	
 }

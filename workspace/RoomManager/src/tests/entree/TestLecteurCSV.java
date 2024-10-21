@@ -16,6 +16,7 @@ class TestLecteurCSV {
 	private final String EMPLOYES_PATH = "/RoomManager/src/ressourcescsv/employes 26_08_24 13_40.csv";
 	private final String RESERVATIONS_PATH = "/RoomManager/src/ressourcescsv/reservations 26_08_24 13_40.csv";
 	private final String SALLES_PATH = "/RoomManager/src/ressourcescsv/salles 26_08_24 13_40.csv";
+	private final String PATH_INEXISTANT = ""
 
 	@Test
 	void testGetRessource() {
@@ -30,13 +31,14 @@ class TestLecteurCSV {
 			employes = LecteurCSV.getRessource(EMPLOYES_PATH);
 			reservations = LecteurCSV.getRessource(RESERVATIONS_PATH);
 			salles = LecteurCSV.getRessource(SALLES_PATH);
-		} catch (WrongFileFormatException e) {
-			
-			e.printStackTrace();
-		} catch (IOException e) {
-			
-			e.printStackTrace();
+		} catch(IOException e) {
+			System.out.print("");
+		} catch(WrongFileFormatException e) {
+			System.out.print("");
 		}
+		
+		
+		
 		
 		if(activites.size() == 9) {
 			//TODO
