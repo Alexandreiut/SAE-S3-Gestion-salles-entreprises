@@ -1,3 +1,8 @@
+.pane {
+	-fx-pref-width: 1000;
+    -fx-pref-height: 600;
+}
+
 .button-menu {
 	-fx-translate-y: 23;
 	-fx-translate-x: 28;
