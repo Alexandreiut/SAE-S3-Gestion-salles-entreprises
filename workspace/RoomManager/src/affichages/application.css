@@ -1,4 +1,10 @@
 .button-menu {
+	-fx-translate-y: 23;
+	-fx-translate-x: 28;
+	
+	-fx-pref-width: 139;
+    -fx-pref-height: 41;
+	
     -fx-background-color: #00BBB0;
     -fx-text-fill: white;
     -fx-font-weight: bold;
@@ -9,14 +15,17 @@
     -fx-border-color: black;
     -fx-border-width: 3;
     -fx-border-radius: 20;
-    -fx-border-style: solid; /* Added this line */
+    -fx-border-style: solid;
 
 }
 
 .bandeau {
 	-fx-background-color: #016401;
 	-fx-alignment: center;
-	-fx-translate-y:37;
+
+	-fx-translate-y: 37;
+	-fx-pref-width: 1000;
+    -fx-pref-height: 65;
 }
 
 .titre {
@@ -31,5 +40,10 @@
     -fx-font-weight: bold;
     -fx-padding: 0;
     -fx-font-size: 32px;
+    
+    -fx-translate-x: 370;
+    -fx-pref-width: 48;
+    -fx-pref-height: 48;
+
 
 }
