@@ -16,6 +16,7 @@
 .bandeau {
 	-fx-background-color: #016401;
 	-fx-alignment: center;
+	-fx-translate-y:37;
 }
 
 .titre {
