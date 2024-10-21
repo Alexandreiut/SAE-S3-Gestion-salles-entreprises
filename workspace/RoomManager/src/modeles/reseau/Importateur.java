@@ -54,7 +54,7 @@ public class Importateur {
 	 * @return
 	 */
 	public String recevoirDonnee() {
-		
+		return null; //stub
 		
 		
 	}
@@ -63,8 +63,8 @@ public class Importateur {
 	 * false sinon
 	 * @param donneAConvertir
 	 */
-	public convertirReponseDonnee(String[] donneAConvertir) {
-		
+	public boolean convertirReponseDonnee(String[] donneAConvertir) {
+		return true; //stub
 		
 		
 	}
@@ -74,6 +74,7 @@ public class Importateur {
 	 * @return
 	 */
 	public boolean envoiEntier() {
+		return true; //stub
 		
 	}
 	
@@ -82,6 +83,7 @@ public class Importateur {
 	 * @return
 	 */
 	public int recevoirEntier() {
+		return 0; //stub
 		
 	}
 	
@@ -91,6 +93,7 @@ public class Importateur {
 	 * @return
 	 */
 	public boolean closeConnexion() {
+		return true; //stub
 		
 	}
 	
