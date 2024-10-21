@@ -91,32 +91,56 @@ public class Stockage {
      * sauvegarde la liste des salles et écrase celle précedemment sauvegardé
      * @param listeASauvegarder liste de salles à enregistrer
      */
-    public void setListeSalle(ArrayList<Salle> listeASauvegarder) {
-        listeSalles = listeASauvegarder;
+    public void setListeSalle(ArrayList<Object> listeASauvegarder) {
+    	ArrayList<Salle> listeConstruite = new ArrayList<>();
+    	for(Object obj : listeASauvegarder) {
+    		if(obj instanceof Salle) {
+    			listeConstruite.add((Salle) obj);
+    		}
+    	}
+        listeSalles = listeConstruite;
     }
 
     /**
      * sauvegarde la liste des Activités et écrase celle précedemment sauvegardé
      * @param listeASauvegarder liste d'activités à enregistrer
      */
-    public void setListeActivite(ArrayList<Activite> listeASauvegarder) {
-    	listeActivites = listeASauvegarder;
+    public void setListeActivite(ArrayList<Object> listeASauvegarder) {
+    	ArrayList<Activite> listeConstruite = new ArrayList<>();
+    	for(Object obj : listeASauvegarder) {
+    		if(obj instanceof Activite) {
+    			listeConstruite.add((Activite) obj);
+    		}
+    	}
+    	listeActivites = listeConstruite;
     }
     
     /**
      * sauvegarde la liste des employés et écrase celle précedemment sauvegardé
      * @param listeASauvegarder liste d'employés à enregistrer
      */
-    public void setListeEmploye(ArrayList<Employe> listeASauvegarder) {
-    	listeEmployes = listeASauvegarder;
+    public void setListeEmploye(ArrayList<Object> listeASauvegarder) {
+    	ArrayList<Employe> listeConstruite = new ArrayList<>();
+    	for(Object obj : listeASauvegarder) {
+    		if(obj instanceof Employe) {
+    			listeConstruite.add((Employe) obj);
+    		}
+    	}
+    	listeEmployes = listeConstruite;
     }
     
     /**
      * sauvegarde la liste des réservations et écrase celle précedemment sauvegardé
      * @param listeASauvegarder liste de réservations à enregistrer
      */
-    public void setListeReservation(ArrayList<Reservation> listeASauvegarder) {
-    	listeReservations = listeASauvegarder;
+    public void setListeReservation(ArrayList<Object> listeASauvegarder) {
+    	ArrayList<Reservation> listeConstruite = new ArrayList<>();
+    	for(Object obj : listeASauvegarder) {
+    		if(obj instanceof Reservation) {
+    			listeConstruite.add((Reservation) obj);
+    		}
+    	}
+    	listeReservations = listeConstruite;
     }
     
     /**

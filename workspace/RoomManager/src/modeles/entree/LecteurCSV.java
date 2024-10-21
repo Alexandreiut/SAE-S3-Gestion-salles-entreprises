@@ -183,13 +183,13 @@ public class LecteurCSV {
 	 * @throws LectureException si données incohérentes
 	 */
 	public static ArrayList<Object> readReservationCSV(ArrayList<String> listeLigneFichier, ArrayList<Object> listeEmploye,
-			ArrayList<Object> listeSalles, ArrayList<Object> listeActivite) throws LectureException { //INITIALEMENT PRIVATE
+			ArrayList<Object> listeSalle, ArrayList<Object> listeActivite) throws LectureException { //INITIALEMENT PRIVATE
 	    
 	    Reservation reservation;        
 	    
-	    Activite activite;
-	    Employe reservant;
-	    Salle salleReservee;
+	    String activite;
+	    String reservant;
+	    int salleReservee;
 	    
 	    String id;
 	    String date;
@@ -208,16 +208,47 @@ public class LecteurCSV {
 	    
 	    listeLigneFichier.remove(0);
 	    
+	    // Cast des listes
+	    
+	    ArrayList<String> listeIdEmploye = new ArrayList<>();
+	    ArrayList<String> listeIdActivite = new ArrayList<>();
+	    ArrayList<Integer> listeIdSalle = new ArrayList<>();
+
+        for (Object emp : listeEmploye) {
+            if (emp instanceof Employe) {
+            	listeIdEmploye.add(((Employe) emp).getIdentifiant());
+            }
+        }
+        for (Object act : listeActivite) {
+            if (act instanceof Activite) {
+            	listeIdActivite.add(((Activite) act).getNom());
+            }
+        }
+        for (Object sal : listeSalle) {
+            if (sal instanceof Employe) {
+            	listeIdSalle.add(((Salle) sal).getIdentifiant());
+            }
+        }	    
+	    
 	    for(String ligne : listeLigneFichier) {
 	        
 	        ligneSplit  = ligne.split(";");
 	        
 	        id = (ligneSplit.length > 0 && ligneSplit[0].length() > 1 && ligneSplit[0].charAt(0) == 'R') ? ligneSplit[0] : "Id inconnu";
-	        
-	        salleReservee = (ligneSplit.length > 1 && ligneSplit[1].length() == 8 && ligneSplit[1].matches("\\d+")) ? getSalleById(listeSalles, ligneSplit[1]) : new Salle(0, "Inconnue", 0, false, false, 0, "Type inconnu", new ArrayList<String>(), false);
-	        reservant = (ligneSplit.length > 2 && ligneSplit[2].length() == 7 && ligneSplit[2].charAt(0) == 'E') ? getEmployeById(listeEmploye, ligneSplit[2]) : new Employe("Inconnu", "Nom inconnu", "Prenom inconnu", 0000);
-	        activite = (ligneSplit.length > 3 && ligneSplit[3].length() > 1) ? getActiviteById(listeActivite, ligneSplit[3]) : new Activite("Inconnu", "Activite inconnue");
-	        
+	        // Vérification de l'existance des identifiants relever par la lecture pour garder une cohérence	        
+	        salleReservee = (ligneSplit.length > 1 && ligneSplit[1].length() == 8 && ligneSplit[1].matches("\\d+")) ? Integer.parseInt(ligneSplit[2]) : -1;
+	        reservant = (ligneSplit.length > 2 && ligneSplit[2].length() == 7 && ligneSplit[2].charAt(0) == 'E') ? ligneSplit[2] : "Employé inconnu";
+	        activite = (ligneSplit.length > 3 && ligneSplit[3].length() > 1) ? ligneSplit[3] : "Activite inconnue";
+	        if(!listeIdSalle.contains(salleReservee)) {
+	        	throw new LectureException();
+	        }
+	        if(!listeIdEmploye.contains(reservant)) {
+	        	throw new LectureException();
+	        }
+	        if(!listeIdActivite.contains(activite)) {
+	        	throw new LectureException();
+	        }    
+	        // Récupération de l'ensemble des élément pour constituer une réservation
 	        date = (ligneSplit.length > 4 && ligneSplit[4].length() == 10 && ligneSplit[4].matches("\\d{2}/\\d{2}/\\d{4}")) ? ligneSplit[4] : "Date inconnu";
 	        heureDebut = (ligneSplit.length > 5 && ligneSplit[5].length() == 5 && ligneSplit[5].matches("\\d{2}h\\d{2}")) ? ligneSplit[5] : "Heure début inconnu";
 	        heureFin = (ligneSplit.length > 6 && ligneSplit[6].length() == 5 && ligneSplit[6].matches("\\d{2}h\\d{2}")) ? ligneSplit[6] : "Heure fin inconnu";
@@ -309,82 +340,5 @@ public class LecteurCSV {
 		}
 	        
 		return listeActivite;
-	}
-	
-	
-	/**
-	 * 
-	 * @param listeEmploye
-	 * @param id
-	 * @return
-	 */
-	public static Employe getEmployeById(ArrayList<Object> listeEmploye, String id) {  //INITIALEMENT PRIVATE
-		
-		ArrayList<Employe> listeEmployeConverti = new ArrayList<>();
-
-		for (Object obj : listeEmploye) {
-		    if (obj instanceof Employe) {
-		    	listeEmployeConverti.add((Employe) obj);
-		    } else {
-		        System.out.println("Erreur: Un objet n'est pas du type Employe.");
-		    }
-		}
-		
-	    for (Employe employe : listeEmployeConverti) {
-	        if (employe.getIdentifiant().equals(id)) {
-	            return employe;
-	        }
-	    }
-	    return new Employe("Inconnu", "Nom inconnu", "Prenom inconnu", 0000);
-	}
-	
-	/**
-	 * 
-	 * @param listeSalle
-	 * @param id
-	 * @return
-	 */
-	public static Salle getSalleById(ArrayList<Object> listeSalle, String id) { //INITIALEMENT PRIVATE
-		
-		ArrayList<Salle> listeSalleConverti = new ArrayList<>();
-		
-		for (Object obj : listeSalle) {
-		    if (obj instanceof Salle) {
-		    	listeSalleConverti.add((Salle) obj);
-		    } else {
-		        System.out.println("Erreur: Un objet n'est pas du type Salle.");
-		    }
-		}
-		
-	    for (Salle salle : listeSalleConverti) {
-	        if (salle.getIdentifiant() == Integer.parseInt(id)) {
-	            return salle;
-	        }
-	    }
-	    return new Salle(0, "Nom inconnu", 0, false, false, 0, "Indefini", null, false);
-	}
-	
-	/**
-	 * 
-	 */
-	public static Activite getActiviteById(ArrayList<Object> listeActivite, String id) { //INITIALEMENT PRIVATE
-		
-		ArrayList<Activite> listeActiviteConverti = new ArrayList<>();
-		
-		for (Object obj : listeActivite) {
-		    if (obj instanceof Activite) {
-		    	listeActiviteConverti.add((Activite) obj);
-		    } else {
-		        System.out.println("Erreur: Un objet n'est pas du type Activite.");
-		    }
-		}
-		
-	    for (Activite activite : listeActiviteConverti) {
-	        if (activite.getIdentifiant().equals(id)) {
-	            return activite;
-	        }
-	    }
-	    return new Activite("Inconnu", "Nom inconnu");
-	}
-	
+	}	
 }
