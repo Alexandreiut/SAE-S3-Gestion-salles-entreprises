@@ -1,0 +1,34 @@
+.button-menu {
+    -fx-background-color: #00BBB0;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 32px;
+    -fx-background-radius: 20;
+    -fx-padding: 0;
+    
+    -fx-border-color: black;
+    -fx-border-width: 3;
+    -fx-border-radius: 20;
+    -fx-border-style: solid; /* Added this line */
+
+}
+
+.bandeau {
+	-fx-background-color: #016401;
+	-fx-alignment: center;
+}
+
+.titre {
+	-fx-text-fill: #FFFFFF;
+	-fx-font-size: 32px;
+	-fx-font-weight: bold;
+}
+
+.bouton-aide {
+	-fx-background-radius: 360;
+	-fx-background-color: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-padding: 0;
+    -fx-font-size: 32px;
+
+}
