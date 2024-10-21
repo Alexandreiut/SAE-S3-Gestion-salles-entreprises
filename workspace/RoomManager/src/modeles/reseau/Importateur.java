@@ -32,11 +32,13 @@ public class Importateur {
 	 * @param port de la connexion du côté du serveur
 	 * @throws IOException si problème lors de l'instanciation du socket
 	 */
-	public Importateur(String adresseIp, int port) throws IOException {
+	public Importateur(String adresseIp, int port, Stockage stockage) throws IOException {
 		
 		socketClient = new Socket(adresseIp, port);
 		
 		input = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
+		
+		this.stockage = stockage;
 	
 	}
 	
