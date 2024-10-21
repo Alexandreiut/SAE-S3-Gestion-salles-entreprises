@@ -186,10 +186,10 @@ public class Stockage {
      */
      public boolean restauration(String nomFichier) {
 	     // liste contenant les items qui vont être sauvegardé
-    	    ArrayList<Salle> listeSallesDeserialisee = new ArrayList<>();
-    	    ArrayList<Activite> listeActivitesDeserialisee = new ArrayList<>();
-    	    ArrayList<Employe> listeEmployesDeserialisee = new ArrayList<>();
-    	    ArrayList<Reservation> listeReservationsDeserialisee = new ArrayList<>();
+    	    ArrayList<Object> listeSallesDeserialisee = new ArrayList<>();
+    	    ArrayList<Object> listeActivitesDeserialisee = new ArrayList<>();
+    	    ArrayList<Object> listeEmployesDeserialisee = new ArrayList<>();
+    	    ArrayList<Object> listeReservationsDeserialisee = new ArrayList<>();
 	     try {
 	    	 // Récupération des données du .ser
 		     ObjectInputStream fluxLecture = new ObjectInputStream(
