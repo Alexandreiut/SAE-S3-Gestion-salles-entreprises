@@ -1,0 +1,54 @@
+.pane {
+	-fx-pref-width: 1000;
+    -fx-pref-height: 600;
+}
+
+.button-menu {
+	-fx-translate-y: 23;
+	-fx-translate-x: 28;
+	
+	-fx-pref-width: 139;
+    -fx-pref-height: 41;
+	
+    -fx-background-color: #00BBB0;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 32px;
+    -fx-background-radius: 20;
+    -fx-padding: 0;
+    
+    -fx-border-color: black;
+    -fx-border-width: 3;
+    -fx-border-radius: 20;
+    -fx-border-style: solid;
+
+}
+
+.bandeau {
+	-fx-background-color: #016401;
+	-fx-alignment: center;
+
+	-fx-translate-y: 37;
+	-fx-pref-width: 1000;
+    -fx-pref-height: 65;
+}
+
+.titre {
+	-fx-text-fill: #FFFFFF;
+	-fx-font-size: 32px;
+	-fx-font-weight: bold;
+}
+
+.bouton-aide {
+	-fx-background-radius: 360;
+	-fx-background-color: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-padding: 0;
+    -fx-font-size: 32px;
+    
+    -fx-translate-x: 370;
+    -fx-pref-width: 48;
+    -fx-pref-height: 48;
+
+
+}
