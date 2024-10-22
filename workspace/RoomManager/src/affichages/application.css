@@ -1,8 +1,10 @@
+/********** Taille de l'app par défaut **********/
 .pane {
 	-fx-pref-width: 1000;
     -fx-pref-height: 600;
 }
 
+/********** Elements du bandeau **********/
 .button-menu {
 	-fx-translate-y: 23;
 	-fx-translate-x: 28;
@@ -21,7 +23,6 @@
     -fx-border-width: 3;
     -fx-border-radius: 20;
     -fx-border-style: solid;
-
 }
 
 .bandeau {
@@ -49,6 +50,56 @@
     -fx-translate-x: 370;
     -fx-pref-width: 48;
     -fx-pref-height: 48;
+}
 
+/********** Elements du Menu latéral **********/
+/* modification bandeau */
+.bandeau-modifier {
+	-fx-background-color: #016401;
+	-fx-alignment: center;
+	-fx-translate-y: 37;
+	-fx-translate-x: 300;
+	-fx-pref-width: 700;
+    -fx-pref-height: 65;
+}
+/* modification bandeau du bouton aide */
+.bouton-aide-modifier {
+	-fx-background-radius: 360;
+	-fx-background-color: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-padding: 0;
+    -fx-font-size: 32px;
+    
+    -fx-translate-x: 220;
+    -fx-pref-width: 48;
+    -fx-pref-height: 48;
+}
 
+.menu {
+	-fx-background-color: #CCF5F3;
+	-fx-pref-width: 300;
+    -fx-pref-height: 600;
+    -fx-spacing: 50px;
+}
+
+.rectangle-bleu {
+	-fx-fill: #00BBB0;
+    -fx-stroke-width: 0px;
+}
+
+.bouton-menu-modifier {
+	-fx-pref-width: 139;
+    -fx-pref-height: 41;
+	
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+    -fx-font-size: 32px;
+    -fx-background-radius: 20;
+    -fx-padding: 0;
+    
+    -fx-border-color: black;
+    -fx-border-width: 3;
+    -fx-border-radius: 20;
+    -fx-border-style: solid;
 }
