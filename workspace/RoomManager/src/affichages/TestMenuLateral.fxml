@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" styleClass="pane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox prefHeight="0.0" prefWidth="0.0" styleClass="bandeau-modifier">
+         <children>
+            <Label styleClass="titre" text="Consultation" />
+            <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" styleClass="bouton-aide-modifier" text="i" />
+         </children></HBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" styleClass="menu">
+         <children>
+            <Button mnemonicParsing="false" styleClass="bouton-menu-modifier" text="Menu" />
+            <Button mnemonicParsing="false" styleClass="les-boutons-menu" text="Accueil" />
+            <Button mnemonicParsing="false" styleClass="les-boutons-menu" text="Consultation" />
+            <Button mnemonicParsing="false" styleClass="les-boutons-menu" text="Générer PDF" />
+            <Button mnemonicParsing="false" styleClass="les-boutons-menu" text="Importation" />
+            <Button mnemonicParsing="false" styleClass="les-boutons-menu" text="Exportation" />
+         </children>
+      </VBox>
+      <Pane prefHeight="200.0" prefWidth="200.0" styleClass="menu-bandeau-bleu" />
+   </children>
+</Pane>

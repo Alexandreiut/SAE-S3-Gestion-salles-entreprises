@@ -91,32 +91,56 @@ public class Stockage {
      * sauvegarde la liste des salles et écrase celle précedemment sauvegardé
      * @param listeASauvegarder liste de salles à enregistrer
      */
-    public void setListeSalle(ArrayList<Salle> listeASauvegarder) {
-        listeSalles = listeASauvegarder;
+    public void setListeSalle(ArrayList<Object> listeASauvegarder) {
+    	ArrayList<Salle> listeConstruite = new ArrayList<>();
+    	for(Object obj : listeASauvegarder) {
+    		if(obj instanceof Salle) {
+    			listeConstruite.add((Salle) obj);
+    		}
+    	}
+        listeSalles = listeConstruite;
     }
 
     /**
      * sauvegarde la liste des Activités et écrase celle précedemment sauvegardé
      * @param listeASauvegarder liste d'activités à enregistrer
      */
-    public void setListeActivite(ArrayList<Activite> listeASauvegarder) {
-    	listeActivites = listeASauvegarder;
+    public void setListeActivite(ArrayList<Object> listeASauvegarder) {
+    	ArrayList<Activite> listeConstruite = new ArrayList<>();
+    	for(Object obj : listeASauvegarder) {
+    		if(obj instanceof Activite) {
+    			listeConstruite.add((Activite) obj);
+    		}
+    	}
+    	listeActivites = listeConstruite;
     }
     
     /**
      * sauvegarde la liste des employés et écrase celle précedemment sauvegardé
      * @param listeASauvegarder liste d'employés à enregistrer
      */
-    public void setListeEmploye(ArrayList<Employe> listeASauvegarder) {
-    	listeEmployes = listeASauvegarder;
+    public void setListeEmploye(ArrayList<Object> listeASauvegarder) {
+    	ArrayList<Employe> listeConstruite = new ArrayList<>();
+    	for(Object obj : listeASauvegarder) {
+    		if(obj instanceof Employe) {
+    			listeConstruite.add((Employe) obj);
+    		}
+    	}
+    	listeEmployes = listeConstruite;
     }
     
     /**
      * sauvegarde la liste des réservations et écrase celle précedemment sauvegardé
      * @param listeASauvegarder liste de réservations à enregistrer
      */
-    public void setListeReservation(ArrayList<Reservation> listeASauvegarder) {
-    	listeReservations = listeASauvegarder;
+    public void setListeReservation(ArrayList<Object> listeASauvegarder) {
+    	ArrayList<Reservation> listeConstruite = new ArrayList<>();
+    	for(Object obj : listeASauvegarder) {
+    		if(obj instanceof Reservation) {
+    			listeConstruite.add((Reservation) obj);
+    		}
+    	}
+    	listeReservations = listeConstruite;
     }
     
     /**
@@ -124,7 +148,7 @@ public class Stockage {
      * @param une chaîne contenant le chemin et le nom du fichier
      * @return vrai si la sérialisation à été correctement effectué, false sinon
      */
-    public boolean serialisation(String nomChemin) {
+    public boolean serialisation() {
     	// Liste sérialisé contenant tous les items
         ArrayList<Object> listeObject = new ArrayList<>();
         // Récupération de tous les items stockés
@@ -132,10 +156,14 @@ public class Stockage {
         listeObject.addAll(listeActivites);
         listeObject.addAll(listeEmployes);
         listeObject.addAll(listeReservations);
+        // Vérification que des éléments soit présent dans le stockage
+        if(listeObject.size() == 0) {
+        	return false;
+        }
         
         try {
             // Création du fichier qui recevra les objets
-            File fichier = new File(nomChemin);
+            File fichier = new File("sauvegarde.dat");
             ObjectOutputStream fluxEcriture = new ObjectOutputStream(new FileOutputStream(fichier));
             
             // Écriture des objets dans le fichier
@@ -160,16 +188,16 @@ public class Stockage {
      * @param une chaîne contenant le nom du fichier à consulter
      * @return vrai si la désérialisation à été correctement effectué, false sinon
      */
-     public boolean restauration(String nomFichier) {
+     public boolean restauration() {
 	     // liste contenant les items qui vont être sauvegardé
-    	    ArrayList<Salle> listeSallesDeserialisee = new ArrayList<>();
-    	    ArrayList<Activite> listeActivitesDeserialisee = new ArrayList<>();
-    	    ArrayList<Employe> listeEmployesDeserialisee = new ArrayList<>();
-    	    ArrayList<Reservation> listeReservationsDeserialisee = new ArrayList<>();
+    	    ArrayList<Object> listeSallesDeserialisee = new ArrayList<>();
+    	    ArrayList<Object> listeActivitesDeserialisee = new ArrayList<>();
+    	    ArrayList<Object> listeEmployesDeserialisee = new ArrayList<>();
+    	    ArrayList<Object> listeReservationsDeserialisee = new ArrayList<>();
 	     try {
 	    	 // Récupération des données du .ser
 		     ObjectInputStream fluxLecture = new ObjectInputStream(
-		     new FileInputStream(nomFichier));     
+		     new FileInputStream("sauvegarde.dat"));     
 		     try {
 		    	 // lecture en continue tant que le fichier n'est pas totalement lu
 		         while (true) {
@@ -195,11 +223,10 @@ public class Stockage {
 		     setListeReservation(listeReservationsDeserialisee);
 		     return true;
 	     } catch (IOException e) { // Nom de fichier incorrect
-	    	 System.out.println("Problème d'accès au fichier " + nomFichier);
+	    	 System.out.println("Problème d'accès au fichier sauvegarde.dat");
 	    	 return false;
 	     } catch (ClassNotFoundException e) { // echec de cast de donnée en items
-	    	 System.out.println("Problème lors de la lecture du fichier "
-	    			 + nomFichier);
+	    	 System.out.println("Problème lors de la lecture du fichier sauvegarde.dat");
 	    	 return false;
 	     }
      }
