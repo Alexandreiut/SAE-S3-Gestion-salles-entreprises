@@ -28,10 +28,10 @@
 .bandeau {
 	-fx-background-color: #016401;
 	-fx-alignment: center;
+
 	-fx-translate-y: 37;
 	-fx-pref-width: 1000;
     -fx-pref-height: 65;
-
 }
 
 .titre {
