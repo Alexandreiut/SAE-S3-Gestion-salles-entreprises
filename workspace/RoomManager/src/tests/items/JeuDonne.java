@@ -1,12 +1,12 @@
-package src.tests.items;
+package tests.items;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import src.modeles.items.Activite;
-import src.modeles.items.Employe;
-import src.modeles.items.Reservation;
-import src.modeles.items.Salle;
+import modeles.items.Activite;
+import modeles.items.Employe;
+import modeles.items.Reservation;
+import modeles.items.Salle;
 
 public class JeuDonne {
     

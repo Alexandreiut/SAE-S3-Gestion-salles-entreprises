@@ -3,7 +3,7 @@
  * BUT Info2, 2024/2025, pas de copyright
  */
 
-package src.modeles.erreur;
+package modeles.erreur;
 
 /**
  * Classe d'exception, pour les erreurs de connections

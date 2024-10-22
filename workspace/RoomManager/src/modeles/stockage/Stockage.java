@@ -3,7 +3,7 @@
  * BUT info2 2024-2025, aucun copyright
  */
 
-package src.modeles.stockage;
+package modeles.stockage;
 
 import java.io.EOFException;
 import java.io.File;
@@ -14,10 +14,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import src.modeles.items.Salle;
-import src.modeles.items.Activite;
-import src.modeles.items.Employe;
-import src.modeles.items.Reservation;
+import modeles.items.Salle;
+import modeles.items.Activite;
+import modeles.items.Employe;
+import modeles.items.Reservation;
 
 /**
  * Stockage des données importées de l'application. 

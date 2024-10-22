@@ -1,4 +1,4 @@
-package src.tests.items;
+package tests.items;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import src.modeles.items.Salle;
+import modeles.items.Salle;
 
 public class TestSalle extends JeuDonne{
 

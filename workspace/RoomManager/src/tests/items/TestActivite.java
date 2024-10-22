@@ -1,4 +1,4 @@
-package src.tests.items;
+package tests.items;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import src.modeles.items.Activite;
+import modeles.items.Activite;
 
 public class TestActivite extends JeuDonne{
     private ArrayList<Activite> activites;

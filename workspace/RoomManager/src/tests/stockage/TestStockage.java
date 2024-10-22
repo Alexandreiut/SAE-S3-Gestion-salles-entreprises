@@ -1,4 +1,4 @@
-package src.tests.stockage;
+package tests.stockage;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import src.modeles.items.Activite;
-import src.modeles.items.Employe;
-import src.modeles.items.Reservation;
-import src.modeles.items.Salle;
-import src.modeles.stockage.Stockage;
-import src.tests.items.JeuDonne;
+import modeles.items.Activite;
+import modeles.items.Employe;
+import modeles.items.Reservation;
+import modeles.items.Salle;
+import modeles.stockage.Stockage;
+import tests.items.JeuDonne;
 
 
 

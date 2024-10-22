@@ -3,7 +3,7 @@
  * BUT Info2, 2024/2025, pas de copyright
  */
 
-package src.modeles.entree;
+package modeles.entree;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,12 +12,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import src.modeles.erreur.LectureException;
-import src.modeles.erreur.WrongFileFormatException;
-import src.modeles.items.Activite;
-import src.modeles.items.Employe;
-import src.modeles.items.Reservation;
-import src.modeles.items.Salle;
+import modeles.erreur.LectureException;
+import modeles.erreur.WrongFileFormatException;
+import modeles.items.Activite;
+import modeles.items.Employe;
+import modeles.items.Reservation;
+import modeles.items.Salle;
 
 /**
  * Classe outil pour la lecture des csv
@@ -221,35 +221,6 @@ public class LecteurCSV {
 	    ArrayList<String> listeIdEmploye = new ArrayList<>();
 	    ArrayList<String> listeIdActivite = new ArrayList<>();
 	    ArrayList<Integer> listeIdSalle = new ArrayList<>();
-
-		Reservation reservation;        
-
-		String activite;
-		String reservant;
-		int salleReservee;
-
-		String id;
-		String date;
-		String heureDebut;
-		String heureFin;
-		String objetReservation;
-		String nomInterlocuteur;
-		String prenomInterlocuteur;
-		String usageSalle;
-
-		int numeroInterlocuteur;
-
-		String[] ligneSplit;
-
-		ArrayList<Object> listeReservation = new ArrayList<Object>();
-
-		listeLigneFichier.remove(0);
-
-		// Cast des listes
-
-		ArrayList<String> listeIdEmploye = new ArrayList<>();
-		ArrayList<String> listeIdActivite = new ArrayList<>();
-		ArrayList<Integer> listeIdSalle = new ArrayList<>();
 
 		for (Object emp : listeEmploye) {
 			if (emp instanceof Employe) {
