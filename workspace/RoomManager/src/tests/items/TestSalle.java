@@ -1,4 +1,4 @@
-package tests.items;
+package src.tests.items;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,27 +8,15 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import modeles.items.Salle;
+import src.modeles.items.Salle;
 
-public class TestSalle {
+public class TestSalle extends JeuDonne{
 
     private ArrayList<Salle> salles;
     
     @BeforeEach
     public void setUp() {
-        salles = new ArrayList<>();
-        
-        salles.add(new Salle(1, "A6", 15, true, false, 4, "PC portable", new ArrayList<>(), false));
-        salles.add(new Salle(2, "salle bleue", 18, true, true, 0, "", new ArrayList<>(), false));
-        salles.add(new Salle(3, "salle ronde", 14, true, false, 0, "", new ArrayList<>(), false));
-        salles.add(new Salle(4, "salle Picasso", 15, false, false, 0, "", new ArrayList<>(), false));
-        salles.add(new Salle(5, "petite salle", 7, true, true, 0, "", new ArrayList<>(), false));
-        salles.add(new Salle(6, "A7", 4, false, false, 0, "", new ArrayList<>(), false));
-        salles.add(new Salle(7, "salle patio", 6, false, false, 0, "", new ArrayList<>(), false));
-        salles.add(new Salle(8, "salle Sydney", 20, true, false, 16, "PC Windows", 
-                           new ArrayList<>(List.of("bureautique", "java", "Intellij")), false));
-        salles.add(new Salle(9, "salle Brisbane", 22, true, false, 18, "PC Windows", 
-                           new ArrayList<>(List.of("bureautique", "java", "Intellij", "photoshop")), true));
+        salles = setUpSalles();
     }
 
     @Test

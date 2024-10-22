@@ -3,22 +3,21 @@
  * BUT Info2, 2024/2025, pas de copyright
  */
 
-package modeles.entree;
+package src.modeles.entree;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import modeles.erreur.LectureException;
-import modeles.erreur.WrongFileFormatException;
-import modeles.items.Activite;
-import modeles.items.Employe;
-import modeles.items.Reservation;
-import modeles.items.Salle;
+import src.modeles.erreur.LectureException;
+import src.modeles.erreur.WrongFileFormatException;
+import src.modeles.items.Activite;
+import src.modeles.items.Employe;
+import src.modeles.items.Reservation;
+import src.modeles.items.Salle;
 
 /**
  * Classe outil pour la lecture des csv
@@ -35,36 +34,24 @@ public class LecteurCSV {
 	/**
 	 * @param filePath le chemin du fichier 
 	 * @return Le contenu du fichier sous forme d'une liste de ligne.
-	 * @throws WrongFileFormatException si l'extension du fichier est incorrectes
+	 * @throws WrongFileFormatException si l'extension du fichier est incorrecte
 	 * @throws IOException 
 	 */
 	public static ArrayList<String> getRessource(String filePath) throws WrongFileFormatException, IOException {
 
 		ArrayList<String> listeLignes = new ArrayList<String>();
 
-		if(getFileExtension(filePath) != ".csv") {
-			throw new WrongFileFormatException();
-		}
-
 		File file = new File(filePath);
 
-		FileReader fileReader;
-		try {
-			fileReader = new FileReader(file);
-			
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
+		FileReader fileReader = new FileReader(file);
+		BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-			for (String ligne = bufferedReader.readLine(); ligne != null; ligne = bufferedReader.readLine()) {
-				listeLignes.add(ligne);
-			}
-
-			bufferedReader.close();
-			fileReader.close();
-		} catch (FileNotFoundException e) {
-			throw new FileNotFoundException();
-		} catch (IOException e) {
-			throw new IOException();
+		for (String ligne = bufferedReader.readLine(); ligne != null; ligne = bufferedReader.readLine()) {
+			listeLignes.add(ligne);
 		}
+
+		bufferedReader.close();
+		fileReader.close();
 
 		for(String ligne : listeLignes) {
 			System.out.println(ligne);
@@ -102,7 +89,7 @@ public class LecteurCSV {
 		 * En-tête du csv des salles
 		 */
 		final String EN_TETE_SALLE = "Ident;Nom;Capacite;videoproj;ecranXXL;ordinateur;type;logiciels;imprimante";
-
+		
 		//Fait l'appel en fonction de l'en-tête
 		switch(listeLigneFichier.get(0)) {
 
@@ -115,10 +102,10 @@ public class LecteurCSV {
 			return readEmployeCSV(listeLigneFichier);
 
 		case EN_TETE_RESERVATION :
-
+			
 			ArrayList<Object> listeEmploye = readEmployeCSV(getRessource("C:\\Users\\astie\\cours\\2024-2025\\sae\\s3\\employes 26_08_24 13_40.csv"));
-			ArrayList<Object> listeSalles = readSalleCSV(getRessource("C:\\Users\\astie\\cours\\2024-2025\\sae\\s3\\salles 26_08_24 13_40.csv"));
-			ArrayList<Object> listeActivite = readActiviteCSV(getRessource("C:\\Users\\astie\\cours\\2024-2025\\sae\\s3\\activites 26_08_24 13_40.csv"));
+		    ArrayList<Object> listeSalles = readSalleCSV(getRessource("C:\\Users\\astie\\cours\\2024-2025\\sae\\s3\\salles 26_08_24 13_40.csv"));
+		    ArrayList<Object> listeActivite = readActiviteCSV(getRessource("C:\\Users\\astie\\cours\\2024-2025\\sae\\s3\\activites 26_08_24 13_40.csv"));
 
 			return readReservationCSV(listeLigneFichier, listeEmploye, listeSalles, listeActivite);
 
@@ -129,6 +116,8 @@ public class LecteurCSV {
 		default : 
 			throw new WrongFileFormatException();
 		}
+
+
 	}
 
 	/**
@@ -195,6 +184,35 @@ public class LecteurCSV {
 	 */
 	public static ArrayList<Object> readReservationCSV(ArrayList<String> listeLigneFichier, ArrayList<Object> listeEmploye,
 			ArrayList<Object> listeSalle, ArrayList<Object> listeActivite) throws LectureException { //INITIALEMENT PRIVATE
+	    
+	    Reservation reservation;        
+	    
+	    String activite;
+	    String reservant;
+	    int salleReservee;
+	    
+	    String id;
+	    String date;
+	    String heureDebut;
+	    String heureFin;
+	    String objetReservation;
+	    String nomInterlocuteur;
+	    String prenomInterlocuteur;
+	    String usageSalle;
+	    
+	    int numeroInterlocuteur;
+	    
+	    String[] ligneSplit;
+	    
+	    ArrayList<Object> listeReservation = new ArrayList<Object>();
+	    
+	    listeLigneFichier.remove(0);
+	    
+	    // Cast des listes
+	    
+	    ArrayList<String> listeIdEmploye = new ArrayList<>();
+	    ArrayList<String> listeIdActivite = new ArrayList<>();
+	    ArrayList<Integer> listeIdSalle = new ArrayList<>();
 
         for (Object emp : listeEmploye) {
             if (emp instanceof Employe) {
@@ -210,7 +228,8 @@ public class LecteurCSV {
             if (sal instanceof Employe) {
             	listeIdSalle.add(((Salle) sal).getIdentifiant());
             }
-        }	    
+        }
+	    
 	    
 	    for(String ligne : listeLigneFichier) {
 	        
@@ -258,34 +277,34 @@ public class LecteurCSV {
 	 * @throws LectureException si données incohérentes
 	 */
 	public static ArrayList<Object> readEmployeCSV(ArrayList<String> listeLigneFichier) throws LectureException { //INITIALEMENT PRIVATE
-
-		Employe employe;
-
-		String id;
-		String nom;
-		String prenom;
-		int tel;
-
-		String[] ligneSplit;
-
-		ArrayList<Object> listeEmploye = new ArrayList<Object>();
-
-		listeLigneFichier.remove(0);
-
-		for(String ligne : listeLigneFichier) {
-
-			ligneSplit  = ligne.split(";");
-
-			id = (ligneSplit.length > 0 && ligneSplit[0].length() == 7 && ligneSplit[0].charAt(0) == 'E') ? ligneSplit[0] : "Employe inconnu";
-			nom = (ligneSplit.length > 1 && ligneSplit[1].length() > 1) ? ligneSplit[1] : "Nom inconnu";
-			prenom = (ligneSplit.length > 2 && ligneSplit[2].length() > 1) ? ligneSplit[2] : "Prenom inconnu";
-			tel = (ligneSplit.length > 3 && ligneSplit[3].length() == 4 && ligneSplit[3].matches("\\d+")) ? Integer.parseInt(ligneSplit[3]) : -1;
-
-			employe = new Employe(id, nom, prenom, tel);
-			listeEmploye.add((Object) employe);
-		}
-
-		return listeEmploye;
+	    
+	    Employe employe;
+	    
+	    String id;
+	    String nom;
+	    String prenom;
+	    int tel;
+	    
+	    String[] ligneSplit;
+	    
+	    ArrayList<Object> listeEmploye = new ArrayList<Object>();
+	    
+	    listeLigneFichier.remove(0);
+	    
+	    for(String ligne : listeLigneFichier) {
+	        
+	        ligneSplit  = ligne.split(";");
+	        
+	        id = (ligneSplit.length > 0 && ligneSplit[0].length() == 7 && ligneSplit[0].charAt(0) == 'E') ? ligneSplit[0] : "Employe inconnu";
+	        nom = (ligneSplit.length > 1 && ligneSplit[1].length() > 1) ? ligneSplit[1] : "Nom inconnu";
+	        prenom = (ligneSplit.length > 2 && ligneSplit[2].length() > 1) ? ligneSplit[2] : "Prenom inconnu";
+	        tel = (ligneSplit.length > 3 && ligneSplit[3].length() == 4 && ligneSplit[3].matches("\\d+")) ? Integer.parseInt(ligneSplit[3]) : -1;
+	        
+	        employe = new Employe(id, nom, prenom, tel);
+	        listeEmploye.add((Object) employe);
+	    }
+	    
+	    return listeEmploye;
 	}
 
 
@@ -298,43 +317,131 @@ public class LecteurCSV {
 	 * @throws LectureException si données incohérentes
 	 */
 	public static ArrayList<Object> readActiviteCSV(ArrayList<String> listeLigneFichier) throws LectureException { //INITIALEMENT PRIVATE
-
+		
 		Activite activite;
-
+		
 		String id;
 		String nom;
-
+		
 		String[] ligneSplit;
-
+	    
 		ArrayList<Object> listeActivite = new ArrayList<Object>();
-
+	    
 		listeLigneFichier.remove(0);
-
+	    
 		for(String ligne : listeLigneFichier) {
-
+				
 			ligneSplit  = ligne.split(";");		
-
-			id = (ligneSplit.length > 0 && ligneSplit[0].length() == 8 && ligneSplit[0].charAt(0) == 'A') ? ligneSplit[0] : "Activite inconnu";
-			nom = (ligneSplit.length > 1 && ligneSplit[1].length() > 1) ? ligneSplit[1] : "Nom inconnu";
-
+			
+	        id = (ligneSplit.length > 0 && ligneSplit[0].length() == 8 && ligneSplit[0].charAt(0) == 'A') ? ligneSplit[0] : "Activite inconnu";
+	        nom = (ligneSplit.length > 1 && ligneSplit[1].length() > 1) ? ligneSplit[1] : "Nom inconnu";
+			
 			activite = new Activite(id, nom);
 			listeActivite.add((Object) activite);
 		}
-
+	        
 		return listeActivite;
 	}
-
+	
+	
 	/**
 	 * 
-	 * @param filePath
+	 * @param listeEmploye
+	 * @param id
 	 * @return
 	 */
-	private static String getFileExtension(String filePath) {
-		int indexPoint;
-		indexPoint = filePath.lastIndexOf('.');
-		if (indexPoint > 0 && indexPoint < filePath.length() - 1) {
-			return filePath.substring(indexPoint + 1);
+	public static Employe getEmployeById(ArrayList<Object> listeEmploye, String id) {  //INITIALEMENT PRIVATE
+		
+		ArrayList<Employe> listeEmployeConverti = new ArrayList<>();
+
+		for (Object obj : listeEmploye) {
+		    if (obj instanceof Employe) {
+		    	listeEmployeConverti.add((Employe) obj);
+		    } else {
+		        System.out.println("Erreur: Un objet n'est pas du type Employe.");
+		    }
 		}
-		return "";
+		
+	    for (Employe employe : listeEmployeConverti) {
+	        if (employe.getIdentifiant().equals(id)) {
+	            return employe;
+	        }
+	    }
+	    return new Employe("Inconnu", "Nom inconnu", "Prenom inconnu", 0000);
 	}
+	
+	/**
+	 * 
+	 * @param listeSalle
+	 * @param id
+	 * @return
+	 */
+	public static Salle getSalleById(ArrayList<Object> listeSalle, String id) { //INITIALEMENT PRIVATE
+		
+		ArrayList<Salle> listeSalleConverti = new ArrayList<>();
+		
+		for (Object obj : listeSalle) {
+		    if (obj instanceof Salle) {
+		    	listeSalleConverti.add((Salle) obj);
+		    } else {
+		        System.out.println("Erreur: Un objet n'est pas du type Salle.");
+		    }
+		}
+		
+	    for (Salle salle : listeSalleConverti) {
+	        if (salle.getIdentifiant() == Integer.parseInt(id)) {
+	            return salle;
+	        }
+	    }
+	    return new Salle(0, "Nom inconnu", 0, false, false, 0, "Indefini", null, false);
+	}
+	
+	/**
+	 * 
+	 */
+	public static Activite getActiviteById(ArrayList<Object> listeActivite, String id) { //INITIALEMENT PRIVATE
+		
+		ArrayList<Activite> listeActiviteConverti = new ArrayList<>();
+		
+		for (Object obj : listeActivite) {
+		    if (obj instanceof Activite) {
+		    	listeActiviteConverti.add((Activite) obj);
+		    } else {
+		        System.out.println("Erreur: Un objet n'est pas du type Activite.");
+		    }
+		}
+		
+	    for (Activite activite : listeActiviteConverti) {
+	        if (activite.getIdentifiant().equals(id)) {
+	            return activite;
+	        }
+	    }
+	    return new Activite("Inconnu", "Nom inconnu");
+	}
+	/**
+
+	 * 
+
+	 * @param filePath
+
+	 * @return
+
+	 */
+
+	private static String getFileExtension(String filePath) {
+
+		int indexPoint;
+
+		indexPoint = filePath.lastIndexOf('.');
+
+		if (indexPoint > 0 && indexPoint < filePath.length() - 1) {
+
+			return filePath.substring(indexPoint + 1);
+
+		}
+
+		return "";
+
+	}
+	
 }

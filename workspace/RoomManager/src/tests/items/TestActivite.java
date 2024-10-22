@@ -1,4 +1,4 @@
-package tests.items;
+package src.tests.items;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,20 +7,14 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import modeles.items.Activite;
+import src.modeles.items.Activite;
 
-public class TestActivite {
+public class TestActivite extends JeuDonne{
     private ArrayList<Activite> activites;
 
     @BeforeEach
     public void setUp() {
-        activites = new ArrayList<>(); // Initialisation de la liste simulant le stockage
-        activites.add(new Activite("A0000001", "réunion"));
-        activites.add(new Activite("A0000002", "formation"));
-        activites.add(new Activite("A0000003", "entretien de la salle"));
-        activites.add(new Activite("A0000004", "prêt"));
-        activites.add(new Activite("A0000005", "location"));
-        activites.add(new Activite("A0000006", "autre"));
+        activites = setUpActivites();
     }
 
     @Test

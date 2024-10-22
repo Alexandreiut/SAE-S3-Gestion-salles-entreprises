@@ -1,4 +1,4 @@
-package tests.entree;
+package src.tests.entree;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import modeles.entree.LecteurCSV;
-import modeles.erreur.WrongFileFormatException;
+import src.modeles.entree.LecteurCSV;
+import src.modeles.erreur.WrongFileFormatException;
 
 class TestLecteurCSV {
 	

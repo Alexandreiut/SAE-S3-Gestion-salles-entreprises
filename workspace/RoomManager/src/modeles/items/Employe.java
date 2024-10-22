@@ -3,7 +3,7 @@
  * BUT info2 2024-2025, aucun copyright
  */
 
-package modeles.items;
+package src.modeles.items;
 import java.io.Serializable;
 
 

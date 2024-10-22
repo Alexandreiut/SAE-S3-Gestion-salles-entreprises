@@ -1,4 +1,4 @@
-package modeles.reseau;
+package src.modeles.reseau;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,10 +8,10 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import modeles.entree.LecteurCSV;
-import modeles.erreur.LectureException;
-import modeles.items.*;
-import modeles.stockage.Stockage;
+import src.modeles.entree.LecteurCSV;
+import src.modeles.erreur.LectureException;
+import src.modeles.items.*;
+import src.modeles.stockage.Stockage;
 
 import java.io.PrintWriter;
 
