@@ -12,6 +12,6 @@
             <Label styleClass="titre" text="Consultation" />
             <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" styleClass="bouton-aide" text="i" />
          </children></HBox>
-      <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" styleClass="button-menu" text="Menu" />
+      <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" styleClass="bouton-menu" text="Menu" />
    </children>
 </Pane>

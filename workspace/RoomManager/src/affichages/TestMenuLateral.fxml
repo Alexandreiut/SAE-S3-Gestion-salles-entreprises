@@ -15,13 +15,14 @@
          </children></HBox>
       <VBox prefHeight="200.0" prefWidth="100.0" styleClass="menu">
          <children>
-            <Button mnemonicParsing="false" styleClass="bouton-menu-mdifier" />
-            <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
+            <Button mnemonicParsing="false" styleClass="bouton-menu-modifier" text="Menu" />
+            <Button mnemonicParsing="false" styleClass="les-boutons-menu" text="Accueil" />
+            <Button mnemonicParsing="false" styleClass="les-boutons-menu" text="Consultation" />
+            <Button mnemonicParsing="false" styleClass="les-boutons-menu" text="Générer PDF" />
+            <Button mnemonicParsing="false" styleClass="les-boutons-menu" text="Importation" />
+            <Button mnemonicParsing="false" styleClass="les-boutons-menu" text="Exportation" />
          </children>
       </VBox>
+      <Pane prefHeight="200.0" prefWidth="200.0" styleClass="menu-bandeau-bleu" />
    </children>
 </Pane>

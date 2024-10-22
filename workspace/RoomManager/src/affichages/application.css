@@ -1,19 +1,27 @@
+/* ============================================ */
 /********** Taille de l'app par défaut **********/
+/* ============================================ */
+
 .pane {
 	-fx-pref-width: 1000;
     -fx-pref-height: 600;
+    -fx-background-color: white	;
 }
 
+
+/* ===================================== */
 /********** Elements du bandeau **********/
-.button-menu {
+/* ===================================== */
+
+.bouton-menu {
 	-fx-translate-y: 23;
 	-fx-translate-x: 28;
 	
-	-fx-pref-width: 139;
-    -fx-pref-height: 41;
+	-fx-pref-width: 228;
+    -fx-pref-height: 70;
 	
-    -fx-background-color: #00BBB0;
-    -fx-text-fill: white;
+    -fx-background-color: white;
+    -fx-text-fill: black;
     -fx-font-weight: bold;
     -fx-font-size: 32px;
     -fx-background-radius: 20;
@@ -52,7 +60,11 @@
     -fx-pref-height: 48;
 }
 
+
+/* ========================================== */
 /********** Elements du Menu latéral **********/
+/* ========================================== */
+
 /* modification bandeau */
 .bandeau-modifier {
 	-fx-background-color: #016401;
@@ -77,19 +89,22 @@
 
 .menu {
 	-fx-background-color: #CCF5F3;
-	-fx-pref-width: 300;
+	-fx-translate-x: 15;
+	-fx-pref-width: 285;
     -fx-pref-height: 600;
-    -fx-spacing: 50px;
+    -fx-spacing: 15px;
+    -fx-padding: 25 0 0 25;
 }
 
-.rectangle-bleu {
-	-fx-fill: #00BBB0;
-    -fx-stroke-width: 0px;
+.menu-bandeau-bleu {
+	-fx-background-color: #00BBB0;
+	-fx-pref-width: 15;
+    -fx-pref-height: 600;
 }
 
 .bouton-menu-modifier {
-	-fx-pref-width: 139;
-    -fx-pref-height: 41;
+	-fx-pref-width: 224;
+    -fx-pref-height: 70;
 	
     -fx-background-color: #FFFFFF;
     -fx-text-fill: #000000;
@@ -102,4 +117,47 @@
     -fx-border-width: 3;
     -fx-border-radius: 20;
     -fx-border-style: solid;
+}
+
+.les-boutons-menu {
+	-fx-pref-width: 224;
+    -fx-pref-height: 70;
+	
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+    -fx-font-size: 32px;
+    -fx-background-radius: 150;
+    -fx-padding: 0;
+    
+    -fx-border-color: #00BBB0;
+    -fx-border-width: 3;
+    -fx-border-radius: 150;
+    -fx-border-style: solid;
+}
+
+
+/* =================================== */
+/********** hover des boutons **********/
+/* =================================== */
+
+.bouton-menu:hover {
+    -fx-background-color: #00BBB0;
+    -fx-cursor: hand;
+}
+.bouton-aide:hover {
+    -fx-background-color: #00BBB0;
+    -fx-cursor: hand;
+}
+.les-boutons-menu:hover {
+    -fx-background-color: #00BBB0;
+    -fx-cursor: hand;
+}
+.bouton-menu-modifier:hover {
+    -fx-background-color: #00BBB0;
+    -fx-cursor: hand;
+}
+.bouton-aide-modifier:hover {
+    -fx-background-color: #00BBB0;
+    -fx-cursor: hand;
 }
