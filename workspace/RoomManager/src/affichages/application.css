@@ -74,6 +74,7 @@
 	-fx-pref-width: 700;
     -fx-pref-height: 65;
 }
+
 /* modification bandeau du bouton aide */
 .bouton-aide-modifier {
 	-fx-background-radius: 360;
