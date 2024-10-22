@@ -1,45 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<Pane id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" styleClass="pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-      <children>
-      <HBox prefHeight="0.0" prefWidth="0.0" styleClass="bandeau">
-         <children>
-            <Label styleClass="titre" text="Accueil" />
-            <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" styleClass="bouton-aide" text="i" />
-         </children></HBox>
-   </children>
-   <children>
-      <Button id="importation" layoutX="270.0" layoutY="375.0" mnemonicParsing="false" prefWidth="210.0" styleClass="label-consultation" stylesheets="@accueil.css" text="Importation">
-         <font>
-            <Font name="System Bold" size="30.0" />
-         </font>
-      </Button>
-      <Button id="exportation" layoutX="520.0" layoutY="375.0" mnemonicParsing="false" prefWidth="210.0" styleClass="label-consultation" stylesheets="@accueil.css" text="Exportation">
-         <font>
-            <Font name="System Bold" size="30.0" />
-         </font>
-      </Button>
-      <Button id="genererPdf" layoutX="520.0" layoutY="253.0" mnemonicParsing="false" prefWidth="210.0" styleClass="label-consultation" stylesheets="@accueil.css" text="Générer PDF">
-         <font>
-            <Font name="System Bold" size="30.0" />
-         </font>
-      </Button>
+<Pane id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleurs.AccueilControleur">
+  <children>
+ 	<HBox prefHeight="0.0" prefWidth="0.0" styleClass="bandeau">
+    <children>
+       <Label styleClass="titre" text="Accueil" />
+       <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" styleClass="bouton-aide" text="i" />
+    </children></HBox>
       <Label alignment="CENTER" layoutX="200.0" layoutY="144.0" text="Bienvenur sur l'application RoomManager">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <Label id="consultation" layoutX="270.0" layoutY="253.0" prefWidth="210.0" styleClass="label-consultation" stylesheets="@accueil.css" text="Consultation">
+      <Button id="consultation" layoutX="270.0" layoutY="253.0" onAction="#versVueConsultation" prefWidth="210.0" styleClass="label-consultation" stylesheets="@accueil.css" text="Consultation">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
-      </Label>
+      </Button>
+      <Button id="genererPdf" layoutX="520.0" layoutY="253.0" mnemonicParsing="false" onAction="#versVueGenererPDF" prefWidth="210.0" styleClass="label-consultation" stylesheets="@accueil.css" text="Générer PDF">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Button>
+      <Button id="importation" layoutX="270.0" layoutY="375.0" mnemonicParsing="false" onAction="#versVueImportation" prefWidth="210.0" styleClass="label-consultation" stylesheets="@accueil.css" text="Importation">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Button>
+      <Button id="exportation" layoutX="520.0" layoutY="375.0" mnemonicParsing="false" onAction="#versVueExportation" prefWidth="210.0" styleClass="label-consultation" stylesheets="@accueil.css" text="Exportation">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Button>
    </children>
    <stylesheets>
       <URL value="@accueil.css" />
