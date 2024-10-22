@@ -29,8 +29,8 @@ public static Stockage stockage;
 	public void start(Stage primaryStage) {
 		try {
             // Charge le fichier FXML
-			Parent root = FXMLLoader.load(getClass().getResource("affichages/RoomManager.fxml"));
-			//Parent root = FXMLLoader.load(getClass().getResource("affichages/TestMenuLateral.fxml"));
+			//Parent root = FXMLLoader.load(getClass().getResource("affichages/RoomManager.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("affichages/TestMenuLateral.fxml"));
             
             // Crée la scène avec la racine FXML
             Scene scene = new Scene(root);

@@ -1,0 +1,9 @@
+.FondVBox {
+	-fx-background-color: #D9D9D9;
+}
+
+.bordureHBOX {
+	-fx-border-color : #000000;
+	-fx-border-radius : 2px;
+	-fx-border-width : 2px;
+}
