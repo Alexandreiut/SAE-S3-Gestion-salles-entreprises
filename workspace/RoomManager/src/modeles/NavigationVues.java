@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 /**
  * Classe permettant la navigation entre les vues de l'application.
  */ 
-
 public class NavigationVues {	
 	/**
 	 * Chemin vers le dossier racine des vues à partir du 

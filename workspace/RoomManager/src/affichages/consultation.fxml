@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" styleClass="pane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" styleClass="pane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleurs.ConsultationControleur">
    <children>
       <HBox prefHeight="0.0" prefWidth="0.0" styleClass="bandeau">
          <children>
@@ -15,15 +15,18 @@
             <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" styleClass="bouton-aide" text="i" />
          </children></HBox>
       <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" styleClass="bouton-menu" text="Menu" />
-      <VBox layoutY="102.0" prefHeight="499.0" prefWidth="214.0" styleClass="FondVBox" />
+      <VBox id="vboxFiltres" layoutY="102.0" prefHeight="499.0" prefWidth="214.0" styleClass="FondVBox" />
       <Button layoutX="492.0" layoutY="515.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="484.0" styleClass="les-boutons-menu" text="+ Ajouter des résultats au pdf" />
       <Button layoutX="759.0" layoutY="515.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="134.0" styleClass="les-boutons-menu" text="&lt;--" />
       <HBox layoutX="225.0" layoutY="111.0" prefHeight="70.0" prefWidth="758.0" />
-      <HBox layoutX="225.0" layoutY="194.0" prefHeight="33.0" prefWidth="758.0" styleClass="FondVBox" />
+      <HBox id="entete" layoutX="225.0" layoutY="194.0" prefHeight="33.0" prefWidth="758.0" styleClass="FondVBox" />
       <VBox layoutX="225.0" layoutY="227.0" prefHeight="278.0" prefWidth="758.0" styleClass="bordureHBOX">
          <children>
             <HBox prefHeight="79.0" prefWidth="754.0" styleClass="bordureHBOX" />
-            <HBox prefHeight="199.0" prefWidth="754.0" styleClass="bordureHBOX" />
+            <HBox id="hboxDonnees" fx:id="hboxDonnees" prefHeight="199.0" prefWidth="754.0" styleClass="bordureHBOX">
+               <children>
+                  <VBox fx:id="vboxDonnees" prefHeight="193.0" prefWidth="751.0" />
+               </children></HBox>
          </children>
       </VBox>
    </children>
