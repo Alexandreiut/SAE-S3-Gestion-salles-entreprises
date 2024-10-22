@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import modeles.items.Salle;
@@ -28,9 +29,14 @@ import modeles.items.Reservation;
  * - l'ensemble des activités possible dans la salle
  * @author Alexandre Brouzes
  */
-public class Stockage {
+public class Stockage implements Serializable {
     
-    /* liste de l'ensemble des salles enregistrées */
+    /**
+	 * Numéro de version pour la classe.
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/* liste de l'ensemble des salles enregistrées */
     private ArrayList<Salle> listeSalles;
     
     /* liste de l'ensemble des activités possible */
@@ -143,11 +149,22 @@ public class Stockage {
     	listeReservations = listeConstruite;
     }
     
+    
+    
+    
+    
+    
+    /*==========================================================================*/
+    /******** une classe sérialisation avec un code plus propre existe *********/
+    /*==========================================================================*/
+    
     /**
      * Sérialise dans un fichier les liste d'items stocké
      * @param une chaîne contenant le chemin et le nom du fichier
      * @return vrai si la sérialisation à été correctement effectué, false sinon
      */
+    
+    /*
     public boolean serialisation() {
     	// Liste sérialisé contenant tous les items
         ArrayList<Object> listeObject = new ArrayList<>();
@@ -182,13 +199,16 @@ public class Stockage {
             return false;
         }
     }
+    */
     
     /**
      * Désérialise depuis un fichier les données afin de les stocker
      * @param une chaîne contenant le nom du fichier à consulter
      * @return vrai si la désérialisation à été correctement effectué, false sinon
      */
-     public boolean restauration() {
+    
+    /*
+    public boolean restauration() {
 	     // liste contenant les items qui vont être sauvegardé
     	    ArrayList<Object> listeSallesDeserialisee = new ArrayList<>();
     	    ArrayList<Object> listeActivitesDeserialisee = new ArrayList<>();
@@ -230,6 +250,6 @@ public class Stockage {
 	    	 return false;
 	     }
      }
-
+	*/
     
 }

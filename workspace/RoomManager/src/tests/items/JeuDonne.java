@@ -10,7 +10,7 @@ import modeles.items.Salle;
 
 public class JeuDonne {
     
-    protected ArrayList<Activite> setUpActivites() {
+    public ArrayList<Activite> setUpActivites() {
         ArrayList<Activite> activites = new ArrayList<>();
         activites.add(new Activite("A0000001", "réunion"));
         activites.add(new Activite("A0000002", "formation"));
@@ -21,7 +21,7 @@ public class JeuDonne {
         return activites;
     }
 
-    protected ArrayList<Employe> setUpEmployes() {
+    public ArrayList<Employe> setUpEmployes() {
         ArrayList<Employe> employes = new ArrayList<>();
         employes.add(new Employe("E0000001", "Dupont", "Pierre", 2614));
         employes.add(new Employe("E0000002", "Lexpert", "Noemie", 2614));
@@ -34,7 +34,7 @@ public class JeuDonne {
         return employes;
     }
 
-    protected ArrayList<Reservation> setUpReservations() {
+    public ArrayList<Reservation> setUpReservations() {
         ArrayList<Reservation> reservations = new ArrayList<>();
         reservations.add(new Reservation("R000001", "7/10/2024", "17h00", "19h00", "club gym", "Legendre", "Noémie", 0600000000, "reunion", "E000001", "prêt", 1));
         reservations.add(new Reservation("R000002", "7/10/2024", "15h00", "18h00", "réunion avec client", "", "", 0, "réunion", "E000001", "réunion", 4));
@@ -57,7 +57,7 @@ public class JeuDonne {
         return reservations;
     }
 
-    protected ArrayList<Salle> setUpSalles() {
+    public ArrayList<Salle> setUpSalles() {
         ArrayList<Salle> salles = new ArrayList<>();
         salles.add(new Salle(1, "A6", 15, true, false, 4, "PC portable", new ArrayList<>(), false));
         salles.add(new Salle(2, "salle bleue", 18, true, true, 0, "", new ArrayList<>(), false));

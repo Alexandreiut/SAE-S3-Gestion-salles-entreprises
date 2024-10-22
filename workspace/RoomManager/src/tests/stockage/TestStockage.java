@@ -99,7 +99,8 @@ public class TestStockage extends JeuDonne {
         assertEquals(listeReservationSauvegarde.size(), stockItems.getListeReservation().size());
     	
     }
-
+    
+    /* Classe Serialisation deja existante
     @Test
     public void testSerialisation() {
         Stockage stockageVide = new Stockage(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
@@ -118,7 +119,7 @@ public class TestStockage extends JeuDonne {
         // Nettoyez le fichier de test après vérification
         fichier.delete();
     }
-    
+    */
     //TODO test de la déserialisation
     
 }

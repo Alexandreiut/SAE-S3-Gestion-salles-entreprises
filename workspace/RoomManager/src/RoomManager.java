@@ -1,11 +1,30 @@
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import modeles.sauvegarde.Serialisation;
+import modeles.stockage.Stockage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 
 public class RoomManager extends Application {
+	
+public static Stockage stockage;
+	
+	public static void processusFermetureApp(Stage stageCourant) {
+		stageCourant.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent event) {
+				Serialisation.serialiser(stockage);
+				Platform.exit();
+				event.consume();
+			}
+		});
+	}
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -28,6 +47,7 @@ public class RoomManager extends Application {
 	}
 	
 	public static void main(String[] args) {
+		stockage = Serialisation.deserialiser();
 		launch(args);
 	}
 }
