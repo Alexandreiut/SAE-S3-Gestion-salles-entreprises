@@ -12,7 +12,7 @@ public class AccueilControleur {
 	
 	@FXML
 	public void versVueGenererPDF() {
-		System.out.println("En cours de dev !");
+		NavigationVues.changerVue("consultation");
 	}
 	
 	@FXML
