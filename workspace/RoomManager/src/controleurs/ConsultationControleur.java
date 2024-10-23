@@ -5,11 +5,17 @@
 
 package controleurs;
 
+import java.util.ArrayList;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
+import lanceur.RoomManager;
+import modeles.items.Activite;
+import modeles.items.Employe;
+import modeles.items.Reservation;
+import modeles.items.Salle;
 import modeles.stockage.Stockage;
 
 /**
@@ -17,7 +23,7 @@ import modeles.stockage.Stockage;
  */
 public class ConsultationControleur {
 	
-	Stockage stockage;
+	private static Stockage stockage;
 	
 	@FXML
 	private HBox hboxDonnees;
@@ -27,15 +33,63 @@ public class ConsultationControleur {
 
 	@FXML
 	public void initialize() {
-				
-	    for (int i = 0; i < 3; i++) {
-	        HBox hbox = new HBox();
-	        for (int j = 1; j <= 5; j++) {
-	            Label label = new Label("Label " + (i * 5 + j));
-	            hbox.getChildren().add(label);
-	        }
-	        vboxDonnees.getChildren().add(hbox);
-	    }
+		
+		stockage = RoomManager.stockage;
+		
+		affichageDonnees();		
+	}
+	
+	private void affichageDonnees() {
+		if (stockage == null) {
+			vboxDonnees.getChildren().add(new Label("Aucune données dans l'app !"));
+			
+		} else {
+			ArrayList<Employe> employes = stockage.getListeEmploye();
+			ArrayList<Salle> salles = stockage.getListeSalle();
+			ArrayList<Activite> activitees = stockage.getListeActivite();
+			ArrayList<Reservation> reservations = stockage.getListeReservation();
+			
+			Label employe = new Label("Employés :");
+			vboxDonnees.getChildren().add(employe);
+			
+			for (Employe e : employes) {
+				String infos = e.toString();
+				Label affichageInfos = new Label(infos);
+				vboxDonnees.getChildren().add(affichageInfos);
+			}
+			
+			
+			Label salle = new Label("Salles :");
+			vboxDonnees.getChildren().add(salle);
+			
+			for (Salle s : salles) {
+				String infos = s.toString();
+				Label affichageInfos = new Label(infos);
+				vboxDonnees.getChildren().add(affichageInfos);
+			}
+			
+			
+			Label activite = new Label("Activitées :");
+			vboxDonnees.getChildren().add(activite);
+			
+			for (Activite a : activitees) {
+				String infos = a.toString();
+				Label affichageInfos = new Label(infos);
+				vboxDonnees.getChildren().add(affichageInfos);
+			}
+			
+			
+			Label reservation = new Label("Réservations :");
+			vboxDonnees.getChildren().add(reservation);
+			
+			for (Reservation r : reservations) {
+				String infos = r.toString();
+				Label affichageInfos = new Label(infos);
+				vboxDonnees.getChildren().add(affichageInfos);
+			}
+			
+		}
+		
 	}
 	
 }

@@ -60,7 +60,7 @@ public class NavigationVues {
 				sceneCourante.setRoot(racine);
 				vueCourante = routeVueFXML;
 			} catch (IOException e) {
-				System.out.println("ERREUR CHARGEMENT VUE :\n" + e.getMessage());
+				System.out.println("Problème au changement de la vue :\n" + e.getMessage());
 			}
 		}
 	}
