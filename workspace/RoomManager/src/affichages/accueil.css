@@ -1,7 +1,7 @@
 .label-consultation {
 	
     -fx-background-color: #ffffff; /* Fond blanc */
-    -fx-border-color: #00BBB0; /* Bordure bleu clair */
+    -fx-border-color: #00bbb0; /* Bordure bleu clair */
     -fx-border-width: 4px;
     -fx-border-radius: 50px; /* Bords très arrondis */
     -fx-background-radius: 50px; /* Arrondi pour le fond également */

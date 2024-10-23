@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import modeles.items.Salle;
@@ -28,9 +29,14 @@ import modeles.items.Reservation;
  * - l'ensemble des activités possible dans la salle
  * @author Alexandre Brouzes
  */
-public class Stockage {
+public class Stockage implements Serializable {
     
-    /* liste de l'ensemble des salles enregistrées */
+    /**
+	 * Numéro de version pour la classe.
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/* liste de l'ensemble des salles enregistrées */
     private ArrayList<Salle> listeSalles;
     
     /* liste de l'ensemble des activités possible */
@@ -143,12 +149,23 @@ public class Stockage {
     	listeReservations = listeConstruite;
     }
     
+    
+    
+    
+    
+    
+    /*==========================================================================*/
+    /******** une classe sérialisation avec un code plus propre existe *********/
+    /*==========================================================================*/
+    
     /**
      * Sérialise dans un fichier les liste d'items stocké
      * @param une chaîne contenant le chemin et le nom du fichier
      * @return vrai si la sérialisation à été correctement effectué, false sinon
      */
-    public boolean serialisation(String nomChemin) {
+    
+    /*
+    public boolean serialisation() {
     	// Liste sérialisé contenant tous les items
         ArrayList<Object> listeObject = new ArrayList<>();
         // Récupération de tous les items stockés
@@ -156,10 +173,14 @@ public class Stockage {
         listeObject.addAll(listeActivites);
         listeObject.addAll(listeEmployes);
         listeObject.addAll(listeReservations);
+        // Vérification que des éléments soit présent dans le stockage
+        if(listeObject.size() == 0) {
+        	return false;
+        }
         
         try {
             // Création du fichier qui recevra les objets
-            File fichier = new File(nomChemin);
+            File fichier = new File("sauvegarde.dat");
             ObjectOutputStream fluxEcriture = new ObjectOutputStream(new FileOutputStream(fichier));
             
             // Écriture des objets dans le fichier
@@ -178,13 +199,16 @@ public class Stockage {
             return false;
         }
     }
+    */
     
     /**
      * Désérialise depuis un fichier les données afin de les stocker
      * @param une chaîne contenant le nom du fichier à consulter
      * @return vrai si la désérialisation à été correctement effectué, false sinon
      */
-     public boolean restauration(String nomFichier) {
+    
+    /*
+    public boolean restauration() {
 	     // liste contenant les items qui vont être sauvegardé
     	    ArrayList<Object> listeSallesDeserialisee = new ArrayList<>();
     	    ArrayList<Object> listeActivitesDeserialisee = new ArrayList<>();
@@ -193,7 +217,7 @@ public class Stockage {
 	     try {
 	    	 // Récupération des données du .ser
 		     ObjectInputStream fluxLecture = new ObjectInputStream(
-		     new FileInputStream(nomFichier));     
+		     new FileInputStream("sauvegarde.dat"));     
 		     try {
 		    	 // lecture en continue tant que le fichier n'est pas totalement lu
 		         while (true) {
@@ -219,14 +243,13 @@ public class Stockage {
 		     setListeReservation(listeReservationsDeserialisee);
 		     return true;
 	     } catch (IOException e) { // Nom de fichier incorrect
-	    	 System.out.println("Problème d'accès au fichier " + nomFichier);
+	    	 System.out.println("Problème d'accès au fichier sauvegarde.dat");
 	    	 return false;
 	     } catch (ClassNotFoundException e) { // echec de cast de donnée en items
-	    	 System.out.println("Problème lors de la lecture du fichier "
-	    			 + nomFichier);
+	    	 System.out.println("Problème lors de la lecture du fichier sauvegarde.dat");
 	    	 return false;
 	     }
      }
-
+	*/
     
 }

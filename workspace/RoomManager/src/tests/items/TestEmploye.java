@@ -9,21 +9,13 @@ import org.junit.jupiter.api.Test;
 
 import modeles.items.Employe;
 
-public class TestEmploye {
+public class TestEmploye extends JeuDonne{
     private ArrayList<Employe> employes; 
 
     @BeforeEach
     public void setUp() {
     	// Initialisation de la liste simulant une liste d'employé dans le stockage
-        employes = new ArrayList<>();
-        employes.add(new Employe("E0000001", "Dupont", "Pierre",2614));
-        employes.add(new Employe("E0000002", "Lexpert", "Noemie",2614));
-        employes.add(new Employe("E0000003", "Dujardin", "Océane",2633));
-        employes.add(new Employe("E0000004", "Durand", "Bill",2696));
-        employes.add(new Employe("E0000005", "Dupont", "Max",-1));
-        employes.add(new Employe("E0000006", "Martin", "Martin",2678));
-        employes.add(new Employe("E0000007", "Legrand", "Jean-Pierre",2689));
-        employes.add(new Employe("E0000008", "Deneuve", "Zoé",2626));   
+        employes = setUpEmployes();
     }
 
     @Test
