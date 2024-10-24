@@ -1,5 +1,5 @@
 /*
- * Employe.java                                          15/10/2024
+ * Employe.java                                         15/10/2024
  * BUT info2 2024-2025, aucun copyright
  */
 
@@ -18,14 +18,18 @@ public class Employe implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	 
-    /** identifiant sur 8 caractères composé de E suivi de 7 chiffres */
+    /** 
+     * identifiant sur 8 caractères composé de E suivi de 7 chiffres 
+     */
     private String identifiant;
 
     private String nom;
 
     private String prenom;
 
-    /** numéro de téléphone en 4 chiffres */
+    /** 
+     * numéro de téléphone en 4 chiffres 
+     */
     private int telephone;
 
     /**

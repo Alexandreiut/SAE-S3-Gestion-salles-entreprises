@@ -1,3 +1,8 @@
+/*
+ * JeuDonne.java				24/10/2024
+ * BUT Info2, 2024/2025, pas de copyright
+ */
+
 package tests.items;
 
 import java.util.ArrayList;
@@ -8,6 +13,9 @@ import modeles.items.Employe;
 import modeles.items.Reservation;
 import modeles.items.Salle;
 
+/**
+ * Données des CSV exploitable pour les tests
+ */
 public class JeuDonne {
     
     public ArrayList<Activite> setUpActivites() {

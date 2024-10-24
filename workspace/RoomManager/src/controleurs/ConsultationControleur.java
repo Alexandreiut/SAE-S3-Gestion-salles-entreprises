@@ -24,7 +24,7 @@ import modeles.stockage.Stockage;
 public class ConsultationControleur {
 	
 	/**
-	 * Données de l'application à exploiter, les données sont stockées dans cette variable
+	 * Données de l'application
 	 */
 	private static Stockage stockage;
 	

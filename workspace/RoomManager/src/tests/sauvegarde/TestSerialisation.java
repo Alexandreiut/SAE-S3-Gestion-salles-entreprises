@@ -1,3 +1,8 @@
+/*
+ * TestSerialisation.java				24/10/2024
+ * BUT Info2, 2024/2025, pas de copyright
+ */
+
 package tests.sauvegarde;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,7 +21,10 @@ import modeles.sauvegarde.Serialisation;
 import modeles.stockage.Stockage;
 import tests.items.JeuDonne;
 
-class TestSerialisation {
+/**
+ * Classe de tests de la classe Serialisation.java
+ */
+public class TestSerialisation {
 	
 	private static JeuDonne donnees;
 	

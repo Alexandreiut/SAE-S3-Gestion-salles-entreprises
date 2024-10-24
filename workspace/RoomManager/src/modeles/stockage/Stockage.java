@@ -36,16 +36,24 @@ public class Stockage implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	/* liste de l'ensemble des salles enregistrées */
+	/** 
+	 * liste de l'ensemble des salles enregistrées 
+	 */
     private ArrayList<Salle> listeSalles;
     
-    /* liste de l'ensemble des activités possible */
+    /** 
+     * liste de l'ensemble des activités possible 
+     */
     private ArrayList<Activite> listeActivites;
     
-    /* liste de l'ensemble des employés enregistrés */
+    /** 
+     * liste de l'ensemble des employés enregistrés 
+     */
     private ArrayList<Employe> listeEmployes;
     
-    /* liste de l'ensemble des reservations enregistrés */
+    /** 
+     * liste de l'ensemble des reservations enregistrés 
+     */
     private ArrayList<Reservation> listeReservations;
     
     
