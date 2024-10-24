@@ -1,3 +1,8 @@
+/*
+ * Exportateur.java					24/10/2024
+ * BUT Info2, 2024/2025, pas de copyright
+ */
+
 package modeles.reseau;
 
 import java.io.BufferedReader;
@@ -12,18 +17,31 @@ import java.util.ArrayList;
 import modeles.items.Activite;
 import modeles.stockage.Stockage;
 
+/**
+ * Représente un exportateur, avec un socket et un port, voulant 
+ * faire une exportation distante
+ */
 public class Exportateur {
 	
-	/** socket associé à l'exportateur permettant l'attente d'un client */
+	/** 
+	 * socket associé à l'exportateur permettant l'attente d'un client 
+	 */
 	private ServerSocket socketServeur;
 	
-	/** socket associé à l'exportateur permettant la communication avec le client */
+	/** 
+	 * socket associé à l'exportateur permettant la communication 
+	 * avec le client 
+	 */
 	private Socket socketCommunication;
 	
-	/** stockage de l'application */
+	/** 
+	 * stockage de l'application 
+	 */
 	private Stockage stockage;
 	
-	/** sortie de l'exportateur */
+	/** 
+	 * sortie de l'exportateur 
+	 */
 	private PrintWriter output;
 	
 	/**
@@ -37,9 +55,11 @@ public class Exportateur {
 	}
 	
 	/**
-	 * accepte la connexion d'un client et instancie socketCommunication et output
+	 * accepte la connexion d'un client et instancie 
+	 * socketCommunication et output
 	 * afin de permettre la communication avec le client
-	 * @throws IOException s'il y a erreur lors de la création de la communication
+	 * @throws IOException s'il y a erreur lors de la création 
+	 * de la communication
 	 */
 	public void accepterConnexion() throws IOException {
 		socketCommunication = socketServeur.accept();
@@ -72,7 +92,8 @@ public class Exportateur {
 	}
 	
 	/**
-	 * envoi les données convertit à l'importateur ayant effectué une requête
+	 * envoi les données convertit à l'importateur 
+	 * ayant effectué une requête
 	 * @return true si l'envoi a été correctement effectué, false sinon
 	 */
 	public boolean envoiReponse() {
@@ -124,7 +145,8 @@ public class Exportateur {
 	
 	
 	/**
-	 * renvoie true si la connexion avec l'importateur a été correctement fermée,
+	 * renvoie true si la connexion avec l'importateur 
+	 * a été correctement fermée,
 	 *  false sinon
 	 * @return
 	 */

@@ -1,3 +1,8 @@
+/*
+ * TestSalle.java				24/10/2024
+ * BUT Info2, 2024/2025, pas de copyright
+ */
+
 package tests.items;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,6 +15,9 @@ import org.junit.jupiter.api.Test;
 
 import modeles.items.Salle;
 
+/**
+ * Classe de tests de la classe Salle.java
+ */
 public class TestSalle extends JeuDonne{
 
     private ArrayList<Salle> salles;

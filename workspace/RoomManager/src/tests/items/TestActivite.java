@@ -1,3 +1,8 @@
+/*
+ * TestActivite.java				24/10/2024
+ * BUT Info2, 2024/2025, pas de copyright
+ */
+
 package tests.items;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,6 +14,9 @@ import org.junit.jupiter.api.Test;
 
 import modeles.items.Activite;
 
+/**
+ * Classe de tests de la classe Activite.java
+ */
 public class TestActivite extends JeuDonne{
     private ArrayList<Activite> activites;
 

@@ -1,3 +1,8 @@
+/*
+ * Importateur.java					24/10/2024
+ * BUT Info2, 2024/2025, pas de copyright
+ */
+
 package modeles.reseau;
 
 import java.io.IOException;
@@ -15,6 +20,10 @@ import modeles.stockage.Stockage;
 
 import java.io.PrintWriter;
 
+/**
+ * Représente un importateur, avec une adresse IP et un port
+ * voulant recevoir des données distante
+ */
 public class Importateur {
 	
 	/** socket associé à l'imortateur permettant une communication */
@@ -27,12 +36,14 @@ public class Importateur {
 	private Stockage stockage;
 	
 	/**
-	 * instancie un importateur, le socket est instancié selon l'adresse ip et le port 
+	 * instancie un importateur, le socket est instancié 
+	 * selon l'adresse ip et le port 
 	 * @param adresseIp du serveur
 	 * @param port de la connexion du côté du serveur
 	 * @throws IOException si problème lors de l'instanciation du socket
 	 */
-	public Importateur(String adresseIp, int port, Stockage stockage) throws IOException {
+	public Importateur(String adresseIp, int port, Stockage stockage) 
+			throws IOException {
 		
 		socketClient = new Socket(adresseIp, port);
 		
@@ -43,7 +54,7 @@ public class Importateur {
 	}
 	
 	/**
-	 * Demande les données à l'exportateur lorsque l'importateur est pr�t, 
+	 * Demande les données à l'exportateur lorsque l'importateur est pret
 	 * true si la requête a été correctement envoyée, false sinon
 	 * @return
 	 */
@@ -87,7 +98,8 @@ public class Importateur {
 	 * en objets puis les stock,
 	 * true si le processus a correctement été effectué dans sa totalité,
 	 * false sinon
-	 * @throws FileNotFoundException si un fichier temporaire n'a pu être trouvé
+	 * @throws FileNotFoundException 
+	 * si un fichier temporaire n'a pu être trouvé
 	 * @param donneAConvertir
 	 */
 	public boolean convertirReponseDonnee(ArrayList<String> donneAConvertir) {
@@ -157,9 +169,8 @@ public class Importateur {
 	
 	
 	/**
-	 * renvoie true si la connexion avec l'exportateur a été correctement fermée,
-	 *  false sinon
-	 * @return
+	 * @return true si la connexion avec l'exportateur a été 
+	 * correctement fermée, false sinon
 	 */
 	public boolean closeConnexion() {
 		

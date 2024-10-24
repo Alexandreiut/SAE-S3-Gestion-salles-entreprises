@@ -1,3 +1,8 @@
+/*
+ * TestStockage.java				24/10/2024
+ * BUT Info2, 2024/2025, pas de copyright
+ */
+
 package tests.stockage;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,8 +20,9 @@ import modeles.items.Salle;
 import modeles.stockage.Stockage;
 import tests.items.JeuDonne;
 
-
-
+/**
+ * Classe de tests de la classe Stockage.java
+ */
 public class TestStockage extends JeuDonne {
    
     private ArrayList<Salle> listeSalles;

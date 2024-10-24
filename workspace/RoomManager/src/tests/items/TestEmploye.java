@@ -1,3 +1,8 @@
+/*
+ * TestEmploye.java				24/10/2024
+ * BUT Info2, 2024/2025, pas de copyright
+ */
+
 package tests.items;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,6 +14,9 @@ import org.junit.jupiter.api.Test;
 
 import modeles.items.Employe;
 
+/**
+ * Classe tests de la classe Employe.java
+ */
 public class TestEmploye extends JeuDonne{
     private ArrayList<Employe> employes; 
 

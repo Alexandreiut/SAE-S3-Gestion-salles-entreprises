@@ -15,11 +15,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import modeles.consultation.Consultation;
-import modeles.items.Activite;
-import modeles.items.Employe;
-import modeles.items.Reservation;
-import modeles.items.Salle;
-import modeles.stockage.Stockage;
 
 /**
  * Controleur de la vue consultation.fxml

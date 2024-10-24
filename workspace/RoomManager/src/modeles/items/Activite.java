@@ -1,5 +1,5 @@
 /*
- * Activite.java                                          16/10/2024
+ * Activite.java                                        16/10/2024
  * BUT info2 2024-2025, aucun copyright
  */
 
@@ -18,8 +18,11 @@ public class Activite implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	 
-    /** identifiant unique associé à une activité sur 8 
-       caractères dont la première lettre est un A et les autres des chiffres */
+    /** 
+     * identifiant unique associé à une activité sur 8 
+     * caractères dont la première lettre est un A 
+     * et les autres des chiffres 
+     */
     private String identifiant;
     
     /** nom de la salle */
