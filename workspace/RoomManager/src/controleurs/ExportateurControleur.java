@@ -9,15 +9,9 @@
 
 package controleurs;
 
-<<<<<<< HEAD
-public class ExportateurControleur {
-	
-}
-=======
 /**
  * Controleur de la vue exportateur.fxml
  */
 public class ExportateurControleur {
 	
 }
->>>>>>> f8608c151458fb8e72e5d9239da7b3b1a0e397d2
