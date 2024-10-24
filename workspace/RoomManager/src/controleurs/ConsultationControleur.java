@@ -23,6 +23,9 @@ import modeles.stockage.Stockage;
  */
 public class ConsultationControleur {
 	
+	/**
+	 * Données de l'application à exploiter, les données sont stockées dans cette variable
+	 */
 	private static Stockage stockage;
 	
 	@FXML
@@ -31,6 +34,10 @@ public class ConsultationControleur {
 	@FXML
 	private VBox vboxDonnees;
 
+	
+	/**
+	 * Initialisation des données
+	 */
 	@FXML
 	public void initialize() {
 		
@@ -39,6 +46,9 @@ public class ConsultationControleur {
 		affichageDonnees();		
 	}
 	
+	/**
+	 * Affiche les données brutes dans le corps de la page, dans le VBox
+	 */
 	private void affichageDonnees() {
 		if (stockage == null) {
 			vboxDonnees.getChildren().add(new Label("Aucune données dans l'app !"));

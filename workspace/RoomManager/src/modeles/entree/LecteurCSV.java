@@ -1,5 +1,5 @@
 /*
- * LecteurCSV.java 17/10/2024
+ * LecteurCSV.java 						17/10/2024
  * BUT Info2, 2024/2025, pas de copyright
  */
 
@@ -351,88 +351,11 @@ public class LecteurCSV {
 		return listeActivite;
 	}
 	
-	/**
-	 * 
-	 * @param listeEmploye
-	 * @param id
-	 * @return
-	 */
-	public static Employe getEmployeById(ArrayList<Object> listeEmploye, String id) {  //INITIALEMENT PRIVATE
-		
-		ArrayList<Employe> listeEmployeConverti = new ArrayList<>();
-
-		for (Object obj : listeEmploye) {
-		    if (obj instanceof Employe) {
-		    	listeEmployeConverti.add((Employe) obj);
-		    } else {
-		        System.out.println("Erreur: Un objet n'est pas du type Employe.");
-		    }
-		}
-		
-	    for (Employe employe : listeEmployeConverti) {
-	        if (employe.getIdentifiant().equals(id)) {
-	            return employe;
-	        }
-	    }
-	    return new Employe("Inconnu", "Nom inconnu", "Prenom inconnu", 0000);
-	}
 	
 	/**
-	 * 
-	 * @param listeSalle
-	 * @param id
-	 * @return
-	 */
-	public static Salle getSalleById(ArrayList<Object> listeSalle, String id) { //INITIALEMENT PRIVATE
-		
-		ArrayList<Salle> listeSalleConverti = new ArrayList<>();
-		
-		for (Object obj : listeSalle) {
-		    if (obj instanceof Salle) {
-		    	listeSalleConverti.add((Salle) obj);
-		    } else {
-		        System.out.println("Erreur: Un objet n'est pas du type Salle.");
-		    }
-		}
-		
-	    for (Salle salle : listeSalleConverti) {
-	        if (salle.getIdentifiant() == Integer.parseInt(id)) {
-	            return salle;
-	        }
-	    }
-	    return new Salle(0, "Nom inconnu", 0, false, false, 0, "Indefini", null, false);
-	}
-	
-	/**
-	 * 
-	 */
-	public static Activite getActiviteById(ArrayList<Object> listeActivite, String id) { //INITIALEMENT PRIVATE
-		
-		ArrayList<Activite> listeActiviteConverti = new ArrayList<>();
-		
-		for (Object obj : listeActivite) {
-		    if (obj instanceof Activite) {
-		    	listeActiviteConverti.add((Activite) obj);
-		    } else {
-		        System.out.println("Erreur: Un objet n'est pas du type Activite.");
-		    }
-		}
-		
-	    for (Activite activite : listeActiviteConverti) {
-	        if (activite.getIdentifiant().equals(id)) {
-	            return activite;
-	        }
-	    }
-	    return new Activite("Inconnu", "Nom inconnu");
-	}
-	/**
-
-	 * 
-
+	 * Obtenir l'extension d'un fichier
 	 * @param filePath
-
 	 * @return
-
 	 */
 
 	private static String getFileExtension(String filePath) {
@@ -446,9 +369,6 @@ public class LecteurCSV {
 			return filePath.substring(indexPoint + 1);
 
 		}
-
 		return "";
-
-	}
-	
+	}	
 }
