@@ -1,5 +1,6 @@
 /*
- * 
+ * Consultation.java						25/10/2024
+ * BUT Info2, 2024/2025, pas de copyrigth
  */
 
 package modeles.consultation;
@@ -16,7 +17,7 @@ import modeles.items.Salle;
 import modeles.stockage.Stockage;
 
 /**
- * 
+ * Modele de la consultation
  */
 public class Consultation {
 	
