@@ -54,26 +54,6 @@ public class Importateur {
 	}
 	
 	/**
-	 * Demande les données à l'exportateur lorsque l'importateur est pret
-	 * true si la requête a été correctement envoyée, false sinon
-	 * @return
-	 */
-	public boolean envoiRequete() {
-		
-		try {
-			PrintWriter output = new PrintWriter(socketClient.getOutputStream(), true);
-			
-			output.print("DEMANDE ENVOI");
-			
-			return true;
-			
-		} catch (IOException e) {
-			return false;
-		}
-		
-	}
-	
-	/**
 	 * Réception de la réponse de l'exportateur contenant les informations,
 	 *  true si le transfert a été correctement transféré, false sinon
 	 * @return
@@ -144,10 +124,10 @@ public class Importateur {
 	
 	
 	/**
-	 * envoi l'entier au serveur
+	 * envoi le message au serveur
 	 * @return true si tout s'est bien passé, false sinon
 	 */
-	public boolean envoiEntier(int valeur) {
+	public boolean envoiMessage(String valeur) {
 	    try {
             PrintWriter output = new PrintWriter(socketClient.getOutputStream(), true);
             output.println(valeur); // Envoyer l'entier
@@ -159,11 +139,12 @@ public class Importateur {
 	
 	
 	/**
-	 * reçois un entier du serveur
-	 * @return un entier
+	 * reçois un message du serveur
+	 * @return un message sous la forme d'une chaîne de caractères
+	 * @throws IOException en cas d'erreur de lecture
 	 */
-	public int recevoirEntier() {
-		return 0; //stub
+	public String recevoirMessage() throws IOException {
+		return input.readLine();
 		
 	}
 	
