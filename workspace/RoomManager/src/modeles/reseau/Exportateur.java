@@ -67,31 +67,6 @@ public class Exportateur {
 	}
 	
 	/**
-	 * @return true si le client a demandé l'envoi de données, false sinon
-	 */
-	public boolean attenteRequete() {
-		
-		String message;
-		
-		BufferedReader in;
-		
-		try {
-			in = new BufferedReader(new InputStreamReader(
-                 socketCommunication.getInputStream()));
-			message = in.readLine();
-		} catch (IOException e) {
-			return false;
-		}
-		
-		if (message.equals("DEMANDE ENVOI")) {
-			return true;
-		}
-		// else
-		
-		return false;
-	}
-	
-	/**
 	 * envoi les données convertit à l'importateur 
 	 * ayant effectué une requête
 	 * @return true si l'envoi a été correctement effectué, false sinon
@@ -126,20 +101,31 @@ public class Exportateur {
 	
 
 	/**
-	 * envoi l'entier au client
+	 * envoi le message au client
 	 * @return true si tout s'est bien passé, false sinon
 	 */
-	public boolean envoiEntier(int valeur) {
-	    return false; //STUB
+	public boolean envoiMessage(String valeur) {
+	    try {
+            output.println(valeur); // Envoyer l'entier
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
 	}
 	
 	
 	/**
-	 * reçois un entier du client
-	 * @return un entier
+	 * reçois un message du client
+	 * @return un message sous la forme d'une chaîne de caractères
+	 * @throws IOException en cas d'erreur de lecture
 	 */
-	public int recevoirEntier() {
-		return 0; //stub
+	public String recevoirMessage() throws IOException {
+		
+		BufferedReader input;
+		
+		input = new BufferedReader(new InputStreamReader(socketCommunication.getInputStream()));
+		
+		return input.readLine();
 		
 	}
 	
@@ -153,7 +139,7 @@ public class Exportateur {
 	public boolean closeConnexion() {
 		
 		try {
-			socketServeur.close();
+			socketCommunication.close();
 			return true;
 		} catch (IOException e) {
 			return false;
