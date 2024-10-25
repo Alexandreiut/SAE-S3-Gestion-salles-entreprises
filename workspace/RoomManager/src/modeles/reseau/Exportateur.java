@@ -14,7 +14,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import modeles.items.Activite;
+import modeles.items.*;
+import modeles.sortie.EcritureCSV;
 import modeles.stockage.Stockage;
 
 /**
@@ -67,50 +68,89 @@ public class Exportateur {
 	}
 	
 	/**
-	 * envoi les données convertit à l'importateur 
-	 * ayant effectué une requête
-	 * @return true si l'envoi a été correctement effectué, false sinon
+	 * envoi les données converties au format csv à l'importateur
 	 */
-	public boolean envoiReponse() {
+	public void envoiDonnee() {
+		envoiSalles();
+		envoiActivites();
+		envoiEmployes();
+		envoiReservations();
+	}
+	
+	/**
+	 * envoi les salles converties au format csv à l'importateur
+	 */
+	public void envoiSalles() {
 		
-		int compteurLigne;
+		ArrayList<Salle> listeSalles = stockage.getListeSalle();
 		
-		String ligne;
-		String paquet;
+		ArrayList<String> donneesAEnvoyer;
 		
-		ArrayList<Activite> ListeActivite = stockage.getListeActivite();
+		donneesAEnvoyer = EcritureCSV.ecrireSalles(listeSalles);
 		
-		// TODO envoyer données
-		paquet = "";
-		compteurLigne = 0;
-		for (Activite activite : ListeActivite) {
-			ligne = activite.getIdentifiant() + ";" + activite.getNom();
-			paquet += ligne;
-			if (compteurLigne >= 4) {
-				paquet = "";
-				compteurLigne = 0;
-			} else {
-				compteurLigne++;
-			}
+		for (String ligne : donneesAEnvoyer) {
+			output.write(ligne);
 		}
 		
-		return false; //STUB
+	}
+	
+	/**
+	 * envoi les activités converties au format csv à l'importateur
+	 */
+	public void envoiActivites() {
 		
+		ArrayList<Activite> listeActivites = stockage.getListeActivite();
+		
+		ArrayList<String> donneesAEnvoyer;
+		
+		donneesAEnvoyer = EcritureCSV.ecrireActivites(listeActivites);
+		
+		for (String ligne : donneesAEnvoyer) {
+			output.write(ligne);
+		}
+		
+	}
+	
+	/**
+	 * envoi les employés convertis au format csv à l'importateur
+	 */
+	public void envoiEmployes() {
+		
+		ArrayList<Employe> listeEmployes = stockage.getListeEmploye();
+		
+		ArrayList<String> donneesAEnvoyer;
+		
+		donneesAEnvoyer = EcritureCSV.ecrireEmployes(listeEmployes);
+		
+		for (String ligne : donneesAEnvoyer) {
+			output.write(ligne);
+		}
+		
+	}
+	
+	/**
+	 * envoi les réservations converties au format csv à l'importateur
+	 */
+	public void envoiReservations() {
+		
+		ArrayList<Reservation> listeReservations = stockage.getListeReservation();
+		
+		ArrayList<String> donneesAEnvoyer;
+		
+		donneesAEnvoyer = EcritureCSV.ecrireReservations(listeReservations);
+		
+		for (String ligne : donneesAEnvoyer) {
+			output.write(ligne);
+		}
 		
 	}
 	
 
 	/**
 	 * envoi le message au client
-	 * @return true si tout s'est bien passé, false sinon
 	 */
-	public boolean envoiMessage(String valeur) {
-	    try {
-            output.println(valeur); // Envoyer l'entier
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+	public void envoiMessage(String valeur) {
+        output.println(valeur);
 	}
 	
 	
@@ -137,7 +177,6 @@ public class Exportateur {
 	 * @return
 	 */
 	public boolean closeConnexion() {
-		
 		try {
 			socketCommunication.close();
 			return true;
