@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
 
 <Pane fx:id="panePrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleurs.ConsultationControleur">
    <children>
@@ -18,7 +19,6 @@
       <Button mnemonicParsing="false" onAction="#menu" prefHeight="0.0" prefWidth="0.0" styleClass="bouton-menu" text="Menu" />
       <VBox id="vboxFiltres" layoutY="102.0" prefHeight="499.0" prefWidth="214.0" styleClass="FondVBox" />
       <Button layoutX="492.0" layoutY="515.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="484.0" styleClass="les-boutons-menu" text="+ Ajouter des résultats au pdf" />
-      <Button layoutX="759.0" layoutY="515.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="134.0" styleClass="les-boutons-menu" text="&lt;--" />
       <HBox layoutX="225.0" layoutY="111.0" prefHeight="70.0" prefWidth="758.0" />
       <HBox id="entete" layoutX="225.0" layoutY="194.0" prefHeight="33.0" prefWidth="758.0" styleClass="FondVBox" />
       <VBox layoutX="225.0" layoutY="227.0" prefHeight="278.0" prefWidth="758.0" styleClass="bordureHBOX">
@@ -35,6 +35,11 @@
             </HBox>
          </children>
       </VBox>
+      <Button layoutX="652.0" layoutY="370.0" mnemonicParsing="false" scaleX="0.175" scaleY="0.175" styleClass="bouton-retour">
+         <graphic>
+            <SVGPath content="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 288 480 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-370.7 0 73.4-73.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-128 128z" scaleX="0.5" scaleY="0.5" />
+         </graphic>
+      </Button>
    </children>
    <stylesheets>
       <URL value="@application.css" />
