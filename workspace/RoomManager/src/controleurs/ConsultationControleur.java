@@ -10,11 +10,12 @@ import java.util.HashMap;
 
 import affichages.GestionAffichageMenu;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-
+import modeles.NavigationVues;
 import modeles.consultation.Consultation;
 
 /**
@@ -30,6 +31,9 @@ public class ConsultationControleur {
 	
 	@FXML
 	private VBox vboxDonnees;
+	
+	@FXML 
+	private Button boutonRetour;
 
 	
 	/**
@@ -78,4 +82,9 @@ public class ConsultationControleur {
 			layout.getChildren().add(affichageInfos);
 		}
 	}
+	
+	@FXML
+    private void handleRetour() {
+        NavigationVues.retourVuePrecedente();
+    }
 }
