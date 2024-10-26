@@ -8,12 +8,14 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" styleClass="pane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox prefHeight="0.0" prefWidth="0.0" styleClass="bandeau-modifier">
+      <HBox prefHeight="0.0" prefWidth="0.0" styleClass="bandeau">
          <children>
             <Label styleClass="titre" text="Consultation" />
-            <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" styleClass="bouton-aide-modifier" text="i" />
-         </children></HBox>
-      <VBox prefHeight="200.0" prefWidth="100.0" styleClass="menu">
+            <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" styleClass="bouton-aide" text="i" />
+         </children>
+      </HBox>
+      <Pane prefHeight="0.0" prefWidth="0.0" styleClass="menu-bandeau-bleu" />
+      <VBox prefHeight="0.0" prefWidth="0.0" styleClass="menu">
          <children>
             <Button mnemonicParsing="false" styleClass="bouton-menu-modifier" text="Menu" />
             <Button mnemonicParsing="false" styleClass="les-boutons-menu" text="Accueil" />
@@ -23,6 +25,5 @@
             <Button mnemonicParsing="false" styleClass="les-boutons-menu" text="Exportation" />
          </children>
       </VBox>
-      <Pane prefHeight="200.0" prefWidth="200.0" styleClass="menu-bandeau-bleu" />
    </children>
 </Pane>

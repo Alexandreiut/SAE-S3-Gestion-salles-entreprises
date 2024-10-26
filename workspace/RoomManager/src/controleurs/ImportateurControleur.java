@@ -5,9 +5,20 @@
 
 package controleurs;
 
+import affichages.GestionAffichageMenu;
+import javafx.fxml.FXML;
+import javafx.scene.layout.Pane;
+
 /**
  * Controleur de la vue importateur.fxml
  */
 public class ImportateurControleur {
 	
+	@FXML
+	private Pane panePrincipal;
+	
+	@FXML
+	private void menu() {
+		GestionAffichageMenu.affichageMenu(panePrincipal);
+	}
 }

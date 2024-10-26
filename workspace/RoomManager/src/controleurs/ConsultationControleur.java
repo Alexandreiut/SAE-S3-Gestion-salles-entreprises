@@ -8,6 +8,7 @@ package controleurs;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import affichages.GestionAffichageMenu;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -22,6 +23,9 @@ import modeles.consultation.Consultation;
 public class ConsultationControleur {
 	
 	@FXML
+	private Pane panePrincipal;
+	
+	@FXML
 	private HBox hboxDonnees;
 	
 	@FXML
@@ -33,7 +37,7 @@ public class ConsultationControleur {
 	 * par defaut lorsque l'on arrive sur la vue.
 	 */
 	@FXML
-	public void initialize() {
+	private void initialize() {
 		
 		Consultation consultation = new Consultation();
 		HashMap<String,  ArrayList<? extends Object>> donnees = consultation.fetchDonneesBrutes();
@@ -54,6 +58,11 @@ public class ConsultationControleur {
 			vboxDonnees.getChildren().add(new Label("Réservations :"));
 			affichage(vboxDonnees, donnees.get("Réservations"));
 		}	
+	}
+	
+	@FXML
+	private void menu() {
+		GestionAffichageMenu.affichageMenu(panePrincipal);
 	}
 	
 	/**
