@@ -1,3 +1,8 @@
+/*
+ * Importateur.java					24/10/2024
+ * BUT Info2, 2024/2025, pas de copyright
+ */
+
 package modeles.reseau;
 
 import java.io.IOException;
@@ -15,6 +20,10 @@ import modeles.stockage.Stockage;
 
 import java.io.PrintWriter;
 
+/**
+ * Représente un importateur, avec une adresse IP et un port
+ * voulant recevoir des données distante
+ */
 public class Importateur {
 	
 	/** socket associé à l'imortateur permettant une communication */
@@ -27,12 +36,14 @@ public class Importateur {
 	private Stockage stockage;
 	
 	/**
-	 * instancie un importateur, le socket est instancié selon l'adresse ip et le port 
+	 * instancie un importateur, le socket est instancié 
+	 * selon l'adresse ip et le port 
 	 * @param adresseIp du serveur
 	 * @param port de la connexion du côté du serveur
 	 * @throws IOException si problème lors de l'instanciation du socket
 	 */
-	public Importateur(String adresseIp, int port, Stockage stockage) throws IOException {
+	public Importateur(String adresseIp, int port, Stockage stockage) 
+			throws IOException {
 		
 		socketClient = new Socket(adresseIp, port);
 		
@@ -40,26 +51,6 @@ public class Importateur {
 		
 		this.stockage = stockage;
 	
-	}
-	
-	/**
-	 * Demande les données à l'exportateur lorsque l'importateur est pr�t, 
-	 * true si la requête a été correctement envoyée, false sinon
-	 * @return
-	 */
-	public boolean envoiRequete() {
-		
-		try {
-			PrintWriter output = new PrintWriter(socketClient.getOutputStream(), true);
-			
-			output.print("DEMANDE ENVOI");
-			
-			return true;
-			
-		} catch (IOException e) {
-			return false;
-		}
-		
 	}
 	
 	/**
@@ -87,7 +78,8 @@ public class Importateur {
 	 * en objets puis les stock,
 	 * true si le processus a correctement été effectué dans sa totalité,
 	 * false sinon
-	 * @throws FileNotFoundException si un fichier temporaire n'a pu être trouvé
+	 * @throws FileNotFoundException 
+	 * si un fichier temporaire n'a pu être trouvé
 	 * @param donneAConvertir
 	 */
 	public boolean convertirReponseDonnee(ArrayList<String> donneAConvertir) {
@@ -148,10 +140,10 @@ public class Importateur {
 	
 	
 	/**
-	 * envoi l'entier au serveur
+	 * envoi le message au serveur
 	 * @return true si tout s'est bien passé, false sinon
 	 */
-	public boolean envoiEntier(int valeur) {
+	public boolean envoiMessage(String valeur) {
 	    try {
             PrintWriter output = new PrintWriter(socketClient.getOutputStream(), true);
             output.println(valeur); // Envoyer l'entier
@@ -163,19 +155,19 @@ public class Importateur {
 	
 	
 	/**
-	 * reçois un entier du serveur
-	 * @return un entier
+	 * reçois un message du serveur
+	 * @return un message sous la forme d'une chaîne de caractères
+	 * @throws IOException en cas d'erreur de lecture
 	 */
-	public int recevoirEntier() {
-		return 0; //stub
+	public String recevoirMessage() throws IOException {
+		return input.readLine();
 		
 	}
 	
 	
 	/**
-	 * renvoie true si la connexion avec l'exportateur a été correctement fermée,
-	 *  false sinon
-	 * @return
+	 * @return true si la connexion avec l'exportateur a été 
+	 * correctement fermée, false sinon
 	 */
 	public boolean closeConnexion() {
 		

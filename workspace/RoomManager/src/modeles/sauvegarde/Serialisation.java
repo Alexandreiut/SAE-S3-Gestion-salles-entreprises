@@ -16,12 +16,20 @@ import modeles.stockage.Stockage;
  */
 public class Serialisation {
 	
-	/** Chemin du dossier pour les sauvegardes */
+	/** 
+	 * Chemin du dossier pour les sauvegardes 
+	 */
     private static final String CHEMIN_DOSSIER = "src/serialisationdonnees/";
     
+    /**
+     * Nom du fichier de sauvegarde
+     */
     private static final String NOM_FICHIER = "donnees.ser";
 	
-    
+    /**
+     * Sérialise un objet
+     * @param aSerialiser l'objet à sérialiser
+     */
 	public static void serialiser(Stockage aSerialiser) {
 		
 		try {
@@ -40,7 +48,11 @@ public class Serialisation {
 		}
 	}
 	
-
+	/**
+	 * Désérialise un objet
+	 * @return l'objet Stockage désérialisé depuis le fichier, 
+	 * ou null si il y a une erreur
+	 */
 	public static Stockage deserialiser() {
 
 		// Variable qui recevra l'objet sauvegardé en mémoire

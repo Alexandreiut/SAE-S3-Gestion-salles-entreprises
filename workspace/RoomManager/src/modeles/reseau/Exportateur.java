@@ -1,3 +1,8 @@
+/*
+ * Exportateur.java					24/10/2024
+ * BUT Info2, 2024/2025, pas de copyright
+ */
+
 package modeles.reseau;
 
 import java.io.BufferedReader;
@@ -9,21 +14,35 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import modeles.items.Activite;
+import modeles.items.*;
+import modeles.sortie.EcritureCSV;
 import modeles.stockage.Stockage;
 
+/**
+ * Représente un exportateur, avec un socket et un port, voulant 
+ * faire une exportation distante
+ */
 public class Exportateur {
 	
-	/** socket associé à l'exportateur permettant l'attente d'un client */
+	/** 
+	 * socket associé à l'exportateur permettant l'attente d'un client 
+	 */
 	private ServerSocket socketServeur;
 	
-	/** socket associé à l'exportateur permettant la communication avec le client */
+	/** 
+	 * socket associé à l'exportateur permettant la communication 
+	 * avec le client 
+	 */
 	private Socket socketCommunication;
 	
-	/** stockage de l'application */
+	/** 
+	 * stockage de l'application 
+	 */
 	private Stockage stockage;
 	
-	/** sortie de l'exportateur */
+	/** 
+	 * sortie de l'exportateur 
+	 */
 	private PrintWriter output;
 	
 	/**
@@ -37,9 +56,11 @@ public class Exportateur {
 	}
 	
 	/**
-	 * accepte la connexion d'un client et instancie socketCommunication et output
+	 * accepte la connexion d'un client et instancie 
+	 * socketCommunication et output
 	 * afin de permettre la communication avec le client
-	 * @throws IOException s'il y a erreur lors de la création de la communication
+	 * @throws IOException s'il y a erreur lors de la création 
+	 * de la communication
 	 */
 	public void accepterConnexion() throws IOException {
 		socketCommunication = socketServeur.accept();
@@ -47,91 +68,117 @@ public class Exportateur {
 	}
 	
 	/**
-	 * @return true si le client a demandé l'envoi de données, false sinon
+	 * envoi les données converties au format csv à l'importateur
 	 */
-	public boolean attenteRequete() {
-		
-		String message;
-		
-		BufferedReader in;
-		
-		try {
-			in = new BufferedReader(new InputStreamReader(
-                 socketCommunication.getInputStream()));
-			message = in.readLine();
-		} catch (IOException e) {
-			return false;
-		}
-		
-		if (message.equals("DEMANDE ENVOI")) {
-			return true;
-		}
-		// else
-		
-		return false;
+	public void envoiDonnee() {
+		envoiSalles();
+		envoiActivites();
+		envoiEmployes();
+		envoiReservations();
 	}
 	
 	/**
-	 * envoi les données convertit à l'importateur ayant effectué une requête
-	 * @return true si l'envoi a été correctement effectué, false sinon
+	 * envoi les salles converties au format csv à l'importateur
 	 */
-	public boolean envoiReponse() {
+	public void envoiSalles() {
 		
-		int compteurLigne;
+		ArrayList<Salle> listeSalles = stockage.getListeSalle();
 		
-		String ligne;
-		String paquet;
+		ArrayList<String> donneesAEnvoyer;
 		
-		ArrayList<Activite> ListeActivite = stockage.getListeActivite();
+		donneesAEnvoyer = EcritureCSV.ecrireSalles(listeSalles);
 		
-		// TODO envoyer données
-		paquet = "";
-		compteurLigne = 0;
-		for (Activite activite : ListeActivite) {
-			ligne = activite.getIdentifiant() + ";" + activite.getNom();
-			paquet += ligne;
-			if (compteurLigne >= 4) {
-				paquet = "";
-				compteurLigne = 0;
-			} else {
-				compteurLigne++;
-			}
+		for (String ligne : donneesAEnvoyer) {
+			output.write(ligne);
 		}
 		
-		return false; //STUB
+	}
+	
+	/**
+	 * envoi les activités converties au format csv à l'importateur
+	 */
+	public void envoiActivites() {
 		
+		ArrayList<Activite> listeActivites = stockage.getListeActivite();
+		
+		ArrayList<String> donneesAEnvoyer;
+		
+		donneesAEnvoyer = EcritureCSV.ecrireActivites(listeActivites);
+		
+		for (String ligne : donneesAEnvoyer) {
+			output.write(ligne);
+		}
+		
+	}
+	
+	/**
+	 * envoi les employés convertis au format csv à l'importateur
+	 */
+	public void envoiEmployes() {
+		
+		ArrayList<Employe> listeEmployes = stockage.getListeEmploye();
+		
+		ArrayList<String> donneesAEnvoyer;
+		
+		donneesAEnvoyer = EcritureCSV.ecrireEmployes(listeEmployes);
+		
+		for (String ligne : donneesAEnvoyer) {
+			output.write(ligne);
+		}
+		
+	}
+	
+	/**
+	 * envoi les réservations converties au format csv à l'importateur
+	 */
+	public void envoiReservations() {
+		
+		ArrayList<Reservation> listeReservations = stockage.getListeReservation();
+		
+		ArrayList<String> donneesAEnvoyer;
+		
+		donneesAEnvoyer = EcritureCSV.ecrireReservations(listeReservations);
+		
+		for (String ligne : donneesAEnvoyer) {
+			output.write(ligne);
+		}
 		
 	}
 	
 
 	/**
-	 * envoi l'entier au client
-	 * @return true si tout s'est bien passé, false sinon
+	 * envoi le message au client
 	 */
-	public boolean envoiEntier(int valeur) {
-	    return false; //STUB
+	public void envoiMessage(String valeur) {
+        output.println(valeur);
 	}
 	
 	
 	/**
-	 * reçois un entier du client
-	 * @return un entier
+	 * reçois un message du client
+	 * @return un message sous la forme d'une chaîne de caractères
+	 * @throws IOException en cas d'erreur de lecture
 	 */
-	public int recevoirEntier() {
-		return 0; //stub
+	public String recevoirMessage() throws IOException {
+		
+		BufferedReader input;
+		
+		input = new BufferedReader(new InputStreamReader(socketCommunication.getInputStream()));
+		
+		return input.readLine();
 		
 	}
 	
 	
 	/**
-	 * renvoie true si la connexion avec l'importateur a été correctement fermée,
+	 * renvoie true si la connexion avec l'importateur 
+	 * a été correctement fermée,
 	 *  false sinon
 	 * @return
 	 */
 	public boolean closeConnexion() {
-		
 		try {
-			socketServeur.close();
+			socketCommunication.close();
 			return true;
 		} catch (IOException e) {
 			return false;

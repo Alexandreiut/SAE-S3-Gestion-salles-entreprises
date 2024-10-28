@@ -1,3 +1,8 @@
+/*
+ * NavigationVues.java 					24/10/2024
+ * BUT Info2, 2024/2025, pas de copyright
+ */
+
 package modeles;
 
 import java.io.IOException;
@@ -66,13 +71,17 @@ public class NavigationVues {
 	}
 	
 	
-	/** @return La scène courante. */
+	/** 
+	 * @return La scène courante. 
+	 */
 	public static Scene getScene() {
 		return sceneCourante;
 	}
 	
 	
-	/** @return La vue courante. */
+	/** 
+	 * @return La vue courante. 
+	 */
 	public static String getVueCourante() {
 		return vueCourante;
 	}

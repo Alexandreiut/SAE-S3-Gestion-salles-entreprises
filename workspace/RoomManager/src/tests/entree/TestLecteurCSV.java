@@ -1,3 +1,8 @@
+/*
+ * TestLecteurCSV.java				24/10/2024
+ * BUT Info2, 2024/2025, pas de copyright
+ */
+
 package tests.entree;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,7 +18,10 @@ import modeles.entree.LecteurCSV;
 import modeles.erreur.LectureException;
 import modeles.erreur.WrongFileFormatException;
 
-class TestLecteurCSV {
+/**
+ * Classe de tests de la classe LecteurCSV.java
+ */
+public class TestLecteurCSV {
 
 	private final String ACTIVITES_PATH = "Z:\\SAEjava\\activites 26_08_24 13_40.csv";
 	private final String EMPLOYES_PATH = "Z:\\SAEjava\\employes 26_08_24 13_40.csv";

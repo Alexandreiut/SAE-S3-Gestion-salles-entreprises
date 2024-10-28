@@ -1,4 +1,10 @@
+/*
+ * RoomManager.java				23/10/2024
+ * BUT Info2, 2024/2025, pas de copyright
+ */
+
 package lanceur;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -11,11 +17,13 @@ import modeles.stockage.Stockage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-
+/**
+ * Lance l'application
+ */
 public class RoomManager extends Application {
-	
-public static Stockage stockage;
-	
+
+	public static Stockage stockage;
+
 	public static void processusFermetureApp(Stage stageCourant) {
 		stageCourant.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
@@ -26,30 +34,38 @@ public static Stockage stockage;
 			}
 		});
 	}
-	
+
+	/**
+	 * Configure la scène principale de l'application
+	 * @param primaryStage la fenetre principale
+	 */
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-            // Charge le fichier FXML	
+			// Charge le fichier FXML	
 			Parent root = FXMLLoader.load(getClass().getResource("/affichages/RoomManager.fxml"));
 			//Parent root = FXMLLoader.load(getClass().getResource("/affichages/TestMenuLateral.fxml"));
 			//Parent root = FXMLLoader.load(getClass().getResource("/affichages/consultation.fxml"));
-            
-            // Crée la scène avec la racine FXML
-            Scene scene = new Scene(root);
-            NavigationVues.setSceneCourante(scene);
-            
-            // Ajoute la feuille de style CSS
-            //scene.getStylesheets().add(getClass().getResource("affichages/RoomManager.css").toExternalForm());
-            
-            // Configure et affiche la fenêtre
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+			// Crée la scène avec la racine FXML
+			Scene scene = new Scene(root);
+			NavigationVues.setSceneCourante(scene);
+
+			// Ajoute la feuille de style CSS
+			//scene.getStylesheets().add(getClass().getResource("affichages/RoomManager.css").toExternalForm());
+
+			// Configure et affiche la fenêtre
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	
+
+	/**
+	 * Main de la classe, lance l'application, et la sérialisation
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		stockage = Serialisation.deserialiser();
 		launch(args);

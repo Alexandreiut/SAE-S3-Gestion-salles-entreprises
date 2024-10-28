@@ -1,5 +1,5 @@
 /*
- * Reservation.java                                          16/10/2024
+ * Reservation.java                                        16/10/2024
  * BUT info2 2024-2025, aucun copyright
  */
 
@@ -10,9 +10,12 @@ import java.io.Serializable;
 
 /**
  * Objet réservation de salle représenté par un identifiant, une date,
- * une heure de début, une heure de fin, un objet de réservation, un nom d'nterlocuteur, 
- * un prénom d'interlocuteur, un numéro d'interlocuteur, un usage de la salle
- * une réservation est associé à un employé resevant, une activité et une salle 
+ * une heure de début, une heure de fin, 
+ * un objet de réservation, un nom d'nterlocuteur, 
+ * un prénom d'interlocuteur, un numéro d'interlocuteur,
+ * un usage de la salle
+ * une réservation est associé à un employé resevant, 
+ * une activité et une salle 
  * @author Alexandre Brouzes
  */
 public class Reservation implements Serializable {
@@ -21,41 +24,65 @@ public class Reservation implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
     
-    /** identifiant unique associé à une réservation sur 7 caractères dont le premier 
-       est un R et les autres des chiffres */
+    /** 
+     * identifiant unique associé à une réservation sur 7 caractères dont le premier 
+     * est un R et les autres des chiffres 
+     */
     private String identifiant;
     
-    /** date du jour de la réservation au format JJ/MM/AAAA */
+    /** 
+     * date du jour de la réservation au format JJ/MM/AAAA 
+	 */
     private String date;
 
-    /** heure de début de la réservation de la salle au format HH:MM */
+    /** 
+     * heure de début de la réservation de la salle au format HH:MM 
+     */
     private String heureDebut;
 
-    /** heure de fin de la réservation de la salle au format HH:MM */
+    /** 
+     * heure de fin de la réservation de la salle au format HH:MM 
+     */
     private String heureFin;
     
-    /** objet ou thème de la réservation */
+    /** 
+     * objet ou thème de la réservation 
+     */
     private String objetReservation;
     
-    /** nom de la personne ayant demandé la réservation */
+    /** 
+     * nom de la personne ayant demandé la réservation 
+     */
     private String nomInterlocuteur;
     
-    /** prénom de la personne ayant demandé la réservation */
+    /** 
+     * prénom de la personne ayant demandé la réservation 
+     */
     private String prenomInterlocuteur;
     
-    /** numéro de téléphone de la personne ayant demandé la réservation */
+    /** 
+     * numéro de téléphone de la personne ayant demandé la réservation 
+     */
     private int numeroInterlocuteur;
     
-    /** numéro de téléphone de la personne ayant demandé la réservation */
+    /** 
+     * numéro de téléphone de la personne ayant demandé la réservation 
+     */
     private String usageSalle;
     
-    /** identifiant de l'employé ayant effectué la réservation */
+    /** 
+     * identifiant de l'employé ayant effectué la réservation 
+     */
     private String reservant;
     
-    /** identifiant de l'activité de la réservation */
+    /** 
+     * identifiant de l'activité de la réservation 
+     */
     private String activite;
     
-    /** identifiant de la salle occupé pendant la réservation */
+    /** 
+     * identifiant de la salle occupé pendant la réservation 
+     */
     private int salleReservee;
     
     /**
