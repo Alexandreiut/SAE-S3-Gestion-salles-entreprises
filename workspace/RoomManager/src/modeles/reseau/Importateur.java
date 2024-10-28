@@ -110,13 +110,29 @@ public class Importateur {
 					}
 					
 					if (objetsAInserer.get(0) instanceof Employe) {
-						stockage.setListeEmploye(objetsAInserer);
+						ArrayList<Employe> listeE = new ArrayList<>();
+						for(Object obj : objetsAInserer) {
+							listeE.add((Employe) obj);
+						}
+						stockage.setListeEmploye(listeE);
 					} else if (objetsAInserer.get(0) instanceof Activite) {
-						stockage.setListeActivite(objetsAInserer);
+						ArrayList<Activite> listeA = new ArrayList<>();
+						for(Object obj : objetsAInserer) {
+							listeA.add((Activite) obj);
+						}
+						stockage.setListeActivite(listeA);
 					} else if (objetsAInserer.get(0) instanceof Salle) {
-						stockage.setListeSalle(objetsAInserer);
+						ArrayList<Salle> listeS = new ArrayList<>();
+						for(Object obj : objetsAInserer) {
+							listeS.add((Salle) obj);
+						}
+						stockage.setListeSalle(listeS);
 					} else {
-						stockage.setListeReservation(objetsAInserer);
+						ArrayList<Reservation> listeR = new ArrayList<>();
+						for(Object obj : objetsAInserer) {
+							listeR.add((Reservation) obj);
+						}
+						stockage.setListeReservation(listeR);
 					} 
 					
 				}
