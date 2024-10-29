@@ -34,31 +34,31 @@ public class GestionAffichageMenu {
 		Button btnAccueil = new Button("Accueil");
 		btnAccueil.getStyleClass().add("les-boutons-menu");
 		btnAccueil.setOnAction(event -> {
-			NavigationVues.changerVue("RoomManager");
+			NavigationVues.changerVue("RoomManager", false);
 		});
 		
 		Button btnConsultation = new Button("Consultation");
 		btnConsultation.getStyleClass().add("les-boutons-menu");
 		btnConsultation.setOnAction(event -> {
-			NavigationVues.changerVue("consultation");
+			NavigationVues.changerVue("consultation", false);
 		});
 		
 		Button btnGenererPDF = new Button("Générer PDF");
 		btnGenererPDF.getStyleClass().add("les-boutons-menu");
 		btnGenererPDF.setOnAction(event -> {
-			NavigationVues.changerVue("genererPDF");
+			NavigationVues.changerVue("genererPDF", false);
 		});
 		
 		Button btnImportation = new Button("Importation");
 		btnImportation.getStyleClass().add("les-boutons-menu");
 		btnImportation.setOnAction(event -> {
-			NavigationVues.changerVue("importation");
+			NavigationVues.changerVue("importation", false);
 		});
 		
 		Button btnExportation = new Button("Exportation");
 		btnExportation.getStyleClass().add("les-boutons-menu");
 		btnExportation.setOnAction(event -> {
-			NavigationVues.changerVue("exportation");
+			NavigationVues.changerVue("exportation", false);
 		});
 		
 		menu.getChildren().addAll(Arrays.asList(btnMenu, btnAccueil, btnConsultation, btnGenererPDF, btnImportation, btnExportation));

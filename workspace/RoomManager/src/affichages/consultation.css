@@ -7,3 +7,94 @@
 	-fx-border-radius : 2px;
 	-fx-border-width : 2px;
 }
+
+.boutons-ajouter {
+	-fx-pref-width: 275;
+    -fx-pref-height: 60;
+	
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+    -fx-font-size: 32px;
+    -fx-background-radius: 150;
+    -fx-padding: 0;
+    
+    -fx-border-color: #00BBB0;
+    -fx-border-width: 3;
+    -fx-border-radius: 150;
+    -fx-border-style: solid;
+}
+
+.saisie-text {
+	-fx-pref-width: 200;
+    -fx-pref-height: 50;
+	
+	-fx-border-color: black;    /* Bordure noire */
+	-fx-border-width: 4px;      /* Épaisseur de la bordure */
+	-fx-border-radius: 3px;     /* Coins légèrement arrondis (optionnel) */
+	-fx-background-radius: 20;
+	-fx-border-radius: 20;
+}
+
+.bouton-filtre {
+	-fx-pref-width: 150;
+    -fx-pref-height: 30;
+    
+    -fx-font-size: 15px;
+    -fx-text-fill: #000000;
+	
+    -fx-background-color: white; /* Fond blanc */
+    -fx-border-color: black; /* Bordure noire */
+    -fx-font-weight: bold;
+    -fx-border-width: 4px; /* Épaisseur de la bordure */
+    -fx-background-radius: 125px; /* Coins arrondis pour le bouton */
+    -fx-border-radius: 20px;
+    -fx-border-style: solid; 
+}
+
+.comboBox {
+	-fx-pref-width: 200;
+    -fx-pref-height: 30;
+    
+    -fx-font-size: 15px;
+    -fx-text-fill: #000000;
+	
+    -fx-background-color: white; /* Fond blanc */
+    -fx-border-color: black; /* Bordure noire */
+    -fx-font-weight: bold;
+    -fx-border-width: 4px; /* Épaisseur de la bordure */
+    -fx-background-radius: 125px; /* Coins arrondis pour le bouton */
+    -fx-border-radius: 20px;
+    -fx-border-style: solid; 
+}
+
+.boutons-loupe {
+	-fx-pref-width: 175;
+    -fx-pref-height: 50;
+	
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-background-radius: 150;
+    
+    /*-fx-border-color: #00BBB0;
+    -fx-border-width: 50px;
+    -fx-border-radius: 150;
+    -fx-border-style: solid;*/
+}
+
+.boutons-ajouter:hover {
+    -fx-background-color: #00BBB0;
+    -fx-cursor: hand;
+}
+
+.boutons-loupe:hover {
+	-fx-background-color: #D9D9D9;
+    -fx-cursor: hand;
+}
+
+.bouton-filtre:hover {
+	-fx-background-color: #D9D9D9;
+    -fx-cursor: hand;
+}

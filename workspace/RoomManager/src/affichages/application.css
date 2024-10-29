@@ -177,6 +177,5 @@
     -fx-border-width: 20px; /* Épaisseur de la bordure */
     -fx-background-radius: 125px; /* Coins arrondis pour le bouton */
     -fx-border-radius: 125px;
-    -fx-border-style: solid;
-    
+    -fx-border-style: solid; 
 }

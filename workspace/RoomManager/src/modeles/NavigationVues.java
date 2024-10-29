@@ -50,7 +50,7 @@ public class NavigationVues {
      * Change de vue vers celle envoyée en paramètre.
      * @param routeVueFXML Nom du fichier FXML de la vue cible
      */
-    public static void changerVue(String routeVueFXML) {
+    public static void changerVue(String routeVueFXML, boolean retour) {
     	
     	//Accueil comme vue par défaut;
     	
@@ -58,7 +58,7 @@ public class NavigationVues {
             System.out.println("Erreur : aucune scène courante !");
         } else {
             try {
-                if (vueCourante != null) {
+                if (vueCourante != null && retour != true) {
                     historiqueVues.push(vueCourante);  // Ajoute la vue actuelle à l'historique
                 }
                 
@@ -79,7 +79,7 @@ public class NavigationVues {
     public static void retourVuePrecedente() {
         if (!historiqueVues.isEmpty()) {
             String vuePrecedente = historiqueVues.pop();
-            changerVue(vuePrecedente);
+            changerVue(vuePrecedente, true);
         } else {
             System.out.println("Aucune vue précédente dans l'historique.");
         }
