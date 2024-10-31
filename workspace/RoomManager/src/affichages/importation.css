@@ -36,4 +36,5 @@
 	-fx-border-color: black;    /* Bordure noire */
 	-fx-border-width: 2px;      /* Épaisseur de la bordure */
 	-fx-border-radius: 3px;     /* Coins légèrement arrondis (optionnel) */
+	-fx-background-radius: 3px;
 }
