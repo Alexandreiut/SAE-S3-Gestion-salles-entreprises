@@ -54,26 +54,6 @@ public class Importateur {
 	}
 	
 	/**
-	 * Demande les données à l'exportateur lorsque l'importateur est pret
-	 * true si la requête a été correctement envoyée, false sinon
-	 * @return
-	 */
-	public boolean envoiRequete() {
-		
-		try {
-			PrintWriter output = new PrintWriter(socketClient.getOutputStream(), true);
-			
-			output.print("DEMANDE ENVOI");
-			
-			return true;
-			
-		} catch (IOException e) {
-			return false;
-		}
-		
-	}
-	
-	/**
 	 * Réception de la réponse de l'exportateur contenant les informations,
 	 *  true si le transfert a été correctement transféré, false sinon
 	 * @return
@@ -122,13 +102,29 @@ public class Importateur {
 					}
 					
 					if (objetsAInserer.get(0) instanceof Employe) {
-						stockage.setListeEmploye(objetsAInserer);
+						ArrayList<Employe> listeE = new ArrayList<>();
+						for(Object obj : objetsAInserer) {
+							listeE.add((Employe) obj);
+						}
+						stockage.setListeEmploye(listeE);
 					} else if (objetsAInserer.get(0) instanceof Activite) {
-						stockage.setListeActivite(objetsAInserer);
+						ArrayList<Activite> listeA = new ArrayList<>();
+						for(Object obj : objetsAInserer) {
+							listeA.add((Activite) obj);
+						}
+						stockage.setListeActivite(listeA);
 					} else if (objetsAInserer.get(0) instanceof Salle) {
-						stockage.setListeSalle(objetsAInserer);
+						ArrayList<Salle> listeS = new ArrayList<>();
+						for(Object obj : objetsAInserer) {
+							listeS.add((Salle) obj);
+						}
+						stockage.setListeSalle(listeS);
 					} else {
-						stockage.setListeReservation(objetsAInserer);
+						ArrayList<Reservation> listeR = new ArrayList<>();
+						for(Object obj : objetsAInserer) {
+							listeR.add((Reservation) obj);
+						}
+						stockage.setListeReservation(listeR);
 					} 
 					
 				}
@@ -144,10 +140,10 @@ public class Importateur {
 	
 	
 	/**
-	 * envoi l'entier au serveur
+	 * envoi le message au serveur
 	 * @return true si tout s'est bien passé, false sinon
 	 */
-	public boolean envoiEntier(int valeur) {
+	public boolean envoiMessage(String valeur) {
 	    try {
             PrintWriter output = new PrintWriter(socketClient.getOutputStream(), true);
             output.println(valeur); // Envoyer l'entier
@@ -159,11 +155,12 @@ public class Importateur {
 	
 	
 	/**
-	 * reçois un entier du serveur
-	 * @return un entier
+	 * reçois un message du serveur
+	 * @return un message sous la forme d'une chaîne de caractères
+	 * @throws IOException en cas d'erreur de lecture
 	 */
-	public int recevoirEntier() {
-		return 0; //stub
+	public String recevoirMessage() throws IOException {
+		return input.readLine();
 		
 	}
 	

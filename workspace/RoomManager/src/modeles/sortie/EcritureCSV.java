@@ -18,24 +18,35 @@ import modeles.items.Salle;
 public class EcritureCSV {
 	
 	/**
-	 * Converti les objets recu en parametres en String
-	 * @param listeObjets
-	 * @return une liste de string créée à partir de la liste d'objets
-	 * @throws IllegalArgumentException si le type des objets de la liste 
-	 * n'est pas Salle, Employe, Activite ou Reservation.
-	 */
-	public ArrayList<String> ecrireListe(ArrayList<Object> listeObjets) 
-			throws IllegalArgumentException {
-		return null; //STUBS
-	}
-	
-	/**
 	 * Converti les salles recu en parametre en String
 	 * @param listeSalles une liste de salle à convertir
 	 * @return une liste de String
 	 */
-	public ArrayList<String> ecrireSalles(ArrayList<Salle> listeSalles) {
-		return null; //STUB
+	public static ArrayList<String> ecrireSalles(ArrayList<Salle> listeSalles) {
+		
+		String ligne;
+		
+		ArrayList<String> resultat;
+		
+		resultat = new ArrayList<>();
+		
+		// entête
+		resultat.add("Ident;Nom;Capacite;videoproj;ecranXXL;ordinateur;type;logiciels;imprimante");
+		
+		for (Salle salle : listeSalles) {
+			ligne = salle.getIdentifiant()
+				    + ";" + salle.getNom()
+				    + ";" + salle.getCapacite()
+				    + ";" + (salle.getVideoProjecteur() ? "oui" : "non")
+				    + ";" + (salle.getEcanXxl() ? "oui" : "non")
+				    + ";" + salle.getNombrePc()
+			        + ";" + salle.getTypePc();
+			// TODO ajouter logiciels et imprimante dans ligne
+			
+			resultat.add(ligne);
+		}
+		
+		return resultat;
 	}
 	
 	/**
@@ -43,7 +54,7 @@ public class EcritureCSV {
 	 * @param listeEmployes une liste d'employé à convertir
 	 * @return une liste de String
 	 */
-	public ArrayList<String> ecrireEmployes(ArrayList<Employe> listeEmployes) {
+	public static ArrayList<String> ecrireEmployes(ArrayList<Employe> listeEmployes) {
 		return null; //STUB
 	}
 	
@@ -52,8 +63,19 @@ public class EcritureCSV {
 	 * @param listeActivites une liste d'activité à convertir
 	 * @return une liste de String
 	 */
-	public ArrayList<String> ecrireActivites(ArrayList<Activite> listeActivites) {
-		return null; //STUB
+	public static ArrayList<String> ecrireActivites(ArrayList<Activite> listeActivites) {
+		ArrayList<String> resultat;
+		
+		resultat = new ArrayList<>();
+		
+		// entête
+		resultat.add("Ident;Activité");
+		
+		for (Activite activite : listeActivites) {
+			resultat.add(activite.getIdentifiant() + ";" + activite.getNom());
+		}
+		
+		return resultat;
 	}
 	
 	/**
@@ -61,7 +83,7 @@ public class EcritureCSV {
 	 * @param listeReservations une liste de réservation à convertir
 	 * @return une liste de String
 	 */
-	public ArrayList<String> ecrireReservations(ArrayList<Reservation> listeReservations) {
+	public static ArrayList<String> ecrireReservations(ArrayList<Reservation> listeReservations) {
 		return null; //STUB
 	}	
 }

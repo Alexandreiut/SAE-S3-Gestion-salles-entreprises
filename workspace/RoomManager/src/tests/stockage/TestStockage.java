@@ -75,23 +75,23 @@ public class TestStockage extends JeuDonne {
     
     @Test
     public void testSetters() {
-    	stockItems.setListeActivite(new ArrayList<Object>());
-    	stockItems.setListeEmploye(new ArrayList<Object>());
-    	stockItems.setListeReservation(new ArrayList<Object>());
-    	stockItems.setListeSalle(new ArrayList<Object>());
+    	stockItems.setListeActivite(new ArrayList<Activite>());
+    	stockItems.setListeEmploye(new ArrayList<Employe>());
+    	stockItems.setListeReservation(new ArrayList<Reservation>());
+    	stockItems.setListeSalle(new ArrayList<Salle>());
     	
     	assertTrue(stockItems.getListeSalle().isEmpty());
         assertTrue(stockItems.getListeActivite().isEmpty());
         assertTrue(stockItems.getListeEmploye().isEmpty());
         assertTrue(stockItems.getListeReservation().isEmpty());
         
-        ArrayList<Object> listeSalleSauvegarde = new ArrayList<>();
+        ArrayList<Salle> listeSalleSauvegarde = new ArrayList<>();
     	listeSalleSauvegarde.add(sal);
-    	ArrayList<Object> listeActiviteSauvegarde = new ArrayList<>();
+    	ArrayList<Activite> listeActiviteSauvegarde = new ArrayList<>();
     	listeActiviteSauvegarde.add(act);
-    	ArrayList<Object> listeEmployeSauvegarde = new ArrayList<>();
+    	ArrayList<Employe> listeEmployeSauvegarde = new ArrayList<>();
     	listeEmployeSauvegarde.add(emp);
-    	ArrayList<Object> listeReservationSauvegarde = new ArrayList<>();
+    	ArrayList<Reservation> listeReservationSauvegarde = new ArrayList<>();
     	listeReservationSauvegarde.add(res);
     	
     	stockItems.setListeSalle(listeSalleSauvegarde);
@@ -104,28 +104,5 @@ public class TestStockage extends JeuDonne {
         assertEquals(listeEmployeSauvegarde.size(), stockItems.getListeEmploye().size());
         assertEquals(listeReservationSauvegarde.size(), stockItems.getListeReservation().size());
     	
-    }
-    
-    /* Classe Serialisation deja existante
-    @Test
-    public void testSerialisation() {
-        Stockage stockageVide = new Stockage(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-        assertFalse(stockageVide.serialisation(), "Erreur : la sérialisation d'un stockage vide devrait échouer.");
-
-        boolean resultat = stockItems.serialisation();
-        
-        // Vérifiez que la sérialisation a réussi
-        assertTrue(resultat, "La sérialisation devrait réussir");
-
-        // Vérifiez que le fichier a été créé
-        String nomFichier = "sauvegarde.dat";
-        File fichier = new File(nomFichier);
-        assertTrue(fichier.exists(), "Le fichier de sérialisation devrait exister");
-
-        // Nettoyez le fichier de test après vérification
-        fichier.delete();
-    }
-    */
-    //TODO test de la déserialisation
-    
+    }  
 }

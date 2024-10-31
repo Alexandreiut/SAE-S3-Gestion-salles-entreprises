@@ -14,7 +14,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import modeles.items.Activite;
+import modeles.items.*;
+import modeles.sortie.EcritureCSV;
 import modeles.stockage.Stockage;
 
 /**
@@ -67,79 +68,104 @@ public class Exportateur {
 	}
 	
 	/**
-	 * @return true si le client a demandé l'envoi de données, false sinon
+	 * envoi les données converties au format csv à l'importateur
 	 */
-	public boolean attenteRequete() {
-		
-		String message;
-		
-		BufferedReader in;
-		
-		try {
-			in = new BufferedReader(new InputStreamReader(
-                 socketCommunication.getInputStream()));
-			message = in.readLine();
-		} catch (IOException e) {
-			return false;
-		}
-		
-		if (message.equals("DEMANDE ENVOI")) {
-			return true;
-		}
-		// else
-		
-		return false;
+	public void envoiDonnee() {
+		envoiSalles();
+		envoiActivites();
+		envoiEmployes();
+		envoiReservations();
 	}
 	
 	/**
-	 * envoi les données convertit à l'importateur 
-	 * ayant effectué une requête
-	 * @return true si l'envoi a été correctement effectué, false sinon
+	 * envoi les salles converties au format csv à l'importateur
 	 */
-	public boolean envoiReponse() {
+	public void envoiSalles() {
 		
-		int compteurLigne;
+		ArrayList<Salle> listeSalles = stockage.getListeSalle();
 		
-		String ligne;
-		String paquet;
+		ArrayList<String> donneesAEnvoyer;
 		
-		ArrayList<Activite> ListeActivite = stockage.getListeActivite();
+		donneesAEnvoyer = EcritureCSV.ecrireSalles(listeSalles);
 		
-		// TODO envoyer données
-		paquet = "";
-		compteurLigne = 0;
-		for (Activite activite : ListeActivite) {
-			ligne = activite.getIdentifiant() + ";" + activite.getNom();
-			paquet += ligne;
-			if (compteurLigne >= 4) {
-				paquet = "";
-				compteurLigne = 0;
-			} else {
-				compteurLigne++;
-			}
+		for (String ligne : donneesAEnvoyer) {
+			output.write(ligne);
 		}
 		
-		return false; //STUB
+	}
+	
+	/**
+	 * envoi les activités converties au format csv à l'importateur
+	 */
+	public void envoiActivites() {
 		
+		ArrayList<Activite> listeActivites = stockage.getListeActivite();
+		
+		ArrayList<String> donneesAEnvoyer;
+		
+		donneesAEnvoyer = EcritureCSV.ecrireActivites(listeActivites);
+		
+		for (String ligne : donneesAEnvoyer) {
+			output.write(ligne);
+		}
+		
+	}
+	
+	/**
+	 * envoi les employés convertis au format csv à l'importateur
+	 */
+	public void envoiEmployes() {
+		
+		ArrayList<Employe> listeEmployes = stockage.getListeEmploye();
+		
+		ArrayList<String> donneesAEnvoyer;
+		
+		donneesAEnvoyer = EcritureCSV.ecrireEmployes(listeEmployes);
+		
+		for (String ligne : donneesAEnvoyer) {
+			output.write(ligne);
+		}
+		
+	}
+	
+	/**
+	 * envoi les réservations converties au format csv à l'importateur
+	 */
+	public void envoiReservations() {
+		
+		ArrayList<Reservation> listeReservations = stockage.getListeReservation();
+		
+		ArrayList<String> donneesAEnvoyer;
+		
+		donneesAEnvoyer = EcritureCSV.ecrireReservations(listeReservations);
+		
+		for (String ligne : donneesAEnvoyer) {
+			output.write(ligne);
+		}
 		
 	}
 	
 
 	/**
-	 * envoi l'entier au client
-	 * @return true si tout s'est bien passé, false sinon
+	 * envoi le message au client
 	 */
-	public boolean envoiEntier(int valeur) {
-	    return false; //STUB
+	public void envoiMessage(String valeur) {
+        output.println(valeur);
 	}
 	
 	
 	/**
-	 * reçois un entier du client
-	 * @return un entier
+	 * reçois un message du client
+	 * @return un message sous la forme d'une chaîne de caractères
+	 * @throws IOException en cas d'erreur de lecture
 	 */
-	public int recevoirEntier() {
-		return 0; //stub
+	public String recevoirMessage() throws IOException {
+		
+		BufferedReader input;
+		
+		input = new BufferedReader(new InputStreamReader(socketCommunication.getInputStream()));
+		
+		return input.readLine();
 		
 	}
 	
@@ -151,9 +177,8 @@ public class Exportateur {
 	 * @return
 	 */
 	public boolean closeConnexion() {
-		
 		try {
-			socketServeur.close();
+			socketCommunication.close();
 			return true;
 		} catch (IOException e) {
 			return false;
