@@ -147,14 +147,14 @@ public class Salle implements Serializable {
     /**
      * @return la liste des logiciels installés sur les ordinateur de la salle
      */
-    public ArrayList<String> getNumeroInterlocuteur() {
+    public ArrayList<String> getLogicielInsalle() {
         return logicielInstalle;
     }
     
     /**
      * @return la présence d'une imprimante dans la salle
      */
-    public boolean getUsageSalle() {
+    public boolean getImprimante() {
         return imprimante;
     }
     
