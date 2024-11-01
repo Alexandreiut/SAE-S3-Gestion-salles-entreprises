@@ -40,8 +40,18 @@ public class EcritureCSV {
 				    + ";" + (salle.getVideoProjecteur() ? "oui" : "non")
 				    + ";" + (salle.getEcanXxl() ? "oui" : "non")
 				    + ";" + salle.getNombrePc()
-			        + ";" + salle.getTypePc();
-			// TODO ajouter logiciels et imprimante dans ligne
+			        + ";" + salle.getTypePc() + ";";
+			
+			for (int i = 0 ; i < salle.getLogicielInstalle().size() - 1 ; i++) {
+				ligne += salle.getLogicielInstalle().get(i) + ",";
+			}
+			
+			if (!salle.getLogicielInstalle().isEmpty()) {
+				ligne += salle.getLogicielInstalle().get(
+						           salle.getLogicielInstalle().size() - 1);
+			}
+			
+			ligne += ";" + (salle.getImprimante() ? "oui" : "non");
 			
 			resultat.add(ligne);
 		}
@@ -55,7 +65,21 @@ public class EcritureCSV {
 	 * @return une liste de String
 	 */
 	public static ArrayList<String> ecrireEmployes(ArrayList<Employe> listeEmployes) {
-		return null; //STUB
+		ArrayList<String> resultat;
+		
+		resultat = new ArrayList<>();
+		
+		// entête
+		resultat.add("Ident;Nom;Prenom;Telephone");
+		
+		for (Employe employe : listeEmployes) {
+			resultat.add(employe.getIdentifiant() + ";"
+		                 + employe.getNom() + ";"
+		                 + employe.getPrenom() + ";"
+		                 + employe.getTelephone());
+		}
+		
+		return resultat;
 	}
 	
 	/**
@@ -84,6 +108,37 @@ public class EcritureCSV {
 	 * @return une liste de String
 	 */
 	public static ArrayList<String> ecrireReservations(ArrayList<Reservation> listeReservations) {
-		return null; //STUB
-	}	
+		ArrayList<String> resultat;
+		
+		resultat = new ArrayList<>();
+		
+		// entête
+		resultat.add("Ident;salle;employe;activite;date;heuredebut;heurefin;;;;;");
+		
+		for (Reservation reservation : listeReservations) {
+			
+			resultat.add(reservation.getIdentifiant() + ";"
+						 + reservation.getSalle() + ";"
+						 + reservation.getEmploye().getIdentifiant() + ";"
+						 + reservation.getActivite().getIdentifiant() + ";"
+		                 + reservation.getDate() + ";"
+		                 + reservation.getHeureDebut() + ";"
+		                 + reservation.getHeureFin() + ";"
+		                 + (reservation.getObjetReservation() == null ? ""
+		                		 : reservation.getObjetReservation()) + ";"
+		                 + (reservation.getNomInterlocuteur() == null ? ""
+		                		 : reservation.getNomInterlocuteur()) + ";"
+		                 + (reservation.getPrenomInterlocuteur() == null ? ""
+		                		 : reservation.getPrenomInterlocuteur()) + ";"
+		                 + (reservation.getNumeroInterlocuteur() == null ? ""
+		                		 : reservation.getNumeroInterlocuteur()) + ";"
+		                 + (reservation.getUsageSalle() == null ? ""
+		                		 : reservation.getUsageSalle());
+		                 
+		                 
+		}
+		
+		return resultat;
+	}
+
 }
