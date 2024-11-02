@@ -2,8 +2,6 @@ package tests.securite;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.math.BigInteger;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
