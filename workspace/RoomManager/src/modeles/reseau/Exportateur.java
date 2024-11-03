@@ -8,7 +8,6 @@ package modeles.reseau;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -64,7 +63,7 @@ public class Exportateur {
 	 */
 	public void accepterConnexion() throws IOException {
 		socketCommunication = socketServeur.accept();
-		output = new PrintWriter(socketCommunication.getOutputStream());
+		output = new PrintWriter(socketCommunication.getOutputStream(), true);
 	}
 	
 	/**
@@ -75,6 +74,7 @@ public class Exportateur {
 		envoiActivites();
 		envoiEmployes();
 		envoiReservations();
+		output.println("FIN");
 	}
 	
 	/**
@@ -89,7 +89,7 @@ public class Exportateur {
 		donneesAEnvoyer = EcritureCSV.ecrireSalles(listeSalles);
 		
 		for (String ligne : donneesAEnvoyer) {
-			output.write(ligne);
+			output.println(ligne);
 		}
 		
 	}
@@ -106,7 +106,7 @@ public class Exportateur {
 		donneesAEnvoyer = EcritureCSV.ecrireActivites(listeActivites);
 		
 		for (String ligne : donneesAEnvoyer) {
-			output.write(ligne);
+			output.println(ligne);
 		}
 		
 	}
@@ -123,7 +123,7 @@ public class Exportateur {
 		donneesAEnvoyer = EcritureCSV.ecrireEmployes(listeEmployes);
 		
 		for (String ligne : donneesAEnvoyer) {
-			output.write(ligne);
+			output.println(ligne);
 		}
 		
 	}
@@ -140,7 +140,7 @@ public class Exportateur {
 		donneesAEnvoyer = EcritureCSV.ecrireReservations(listeReservations);
 		
 		for (String ligne : donneesAEnvoyer) {
-			output.write(ligne);
+			output.println(ligne);
 		}
 		
 	}
@@ -164,6 +164,8 @@ public class Exportateur {
 		BufferedReader input;
 		
 		input = new BufferedReader(new InputStreamReader(socketCommunication.getInputStream()));
+		
+		System.out.println(input.ready());
 		
 		return input.readLine();
 		

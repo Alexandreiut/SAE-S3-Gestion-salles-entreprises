@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import modeles.entree.LecteurCSV;
-import modeles.erreur.LectureException;
 import modeles.items.*;
 import modeles.stockage.Stockage;
 
@@ -47,7 +46,8 @@ public class Importateur {
 		
 		socketClient = new Socket(adresseIp, port);
 		
-		input = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
+		input = new BufferedReader (
+                new InputStreamReader(socketClient.getInputStream()));
 		
 		this.stockage = stockage;
 	
@@ -66,7 +66,9 @@ public class Importateur {
 		
 		paquet = "";
 		while (!paquet.equals("FIN")) {
-			donnees.addAll(Arrays.asList(input.readLine().split("\n")));
+			paquet = input.readLine();
+			System.out.println("TEST recv donnees");
+			donnees.addAll(Arrays.asList(paquet.split("\n")));
         }
 		
 		return donnees;
@@ -144,9 +146,10 @@ public class Importateur {
 	 * @return true si tout s'est bien passé, false sinon
 	 */
 	public boolean envoiMessage(String valeur) {
-	    try {
+		
+		try {
             PrintWriter output = new PrintWriter(socketClient.getOutputStream(), true);
-            output.println(valeur); // Envoyer l'entier
+            output.println(valeur);
             return true;
         } catch (IOException e) {
             return false;
