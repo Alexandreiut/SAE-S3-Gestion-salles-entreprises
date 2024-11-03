@@ -119,8 +119,8 @@ public class EcritureCSV {
 			
 			resultat.add(reservation.getIdentifiant() + ";"
 						 + reservation.getSalle() + ";"
-						 + reservation.getEmploye().getIdentifiant() + ";"
-						 + reservation.getActivite().getIdentifiant() + ";"
+						 + reservation.getEmploye() + ";"
+						 + reservation.getActivite() + ";"
 		                 + reservation.getDate() + ";"
 		                 + reservation.getHeureDebut() + ";"
 		                 + reservation.getHeureFin() + ";"
@@ -130,12 +130,10 @@ public class EcritureCSV {
 		                		 : reservation.getNomInterlocuteur()) + ";"
 		                 + (reservation.getPrenomInterlocuteur() == null ? ""
 		                		 : reservation.getPrenomInterlocuteur()) + ";"
-		                 + (reservation.getNumeroInterlocuteur() == null ? ""
+		                 + (reservation.getNumeroInterlocuteur() == 0 ? ""
 		                		 : reservation.getNumeroInterlocuteur()) + ";"
 		                 + (reservation.getUsageSalle() == null ? ""
-		                		 : reservation.getUsageSalle());
-		                 
-		                 
+		                		 : reservation.getUsageSalle()));
 		}
 		
 		return resultat;
