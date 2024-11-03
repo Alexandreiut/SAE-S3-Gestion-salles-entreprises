@@ -166,7 +166,7 @@ public class Reservation implements Serializable {
      * @return prénom de l'interlocuteur
      */
     public String getPrenomInterlocuteur() {
-        return nomInterlocuteur;
+        return prenomInterlocuteur;
     }
     
     /**
