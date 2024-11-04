@@ -5,13 +5,6 @@
 
 package modeles.stockage;
 
-import java.io.EOFException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -105,62 +98,35 @@ public class Stockage implements Serializable {
      * sauvegarde la liste des salles et écrase celle précedemment sauvegardé
      * @param listeASauvegarder liste de salles à enregistrer
      */
-    public void setListeSalle(ArrayList<Object> listeASauvegarder) {
-    	ArrayList<Salle> listeConstruite = new ArrayList<>();
-    	for(Object obj : listeASauvegarder) {
-    		if(obj instanceof Salle) {
-    			listeConstruite.add((Salle) obj);
-    		}
-    	}
-        listeSalles = listeConstruite;
+    public void setListeSalle(ArrayList<Salle> listeASauvegarder) {
+        listeSalles = listeASauvegarder;
     }
 
     /**
      * sauvegarde la liste des Activités et écrase celle précedemment sauvegardé
      * @param listeASauvegarder liste d'activités à enregistrer
      */
-    public void setListeActivite(ArrayList<Object> listeASauvegarder) {
-    	ArrayList<Activite> listeConstruite = new ArrayList<>();
-    	for(Object obj : listeASauvegarder) {
-    		if(obj instanceof Activite) {
-    			listeConstruite.add((Activite) obj);
-    		}
-    	}
-    	listeActivites = listeConstruite;
+    public void setListeActivite(ArrayList<Activite> listeASauvegarder) {
+    	listeActivites = listeASauvegarder;
     }
     
     /**
      * sauvegarde la liste des employés et écrase celle précedemment sauvegardé
      * @param listeASauvegarder liste d'employés à enregistrer
      */
-    public void setListeEmploye(ArrayList<Object> listeASauvegarder) {
-    	ArrayList<Employe> listeConstruite = new ArrayList<>();
-    	for(Object obj : listeASauvegarder) {
-    		if(obj instanceof Employe) {
-    			listeConstruite.add((Employe) obj);
-    		}
-    	}
-    	listeEmployes = listeConstruite;
+    public void setListeEmploye(ArrayList<Employe> listeASauvegarder) {
+    	listeEmployes = listeASauvegarder;
     }
     
     /**
      * sauvegarde la liste des réservations et écrase celle précedemment sauvegardé
      * @param listeASauvegarder liste de réservations à enregistrer
      */
-    public void setListeReservation(ArrayList<Object> listeASauvegarder) {
-    	ArrayList<Reservation> listeConstruite = new ArrayList<>();
-    	for(Object obj : listeASauvegarder) {
-    		if(obj instanceof Reservation) {
-    			listeConstruite.add((Reservation) obj);
-    		}
-    	}
-    	listeReservations = listeConstruite;
+    public void setListeReservation(ArrayList<Reservation> listeASauvegarder) {
+    	listeReservations = listeASauvegarder;
     }
     
-    
-    
-    
-    
+
     
     /*==========================================================================*/
     /******** une classe sérialisation avec un code plus propre existe *********/

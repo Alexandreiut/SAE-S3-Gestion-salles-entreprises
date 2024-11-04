@@ -26,7 +26,7 @@ public class Salle implements Serializable {
     /** 
      * identifiant unique associé à une salle sur 8 chiffres 
      */
-    private int identifiant;
+    private String identifiant;
     
     /** 
      * nom de la salle 
@@ -80,7 +80,7 @@ public class Salle implements Serializable {
      * @param logicielInstalle ensemble des logiciels installés sur les postes
      * @param imprimante présence d'une imprimante dans la salle
      */
-    public Salle(int id, String nom, int capacite, boolean videoProjecteur,
+    public Salle(String id, String nom, int capacite, boolean videoProjecteur,
     		     boolean ecranXxl, int nombrePc, String typePc, ArrayList<String> logicielInstalle,
     		     boolean imprimante) {
         
@@ -98,7 +98,7 @@ public class Salle implements Serializable {
     /**
      * @return identifiant de la salle
      */
-    public int getIdentifiant() {
+    public String getIdentifiant() {
         return identifiant;
     }
 
@@ -147,14 +147,14 @@ public class Salle implements Serializable {
     /**
      * @return la liste des logiciels installés sur les ordinateur de la salle
      */
-    public ArrayList<String> getNumeroInterlocuteur() {
+    public ArrayList<String> getLogicielInstalle() {
         return logicielInstalle;
     }
     
     /**
      * @return la présence d'une imprimante dans la salle
      */
-    public boolean getUsageSalle() {
+    public boolean getImprimante() {
         return imprimante;
     }
     
@@ -162,8 +162,8 @@ public class Salle implements Serializable {
     public String toString() {
     	return ("Id : " + this.identifiant + ", Nom : " + this.nom
     			+ ", Capacite : " + this.capacite + ", VideoPro ? " + this.videoProjecteur
-    			+ ",EcranXxl : " + this.ecranXxl + ", NombrePc : " + this.nombrePc
+    			+ ",\nEcranXxl : " + this.ecranXxl + ", NombrePc : " + this.nombrePc
     			+ ", TypePc : " + this.typePc + ", Logiciels : " + this.logicielInstalle
-    			+ ",Imprimante ? " + this.imprimante);
+    			+ ",\nImprimante ? " + this.imprimante);
     }
 }

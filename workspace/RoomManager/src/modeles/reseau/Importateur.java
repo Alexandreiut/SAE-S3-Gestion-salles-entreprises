@@ -11,10 +11,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import modeles.entree.LecteurCSV;
-import modeles.erreur.LectureException;
 import modeles.items.*;
 import modeles.stockage.Stockage;
 
@@ -47,30 +45,11 @@ public class Importateur {
 		
 		socketClient = new Socket(adresseIp, port);
 		
-		input = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
+		input = new BufferedReader (
+                new InputStreamReader(socketClient.getInputStream()));
 		
 		this.stockage = stockage;
 	
-	}
-	
-	/**
-	 * Demande les données à l'exportateur lorsque l'importateur est pret
-	 * true si la requête a été correctement envoyée, false sinon
-	 * @return
-	 */
-	public boolean envoiRequete() {
-		
-		try {
-			PrintWriter output = new PrintWriter(socketClient.getOutputStream(), true);
-			
-			output.print("DEMANDE ENVOI");
-			
-			return true;
-			
-		} catch (IOException e) {
-			return false;
-		}
-		
 	}
 	
 	/**
@@ -84,10 +63,10 @@ public class Importateur {
         
 		String paquet;
 		
-		paquet = "";
-		while (!paquet.equals("FIN")) {
-			donnees.addAll(Arrays.asList(input.readLine().split("\n")));
-        }
+		do {
+			paquet = input.readLine();
+			donnees.add(paquet);
+        } while (!paquet.equals("FIN"));
 		
 		return donnees;
 		
@@ -108,11 +87,9 @@ public class Importateur {
 		
 		ArrayList<Object> objetsAInserer;
 		
-		donneesFichier = null;
+		donneesFichier = new ArrayList<String>();
 		for (String ligne : donneAConvertir) {
-			
-			if (ligne.substring(0, 6).equals("Ident;")) {
-				
+			if (ligne.equals("FIN")) {
 				if (donneesFichier != null) {
 					// stockage des données du fichier précédent
 					try {
@@ -122,18 +99,31 @@ public class Importateur {
 					}
 					
 					if (objetsAInserer.get(0) instanceof Employe) {
-						stockage.setListeEmploye(objetsAInserer);
+						ArrayList<Employe> listeE = new ArrayList<>();
+						for(Object obj : objetsAInserer) {
+							listeE.add((Employe) obj);
+						}
+						stockage.setListeEmploye(listeE);
 					} else if (objetsAInserer.get(0) instanceof Activite) {
-						stockage.setListeActivite(objetsAInserer);
+						ArrayList<Activite> listeA = new ArrayList<>();
+						for(Object obj : objetsAInserer) {
+							listeA.add((Activite) obj);
+						}
+						stockage.setListeActivite(listeA);
 					} else if (objetsAInserer.get(0) instanceof Salle) {
-						stockage.setListeSalle(objetsAInserer);
+						ArrayList<Salle> listeS = new ArrayList<>();
+						for(Object obj : objetsAInserer) {
+							listeS.add((Salle) obj);
+						}
+						stockage.setListeSalle(listeS);
 					} else {
-						stockage.setListeReservation(objetsAInserer);
+						ArrayList<Reservation> listeR = new ArrayList<>();
+						for(Object obj : objetsAInserer) {
+							listeR.add((Reservation) obj);
+						}
+						stockage.setListeReservation(listeR);
 					} 
-					
 				}
-				
-				donneesFichier = new ArrayList<String>();
 			} else {
 				donneesFichier.add(ligne);
 			}
@@ -144,13 +134,14 @@ public class Importateur {
 	
 	
 	/**
-	 * envoi l'entier au serveur
+	 * envoi le message au serveur
 	 * @return true si tout s'est bien passé, false sinon
 	 */
-	public boolean envoiEntier(int valeur) {
-	    try {
+	public boolean envoiMessage(String valeur) {
+		
+		try {
             PrintWriter output = new PrintWriter(socketClient.getOutputStream(), true);
-            output.println(valeur); // Envoyer l'entier
+            output.println(valeur);
             return true;
         } catch (IOException e) {
             return false;
@@ -159,11 +150,12 @@ public class Importateur {
 	
 	
 	/**
-	 * reçois un entier du serveur
-	 * @return un entier
+	 * reçois un message du serveur
+	 * @return un message sous la forme d'une chaîne de caractères
+	 * @throws IOException en cas d'erreur de lecture
 	 */
-	public int recevoirEntier() {
-		return 0; //stub
+	public String recevoirMessage() throws IOException {
+		return input.readLine();
 		
 	}
 	

@@ -28,7 +28,6 @@ public class TestEmploye extends JeuDonne{
 
     @Test
     public void testGetters() {
-        System.out.println("/********** Test de getter de la classe Employe **********/");
         String[] listeIdentifiantAttendu = {"E0000001", "E0000002", "E0000003", "E0000004","E0000005","E0000006","E0000007","E0000008"};
         String[] listeNomAttendu = {"Dupont", "Lexpert", "Dujardin", "Durand", "Dupont", "Martin", "Legrand", "Deneuve"};
         String[] listePrenomAttendu = {"Pierre", "Noemie", "Océane", "Bill", "Max", "Martin", "Jean-Pierre", "Zoé"};

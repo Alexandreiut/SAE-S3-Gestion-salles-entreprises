@@ -27,7 +27,6 @@ public class TestActivite extends JeuDonne{
 
     @Test
     public void testGetters() {
-        System.out.println("/********** Test de getter de la classe Activite **********/");
         for (Activite act : activites) {
             if (act.getIdentifiant().equals("A0000001")) {
                 assertTrue(act.getNom().equals("réunion"));
