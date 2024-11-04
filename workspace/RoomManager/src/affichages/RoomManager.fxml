@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleurs.AccueilControleur">
+<Pane id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" styleClass="pane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleurs.AccueilControleur">
   <children>
  	<HBox prefHeight="0.0" prefWidth="0.0" styleClass="bandeau">
     <children>
@@ -19,22 +19,22 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <Button id="consultation" layoutX="270.0" layoutY="253.0" onAction="#versVueConsultation" prefWidth="210.0" styleClass="label-consultation" stylesheets="@accueil.css" text="Consultation">
+      <Button id="consultation" layoutX="270.0" layoutY="253.0" onAction="#versVueConsultation" prefWidth="210.0" styleClass="les-boutons-menu" stylesheets="@accueil.css" text="Consultation">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
       </Button>
-      <Button id="genererPdf" layoutX="520.0" layoutY="253.0" mnemonicParsing="false" onAction="#versVueGenererPDF" prefWidth="210.0" styleClass="label-consultation" stylesheets="@accueil.css" text="Générer PDF">
+      <Button id="genererPdf" layoutX="520.0" layoutY="253.0" mnemonicParsing="false" onAction="#versVueGenererPDF" prefWidth="210.0" styleClass="les-boutons-menu" stylesheets="@accueil.css" text="Générer PDF">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
       </Button>
-      <Button id="importation" layoutX="270.0" layoutY="375.0" mnemonicParsing="false" onAction="#versVueImportation" prefWidth="210.0" styleClass="label-consultation" stylesheets="@accueil.css" text="Importation">
+      <Button id="importation" layoutX="270.0" layoutY="375.0" mnemonicParsing="false" onAction="#versVueImportation" prefWidth="210.0" styleClass="les-boutons-menu" stylesheets="@accueil.css" text="Importation">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
       </Button>
-      <Button id="exportation" layoutX="520.0" layoutY="375.0" mnemonicParsing="false" onAction="#versVueExportation" prefWidth="210.0" styleClass="label-consultation" stylesheets="@accueil.css" text="Exportation">
+      <Button id="exportation" layoutX="520.0" layoutY="375.0" mnemonicParsing="false" onAction="#versVueExportation" prefWidth="210.0" styleClass="les-boutons-menu" stylesheets="@accueil.css" text="Exportation">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>

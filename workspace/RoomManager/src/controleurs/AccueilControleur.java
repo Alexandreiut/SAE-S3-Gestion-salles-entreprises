@@ -18,7 +18,7 @@ public class AccueilControleur {
 	 */
 	@FXML
 	public void versVueConsultation() {
-		NavigationVues.changerVue("consultation");
+		NavigationVues.changerVue("consultation", false);
 	}
 	
 	/**
@@ -26,7 +26,7 @@ public class AccueilControleur {
 	 */
 	@FXML
 	public void versVueGenererPDF() {
-		NavigationVues.changerVue("consultation");
+		NavigationVues.changerVue("consultation", false);
 	}
 	
 	/**
@@ -34,7 +34,7 @@ public class AccueilControleur {
 	 */
 	@FXML
 	public void versVueImportation() {
-		NavigationVues.changerVue("importation");
+		NavigationVues.changerVue("importation", false);
 	}
 	
 	/**
@@ -42,6 +42,6 @@ public class AccueilControleur {
 	 */
 	@FXML
 	public void versVueExportation() {
-		NavigationVues.changerVue("exportation");
+		NavigationVues.changerVue("exportation", false);
 	}
 }
