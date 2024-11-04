@@ -38,7 +38,7 @@ public class EcritureCSV {
 				    + ";" + salle.getNom()
 				    + ";" + salle.getCapacite()
 				    + ";" + (salle.getVideoProjecteur() ? "oui" : "non")
-				    + ";" + (salle.getEcanXxl() ? "oui" : "non")
+				    + ";" + (salle.getEcranXxl() ? "oui" : "non")
 				    + ";" + salle.getNombrePc()
 			        + ";" + salle.getTypePc() + ";";
 			

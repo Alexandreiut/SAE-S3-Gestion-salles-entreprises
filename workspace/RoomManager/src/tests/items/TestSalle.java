@@ -30,12 +30,7 @@ public class TestSalle extends JeuDonne{
 
     @Test
     public void testGetters() {
-<<<<<<< Updated upstream
-        
-=======
-
->>>>>>> Stashed changes
-        int[] listeIdentifiantAttendu = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+        String[] listeIdentifiantAttendu = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
         String[] listeNomAttendu = {"A6", "salle bleue", "salle ronde", "salle Picasso", "petite salle", 
                                      "A7", "salle patio", "salle Sydney", "salle Brisbane"};
         int[] listeCapaciteAttendu = {15, 18, 14, 15, 7, 4, 6, 20, 22};
