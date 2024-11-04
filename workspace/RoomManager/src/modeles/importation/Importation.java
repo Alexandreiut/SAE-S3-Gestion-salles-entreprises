@@ -15,8 +15,11 @@ public class Importation {
 
 	/**
 	 * Méthode pour ouvrir l'explorateur de fichier
+	 * @param stage la page lié 
+	 * @return la liste des fichiers sélectionés
+	 * @throws IllegalArgumentException si null
 	 */
-	public static List<File> openFileExplorer(Stage stage) {
+	public static List<File> openFileExplorer(Stage stage) throws IllegalArgumentException{
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choisir des fichiers");
 
@@ -25,13 +28,13 @@ public class Importation {
 
         // Afficher la boîte de dialogue de sélection de fichiers avec multi-sélection
         List<File> selectedFiles = fileChooser.showOpenMultipleDialog(stage);
-
+        
         if (selectedFiles != null && !selectedFiles.isEmpty()) {
             // Parcourir et afficher les fichiers sélectionnés
             return selectedFiles;
         } else {
             System.out.println("Aucun fichier sélectionné.");
-            return null;
+            throw new IllegalArgumentException();
         }
 	}
 	

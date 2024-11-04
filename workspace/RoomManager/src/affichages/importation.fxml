@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="panePrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" styleClass="pane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleurs.ImportateurControleur">
+<Pane fx:id="panePrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" styleClass="pane" xmlns="http://javafx.com/javafx/22.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleurs.ImportateurControleur">
    <children>
       <HBox prefHeight="0.0" prefWidth="0.0" styleClass="bandeau">
          <children>
@@ -23,15 +23,15 @@
          <children>
             <Label styleClass="texte-titre" text="Locale" />
             <Text fx:id="textSelection" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texte" text="Sélectionnez les fichiers CSV que vous voulez importer " textAlignment="CENTER" wrappingWidth="342.03271484375" />
-            <Button fx:id="importLocalButton" lineSpacing="20.0" mnemonicParsing="false" styleClass="les-boutons-menu" text="Importer" onAction="#handleOuvertureExplorateurFichier"/>
+            <Button fx:id="importLocalButton" lineSpacing="20.0" mnemonicParsing="false" onAction="#handleOuvertureExplorateurFichier" styleClass="les-boutons-menu" text="Importer" />
          </children>
       </VBox>
       <VBox alignment="CENTER" layoutX="507.0" layoutY="111.0" prefHeight="481.0" prefWidth="485.0" spacing="50.0" styleClass="bordureHBOX">
          <children>
-            <Label styleClass="texte-titre" text="Distant" />
+            <Label styleClass="texte-titre" text="Distante" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texte" text="Sélectionnez l’adresse IP de l’émetteur " textAlignment="CENTER" wrappingWidth="268.4482421875" />
             <TextField fx:id="saisieIP" prefHeight="25.0" prefWidth="469.0" scaleX="0.75" styleClass="saisie-text" />
-            <Button fx:id="boutonImportDistant" alignment="CENTER" contentDisplay="CENTER" layoutX="652.0" layoutY="370.0" lineSpacing="20.0" mnemonicParsing="false" styleClass="les-boutons-menu" text="Importer" onAction="#handleImportDistant"/>
+            <Button fx:id="boutonImportDistant" alignment="CENTER" contentDisplay="CENTER" layoutX="652.0" layoutY="370.0" lineSpacing="20.0" mnemonicParsing="false" onAction="#handleImportDistant" styleClass="les-boutons-menu" text="Importer" />
          </children>
       </VBox>
       <Button fx:id="boutonRetour" layoutX="652.0" layoutY="370.0" mnemonicParsing="false" onAction="#handleRetour" scaleX="0.175" scaleY="0.175" styleClass="bouton-retour">

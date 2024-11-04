@@ -41,109 +41,113 @@ import modeles.stockage.Stockage;
  * Controleur de la vue importateur.fxml
  */
 public class ImportateurControleur {
-	
+
 	@FXML
 	private Pane panePrincipal;
-	
+
 	@FXML
 	private VBox vboxLocale;
-	
+
 	@FXML 
 	private Button boutonRetour;
-	
+
 	@FXML
 	private Text textSelection;
-	
+
 	@FXML 
 	private Button importLocalButton;
-	
+
 	@FXML
 	private Button boutonImportDistant;
-	
+
 	@FXML
 	private TextField saisieIP;
-	
+
 	@FXML
-    private void handleOuvertureExplorateurFichier() throws LectureException {
-		
+	private void handleOuvertureExplorateurFichier() throws LectureException {
+
 		List<File> fichierImporte;
-		
+
 		Stage stage = (Stage) importLocalButton.getScene().getWindow();
-		
-        fichierImporte = Importation.openFileExplorer(stage);
-        
-        String path;
-        
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        
-        for (File fichier : fichierImporte) {
-        	path = fichier.getAbsolutePath();
-        	try {
-				
-        		ArrayList<String> lignes = LecteurCSV.getRessource(path);
-        		ArrayList<Object> listeItems = LecteurCSV.readFichier(lignes);
-        		
-        		if (listeItems.get(0) instanceof Employe) {
-        			System.out.print("oui");
-					ArrayList<Employe> listeE = new ArrayList<>();
-					for(Object obj : listeItems) {
-						listeE.add((Employe) obj);
-					}
-					RoomManager.stockage.setListeEmploye(listeE);
-				} else if (listeItems.get(0) instanceof Activite) {
-					ArrayList<Activite> listeA = new ArrayList<>();
-					for(Object obj : listeItems) {
-						listeA.add((Activite) obj);
-					}
-					RoomManager.stockage.setListeActivite(listeA);
-				} else if (listeItems.get(0) instanceof Salle) {
-					ArrayList<Salle> listeS = new ArrayList<>();
-					for(Object obj : listeItems) {
-						listeS.add((Salle) obj);
-					}
-					RoomManager.stockage.setListeSalle(listeS);
-				} else {
-					ArrayList<Reservation> listeR = new ArrayList<>();
-					for(Object obj : listeItems) {
-						listeR.add((Reservation) obj);
-					}
-					RoomManager.stockage.setListeReservation(listeR);
-				} 
-        		
-				Importation.showImportSuccessAlert();
-				
-			} catch (WrongFileFormatException e) {
-				
-		        alert.setTitle("Format de fichier Incorrect");
-		        alert.setContentText("Format de fichier Incorrect");
+		try {
+			fichierImporte = Importation.openFileExplorer(stage);
 
-		        alert.showAndWait();
 
-			} catch (IOException e) {
-				
-				alert.setTitle("Fichier inexistant");
-		        alert.setContentText("Le fichier n'existe pas");
+			String path;
 
-		        alert.showAndWait();
-		        
-			} catch (LectureException e) {
-				
-				alert.setTitle("Fichier vide");
-		        alert.setContentText("Le fichier saisie est vide");
+			Alert alert = new Alert(Alert.AlertType.ERROR);
 
-		        alert.showAndWait();
+			for (File fichier : fichierImporte) {
+				path = fichier.getAbsolutePath();
+				try {
+
+					ArrayList<String> lignes = LecteurCSV.getRessource(path);
+					ArrayList<Object> listeItems = LecteurCSV.readFichier(lignes);
+
+					if (listeItems.get(0) instanceof Employe) {
+						System.out.print("oui");
+						ArrayList<Employe> listeE = new ArrayList<>();
+						for(Object obj : listeItems) {
+							listeE.add((Employe) obj);
+						}
+						RoomManager.stockage.setListeEmploye(listeE);
+					} else if (listeItems.get(0) instanceof Activite) {
+						ArrayList<Activite> listeA = new ArrayList<>();
+						for(Object obj : listeItems) {
+							listeA.add((Activite) obj);
+						}
+						RoomManager.stockage.setListeActivite(listeA);
+					} else if (listeItems.get(0) instanceof Salle) {
+						ArrayList<Salle> listeS = new ArrayList<>();
+						for(Object obj : listeItems) {
+							listeS.add((Salle) obj);
+						}
+						RoomManager.stockage.setListeSalle(listeS);
+					} else {
+						ArrayList<Reservation> listeR = new ArrayList<>();
+						for(Object obj : listeItems) {
+							listeR.add((Reservation) obj);
+						}
+						RoomManager.stockage.setListeReservation(listeR);
+					} 
+
+					Importation.showImportSuccessAlert();
+
+				} catch (WrongFileFormatException e) {
+
+					alert.setTitle("Format de fichier Incorrect");
+					alert.setContentText("Format de fichier Incorrect");
+
+					alert.showAndWait();
+
+				} catch (IOException e) {
+
+					alert.setTitle("Fichier inexistant");
+					alert.setContentText("Le fichier n'existe pas");
+
+					alert.showAndWait();
+
+				} catch (LectureException e) {
+
+					alert.setTitle("Fichier vide");
+					alert.setContentText("Le fichier saisie est vide");
+
+					alert.showAndWait();
+				}
 			}
-        }
-    }
-	
+		} catch (IllegalArgumentException e) {
+			// null, on attrape l'exception, et ne faisons aucune action
+		}
+	}
+
 	@FXML
 	private void handleImportDistant() {
 		String ip = saisieIP.getText();
-		
+
 		if(!ip.matches("^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$")) {
 			throw new IllegalArgumentException();
 		}
-		
+
 		try {
 			Importateur importateur = new Importateur(ip, 6543, RoomManager.stockage);
 			importateur.convertirReponseDonnee(importateur.recevoirDonnee());
@@ -151,14 +155,14 @@ public class ImportateurControleur {
 			// TODO
 		}
 	}
-	
+
 	@FXML
 	private void menu() {
 		GestionAffichageMenu.affichageMenu(panePrincipal);
 	}
-	
+
 	@FXML
-    private void handleRetour() {
-        NavigationVues.retourVuePrecedente();
-    }
+	private void handleRetour() {
+		NavigationVues.retourVuePrecedente();
+	}
 }
