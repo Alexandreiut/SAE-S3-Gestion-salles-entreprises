@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * TestImportateurExportateur.java				24/10/2024
  * BUT Info2, 2024/2025, pas de copyright
