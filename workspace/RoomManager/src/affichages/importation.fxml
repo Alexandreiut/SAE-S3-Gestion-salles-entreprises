@@ -23,7 +23,7 @@
          <children>
             <Label styleClass="texte-titre" text="Locale" />
             <Text fx:id="textSelection" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texte" text="Sélectionnez les fichiers CSV que vous voulez importer " textAlignment="CENTER" wrappingWidth="342.03271484375" />
-            <Button lineSpacing="20.0" mnemonicParsing="false" styleClass="les-boutons-menu" text="Importer" />
+            <Button fx:id="importLocalButton" lineSpacing="20.0" mnemonicParsing="false" styleClass="les-boutons-menu" text="Importer" onAction="#handleOuvertureExplorateurFichier"/>
          </children>
       </VBox>
       <VBox alignment="CENTER" layoutX="507.0" layoutY="111.0" prefHeight="481.0" prefWidth="485.0" spacing="50.0" styleClass="bordureHBOX">
