@@ -22,7 +22,7 @@ public class JeuDonne {
         ArrayList<Activite> activites = new ArrayList<>();
         activites.add(new Activite("A0000001", "réunion"));
         activites.add(new Activite("A0000002", "formation"));
-        activites.add(new Activite("A0000003", "entretien de la salle"));
+        activites.add(new Activite("A0000003", "entretien"));
         activites.add(new Activite("A0000004", "prêt"));
         activites.add(new Activite("A0000005", "location"));
         activites.add(new Activite("A0000006", "autre"));
@@ -31,14 +31,14 @@ public class JeuDonne {
 
     public ArrayList<Employe> setUpEmployes() {
         ArrayList<Employe> employes = new ArrayList<>();
-        employes.add(new Employe("E0000001", "Dupont", "Pierre", 2614));
-        employes.add(new Employe("E0000002", "Lexpert", "Noemie", 2614));
-        employes.add(new Employe("E0000003", "Dujardin", "Océane", 2633));
-        employes.add(new Employe("E0000004", "Durand", "Bill", 2696));
-        employes.add(new Employe("E0000005", "Dupont", "Max", -1));
-        employes.add(new Employe("E0000006", "Martin", "Martin", 2678));
-        employes.add(new Employe("E0000007", "Legrand", "Jean-Pierre", 2689));
-        employes.add(new Employe("E0000008", "Deneuve", "Zoé", 2626));
+        employes.add(new Employe("E000001", "Dupont", "Pierre", 2614));
+        employes.add(new Employe("E000002", "Lexpert", "Noemie", 2614));
+        employes.add(new Employe("E000003", "Dujardin", "Océane", 2633));
+        employes.add(new Employe("E000004", "Durand", "Bill", 2696));
+        employes.add(new Employe("E000005", "Dupont", "Max", -1));
+        employes.add(new Employe("E000006", "Martin", "Martin", 2678));
+        employes.add(new Employe("E000007", "Legrand", "Jean-Pierre", 2689));
+        employes.add(new Employe("E000008", "Deneuve", "Zoé", 2626));
         return employes;
     }
 
@@ -67,15 +67,15 @@ public class JeuDonne {
 
     public ArrayList<Salle> setUpSalles() {
         ArrayList<Salle> salles = new ArrayList<>();
-        salles.add(new Salle("1", "A6", 15, true, false, 4, "PC portable", new ArrayList<>(), false));
-        salles.add(new Salle("2", "salle bleue", 18, true, true, 0, "", new ArrayList<>(), false));
-        salles.add(new Salle("3", "salle ronde", 14, true, false, 0, "", new ArrayList<>(), false));
-        salles.add(new Salle("4", "salle Picasso", 15, false, false, 0, "", new ArrayList<>(), false));
-        salles.add(new Salle("5", "petite salle", 7, true, true, 0, "", new ArrayList<>(), false));
-        salles.add(new Salle("6", "A7", 4, false, false, 0, "", new ArrayList<>(), false));
-        salles.add(new Salle("7", "salle patio", 6, false, false, 0, "", new ArrayList<>(), false));
-        salles.add(new Salle("8", "salle Sydney", 20, true, false, 16, "PC Windows", new ArrayList<>(List.of("bureautique", "java", "Intellij")), false));
-        salles.add(new Salle("9", "salle Brisbane", 22, true, false, 18, "PC Windows", new ArrayList<>(List.of("bureautique", "java", "Intellij", "photoshop")), true));
+        salles.add(new Salle("00000001", "A6", 15, true, false, 4, "PC portable", new ArrayList<>(), false));
+        salles.add(new Salle("00000002", "salle bleue", 18, true, true, 0, "", new ArrayList<>(), false));
+        salles.add(new Salle("00000003", "salle ronde", 14, true, false, 0, "", new ArrayList<>(), false));
+        salles.add(new Salle("00000004", "salle Picasso", 15, false, false, 0, "", new ArrayList<>(), false));
+        salles.add(new Salle("00000005", "petite salle", 7, true, true, 0, "", new ArrayList<>(), false));
+        salles.add(new Salle("00000006", "A7", 4, false, false, 0, "", new ArrayList<>(), false));
+        salles.add(new Salle("00000007", "salle patio", 6, false, false, 0, "", new ArrayList<>(), false));
+        salles.add(new Salle("00000008", "salle Sydney", 20, true, false, 16, "PC Windows", new ArrayList<>(List.of("bureautique", "java", "Intellij")), false));
+        salles.add(new Salle("00000009", "salle Brisbane", 22, true, false, 18, "PC Windows", new ArrayList<>(List.of("bureautique", "java", "Intellij", "photoshop")), true));
         return salles;
     }
 }

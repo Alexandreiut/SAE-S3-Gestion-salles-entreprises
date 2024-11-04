@@ -22,7 +22,7 @@ import modeles.stockage.Stockage;
 public class Consultation {
 	
 	/** Données de l'application à exploiter */
-	private Stockage stockage;
+	private static Stockage stockage;
 	
 	/**
 	 * Initialise le Stockage
@@ -67,7 +67,7 @@ public class Consultation {
 	 */
 	private void initialiseValeurDefautBrute(HashMap<String, ArrayList<? extends Object>> donnees) {
 		for (String key : donnees.keySet()) {
-			if (donnees.get(key) == null) {
+			if (donnees.get(key) == null || donnees.get(key).isEmpty()) {
 				donnees.put(key, new ArrayList<>(Arrays.asList("Aucun(e) " + key + " enregistré dans l'application")));
 			}
 		}

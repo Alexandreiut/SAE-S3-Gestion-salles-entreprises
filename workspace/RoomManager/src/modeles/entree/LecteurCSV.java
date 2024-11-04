@@ -232,7 +232,7 @@ public class LecteurCSV {
 	    ArrayList<Activite> listeActivite = RoomManager.stockage.getListeActivite();
 	    ArrayList<Salle> listeSalle = RoomManager.stockage.getListeSalle();
 	    ArrayList<String> listeIdEmploye = new ArrayList<>();
-	    ArrayList<String> listeIdActivite = new ArrayList<>();
+	    ArrayList<String> listeNomActivite = new ArrayList<>();
 	    ArrayList<String> listeIdSalle = new ArrayList<>();
 	    
 		for (Employe emp : listeEmploye) {
@@ -240,7 +240,7 @@ public class LecteurCSV {
 		}
 		
 		for (Activite act : listeActivite) {
-			listeIdActivite.add(act.getIdentifiant());
+			listeNomActivite.add(act.getNom());
 		}
 		
 		for (Salle sal : listeSalle) {
@@ -254,18 +254,21 @@ public class LecteurCSV {
 
 			id = (ligneSplit.length > 0 && ligneSplit[0].length() > 1 && ligneSplit[0].charAt(0) == 'R') ? ligneSplit[0] : "Id inconnu";
 			// Vérification de l'existance des identifiants relever par la lecture pour garder une cohérence        
-			salleReservee = (ligneSplit.length > 1 && ligneSplit[1].length() == 8 && ligneSplit[1].matches("\\d+")) ? ligneSplit[2] : "-1";
+			salleReservee = (ligneSplit.length > 1 && ligneSplit[1].length() == 8 && ligneSplit[1].matches("\\d+")) ? ligneSplit[1] : "-1";
 			reservant = (ligneSplit.length > 2 && ligneSplit[2].length() == 7 && ligneSplit[2].charAt(0) == 'E') ? ligneSplit[2] : "Employé inconnu";
 			activite = (ligneSplit.length > 3 && ligneSplit[3].length() > 1) ? ligneSplit[3] : "Activite inconnue";
 			
 			if(!listeIdSalle.contains(salleReservee)) {
-				//throw new LectureException();
+				System.out.println(salleReservee);
+				throw new LectureException();
 			}
 			if(!listeIdEmploye.contains(reservant)) {
-				//throw new LectureException();
+				System.out.println(reservant);
+				throw new LectureException();
 			}
-			if(!listeIdActivite.contains(activite)) {
-				//throw new LectureException();
+			if(!listeNomActivite.contains(activite)) {
+				System.out.println(activite);
+				throw new LectureException();
 			} 
 			
 			// Récupération de l'ensemble des élément pour constituer une réservation

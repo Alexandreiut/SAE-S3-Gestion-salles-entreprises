@@ -25,6 +25,10 @@ public class Importation {
 
         // Optionnel : définir un dossier de départ
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        
+        // Ajouter un filtre pour ne montrer que les fichiers .csv
+        FileChooser.ExtensionFilter csvFilter = new FileChooser.ExtensionFilter("Fichiers CSV (*.csv)", "*.csv");
+        fileChooser.getExtensionFilters().add(csvFilter);
 
         // Afficher la boîte de dialogue de sélection de fichiers avec multi-sélection
         List<File> selectedFiles = fileChooser.showOpenMultipleDialog(stage);
