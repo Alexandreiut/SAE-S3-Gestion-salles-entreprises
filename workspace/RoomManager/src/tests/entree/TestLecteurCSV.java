@@ -23,16 +23,16 @@ import modeles.erreur.WrongFileFormatException;
  */
 public class TestLecteurCSV {
 
-	private final String ACTIVITES_PATH = "Z:\\SAEjava\\activites 26_08_24 13_40.csv";
-	private final String EMPLOYES_PATH = "Z:\\SAEjava\\employes 26_08_24 13_40.csv";
-	private final String RESERVATIONS_PATH = "Z:\\SAEjava\\reservations 26_08_24 13_40.csv";
-	private final String SALLES_PATH = "Z:\\SAEjava\\salles 26_08_24 13_40.csv";
+	private static final String ACTIVITES_PATH = "/RoomManager/src/ressource/csv/activites 26_08_24 13_40.csv";
+	private static final String EMPLOYES_PATH = "/RoomManager/src/ressource/csv/employes 26_08_24 13_40.csv";
+	private static final String RESERVATIONS_PATH = "/RoomManager/src/ressource/csv/reservations 26_08_24 13_40.csv";
+	private static final String SALLES_PATH = "/RoomManager/src/ressource/csv/salles 26_08_24 13_40.csv";
 
-	private final String EXTENSION_INCORRECT = "Z:\\SAEjava\\activites 26_08_24 13_40.xls";
-	private final String PATH_INEXISTANT = "abc.csv";
+	private final String EXTENSION_INCORRECT = "/RoomManager/src/ressource/xls/activites 26_08_24 13_40.xls";
+	private final String PATH_INEXISTANT = "";
 
 	@Test
-	void testGetRessource() {
+	private static void testGetRessource() {
 
 		ArrayList<String> activites = new ArrayList<>();
 		ArrayList<String> employes = new ArrayList<>();
@@ -86,7 +86,7 @@ public class TestLecteurCSV {
 
 
 	@Test
-	public void testReadSalleCSV() throws Exception {
+	public static void testReadSalleCSV() throws Exception {
 		ArrayList<String> lignes = new ArrayList<>();
 		lignes.add("Ident;Nom;Capacite;videoproj;ecranXXL;ordinateur;type;logiciels;imprimante");
 		lignes.add("1;Salle A;50;Oui;Non;Oui;Salle de réunion;None;Oui");
@@ -97,38 +97,46 @@ public class TestLecteurCSV {
 		Assertions.assertEquals(1, result.size());
 	}
 
-	public void testReadReservationCSV() throws Exception {
-        ArrayList<String> lignes = new ArrayList<>();
-        lignes.add("Ident;salle;employe;activite;date;heuredebut;heurefin;;;;;");
-        lignes.add("1;Salle 1;1;1;2024-10-21;09:00;10:00");
-        
-        ArrayList<Object> result = LecteurCSV.readFichier(lignes);
-        
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals(1, result.size());
-    }
+	public static void testReadReservationCSV() throws Exception {
+		ArrayList<String> lignes = new ArrayList<>();
+		lignes.add("Ident;salle;employe;activite;date;heuredebut;heurefin;;;;;");
+		lignes.add("1;Salle 1;1;1;2024-10-21;09:00;10:00");
+
+		ArrayList<Object> result = LecteurCSV.readFichier(lignes);
+
+		Assertions.assertNotNull(result);
+		Assertions.assertEquals(1, result.size());
+	}
 
 	@Test
-    public void testReadEmployeCSV() throws Exception {
-        ArrayList<String> lignes = new ArrayList<>();
-        lignes.add("Ident;Nom;Prenom;Telephone");
-        lignes.add("1;Dupont;Jean;0123456789");
-        
-        ArrayList<Object> result = LecteurCSV.readFichier(lignes);
-        
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals(1, result.size());
-    }
+	public static void testReadEmployeCSV() throws Exception {
+		ArrayList<String> lignes = new ArrayList<>();
+		lignes.add("Ident;Nom;Prenom;Telephone");
+		lignes.add("1;Dupont;Jean;0123456789");
 
-	 @Test
-	    public void testReadActiviteCSV() throws Exception {
-	        ArrayList<String> lignes = new ArrayList<>();
-	        lignes.add("Ident;Activité");
-	        lignes.add("1;Réunion");
+		ArrayList<Object> result = LecteurCSV.readFichier(lignes);
 
-	        ArrayList<Object> result = LecteurCSV.readFichier(lignes);
-	        
-	        Assertions.assertNotNull(result);
-	        Assertions.assertEquals(1, result.size());
-	    }
+		Assertions.assertNotNull(result);
+		Assertions.assertEquals(1, result.size());
+	}
+
+	@Test
+	public static void testReadActiviteCSV() throws Exception {
+		ArrayList<String> lignes = new ArrayList<>();
+		lignes.add("Ident;Activité");
+		lignes.add("1;Réunion");
+
+		ArrayList<Object> result = LecteurCSV.readFichier(lignes);
+
+		Assertions.assertNotNull(result);
+		Assertions.assertEquals(1, result.size());
+	}
+	
+	/**
+	 * Appel des méthodes de tests
+	 * @param args inutilisé
+	 */
+	public static void main(String[] args) {
+		testGetRessource();
+	}
 }

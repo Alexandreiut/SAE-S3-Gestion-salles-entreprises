@@ -66,17 +66,17 @@
 /* ========================================== */
 
 /* modification bandeau */
-.bandeau-modifier {
+/*.bandeau-modifier {
 	-fx-background-color: #016401;
 	-fx-alignment: center;
 	-fx-translate-y: 37;
 	-fx-translate-x: 300;
-	-fx-pref-width: 700;
+	-fx-pref-width: 1000;
     -fx-pref-height: 65;
-}
+}*/
 
 /* modification bandeau du bouton aide */
-.bouton-aide-modifier {
+/*.bouton-aide-modifier {
 	-fx-background-radius: 360;
 	-fx-background-color: #FFFFFF;
     -fx-font-weight: bold;
@@ -86,7 +86,7 @@
     -fx-translate-x: 220;
     -fx-pref-width: 48;
     -fx-pref-height: 48;
-}
+}*/
 
 .menu {
 	-fx-background-color: #CCF5F3;
@@ -161,4 +161,21 @@
 .bouton-aide-modifier:hover {
     -fx-background-color: #00BBB0;
     -fx-cursor: hand;
+}
+.bouton-retour:hover{
+	-fx-background-color: #D9D9D9;
+    -fx-cursor: hand;
+}
+
+
+/* ===================================== */
+/********** Bouton retour **********/
+/* ===================================== */
+.bouton-retour {
+    -fx-background-color: white; /* Fond blanc */
+    -fx-border-color: black; /* Bordure noire */
+    -fx-border-width: 20px; /* Épaisseur de la bordure */
+    -fx-background-radius: 125px; /* Coins arrondis pour le bouton */
+    -fx-border-radius: 125px;
+    -fx-border-style: solid; 
 }

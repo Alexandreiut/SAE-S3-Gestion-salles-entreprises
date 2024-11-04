@@ -1,0 +1,27 @@
+.texte {
+	-fx-font-weight: bold;
+    -fx-font-size: 35px;
+    /*-fx-font-family: "Arial"; /* Tu peux remplacer "Arial" par la police de ton choix */
+	
+}
+
+.bouton-afficher:hover{
+	-fx-background-color: #D9D9D9;
+    -fx-cursor: hand;
+}
+
+.bouton-afficher {
+	-fx-pref-width: 180;
+    -fx-pref-height: 45;
+	
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20px;
+    -fx-font-size: 32px;
+    
+    -fx-border-color: #000000;
+    -fx-border-width: 4;
+    -fx-border-radius: 20;
+    -fx-border-style: solid;
+}

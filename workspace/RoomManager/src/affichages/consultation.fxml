@@ -2,28 +2,42 @@
 
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleurs.ConsultationControleur">
+<Pane fx:id="panePrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" styleClass="pane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleurs.ConsultationControleur">
    <children>
       <HBox prefHeight="0.0" prefWidth="0.0" styleClass="bandeau">
          <children>
             <Label styleClass="titre" text="Consultation" />
             <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" styleClass="bouton-aide" text="i" />
          </children></HBox>
-      <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" styleClass="bouton-menu" text="Menu" />
-      <VBox id="vboxFiltres" layoutY="102.0" prefHeight="499.0" prefWidth="214.0" styleClass="FondVBox" />
-      <Button layoutX="492.0" layoutY="515.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="484.0" styleClass="les-boutons-menu" text="+ Ajouter des résultats au pdf" />
-      <Button layoutX="759.0" layoutY="515.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="134.0" styleClass="les-boutons-menu" text="&lt;--" />
-      <HBox layoutX="225.0" layoutY="111.0" prefHeight="70.0" prefWidth="758.0" />
+      <Button mnemonicParsing="false" onAction="#menu" prefHeight="0.0" prefWidth="0.0" styleClass="bouton-menu" text="Menu" />
+      <VBox id="vboxFiltres" alignment="CENTER" layoutY="102.0" prefHeight="499.0" prefWidth="214.0" spacing="20.0" styleClass="FondVBox">
+         <children>
+            <ComboBox prefWidth="150.0" promptText="Type de recherche" styleClass="comboBox" />
+            <ComboBox prefWidth="150.0" promptText="Moyenne par jour" styleClass="comboBox" />
+            <ComboBox prefWidth="150.0" promptText="Réservé" styleClass="comboBox" />
+            <Button mnemonicParsing="false" styleClass="bouton-filtre" text="Date début" />
+            <Button mnemonicParsing="false" styleClass="bouton-filtre" text="Date fin" />
+            <Button mnemonicParsing="false" styleClass="bouton-filtre" text="Heure début" />
+            <Button mnemonicParsing="false" styleClass="bouton-filtre" text="Heure fin" />
+            <ComboBox prefWidth="150.0" promptText="Élément recherché" styleClass="comboBox" />
+         </children></VBox>
+      <Button layoutX="467.0" layoutY="524.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="484.0" styleClass="boutons-ajouter" text="Ajouter au pdf" />
       <HBox id="entete" layoutX="225.0" layoutY="194.0" prefHeight="33.0" prefWidth="758.0" styleClass="FondVBox" />
       <VBox layoutX="225.0" layoutY="227.0" prefHeight="278.0" prefWidth="758.0" styleClass="bordureHBOX">
          <children>
-            <HBox prefHeight="79.0" prefWidth="754.0" styleClass="bordureHBOX" />
+            <HBox alignment="CENTER_RIGHT" prefHeight="79.0" prefWidth="754.0" styleClass="bordureHBOX">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="484.0" styleClass="boutons-ajouter" text="Ajouter au pdf" />
+               </children></HBox>
             <HBox id="hboxDonnees" fx:id="hboxDonnees" prefHeight="199.0" prefWidth="754.0" styleClass="bordureHBOX">
                <children>
                   <ScrollPane prefHeight="192.0" prefWidth="749.6">
@@ -35,6 +49,19 @@
             </HBox>
          </children>
       </VBox>
+      <Button fx:id="boutonRetour" layoutX="652.0" layoutY="370.0" mnemonicParsing="false" onAction="#handleRetour" scaleX="0.175" scaleY="0.175" styleClass="bouton-retour">
+         <graphic>
+            <SVGPath content="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 288 480 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-370.7 0 73.4-73.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-128 128z" scaleX="0.5" scaleY="0.5" />
+         </graphic>
+      </Button>
+      <TextField layoutX="225.0" layoutY="123.0" prefHeight="25.0" prefWidth="173.0" promptText="Nom salle recherché " styleClass="saisie-text" />
+      <TextField layoutX="449.0" layoutY="123.0" prefHeight="25.0" prefWidth="176.0" promptText="Nom employé recherché" styleClass="saisie-text" />
+      <ComboBox layoutX="686.0" layoutY="129.0" prefWidth="150.0" promptText="Type d’activité" styleClass="comboBox" />
+      <Button layoutX="666.0" layoutY="-113.0" mnemonicParsing="false" scaleX="0.0625" scaleY="0.0625" styleClass="boutons-loupe" text=" ">
+         <graphic>
+            <SVGPath content="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
+         </graphic>
+      </Button>
    </children>
    <stylesheets>
       <URL value="@application.css" />

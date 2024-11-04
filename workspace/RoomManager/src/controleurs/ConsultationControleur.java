@@ -8,12 +8,15 @@ package controleurs;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import affichages.GestionAffichageMenu;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-
+import javafx.scene.text.Text;
+import modeles.NavigationVues;
 import modeles.consultation.Consultation;
 
 /**
@@ -22,10 +25,16 @@ import modeles.consultation.Consultation;
 public class ConsultationControleur {
 	
 	@FXML
+	private Pane panePrincipal;
+	
+	@FXML
 	private HBox hboxDonnees;
 	
 	@FXML
 	private VBox vboxDonnees;
+	
+	@FXML 
+	private Button boutonRetour;
 
 	
 	/**
@@ -33,7 +42,7 @@ public class ConsultationControleur {
 	 * par defaut lorsque l'on arrive sur la vue.
 	 */
 	@FXML
-	public void initialize() {
+	private void initialize() {
 		
 		Consultation consultation = new Consultation();
 		HashMap<String,  ArrayList<? extends Object>> donnees = consultation.fetchDonneesBrutes();
@@ -42,18 +51,23 @@ public class ConsultationControleur {
 			affichage(vboxDonnees, donnees.get("pas de données"));
 		
 		} else {	
-			vboxDonnees.getChildren().add(new Label("Employés :"));
+			vboxDonnees.getChildren().add(new Text("Employés :"));
 			affichage(vboxDonnees, donnees.get("Employés"));
 			
-			vboxDonnees.getChildren().add(new Label("Salles :"));
+			vboxDonnees.getChildren().add(new Text("Salles :"));
 			affichage(vboxDonnees, donnees.get("Salles"));
 			
-			vboxDonnees.getChildren().add(new Label("Activitées :"));
+			vboxDonnees.getChildren().add(new Text("Activitées :"));
 			affichage(vboxDonnees, donnees.get("Activitées"));
 			
-			vboxDonnees.getChildren().add(new Label("Réservations :"));
+			vboxDonnees.getChildren().add(new Text("Réservations :"));
 			affichage(vboxDonnees, donnees.get("Réservations"));
 		}	
+	}
+	
+	@FXML
+	private void menu() {
+		GestionAffichageMenu.affichageMenu(panePrincipal);
 	}
 	
 	/**
@@ -69,4 +83,9 @@ public class ConsultationControleur {
 			layout.getChildren().add(affichageInfos);
 		}
 	}
+	
+	@FXML
+    private void handleRetour() {
+        NavigationVues.retourVuePrecedente();
+    }
 }

@@ -162,8 +162,8 @@ public class Salle implements Serializable {
     public String toString() {
     	return ("Id : " + this.identifiant + ", Nom : " + this.nom
     			+ ", Capacite : " + this.capacite + ", VideoPro ? " + this.videoProjecteur
-    			+ ",\nEcranXxl : " + this.ecranXxl + ", NombrePc : " + this.nombrePc
+    			+ ",EcranXxl : " + this.ecranXxl + ", NombrePc : " + this.nombrePc
     			+ ", TypePc : " + this.typePc + ", Logiciels : " + this.logicielInstalle
-    			+ ",\nImprimante ? " + this.imprimante);
+    			+ ",Imprimante ? " + this.imprimante);
     }
 }
