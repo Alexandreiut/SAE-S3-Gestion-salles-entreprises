@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import lanceur.RoomManager;
+
 /**
  * Classe de tests de la classe Importateur.java et Exportateur.java
  */
@@ -81,7 +83,7 @@ public class TestImportateurExportateur {
 		assertDoesNotThrow(() -> importateur = new Importateur("127.0.0.1", 6543, stockageImportateur));
 		
 	}
-/*
+
 	@Test
 	void testEnvoiMessageEtRecevoirMessage() {
 		
@@ -96,7 +98,7 @@ public class TestImportateurExportateur {
 		importateur.closeConnexion();
 		
 	}
-	*/
+	
 	@Test
 	void testEchangeDonnees() {
 		
