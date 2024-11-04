@@ -11,6 +11,8 @@ import modeles.items.*;
 import modeles.reseau.Exportateur;
 import static org.junit.jupiter.api.Assertions.*;
 
+import javafx.application.Application;
+
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
