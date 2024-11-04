@@ -29,7 +29,6 @@ public class TestSalle extends JeuDonne{
 
     @Test
     public void testGetters() {
-        System.out.println("/********** Test de getter de la classe Salle **********/");
         
         int[] listeIdentifiantAttendu = {1, 2, 3, 4, 5, 6, 7, 8, 9};
         String[] listeNomAttendu = {"A6", "salle bleue", "salle ronde", "salle Picasso", "petite salle", 
