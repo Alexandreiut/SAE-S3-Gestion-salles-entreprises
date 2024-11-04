@@ -65,10 +65,10 @@ public class Importateur {
 		String paquet;
 		
 		paquet = input.readLine();
-		while (!paquet.equals("FIN")) {
+		do {
 			donnees.add(paquet);
 			paquet = input.readLine();
-        }
+        } while (!paquet.equals("FIN"));
 		
 		return donnees;
 		
@@ -91,16 +91,18 @@ public class Importateur {
 		
 		donneesFichier = null;
 		for (String ligne : donneAConvertir) {
-			
-			if (ligne.substring(0, 6).equals("Ident;")) {
-				
+			System.out.println(ligne);
+			if (ligne.equals("FIN") || ligne.substring(0, 6).equals("Ident;")) {
 				if (donneesFichier != null) {
 					// stockage des données du fichier précédent
 					try {
+						System.out.println(donneesFichier);
 						objetsAInserer = LecteurCSV.readFichier(donneesFichier);
 					} catch (Exception e) {
 						return false;
 					}
+					
+					System.out.println(objetsAInserer);
 					
 					if (objetsAInserer.get(0) instanceof Employe) {
 						ArrayList<Employe> listeE = new ArrayList<>();

@@ -51,7 +51,7 @@ public class TestImportateurExportateur {
 		
 		logiciels.add("bureautique");
 
-		listeSalles.add(new Salle(1, "Salle A", 50, true, false, 12,
+		listeSalles.add(new Salle("00000001", "Salle A", 50, true, false, 12,
 				                  "fixe", logiciels, true));
 		listeEmployes.add(new Employe("E000001", "Dupont", "Pierre", 2614));
 		listeActivites.add(new Activite("A0000001","réunion"));
@@ -104,14 +104,28 @@ public class TestImportateurExportateur {
 		
 		assertDoesNotThrow(() -> importateur.convertirReponseDonnee(importateur.recevoirDonnee()));
 		
-		assertArrayEquals(stockageExportateur.getListeActivite().toArray(),
-				          stockageImportateur.getListeActivite().toArray());
-		assertArrayEquals(stockageExportateur.getListeEmploye().toArray(),
-			         	  stockageImportateur.getListeEmploye().toArray());
-		assertArrayEquals(stockageExportateur.getListeSalle().toArray(),
-			     	 	  stockageImportateur.getListeSalle().toArray());
-		assertArrayEquals(stockageExportateur.getListeReservation().toArray(),
-			     	 	  stockageImportateur.getListeReservation().toArray());
+		// utilisation de toString() pour comparer les données
+		// car les toString() des items contiennent tous leurs attributs
+		for (int i = 0 ; i < stockageExportateur.getListeActivite().size() ; i++) {
+			assertEquals(stockageExportateur.getListeActivite().get(i).toString(),
+					     stockageImportateur.getListeActivite().get(i).toString());
+		}
+		
+		for (int i = 0 ; i < stockageExportateur.getListeEmploye().size() ; i++) {
+			assertEquals(stockageExportateur.getListeEmploye().get(i).toString(),
+					     stockageImportateur.getListeEmploye().get(i).toString());
+		}
+		
+		for (int i = 0 ; i < stockageExportateur.getListeSalle().size() ; i++) {
+			assertEquals(stockageExportateur.getListeSalle().get(i).toString(),
+					     stockageImportateur.getListeSalle().get(i).toString());
+		}
+		
+		for (int i = 0 ; i < stockageExportateur.getListeReservation().size() ; i++) {
+			assertEquals(stockageExportateur.getListeReservation().get(i).toString(),
+					     stockageImportateur.getListeReservation().get(i).toString());
+		}
+		
 	}
 	/*
 	@Test
