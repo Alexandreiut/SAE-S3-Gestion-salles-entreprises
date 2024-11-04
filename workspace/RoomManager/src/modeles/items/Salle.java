@@ -26,7 +26,7 @@ public class Salle implements Serializable {
     /** 
      * identifiant unique associé à une salle sur 8 chiffres 
      */
-    private int identifiant;
+    private String identifiant;
     
     /** 
      * nom de la salle 
@@ -80,7 +80,7 @@ public class Salle implements Serializable {
      * @param logicielInstalle ensemble des logiciels installés sur les postes
      * @param imprimante présence d'une imprimante dans la salle
      */
-    public Salle(int id, String nom, int capacite, boolean videoProjecteur,
+    public Salle(String id, String nom, int capacite, boolean videoProjecteur,
     		     boolean ecranXxl, int nombrePc, String typePc, ArrayList<String> logicielInstalle,
     		     boolean imprimante) {
         
@@ -98,7 +98,7 @@ public class Salle implements Serializable {
     /**
      * @return identifiant de la salle
      */
-    public int getIdentifiant() {
+    public String getIdentifiant() {
         return identifiant;
     }
 

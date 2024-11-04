@@ -33,7 +33,7 @@ public class TestEcritureCSV {
 		
 		logiciels.add("bureautique");
 		
-		salle = new Salle(1, "Salle A", 50, true, false, 12, "fixe", logiciels, true);
+		salle = new Salle("00000001", "Salle A", 50, true, false, 12, "fixe", logiciels, true);
 		
 		test = new ArrayList<Salle>();	
 		
@@ -41,7 +41,7 @@ public class TestEcritureCSV {
 		
 		resAttendu = new ArrayList<>();
 		resAttendu.add("Ident;Nom;Capacite;videoproj;ecranXXL;ordinateur;type;logiciels;imprimante");
-		resAttendu.add("1;Salle A;50;oui;non;12;fixe;bureautique;oui");
+		resAttendu.add("00000001;Salle A;50;oui;non;12;fixe;bureautique;oui");
 
 		result = EcritureCSV.ecrireSalles(test);
 

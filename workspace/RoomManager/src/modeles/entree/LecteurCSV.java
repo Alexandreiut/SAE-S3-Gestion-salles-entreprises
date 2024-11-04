@@ -147,7 +147,7 @@ public class LecteurCSV {
 
 		Salle salle;
 
-		int id;
+		String id;
 		int capacite;
 		int nombrePc;
 
@@ -169,8 +169,8 @@ public class LecteurCSV {
 
 			ligneSplit  = ligne.split(";");
 
-			id = (ligneSplit.length > 0 && ligneSplit[0].matches("\\d+") && ligneSplit[0].charAt(0) == '0') 
-					? Integer.parseInt(ligneSplit[0]) : 0;
+			id = (ligneSplit.length > 0 && ligneSplit[0].matches("\\d+")) 
+					? ligneSplit[0] : "Id inconnu";
 			nom = (ligneSplit.length > 1) ? ligneSplit[1] : "Nom inconnu";
 			capacite = (ligneSplit.length > 2 && ligneSplit[2].matches("\\d+")) ? Integer.parseInt(ligneSplit[2]) : 0;
 			videoProjecteur = (ligneSplit.length > 3) && ligneSplit[3].equalsIgnoreCase("oui");
@@ -231,7 +231,7 @@ public class LecteurCSV {
 	    
 	    ArrayList<String> listeIdEmploye = new ArrayList<>();
 	    ArrayList<String> listeIdActivite = new ArrayList<>();
-	    ArrayList<Integer> listeIdSalle = new ArrayList<>();
+	    ArrayList<String> listeIdSalle = new ArrayList<>();
 
 		for (Object emp : listeEmploye) {
 			if (emp instanceof Employe) {
