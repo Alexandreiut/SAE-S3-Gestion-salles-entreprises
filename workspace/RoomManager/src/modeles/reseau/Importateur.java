@@ -64,10 +64,9 @@ public class Importateur {
         
 		String paquet;
 		
-		paquet = input.readLine();
 		do {
-			donnees.add(paquet);
 			paquet = input.readLine();
+			donnees.add(paquet);
         } while (!paquet.equals("FIN"));
 		
 		return donnees;
@@ -90,13 +89,13 @@ public class Importateur {
 		ArrayList<Object> objetsAInserer;
 		
 		donneesFichier = null;
+		System.out.println(donneAConvertir);
 		for (String ligne : donneAConvertir) {
-			System.out.println(ligne);
 			if (ligne.equals("FIN") || ligne.substring(0, 6).equals("Ident;")) {
 				if (donneesFichier != null) {
 					// stockage des données du fichier précédent
 					try {
-						System.out.println(donneesFichier);
+						System.out.println(donneesFichier + ":" + LecteurCSV.readFichier(donneesFichier) );
 						objetsAInserer = LecteurCSV.readFichier(donneesFichier);
 					} catch (Exception e) {
 						return false;
