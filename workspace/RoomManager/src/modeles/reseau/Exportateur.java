@@ -165,8 +165,6 @@ public class Exportateur {
 		
 		input = new BufferedReader(new InputStreamReader(socketCommunication.getInputStream()));
 		
-		System.out.println(input.ready());
-		
 		return input.readLine();
 		
 	}

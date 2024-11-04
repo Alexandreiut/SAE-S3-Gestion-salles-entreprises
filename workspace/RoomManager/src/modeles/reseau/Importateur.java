@@ -64,11 +64,10 @@ public class Importateur {
         
 		String paquet;
 		
-		paquet = "";
+		paquet = input.readLine();
 		while (!paquet.equals("FIN")) {
+			donnees.add(paquet);
 			paquet = input.readLine();
-			System.out.println("TEST recv donnees");
-			donnees.addAll(Arrays.asList(paquet.split("\n")));
         }
 		
 		return donnees;
@@ -128,13 +127,12 @@ public class Importateur {
 						}
 						stockage.setListeReservation(listeR);
 					} 
-					
 				}
 				
 				donneesFichier = new ArrayList<String>();
-			} else {
-				donneesFichier.add(ligne);
 			}
+			
+			donneesFichier.add(ligne);
 		}
 		
 		return true;
