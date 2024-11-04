@@ -27,7 +27,6 @@ public class TestReservation extends JeuDonne {
 
     @Test
     public void testGetters() {
-        System.out.println("/********** Test des getters de la classe Reservation **********/");
 
         // Valeurs attendues (tirées du CSV)
         String[] identifiantsAttendus = {"R000001", "R000002", "R000003", "R000004", "R000005", "R000006", "R000007", "R000008", "R000009", "R000010", 
