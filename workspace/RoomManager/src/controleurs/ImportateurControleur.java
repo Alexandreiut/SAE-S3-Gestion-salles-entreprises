@@ -85,7 +85,6 @@ public class ImportateurControleur {
 					ArrayList<Object> listeItems = LecteurCSV.readFichier(lignes);
 
 					if (listeItems.get(0) instanceof Employe) {
-						System.out.print("oui");
 						ArrayList<Employe> listeE = new ArrayList<>();
 						for(Object obj : listeItems) {
 							listeE.add((Employe) obj);
@@ -144,17 +143,50 @@ public class ImportateurControleur {
 	private void handleImportDistant() {
 		String ip = saisieIP.getText();
 
-		if(!ip.matches("^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$")) {
-			throw new IllegalArgumentException();
+		if (!ip.matches("^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$")) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Adresse IP incorrecte");
+			alert.setContentText("Veuillez entrer une adresse IP valide.");
+			alert.showAndWait();
+			return;
 		}
 
 		try {
 			Importateur importateur = new Importateur(ip, 6543, RoomManager.stockage);
-			importateur.convertirReponseDonnee(importateur.recevoirDonnee());
+
+			ArrayList<ArrayList<String>> donnees = importateur.recevoirDonnee();
+
+			if (donnees == null || donnees.isEmpty()) {
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setTitle("Erreur d'importation");
+				alert.setContentText("Aucune donnée reçue du serveur.");
+				alert.showAndWait();
+			}
+
+			boolean succes = importateur.convertirReponseDonnee(donnees);
+
+			Alert alert;
+			if (succes) {
+				alert = new Alert(Alert.AlertType.INFORMATION);
+				alert.setTitle("Importation réussie");
+				alert.setContentText("Les données ont été importées avec succès.");
+			} else {
+				alert = new Alert(Alert.AlertType.ERROR);
+				alert.setTitle("Échec de l'importation");
+				alert.setContentText("Une erreur est survenue lors de la conversion des données.");
+			}
+			alert.showAndWait();
+			
+			importateur.closeConnexion();
+
 		} catch (IOException e) {
-			// TODO
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Erreur de connexion");
+			alert.setContentText("Impossible de se connecter au serveur distant : " + e.getMessage());
+			alert.showAndWait();
 		}
 	}
+
 
 	@FXML
 	private void menu() {

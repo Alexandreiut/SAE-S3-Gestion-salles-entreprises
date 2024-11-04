@@ -70,8 +70,8 @@ public class Exportateur {
 	 * envoi les données converties au format csv à l'importateur
 	 */
 	public void envoiDonnee() {
-		envoiSalles();
 		envoiActivites();
+		envoiSalles();
 		envoiEmployes();
 		envoiReservations();
 	}
@@ -92,7 +92,7 @@ public class Exportateur {
 		}
 		
 		output.println("FIN");
-		
+		output.flush();
 	}
 	
 	/**

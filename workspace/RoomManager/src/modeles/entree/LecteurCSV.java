@@ -259,13 +259,13 @@ public class LecteurCSV {
 			activite = (ligneSplit.length > 3 && ligneSplit[3].length() > 1) ? ligneSplit[3] : "Activite inconnue";
 			
 			if(!listeIdSalle.contains(salleReservee)) {
-				throw new LectureException();
+				//throw new LectureException();
 			}
 			if(!listeIdEmploye.contains(reservant)) {
-				throw new LectureException();
+				//throw new LectureException();
 			}
 			if(!listeIdActivite.contains(activite)) {
-				throw new LectureException();
+				//throw new LectureException();
 			} 
 			
 			// Récupération de l'ensemble des élément pour constituer une réservation

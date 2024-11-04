@@ -57,19 +57,26 @@ public class Importateur {
 	 *  true si le transfert a été correctement transféré, false sinon
 	 * @return
 	 */
-	public ArrayList<String> recevoirDonnee() throws IOException {
-		
-		ArrayList<String> donnees = new ArrayList<>();
-        
-		String paquet;
-		
-		do {
-			paquet = input.readLine();
-			donnees.add(paquet);
-        } while (!paquet.equals("FIN"));
-		
-		return donnees;
-		
+	public ArrayList<ArrayList<String>> recevoirDonnee() throws IOException {
+	    ArrayList<ArrayList<String>> toutesDonnees = new ArrayList<>();
+	    String paquet;
+	    ArrayList<String> donneesSection = new ArrayList<>();
+
+	    while ((paquet = input.readLine()) != null) {
+	        if (paquet.equals("FIN")) {
+	            toutesDonnees.add(new ArrayList<>(donneesSection));
+	            donneesSection.clear();
+	        } else {
+	            donneesSection.add(paquet);
+	        }
+	    }
+
+	    // Ajout de la dernière section si elle n'est pas vide
+	    if (!donneesSection.isEmpty()) {
+	        toutesDonnees.add(donneesSection);
+	    }
+
+	    return toutesDonnees;
 	}
 	
 	/**
@@ -81,55 +88,46 @@ public class Importateur {
 	 * si un fichier temporaire n'a pu être trouvé
 	 * @param donneAConvertir
 	 */
-	public boolean convertirReponseDonnee(ArrayList<String> donneAConvertir) {
-		
-		ArrayList<String> donneesFichier;
-		
-		ArrayList<Object> objetsAInserer;
-		
-		donneesFichier = new ArrayList<String>();
-		for (String ligne : donneAConvertir) {
-			if (ligne.equals("FIN")) {
-				if (donneesFichier != null) {
-					// stockage des données du fichier précédent
-					try {
-						objetsAInserer = LecteurCSV.readFichier(donneesFichier);
-					} catch (Exception e) {
-						return false;
-					}
-					
-					if (objetsAInserer.get(0) instanceof Employe) {
-						ArrayList<Employe> listeE = new ArrayList<>();
-						for(Object obj : objetsAInserer) {
-							listeE.add((Employe) obj);
-						}
-						stockage.setListeEmploye(listeE);
-					} else if (objetsAInserer.get(0) instanceof Activite) {
-						ArrayList<Activite> listeA = new ArrayList<>();
-						for(Object obj : objetsAInserer) {
-							listeA.add((Activite) obj);
-						}
-						stockage.setListeActivite(listeA);
-					} else if (objetsAInserer.get(0) instanceof Salle) {
-						ArrayList<Salle> listeS = new ArrayList<>();
-						for(Object obj : objetsAInserer) {
-							listeS.add((Salle) obj);
-						}
-						stockage.setListeSalle(listeS);
-					} else {
-						ArrayList<Reservation> listeR = new ArrayList<>();
-						for(Object obj : objetsAInserer) {
-							listeR.add((Reservation) obj);
-						}
-						stockage.setListeReservation(listeR);
-					} 
-				}
-			} else {
-				donneesFichier.add(ligne);
-			}
-		}
-		
-		return true;
+	public boolean convertirReponseDonnee(ArrayList<ArrayList<String>> toutesDonnees) {
+	    for (ArrayList<String> donneesFichier : toutesDonnees) {
+	        ArrayList<Object> objetsAInserer;
+	        
+	        try {
+	            objetsAInserer = LecteurCSV.readFichier(donneesFichier);
+	        } catch (Exception e) {
+	            return false;
+	        }
+
+	        // Identifiez le type d'objet à partir du premier élément
+	        if (!objetsAInserer.isEmpty()) {
+	            if (objetsAInserer.get(0) instanceof Employe) {
+	                ArrayList<Employe> listeE = new ArrayList<>();
+	                for (Object obj : objetsAInserer) {
+	                    listeE.add((Employe) obj);
+	                }
+	                stockage.setListeEmploye(listeE);
+	            } else if (objetsAInserer.get(0) instanceof Activite) {
+	                ArrayList<Activite> listeA = new ArrayList<>();
+	                for (Object obj : objetsAInserer) {
+	                    listeA.add((Activite) obj);
+	                }
+	                stockage.setListeActivite(listeA);
+	            } else if (objetsAInserer.get(0) instanceof Salle) {
+	                ArrayList<Salle> listeS = new ArrayList<>();
+	                for (Object obj : objetsAInserer) {
+	                    listeS.add((Salle) obj);
+	                }
+	                stockage.setListeSalle(listeS);
+	            } else {
+	                ArrayList<Reservation> listeR = new ArrayList<>();
+	                for (Object obj : objetsAInserer) {
+	                    listeR.add((Reservation) obj);
+	                }
+	                stockage.setListeReservation(listeR);
+	            }
+	        }
+	    }
+	    return true;
 	}
 	
 	
