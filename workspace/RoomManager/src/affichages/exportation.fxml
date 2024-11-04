@@ -22,7 +22,7 @@
             <Label styleClass="texte" text="Afficher votre IP et le port utilisé" />
             <Button mnemonicParsing="false" styleClass="bouton-afficher" text="Afficher" />
             <Label styleClass="texte" text="Exporter vos données" />
-            <Button mnemonicParsing="false" styleClass="les-boutons-menu" text="Exporter" />
+            <Button fx:id="boutonExporter" mnemonicParsing="false" styleClass="les-boutons-menu" text="Exporter" onAction="#handleExpoter" />
          </children>
          <stylesheets>
             <URL value="@application.css" />

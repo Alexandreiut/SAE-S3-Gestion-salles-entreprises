@@ -30,8 +30,8 @@
          <children>
             <Label styleClass="texte-titre" text="Distant" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texte" text="Sélectionnez l’adresse IP de l’émetteur " textAlignment="CENTER" wrappingWidth="268.4482421875" />
-            <TextField prefHeight="25.0" prefWidth="469.0" scaleX="0.75" styleClass="saisie-text" />
-            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="652.0" layoutY="370.0" lineSpacing="20.0" mnemonicParsing="false" styleClass="les-boutons-menu" text="Importer" />
+            <TextField fx:id="saisieIP" prefHeight="25.0" prefWidth="469.0" scaleX="0.75" styleClass="saisie-text" />
+            <Button fx:id="boutonImportDistant" alignment="CENTER" contentDisplay="CENTER" layoutX="652.0" layoutY="370.0" lineSpacing="20.0" mnemonicParsing="false" styleClass="les-boutons-menu" text="Importer" onAction="#handleImportDistant"/>
          </children>
       </VBox>
       <Button fx:id="boutonRetour" layoutX="652.0" layoutY="370.0" mnemonicParsing="false" onAction="#handleRetour" scaleX="0.175" scaleY="0.175" styleClass="bouton-retour">

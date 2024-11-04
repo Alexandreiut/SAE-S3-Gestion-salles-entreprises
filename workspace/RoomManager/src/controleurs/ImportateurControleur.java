@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -33,6 +34,7 @@ import modeles.items.Activite;
 import modeles.items.Employe;
 import modeles.items.Reservation;
 import modeles.items.Salle;
+import modeles.reseau.Importateur;
 import modeles.stockage.Stockage;
 
 /**
@@ -52,7 +54,14 @@ public class ImportateurControleur {
 	@FXML
 	private Text textSelection;
 	
-	@FXML Button importLocalButton;
+	@FXML 
+	private Button importLocalButton;
+	
+	@FXML
+	private Button boutonImportDistant;
+	
+	@FXML
+	private TextField saisieIP;
 	
 	@FXML
     private void handleOuvertureExplorateurFichier() throws LectureException {
@@ -126,6 +135,22 @@ public class ImportateurControleur {
 			}
         }
     }
+	
+	@FXML
+	private void handleImportDistant() {
+		String ip = saisieIP.getText();
+		
+		if(!ip.matches("^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$")) {
+			throw new IllegalArgumentException();
+		}
+		
+		try {
+			Importateur importateur = new Importateur(ip, 6543, RoomManager.stockage);
+			importateur.convertirReponseDonnee(importateur.recevoirDonnee());
+		} catch (IOException e) {
+			// TODO
+		}
+	}
 	
 	@FXML
 	private void menu() {

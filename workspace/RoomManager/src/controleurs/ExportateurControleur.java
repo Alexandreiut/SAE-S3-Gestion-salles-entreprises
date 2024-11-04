@@ -5,11 +5,15 @@
 
 package controleurs;
 
+import java.io.IOException;
+
 import affichages.GestionAffichageMenu;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+import lanceur.RoomManager;
 import modeles.NavigationVues;
+import modeles.reseau.Exportateur;
 
 /**
  * Controleur de la vue exportateur.fxml
@@ -21,6 +25,21 @@ public class ExportateurControleur {
 	
 	@FXML 
 	private Button boutonRetour;
+	
+	@FXML
+	private Button boutonExporter;
+	
+	@FXML
+	private void handleExpoter() {
+		
+		try {
+			Exportateur exportateur = new Exportateur(6543, RoomManager.stockage);
+			exportateur.accepterConnexion();
+			exportateur.envoiDonnee();
+		} catch (IOException e) {
+			// TODO
+		}
+	}
 	
 	@FXML
 	private void menu() {
