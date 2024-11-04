@@ -5,9 +5,11 @@
 
 package controleurs;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import affichages.GestionAffichageMenu;
 import javafx.fxml.FXML;
@@ -45,9 +47,11 @@ public class ImportateurControleur {
 	@FXML
     private void handleOuvertureExplorateurFichier() {
 		
+		List<File> fichierImporte;
+		
 		Stage stage = (Stage) importLocalButton.getScene().getWindow();
 		
-        Importation.openFileExplorer(stage);
+        fichierImporte = Importation.openFileExplorer(stage);
     }
 	
 	@FXML
