@@ -208,7 +208,7 @@ public class LecteurCSV {
 	    
 	    String activite;
 	    String reservant;
-	    int salleReservee;
+	    String salleReservee;
 	    
 	    String id;
 	    String date;
@@ -256,7 +256,7 @@ public class LecteurCSV {
 
 			id = (ligneSplit.length > 0 && ligneSplit[0].length() > 1 && ligneSplit[0].charAt(0) == 'R') ? ligneSplit[0] : "Id inconnu";
 			// Vérification de l'existance des identifiants relever par la lecture pour garder une cohérence        
-			salleReservee = (ligneSplit.length > 1 && ligneSplit[1].length() == 8 && ligneSplit[1].matches("\\d+")) ? Integer.parseInt(ligneSplit[2]) : -1;
+			salleReservee = (ligneSplit.length > 1 && ligneSplit[1].length() == 8 && ligneSplit[1].matches("\\d+")) ? ligneSplit[2] : "-1";
 			reservant = (ligneSplit.length > 2 && ligneSplit[2].length() == 7 && ligneSplit[2].charAt(0) == 'E') ? ligneSplit[2] : "Employé inconnu";
 			activite = (ligneSplit.length > 3 && ligneSplit[3].length() > 1) ? ligneSplit[3] : "Activite inconnue";
 			if(!listeIdSalle.contains(salleReservee)) {

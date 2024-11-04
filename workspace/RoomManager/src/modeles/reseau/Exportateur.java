@@ -74,7 +74,6 @@ public class Exportateur {
 		envoiActivites();
 		envoiEmployes();
 		envoiReservations();
-		output.println("FIN");
 	}
 	
 	/**
@@ -91,6 +90,8 @@ public class Exportateur {
 		for (String ligne : donneesAEnvoyer) {
 			output.println(ligne);
 		}
+		
+		output.println("FIN");
 		
 	}
 	
@@ -109,6 +110,8 @@ public class Exportateur {
 			output.println(ligne);
 		}
 		
+		output.println("FIN");
+		
 	}
 	
 	/**
@@ -126,6 +129,7 @@ public class Exportateur {
 			output.println(ligne);
 		}
 		
+		output.println("FIN");
 	}
 	
 	/**
@@ -143,6 +147,7 @@ public class Exportateur {
 			output.println(ligne);
 		}
 		
+		output.println("FIN");
 	}
 	
 
@@ -164,8 +169,6 @@ public class Exportateur {
 		BufferedReader input;
 		
 		input = new BufferedReader(new InputStreamReader(socketCommunication.getInputStream()));
-		
-		System.out.println(input.ready());
 		
 		return input.readLine();
 		

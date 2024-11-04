@@ -46,10 +46,10 @@ public class TestStockage extends JeuDonne {
     	
     	stockItems = new Stockage(listeSalles,listeActivites,listeEmployes,listeReservations);	
     	
-    	sal = new Salle(1, "A6", 15, true, false, 4, "PC portable", new ArrayList<String>(), false);
+    	sal = new Salle("1", "A6", 15, true, false, 4, "PC portable", new ArrayList<String>(), false);
         act = new Activite("A0000001", "réunion");
         emp = new Employe("E0000001", "Dupont", "Pierre", 2614);
-        res = new Reservation("R000018", "18/10/2024", "13h00", "19h00", "Département", "Tournefeuille", "Michel", 0655555555, "location", "E000005", "location", 1);
+        res = new Reservation("R000018", "18/10/2024", "13h00", "19h00", "Département", "Tournefeuille", "Michel", 0655555555, "location", "E000005", "location", "1");
     
     }
 

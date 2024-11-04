@@ -108,7 +108,7 @@ public class TestEcritureCSV {
 		reservation = new Reservation("R000001", "07/10/2024", "17h00", "19h00",
 				                      "club gym", "Legendre", "Noémie",
 				                      600000000, "reunion", "E000001",
-				                      "prêt", 1);
+				                      "prêt", "1");
 		
 		test = new ArrayList<Reservation>();	
 		

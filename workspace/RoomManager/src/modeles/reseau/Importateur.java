@@ -88,20 +88,17 @@ public class Importateur {
 		
 		ArrayList<Object> objetsAInserer;
 		
-		donneesFichier = null;
-		System.out.println(donneAConvertir);
+		donneesFichier = new ArrayList<String>();
 		for (String ligne : donneAConvertir) {
-			if (ligne.equals("FIN") || ligne.substring(0, 6).equals("Ident;")) {
+			if (ligne.equals("FIN")) {
 				if (donneesFichier != null) {
 					// stockage des données du fichier précédent
 					try {
-						System.out.println(donneesFichier + ":" + LecteurCSV.readFichier(donneesFichier) );
+						System.out.println(donneesFichier);
 						objetsAInserer = LecteurCSV.readFichier(donneesFichier);
 					} catch (Exception e) {
 						return false;
 					}
-					
-					System.out.println(objetsAInserer);
 					
 					if (objetsAInserer.get(0) instanceof Employe) {
 						ArrayList<Employe> listeE = new ArrayList<>();
@@ -129,11 +126,9 @@ public class Importateur {
 						stockage.setListeReservation(listeR);
 					} 
 				}
-				
-				donneesFichier = new ArrayList<String>();
+			} else {
+				donneesFichier.add(ligne);
 			}
-			
-			donneesFichier.add(ligne);
 		}
 		
 		return true;

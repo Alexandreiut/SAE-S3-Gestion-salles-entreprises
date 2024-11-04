@@ -59,7 +59,7 @@ public class TestImportateurExportateur {
 				                              "17h00", "19h00",
 								              "club gym", "Legendre", "Noémie",
 								              600000000, "reunion", "E000001",
-								              "prêt", 1));
+								              "prêt", "1"));
 		
 		stockageExportateur = new Stockage(listeSalles, listeActivites,
 				                listeEmployes, listeReservations);
@@ -103,7 +103,9 @@ public class TestImportateurExportateur {
 		exportateur.envoiDonnee();
 		
 		assertDoesNotThrow(() -> importateur.convertirReponseDonnee(importateur.recevoirDonnee()));
-		
+		assertDoesNotThrow(() -> importateur.convertirReponseDonnee(importateur.recevoirDonnee()));
+		assertDoesNotThrow(() -> importateur.convertirReponseDonnee(importateur.recevoirDonnee()));
+		assertDoesNotThrow(() -> importateur.convertirReponseDonnee(importateur.recevoirDonnee()));
 		
 		// utilisation de toString() pour comparer les données
 		// car les toString() des items contiennent tous leurs attributs
