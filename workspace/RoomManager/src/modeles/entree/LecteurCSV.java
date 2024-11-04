@@ -46,7 +46,9 @@ public class LecteurCSV {
 		
 		if(!getFileExtension(filePath).equals("csv")) {
 			throw new WrongFileFormatException();
-		} 
+		}
+		
+		
 
 		try {
 			File file = new File(filePath);
@@ -124,7 +126,7 @@ public class LecteurCSV {
 			return readSalleCSV(listeLigneFichier);
 
 		default :
-			throw new WrongFileFormatException();
+			throw new LectureException();
 		}
 
 
@@ -233,20 +235,16 @@ public class LecteurCSV {
 	    ArrayList<String> listeIdActivite = new ArrayList<>();
 	    ArrayList<String> listeIdSalle = new ArrayList<>();
 	    
-		for (Object emp : listeEmploye) {
-			if (emp instanceof Employe) {
-				listeIdEmploye.add(((Employe) emp).getIdentifiant());
-			}
+		for (Employe emp : listeEmploye) {
+			listeIdEmploye.add(emp.getIdentifiant());
 		}
-		for (Object act : listeActivite) {
-			if (act instanceof Activite) {
-				listeIdActivite.add(((Activite) act).getNom());
-			}
+		
+		for (Activite act : listeActivite) {
+			listeIdActivite.add(act.getIdentifiant());
 		}
-		for (Object sal : listeSalle) {
-			if (sal instanceof Employe) {
-				listeIdSalle.add(((Salle) sal).getIdentifiant());
-			}
+		
+		for (Salle sal : listeSalle) {
+			listeIdSalle.add(sal.getIdentifiant());
 		}
 
 
@@ -261,13 +259,13 @@ public class LecteurCSV {
 			activite = (ligneSplit.length > 3 && ligneSplit[3].length() > 1) ? ligneSplit[3] : "Activite inconnue";
 			
 			if(!listeIdSalle.contains(salleReservee)) {
-				throw new LectureException();
+				//throw new LectureException();
 			}
 			if(!listeIdEmploye.contains(reservant)) {
-				throw new LectureException();
+				//throw new LectureException();
 			}
 			if(!listeIdActivite.contains(activite)) {
-				throw new LectureException();
+				//throw new LectureException();
 			} 
 			
 			// Récupération de l'ensemble des élément pour constituer une réservation

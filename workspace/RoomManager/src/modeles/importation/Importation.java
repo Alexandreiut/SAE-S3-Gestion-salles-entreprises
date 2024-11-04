@@ -28,7 +28,6 @@ public class Importation {
 
         if (selectedFiles != null && !selectedFiles.isEmpty()) {
             // Parcourir et afficher les fichiers sélectionnés
-        	showImportSuccessAlert();
             return selectedFiles;
         } else {
             System.out.println("Aucun fichier sélectionné.");
@@ -39,7 +38,7 @@ public class Importation {
 	/**
 	 * Fenetre Pop-Up de confirmation d'importation
 	 */
-	private static void showImportSuccessAlert() {
+	public static void showImportSuccessAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Importation réussie");
         alert.setHeaderText(null); // Pas de texte d'en-tête
