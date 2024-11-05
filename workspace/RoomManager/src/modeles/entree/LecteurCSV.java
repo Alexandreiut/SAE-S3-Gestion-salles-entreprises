@@ -236,19 +236,19 @@ public class LecteurCSV {
 	    ArrayList<String> listeIdSalle = new ArrayList<>();
 	    
 		for (Employe emp : listeEmploye) {
-			listeIdEmploye.add(emp.getIdentifiant());
+			listeIdEmploye.add(emp.getIdentifiant().trim());
 		}
 		
 		for (Activite act : listeActivite) {
-			String nom = act.getNom();
-			if(nom.equals("entretien")) {
-				nom= "entretien de la salle"; //Correction temporaire
+			String nom = act.getNom().trim();
+			if(nom.equals("entretien de la salle")) {
+				nom= "entretien"; //Correction temporaire
 			}
 			listeNomActivite.add(nom);
 		}
 		
 		for (Salle sal : listeSalle) {
-			listeIdSalle.add(sal.getIdentifiant());
+			listeIdSalle.add(sal.getIdentifiant().trim());
 		}
 
 
