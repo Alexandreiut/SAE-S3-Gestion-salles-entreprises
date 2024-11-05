@@ -30,6 +30,8 @@ public class Serialisation {
      * Nom du fichier de sauvegarde
      */
     private static final String NOM_FICHIER = "donnees.ser";
+    
+    private static Stockage stockage;
 	
     /**
      * Sérialise un objet
@@ -61,7 +63,7 @@ public class Serialisation {
 	public static Stockage deserialiser() {
 
 		// Variable qui recevra l'objet sauvegardé en mémoire
-		Stockage stockage = null;
+		stockage = null;
 
 		// déclaration du fichier et lecture dans le fichier
 		try {
@@ -70,17 +72,17 @@ public class Serialisation {
 	        ObjectInputStream fluxLecture = new ObjectInputStream(fileInputStream);
 	        
 	        stockage = (Stockage) fluxLecture.readObject();
-	        initialiseStockage(stockage);
 			fluxLecture.close();
 
 		} catch (IOException e) { 
 			System.out.println("Pas de désérialisation car pas de données");
 		} catch (ClassNotFoundException e) {
-			System.out.println("Erreur de désérialisation : ");
-			
 			// exception levée si l'objet lu n'est pas de type Stockage
 			System.out.println("Problème lors de la lecture du fichier "+ NOM_FICHIER);
+		} finally {
+			initialiseStockage();			
 		}
+		
 		return stockage;
 	}
 	
@@ -88,25 +90,25 @@ public class Serialisation {
 	 * Initialise le stockage avec des liste vide
 	 * @param s le stockage a initialisé
 	 */
-	private static void initialiseStockage(Stockage s) {
-		if (s == null) {
-			s = new Stockage(new ArrayList<Salle>(), new ArrayList<Activite>(),
+	private static void initialiseStockage() {
+		if (stockage == null) {
+			stockage = new Stockage(new ArrayList<Salle>(), new ArrayList<Activite>(),
 					   new ArrayList<Employe>(), new ArrayList<Reservation>());
 		} else {
-			if (s.getListeActivite() == null) {
-				s.setListeActivite(new ArrayList<Activite>());
+			if (stockage.getListeActivite() == null) {
+				stockage.setListeActivite(new ArrayList<Activite>());
 			}
 			
-			if (s.getListeEmploye() == null) {
-				s.setListeEmploye(new ArrayList<Employe>());
+			if (stockage.getListeEmploye() == null) {
+				stockage.setListeEmploye(new ArrayList<Employe>());
 			}
 			
-			if (s.getListeSalle() == null) {
-				s.setListeSalle(new ArrayList<Salle>());
+			if (stockage.getListeSalle() == null) {
+				stockage.setListeSalle(new ArrayList<Salle>());
 			}
 			
-			if (s.getListeReservation() == null) {
-				s.setListeReservation(new ArrayList<Reservation>());
+			if (stockage.getListeReservation() == null) {
+				stockage.setListeReservation(new ArrayList<Reservation>());
 			}
 		}
 	}
