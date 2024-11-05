@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.shape.SVGPath?>
 
 <Pane fx:id="panePrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" styleClass="pane" xmlns="http://javafx.com/javafx/22.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleurs.ConsultationControleur">
@@ -34,19 +35,12 @@
       <HBox id="entete" layoutX="225.0" layoutY="194.0" prefHeight="33.0" prefWidth="758.0" styleClass="FondVBox" />
       <VBox layoutX="225.0" layoutY="227.0" prefHeight="278.0" prefWidth="758.0" styleClass="bordureHBOX">
          <children>
-            <HBox alignment="CENTER_RIGHT" prefHeight="79.0" prefWidth="754.0" styleClass="bordureHBOX">
-               <children>
-                  <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="484.0" styleClass="boutons-ajouter" text="Ajouter au pdf" />
-               </children></HBox>
-            <HBox id="hboxDonnees" fx:id="hboxDonnees" prefHeight="199.0" prefWidth="754.0" styleClass="bordureHBOX">
-               <children>
-                  <ScrollPane prefHeight="192.0" prefWidth="749.6">
-                     <content>
-                        <VBox fx:id="vboxDonnees" prefHeight="193.0" prefWidth="734.0" />
-                     </content>
-                  </ScrollPane>
-               </children>
-            </HBox>
+            <ScrollPane prefHeight="192.0" prefWidth="749.6">
+         		<content>
+            		<GridPane fx:id="grille">
+              		</GridPane>
+              	</content>
+             </ScrollPane>
          </children>
       </VBox>
       <Button fx:id="boutonRetour" layoutX="652.0" layoutY="370.0" mnemonicParsing="false" onAction="#handleRetour" scaleX="0.175" scaleY="0.175" styleClass="bouton-retour">
