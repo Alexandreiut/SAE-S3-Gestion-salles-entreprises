@@ -53,7 +53,7 @@ public class ConsultationControleur {
 		HashMap<String,  ArrayList<? extends Object>> donnees = consultation.fetchDonneesBrutes();
 		
 		if (donnees.containsKey("pas de données")) {
-			//TODO
+			grille.addRow(0, new Label("Aucune données n'est encore enregistrée"));
 		
 		} else {	
 			
