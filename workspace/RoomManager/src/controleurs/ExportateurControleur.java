@@ -42,8 +42,12 @@ public class ExportateurControleur {
 	
 	@FXML
 	private void handleExporter() {
-	    try {
-	        Exportateur exportateur = new Exportateur(6543, RoomManager.stockage);
+		Exportateur exportateur;
+		
+		exportateur = null;
+		
+		try {
+	        exportateur = new Exportateur(6543, RoomManager.stockage);
 	        
 	        exportateur.accepterConnexion();
 	        
@@ -55,24 +59,38 @@ public class ExportateurControleur {
 	        alert.setContentText("Les données ont été exportées avec succès vers le client.");
 	        alert.showAndWait();
 	        
-	        exportateur.closeConnexion();
+            System.out.println( );
 	        
 	    } catch (IOException e) {
+	    	System.out.println(e);
 	        Alert alert = new Alert(Alert.AlertType.ERROR);
 	        alert.setTitle("Erreur d'exportation");
 	        alert.setContentText("Une erreur est survenue lors de l'exportation des données. " +
 	                             "Veuillez vérifier la connexion réseau et réessayer.");
 	        alert.showAndWait();
+	    } finally {
+	    	exportateur.closeConnexion();
 	    }
 	}
 	
 	@FXML
 	private void handleAfficherIP() {
         try {
+        	
             InetAddress ip = InetAddress.getLocalHost();
             Label label = new Label();
-            label.setText(ip.getHostAddress());
+            
             label.getStyleClass().add("texte");
+            
+            InetAddress inet = InetAddress.getLocalHost();
+            InetAddress[] ips = InetAddress.getAllByName(inet.getCanonicalHostName());
+            if (ips != null && ips.length >= 2) {
+            	
+	            label.setText(ips[1].toString().split("/")[1]);
+	            
+            } else {
+            	label.setText(ip.getHostAddress());
+            }
             
             if (!vboxDonnees.getChildren().contains(label)) {
                 int boutonIndex = vboxDonnees.getChildren().indexOf(boutonAfficherIP);
