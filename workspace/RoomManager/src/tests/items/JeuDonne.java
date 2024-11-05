@@ -22,7 +22,7 @@ public class JeuDonne {
         ArrayList<Activite> activites = new ArrayList<>();
         activites.add(new Activite("A0000001", "réunion"));
         activites.add(new Activite("A0000002", "formation"));
-        activites.add(new Activite("A0000003", "entretien"));
+        activites.add(new Activite("A0000003", "entretien de la salle"));
         activites.add(new Activite("A0000004", "prêt"));
         activites.add(new Activite("A0000005", "location"));
         activites.add(new Activite("A0000006", "autre"));
