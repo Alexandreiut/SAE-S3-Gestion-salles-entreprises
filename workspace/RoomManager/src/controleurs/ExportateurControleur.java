@@ -55,9 +55,10 @@ public class ExportateurControleur {
 	        alert.setContentText("Les données ont été exportées avec succès vers le client.");
 	        alert.showAndWait();
 	        
-	        exportateur.closeConnexion();
+            System.out.println( exportateur.closeConnexion());
 	        
 	    } catch (IOException e) {
+	    	System.out.println(e);
 	        Alert alert = new Alert(Alert.AlertType.ERROR);
 	        alert.setTitle("Erreur d'exportation");
 	        alert.setContentText("Une erreur est survenue lors de l'exportation des données. " +
@@ -69,10 +70,21 @@ public class ExportateurControleur {
 	@FXML
 	private void handleAfficherIP() {
         try {
+        	
             InetAddress ip = InetAddress.getLocalHost();
             Label label = new Label();
-            label.setText(ip.getHostAddress());
+            
             label.getStyleClass().add("texte");
+            
+            InetAddress inet = InetAddress.getLocalHost();
+            InetAddress[] ips = InetAddress.getAllByName(inet.getCanonicalHostName());
+            if (ips != null && ips.length >= 2) {
+            	
+	            label.setText(ips[1].toString().split("/")[1]);
+	            
+            } else {
+            	label.setText(ip.getHostAddress());
+            }
             
             if (!vboxDonnees.getChildren().contains(label)) {
                 int boutonIndex = vboxDonnees.getChildren().indexOf(boutonAfficherIP);

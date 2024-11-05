@@ -9,8 +9,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.StandardSocketOptions;
 import java.util.ArrayList;
 
 import modeles.items.*;
@@ -49,7 +51,10 @@ public class Exportateur {
 	 * @param port port d'écoute du socket
 	 */
 	public Exportateur(int port, Stockage stockage) throws IOException {
-		socketServeur = new ServerSocket(port);
+		
+		socketServeur = new ServerSocket();
+		socketServeur.setOption(StandardSocketOptions.SO_REUSEADDR, true);
+		socketServeur.bind(new InetSocketAddress(port));
 		
 		this.stockage = stockage;
 	}
@@ -182,6 +187,7 @@ public class Exportateur {
 	public boolean closeConnexion() {
 		try {
 			socketCommunication.close();
+			socketServeur.close();
 			return true;
 		} catch (IOException e) {
 			return false;
