@@ -236,11 +236,11 @@ public class LecteurCSV {
 	    ArrayList<String> listeIdSalle = new ArrayList<>();
 	    
 		for (Employe emp : listeEmploye) {
-			listeIdEmploye.add(emp.getIdentifiant());
+			listeIdEmploye.add(emp.getIdentifiant().trim());
 		}
 		
 		for (Activite act : listeActivite) {
-			String nom = act.getNom();
+			String nom = act.getNom().trim();
 			if(nom.equals("entretien de la salle")) {
 				nom= "entretien"; //Correction temporaire
 			}
@@ -248,7 +248,7 @@ public class LecteurCSV {
 		}
 		
 		for (Salle sal : listeSalle) {
-			listeIdSalle.add(sal.getIdentifiant());
+			listeIdSalle.add(sal.getIdentifiant().trim());
 		}
 
 

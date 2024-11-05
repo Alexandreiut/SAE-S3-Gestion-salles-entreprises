@@ -26,23 +26,32 @@ public class Crypteur {
 	 * @param alphabet, l'alphabet utilisé pour le cryptage
 	 */
 	public Crypteur(String alphabet) {
+		if (alphabet == null || alphabet.isEmpty()) {
+            throw new IllegalArgumentException("L'alphabet ne peut pas être vide.");
+        }
 		this.alphabet = alphabet;
 	}
 	
 	/**
-	 * §§§§§ Mettre à jour Type de retour + paramètre(s), indéfini quand écri §§§§§
+	 * §§§§§ Mettre à jour Type de retour + paramètre(s), indéfini quand écrit §§§§§
+	 * Nombre générateur pour le cryptage
+     * @return un nombre généré en fonction de la clé pour usage interne
 	 * 
 	 */
-	public void getNombreGenerateur() {
-		
+	public int getNombreGenerateur() {
+		// Si la clé est définie (non nulle), retourne sa longueur en tant que nombre générateur
+	    // Sinon, retourne 0, indiquant qu'il n'y a pas de clé
+		return cle != null ? cle.length() : 0;
 	}
 	
 	/**
 	 * Decrypte un message
-	 * @param le message crypté
+	 * @param messageCrypte le message crypté
 	 * @return le message décrypté
 	 */
 	public String decrypteMessage(String messageCrypte) {
+
+        
 		return ""; //STUB
 	}
 	
@@ -63,5 +72,8 @@ public class Crypteur {
 	 */
 	public String genererCle() {
 		return ""; //STUB
+		
 	}
 }
+	
+	
