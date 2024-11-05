@@ -23,18 +23,14 @@ public class Importation {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choisir des fichiers");
 
-        // Optionnel : définir un dossier de départ
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         
-        // Ajouter un filtre pour ne montrer que les fichiers .csv
         FileChooser.ExtensionFilter csvFilter = new FileChooser.ExtensionFilter("Fichiers CSV (*.csv)", "*.csv");
         fileChooser.getExtensionFilters().add(csvFilter);
 
-        // Afficher la boîte de dialogue de sélection de fichiers avec multi-sélection
         List<File> selectedFiles = fileChooser.showOpenMultipleDialog(stage);
         
         if (selectedFiles != null && !selectedFiles.isEmpty()) {
-            // Parcourir et afficher les fichiers sélectionnés
             return selectedFiles;
         } else {
             System.out.println("Aucun fichier sélectionné.");
@@ -45,12 +41,12 @@ public class Importation {
 	/**
 	 * Fenetre Pop-Up de confirmation d'importation
 	 */
-	public static void showImportSuccessAlert() {
+	public static void showImportSuccessAlert(String nomCSV) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Importation réussie");
-        alert.setHeaderText(null); // Pas de texte d'en-tête
-        alert.setContentText("Les fichiers ont été importés avec succès !");
+        alert.setHeaderText(null);
+        alert.setContentText("Importation des " + nomCSV + " réussi");
 
-        alert.showAndWait(); // Afficher et attendre la fermeture de l'alerte
+        alert.showAndWait();
     }
 }

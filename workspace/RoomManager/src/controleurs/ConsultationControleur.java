@@ -12,12 +12,17 @@ import affichages.GestionAffichageMenu;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import modeles.NavigationVues;
 import modeles.consultation.Consultation;
+import modeles.items.Activite;
+import modeles.items.Employe;
+import modeles.items.Reservation;
+import modeles.items.Salle;
 
 /**
  * Controleur de la vue consultation.fxml
@@ -27,14 +32,14 @@ public class ConsultationControleur {
 	@FXML
 	private Pane panePrincipal;
 	
-	@FXML
-	private HBox hboxDonnees;
-	
-	@FXML
-	private VBox vboxDonnees;
+	//@FXML
+	//private VBox vboxDonnees;
 	
 	@FXML 
 	private Button boutonRetour;
+	
+	@FXML
+	private GridPane grille;
 
 	
 	/**
@@ -48,20 +53,21 @@ public class ConsultationControleur {
 		HashMap<String,  ArrayList<? extends Object>> donnees = consultation.fetchDonneesBrutes();
 		
 		if (donnees.containsKey("pas de données")) {
-			affichage(vboxDonnees, donnees.get("pas de données"));
+			grille.addRow(0, new Label("Aucune données n'est encore enregistrée"));
 		
 		} else {	
-			vboxDonnees.getChildren().add(new Text("Employés :"));
-			affichage(vboxDonnees, donnees.get("Employés"));
 			
-			vboxDonnees.getChildren().add(new Text("Salles :"));
-			affichage(vboxDonnees, donnees.get("Salles"));
-			
-			vboxDonnees.getChildren().add(new Text("Activitées :"));
-			affichage(vboxDonnees, donnees.get("Activitées"));
-			
-			vboxDonnees.getChildren().add(new Text("Réservations :"));
-			affichage(vboxDonnees, donnees.get("Réservations"));
+			int rowIndex = 0; // Index de ligne pour le GridPane
+			ArrayList<Object> listeDonnee = new ArrayList<>();
+			listeDonnee.addAll(donnees.get("Activitées"));
+			listeDonnee.addAll(donnees.get("Employés"));
+			listeDonnee.addAll(donnees.get("Réservations"));
+			listeDonnee.addAll(donnees.get("Salles"));			
+						
+            for (Object obj : listeDonnee) {
+                ajoutItem(obj,rowIndex);   
+                rowIndex ++;
+            }       
 		}	
 	}
 	
@@ -70,22 +76,60 @@ public class ConsultationControleur {
 		GestionAffichageMenu.affichageMenu(panePrincipal);
 	}
 	
-	/**
-	 * Affiche dans la vue les données d'une liste dans un layout définie. 
-	 *
-	 * @param layout : le layout où il faut afficher les données
-	 * @param donnees : les données à afficher
-	 */
-	private void affichage(Pane layout, ArrayList<? extends Object> donnees) {
-		for (Object donnee : donnees) {
-			String infos = donnee.toString();
-			Label affichageInfos = new Label(infos);
-			layout.getChildren().add(affichageInfos);
-		}
-	}
-	
 	@FXML
     private void handleRetour() {
         NavigationVues.retourVuePrecedente();
     }
+	
+	private void ajoutItem(Object item, int numeroLigne) {
+		Button ajoutPdf = new Button("Ajouter au PDF");
+		Label labelConstruit = new Label("");
+		if (item instanceof Activite) {
+			ajoutPdf.setId(((Activite) item).getIdentifiant() + "");
+			labelConstruit = new Label("Activité - ID : " + ((Activite) item).getIdentifiant() + 
+                    ", Nom : " + ((Activite) item).getNom());
+		}
+		if (item instanceof Employe) {
+			ajoutPdf.setId(((Employe) item).getIdentifiant() + "");
+			labelConstruit = new Label("Employé - ID : " + ((Employe) item).getIdentifiant() + 
+                    ", Nom : " + ((Employe) item).getNom() + 
+                    ", Prénom : " + ((Employe) item).getPrenom() +
+                    ", Téléphone : " + ((Employe) item).getTelephone());
+		}
+		if (item instanceof Reservation) {
+			ajoutPdf.setId(((Reservation) item).getIdentifiant() + "");
+			labelConstruit = new Label("Réservation - ID : " + ((Reservation) item).getIdentifiant() +
+                    ", Date : " + ((Reservation) item).getDate() +
+                    ", Heure Début : " + ((Reservation) item).getHeureDebut() +
+                    ", Heure Fin : " + ((Reservation) item).getHeureFin() +
+                    ", Objet : " + ((Reservation) item).getObjetReservation() +
+                    ", Interlocuteur : " + ((Reservation) item).getNomInterlocuteur() +
+                    " / " + ((Reservation) item).getPrenomInterlocuteur() +
+                    ", Téléphone Interlocuteur : " + ((Reservation) item).getNumeroInterlocuteur() +
+                    ", Usage Salle : " + ((Reservation) item).getUsageSalle() +
+                    ", Employé Réservant : " + ((Reservation) item).getEmploye() +
+                    ", Activité : " + ((Reservation) item).getActivite() +
+                    ", Salle Réservée : " + ((Reservation) item).getSalle());
+		}
+		if (item instanceof Salle) {
+			ajoutPdf.setId(((Salle) item).getIdentifiant() + "");
+			String presenceVideoProjecteur = ((Salle) item).getVideoProjecteur() ? "oui" : "non";
+	        String presenceEcranXxl = ((Salle) item).getEcranXxl() ? "oui" : "non";
+	        String presenceImprimante = ((Salle) item).getImprimante() ? "oui" : "non";
+	        
+	        labelConstruit = new Label("Salle - Nom : " + ((Salle) item).getNom() +
+	              " capacité : " + ((Salle) item).getCapacite() + " vidéo projecteur : " + presenceVideoProjecteur +
+	              " écran XXL : " + presenceEcranXxl + " Nombre de poste : " + ((Salle) item).getNombrePc() + 
+	              " Type des postes : " + ((Salle) item).getTypePc() + " Logiciel installés " + ((Salle) item).getLogicielInstalle() + 
+	              " imprimante " + presenceImprimante);
+		}
+		ajoutPdf.setOnAction(events -> {
+        try {
+            //AjoutActivitePdf(ajoutPdf.getId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    	});
+        grille.addRow(numeroLigne, labelConstruit, ajoutPdf);	
+	}
 }
