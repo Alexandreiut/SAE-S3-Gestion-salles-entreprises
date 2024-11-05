@@ -42,8 +42,12 @@ public class ExportateurControleur {
 	
 	@FXML
 	private void handleExporter() {
-	    try {
-	        Exportateur exportateur = new Exportateur(6543, RoomManager.stockage);
+		Exportateur exportateur;
+		
+		exportateur = null;
+		
+		try {
+	        exportateur = new Exportateur(6543, RoomManager.stockage);
 	        
 	        exportateur.accepterConnexion();
 	        
@@ -55,7 +59,7 @@ public class ExportateurControleur {
 	        alert.setContentText("Les données ont été exportées avec succès vers le client.");
 	        alert.showAndWait();
 	        
-            System.out.println( exportateur.closeConnexion());
+            System.out.println( );
 	        
 	    } catch (IOException e) {
 	    	System.out.println(e);
@@ -64,6 +68,8 @@ public class ExportateurControleur {
 	        alert.setContentText("Une erreur est survenue lors de l'exportation des données. " +
 	                             "Veuillez vérifier la connexion réseau et réessayer.");
 	        alert.showAndWait();
+	    } finally {
+	    	exportateur.closeConnexion();
 	    }
 	}
 	
