@@ -92,7 +92,6 @@ public class Exportateur {
 		}
 		
 		output.println("FIN");
-		output.flush();
 	}
 	
 	/**
@@ -111,7 +110,6 @@ public class Exportateur {
 		}
 		
 		output.println("FIN");
-		
 	}
 	
 	/**

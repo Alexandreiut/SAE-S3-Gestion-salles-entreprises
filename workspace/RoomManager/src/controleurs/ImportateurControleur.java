@@ -74,6 +74,7 @@ public class ImportateurControleur {
 
 
 			String path;
+			String nomCSV; //Pour l'affichage des fenetres
 
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 
@@ -85,24 +86,28 @@ public class ImportateurControleur {
 					ArrayList<Object> listeItems = LecteurCSV.readFichier(lignes);
 
 					if (listeItems.get(0) instanceof Employe) {
+						nomCSV = "Employés";
 						ArrayList<Employe> listeE = new ArrayList<>();
 						for(Object obj : listeItems) {
 							listeE.add((Employe) obj);
 						}
 						RoomManager.stockage.setListeEmploye(listeE);
 					} else if (listeItems.get(0) instanceof Activite) {
+						nomCSV = "Activités";
 						ArrayList<Activite> listeA = new ArrayList<>();
 						for(Object obj : listeItems) {
 							listeA.add((Activite) obj);
 						}
 						RoomManager.stockage.setListeActivite(listeA);
 					} else if (listeItems.get(0) instanceof Salle) {
+						nomCSV = "Salles";
 						ArrayList<Salle> listeS = new ArrayList<>();
 						for(Object obj : listeItems) {
 							listeS.add((Salle) obj);
 						}
 						RoomManager.stockage.setListeSalle(listeS);
 					} else {
+						nomCSV = "Réservations";
 						ArrayList<Reservation> listeR = new ArrayList<>();
 						for(Object obj : listeItems) {
 							listeR.add((Reservation) obj);
@@ -110,7 +115,7 @@ public class ImportateurControleur {
 						RoomManager.stockage.setListeReservation(listeR);
 					} 
 
-					Importation.showImportSuccessAlert();
+					Importation.showImportSuccessAlert(nomCSV);
 
 				} catch (WrongFileFormatException e) {
 
