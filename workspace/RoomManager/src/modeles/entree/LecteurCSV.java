@@ -241,8 +241,8 @@ public class LecteurCSV {
 		
 		for (Activite act : listeActivite) {
 			String nom = act.getNom();
-			if(nom.equals("entretien")) {
-				nom= "entretien de la salle"; //Correction temporaire
+			if(nom.equals("entretien de la salle")) {
+				nom= "entretien"; //Correction temporaire
 			}
 			listeNomActivite.add(nom);
 		}
