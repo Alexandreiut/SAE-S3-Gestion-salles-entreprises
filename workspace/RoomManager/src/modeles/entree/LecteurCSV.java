@@ -240,7 +240,11 @@ public class LecteurCSV {
 		}
 		
 		for (Activite act : listeActivite) {
-			listeNomActivite.add(act.getNom());
+			String nom = act.getNom();
+			if(nom.equals("entretien")) {
+				nom= "entretien de la salle"; //Correction temporaire
+			}
+			listeNomActivite.add(nom);
 		}
 		
 		for (Salle sal : listeSalle) {
