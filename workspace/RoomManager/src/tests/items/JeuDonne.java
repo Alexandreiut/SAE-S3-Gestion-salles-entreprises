@@ -44,24 +44,24 @@ public class JeuDonne {
 
     public ArrayList<Reservation> setUpReservations() {
         ArrayList<Reservation> reservations = new ArrayList<>();
-        reservations.add(new Reservation("R000001", "7/10/2024", "17h00", "19h00", "club gym", "Legendre", "Noémie", 0600000000, "reunion", "E000001", "prêt", "1"));
-        reservations.add(new Reservation("R000002", "7/10/2024", "15h00", "18h00", "réunion avec client", "", "", 0, "réunion", "E000001", "réunion", "4"));
-        reservations.add(new Reservation("R000003", "7/10/2024", "10h00", "11h00", "Préparation réunion client", "", "", 0, "réunion", "E000005", "réunion", "4"));
-        reservations.add(new Reservation("R000004", "8/10/2024", "09h00", "11h00", "", "", "", 0, "réunion", "E000002", "réunion", "4"));
-        reservations.add(new Reservation("R000005", "8/10/2024", "17h00", "19h00", "club gym", "Legendre", "Noémie", 0600000000, "AG", "E000003", "prêt", "1"));
-        reservations.add(new Reservation("R000006", "9/10/2024", "09h00", "12h00", "tests candidats", "", "", 0, "autre", "E000007", "autre", "8"));
-        reservations.add(new Reservation("R000007", "7/10/2024", "15h00", "18h00", "présentation maquette", "", "", 0, "réunion", "E000007", "réunion", "3"));
-        reservations.add(new Reservation("R000008", "10/10/2024", "08h00", "18h00", "Bureautique", "Leroux", "Jacques", 0600000001, "formation", "E000003", "formation", "1"));
-        reservations.add(new Reservation("R000009", "11/10/2024", "08h00", "18h00", "Bureautique", "Leroux", "Jacques", 0600000001, "formation", "E000003", "formation", "1"));
-        reservations.add(new Reservation("R000010", "7/10/2024", "10h00", "12h00", "accueil nouveau membre", "", "", 0, "réunion", "E000008", "réunion", "3"));
-        reservations.add(new Reservation("R000011", "10/10/2024", "09h00", "12h00", "tests candidats", "", "", 0, "autre", "E000001", "autre", "8"));
-        reservations.add(new Reservation("R000012", "15/10/2024", "09h00", "10h00", "point avec stagiaire", "", "", 0, "réunion", "E000007", "réunion", "6"));
-        reservations.add(new Reservation("R000013", "11/10/2024", "08h00", "17h00", "mise à jour logiciels", "", "", 0, "entretien", "E000003", "entretien", "8"));
-        reservations.add(new Reservation("R000014", "11/10/2024", "08h00", "17h00", "mise à jour logiciels", "", "", 0, "entretien", "E000007", "entretien", "9"));
-        reservations.add(new Reservation("R000015", "16/10/2024", "10h00", "11h00", "visite tuteur IUT", "", "", 0, "réunion", "E000007", "réunion", "6"));
-        reservations.add(new Reservation("R000016", "17/10/2024", "14h00", "15h30", "validation maquette", "", "", 0, "réunion", "E000005", "réunion", "6"));
-        reservations.add(new Reservation("R000017", "18/10/2024", "08h00", "13h00", "Mairie", "Marin", "Hector", 0666666666, "location", "E000008", "location", "1"));
-        reservations.add(new Reservation("R000018", "18/10/2024", "13h00", "19h00", "Département", "Tournefeuille", "Michel", 0655555555, "location", "E000005", "location", "1"));
+        reservations.add(new Reservation("R000001", "7/10/2024", "17h00", "19h00", "club gym", "Legendre", "Noémie", 0600000000, "reunion", "E000001", "prêt", "00000001"));
+        reservations.add(new Reservation("R000002", "7/10/2024", "15h00", "18h00", "réunion avec client", "", "", 0, "réunion", "E000001", "réunion", "00000004"));
+        reservations.add(new Reservation("R000003", "7/10/2024", "10h00", "11h00", "Préparation réunion client", "", "", 0, "réunion", "E000005", "réunion", "00000004"));
+        reservations.add(new Reservation("R000004", "8/10/2024", "09h00", "11h00", "", "", "", 0, "réunion", "E000002", "réunion", "00000004"));
+        reservations.add(new Reservation("R000005", "8/10/2024", "17h00", "19h00", "club gym", "Legendre", "Noémie", 0600000000, "AG", "E000003", "prêt", "00000001"));
+        reservations.add(new Reservation("R000006", "9/10/2024", "09h00", "12h00", "tests candidats", "", "", 0, "autre", "E000007", "autre", "00000008"));
+        reservations.add(new Reservation("R000007", "7/10/2024", "15h00", "18h00", "présentation maquette", "", "", 0, "réunion", "E000007", "réunion", "00000003"));
+        reservations.add(new Reservation("R000008", "10/10/2024", "08h00", "18h00", "Bureautique", "Leroux", "Jacques", 0600000001, "formation", "E000003", "formation", "00000001"));
+        reservations.add(new Reservation("R000009", "11/10/2024", "08h00", "18h00", "Bureautique", "Leroux", "Jacques", 0600000001, "formation", "E000003", "formation", "00000001"));
+        reservations.add(new Reservation("R000010", "7/10/2024", "10h00", "12h00", "accueil nouveau membre", "", "", 0, "réunion", "E000008", "réunion", "00000003"));
+        reservations.add(new Reservation("R000011", "10/10/2024", "09h00", "12h00", "tests candidats", "", "", 0, "autre", "E000001", "autre", "00000008"));
+        reservations.add(new Reservation("R000012", "15/10/2024", "09h00", "10h00", "point avec stagiaire", "", "", 0, "réunion", "E000007", "réunion", "00000006"));
+        reservations.add(new Reservation("R000013", "11/10/2024", "08h00", "17h00", "mise à jour logiciels", "", "", 0, "entretien", "E000003", "entretien", "00000008"));
+        reservations.add(new Reservation("R000014", "11/10/2024", "08h00", "17h00", "mise à jour logiciels", "", "", 0, "entretien", "E000007", "entretien", "00000009"));
+        reservations.add(new Reservation("R000015", "16/10/2024", "10h00", "11h00", "visite tuteur IUT", "", "", 0, "réunion", "E000007", "réunion", "00000006"));
+        reservations.add(new Reservation("R000016", "17/10/2024", "14h00", "15h30", "validation maquette", "", "", 0, "réunion", "E000005", "réunion", "00000006"));
+        reservations.add(new Reservation("R000017", "18/10/2024", "08h00", "13h00", "Mairie", "Marin", "Hector", 0666666666, "location", "E000008", "location", "00000001"));
+        reservations.add(new Reservation("R000018", "18/10/2024", "13h00", "19h00", "Département", "Tournefeuille", "Michel", 0655555555, "location", "E000005", "location", "00000001"));
         return reservations;
     }
 

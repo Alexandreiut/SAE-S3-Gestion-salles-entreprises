@@ -107,6 +107,7 @@ public class ImportateurControleur {
 						}
 						RoomManager.stockage.setListeSalle(listeS);
 					} else {
+						System.out.print(listeItems.get(0));
 						nomCSV = "Réservations";
 						ArrayList<Reservation> listeR = new ArrayList<>();
 						for(Object obj : listeItems) {
