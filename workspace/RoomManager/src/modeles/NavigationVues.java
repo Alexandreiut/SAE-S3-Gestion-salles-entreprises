@@ -52,8 +52,7 @@ public class NavigationVues {
      */
     public static void changerVue(String routeVueFXML, boolean retour) {
     	
-    	//Accueil comme vue par défaut;
-    	
+    	//Accueil comme vue par défaut
         if (sceneCourante == null) {
             System.out.println("Erreur : aucune scène courante !");
         } else {

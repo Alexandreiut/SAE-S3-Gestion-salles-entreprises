@@ -83,7 +83,7 @@ public class Reservation implements Serializable {
     /** 
      * identifiant de la salle occupé pendant la réservation 
      */
-    private int salleReservee;
+    private String salleReservee;
     
     /**
      * Constructeur de l'objet Réservation
@@ -104,7 +104,7 @@ public class Reservation implements Serializable {
     			   String objetReservation, String nomInterlocuteur, 
     			   String prenomInterlocuteur, int numeroInterlocuteur,
     			   String usageSalle, String reservant, String activite,
-    			   int salleReservee) {
+    			   String salleReservee) {
         
         this.identifiant = id;
         this.date = date;
@@ -200,7 +200,7 @@ public class Reservation implements Serializable {
     /**
      * @return la salle utilisé pour la réservation
      */
-    public int getSalle() {
+    public String getSalle() {
         return salleReservee;
     }
     
@@ -208,9 +208,9 @@ public class Reservation implements Serializable {
     public String toString() {
     	return ("Id : " + this.identifiant + ", Date : " + this.date
     			+ ", HeureDebut : " + this.heureDebut + ", HeureFin : " + this.heureFin
-    			+ ",\nObject : " + this.objetReservation + ", NomInterlo : " + this.nomInterlocuteur
+    			+ ",Object : " + this.objetReservation + ", NomInterlo : " + this.nomInterlocuteur
     			+ ", PrenomInterlo : " + this.prenomInterlocuteur + ", NumInterlo : " + this.numeroInterlocuteur
-    			+ ",\nUsage ? " + this.usageSalle + ", Reservant : " + this.reservant
+    			+ ",Usage ? " + this.usageSalle + ", Reservant : " + this.reservant
     			+ ", Activite  : " + this.activite + ", SalleReserv : " + this.salleReservee);
     }
 }

@@ -5,6 +5,8 @@
 
 package lanceur;
 
+import java.util.ArrayList;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -12,6 +14,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import modeles.NavigationVues;
+import modeles.items.Activite;
+import modeles.items.Employe;
+import modeles.items.Reservation;
+import modeles.items.Salle;
 import modeles.sauvegarde.Serialisation;
 import modeles.stockage.Stockage;
 import javafx.scene.Parent;
@@ -21,7 +27,7 @@ import javafx.scene.Scene;
  * Lance l'application
  */
 public class RoomManager extends Application {
-
+	
 	public static Stockage stockage;
 
 	public static void processusFermetureApp(Stage stageCourant) {
@@ -42,6 +48,9 @@ public class RoomManager extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			
+			//stockage = new Stockage(new ArrayList<Salle>(), new ArrayList<Activite>()
+			//		, new ArrayList<Employe>(), new ArrayList<Reservation>());
 			// Charge le fichier FXML	
 			Parent root = FXMLLoader.load(getClass().getResource("/affichages/RoomManager.fxml"));
 			//Parent root = FXMLLoader.load(getClass().getResource("/affichages/TestMenuLateral.fxml"));
@@ -50,6 +59,8 @@ public class RoomManager extends Application {
 			// Crée la scène avec la racine FXML
 			Scene scene = new Scene(root);
 			NavigationVues.setSceneCourante(scene);
+			
+			processusFermetureApp(primaryStage);
 
 			// Ajoute la feuille de style CSS
 			//scene.getStylesheets().add(getClass().getResource("affichages/RoomManager.css").toExternalForm());

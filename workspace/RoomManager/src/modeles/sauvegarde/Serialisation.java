@@ -8,7 +8,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
+import modeles.items.Activite;
+import modeles.items.Employe;
+import modeles.items.Reservation;
+import modeles.items.Salle;
 import modeles.stockage.Stockage;
 
 /**
@@ -65,6 +70,7 @@ public class Serialisation {
 	        ObjectInputStream fluxLecture = new ObjectInputStream(fileInputStream);
 	        
 	        stockage = (Stockage) fluxLecture.readObject();
+	        initialiseStockage(stockage);
 			fluxLecture.close();
 
 		} catch (IOException e) { 
@@ -76,5 +82,32 @@ public class Serialisation {
 			System.out.println("Problème lors de la lecture du fichier "+ NOM_FICHIER);
 		}
 		return stockage;
+	}
+	
+	/**
+	 * Initialise le stockage avec des liste vide
+	 * @param s le stockage a initialisé
+	 */
+	private static void initialiseStockage(Stockage s) {
+		if (s == null) {
+			s = new Stockage(new ArrayList<Salle>(), new ArrayList<Activite>(),
+					   new ArrayList<Employe>(), new ArrayList<Reservation>());
+		} else {
+			if (s.getListeActivite() == null) {
+				s.setListeActivite(new ArrayList<Activite>());
+			}
+			
+			if (s.getListeEmploye() == null) {
+				s.setListeEmploye(new ArrayList<Employe>());
+			}
+			
+			if (s.getListeSalle() == null) {
+				s.setListeSalle(new ArrayList<Salle>());
+			}
+			
+			if (s.getListeReservation() == null) {
+				s.setListeReservation(new ArrayList<Reservation>());
+			}
+		}
 	}
 }

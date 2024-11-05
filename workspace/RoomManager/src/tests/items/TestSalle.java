@@ -8,6 +8,7 @@ package tests.items;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -29,9 +30,7 @@ public class TestSalle extends JeuDonne{
 
     @Test
     public void testGetters() {
-        System.out.println("/********** Test de getter de la classe Salle **********/");
-        
-        int[] listeIdentifiantAttendu = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+        String[] listeIdentifiantAttendu = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
         String[] listeNomAttendu = {"A6", "salle bleue", "salle ronde", "salle Picasso", "petite salle", 
                                      "A7", "salle patio", "salle Sydney", "salle Brisbane"};
         int[] listeCapaciteAttendu = {15, 18, 14, 15, 7, 4, 6, 20, 22};
@@ -39,6 +38,12 @@ public class TestSalle extends JeuDonne{
         boolean[] listeEcranXxlAttendu = {false, true, false, false, true, false, false, false, false};
         int[] listeNombrePcAttendu = {4, 0, 0, 0, 0, 0, 0, 16, 18};
         String[] listeTypePcAttendu = {"PC portable", "", "", "", "", "", "", "PC Windows", "PC Windows"};
+        List<ArrayList<String>> listeLogicielAttendu = Arrays.asList(new ArrayList<>(), new ArrayList<>(),
+        		new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
+        		new ArrayList<>(List.of("bureautique", "java", "Intellij")),
+        		new ArrayList<>(List.of("bureautique", "java", "Intellij", "photoshop")));
+        boolean[] listeImprimanteAttendu = {false, false, false, false, false, false, false, false, true};
+
         
         for (int i = 0; i < salles.size(); i++) {
             Salle salle = salles.get(i);
@@ -46,9 +51,11 @@ public class TestSalle extends JeuDonne{
             assertEquals(listeNomAttendu[i], salle.getNom());
             assertEquals(listeCapaciteAttendu[i], salle.getCapacite());
             assertEquals(listeVideoProjecteurAttendu[i], salle.getVideoProjecteur());
-            assertEquals(listeEcranXxlAttendu[i], salle.getEcanXxl());
+            assertEquals(listeEcranXxlAttendu[i], salle.getEcranXxl());
             assertEquals(listeNombrePcAttendu[i], salle.getNombrePc());
             assertEquals(listeTypePcAttendu[i], salle.getTypePc());
+            assertEquals(listeLogicielAttendu.get(i),salle.getLogicielInstalle());
+            assertEquals(listeImprimanteAttendu[i],salle.getImprimante());
         }
     }
     
