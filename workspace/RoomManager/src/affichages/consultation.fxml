@@ -6,13 +6,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.shape.SVGPath?>
 
-<Pane fx:id="panePrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" styleClass="pane" xmlns="http://javafx.com/javafx/22.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleurs.ConsultationControleur">
+<Pane fx:id="panePrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" styleClass="pane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleurs.ConsultationControleur">
    <children>
       <HBox prefHeight="0.0" prefWidth="0.0" styleClass="bandeau">
          <children>
@@ -32,10 +32,9 @@
             <ComboBox prefWidth="150.0" promptText="Élément recherché" styleClass="comboBox" />
          </children></VBox>
       <Button layoutX="467.0" layoutY="524.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="484.0" styleClass="boutons-ajouter" text="Ajouter au pdf" />
-      <HBox id="entete" layoutX="225.0" layoutY="194.0" prefHeight="33.0" prefWidth="758.0" styleClass="FondVBox" />
       <VBox layoutX="225.0" layoutY="227.0" prefHeight="278.0" prefWidth="758.0" styleClass="bordureHBOX">
          <children>
-            <ScrollPane prefHeight="192.0" prefWidth="749.6">
+            <ScrollPane prefHeight="276.0" prefWidth="754.0">
          		<content>
             		<GridPane fx:id="grille">
               		</GridPane>

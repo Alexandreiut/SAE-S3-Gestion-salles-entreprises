@@ -10,13 +10,11 @@ import java.util.HashMap;
 
 import affichages.GestionAffichageMenu;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import modeles.NavigationVues;
 import modeles.consultation.Consultation;
 import modeles.items.Activite;
@@ -56,17 +54,19 @@ public class ConsultationControleur {
 			grille.addRow(0, new Label("Aucune données n'est encore enregistrée"));
 		
 		} else {	
-			
 			int rowIndex = 0; // Index de ligne pour le GridPane
 			ArrayList<Object> listeDonnee = new ArrayList<>();
-			listeDonnee.addAll(donnees.get("Activitées"));
+			listeDonnee.addAll(donnees.get("Activitées"));	
 			listeDonnee.addAll(donnees.get("Employés"));
 			listeDonnee.addAll(donnees.get("Réservations"));
 			listeDonnee.addAll(donnees.get("Salles"));			
-						
             for (Object obj : listeDonnee) {
-                ajoutItem(obj,rowIndex);   
-                rowIndex ++;
+            	if(obj instanceof Activite || obj instanceof Employe 
+            			|| obj instanceof Reservation || obj instanceof Salle) {
+            		ajoutItem(obj,rowIndex);   
+                    rowIndex ++;        		
+            	}// posibilité de signaler qu'un objet est problématique dans le stockage
+                
             }       
 		}	
 	}
@@ -84,12 +84,18 @@ public class ConsultationControleur {
 	private void ajoutItem(Object item, int numeroLigne) {
 		Button ajoutPdf = new Button("Ajouter au PDF");
 		Label labelConstruit = new Label("");
+		boolean activiteVide = false;
+		boolean employeVide = false;
+		boolean reservationVide = false;
+		boolean salleVide = false;
 		if (item instanceof Activite) {
+			activiteVide = true;
 			ajoutPdf.setId(((Activite) item).getIdentifiant() + "");
 			labelConstruit = new Label("Activité - ID : " + ((Activite) item).getIdentifiant() + 
                     ", Nom : " + ((Activite) item).getNom());
 		}
 		if (item instanceof Employe) {
+			employeVide = true;
 			ajoutPdf.setId(((Employe) item).getIdentifiant() + "");
 			labelConstruit = new Label("Employé - ID : " + ((Employe) item).getIdentifiant() + 
                     ", Nom : " + ((Employe) item).getNom() + 
@@ -97,6 +103,7 @@ public class ConsultationControleur {
                     ", Téléphone : " + ((Employe) item).getTelephone());
 		}
 		if (item instanceof Reservation) {
+			reservationVide = true;
 			ajoutPdf.setId(((Reservation) item).getIdentifiant() + "");
 			labelConstruit = new Label("Réservation - ID : " + ((Reservation) item).getIdentifiant() +
                     ", Date : " + ((Reservation) item).getDate() +
@@ -112,6 +119,7 @@ public class ConsultationControleur {
                     ", Salle Réservée : " + ((Reservation) item).getSalle());
 		}
 		if (item instanceof Salle) {
+			salleVide = true;
 			ajoutPdf.setId(((Salle) item).getIdentifiant() + "");
 			String presenceVideoProjecteur = ((Salle) item).getVideoProjecteur() ? "oui" : "non";
 	        String presenceEcranXxl = ((Salle) item).getEcranXxl() ? "oui" : "non";
@@ -130,6 +138,7 @@ public class ConsultationControleur {
             e.printStackTrace();
         }
     	});
-        grille.addRow(numeroLigne, labelConstruit, ajoutPdf);	
+		grille.addRow(numeroLigne, labelConstruit, ajoutPdf);
+		
 	}
 }
