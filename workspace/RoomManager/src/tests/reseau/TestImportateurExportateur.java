@@ -44,7 +44,6 @@ public class TestImportateurExportateur {
         }        
     }
 	
-	@Test
 	void testExportateur() {
 		
 		ArrayList<String> logiciels = new ArrayList<>();
@@ -68,11 +67,11 @@ public class TestImportateurExportateur {
 		stockageExportateur = new Stockage(listeSalles, listeActivites,
 				                listeEmployes, listeReservations);
 
-		assertDoesNotThrow(() -> exportateur = new Exportateur(6543, stockageExportateur));
+		assertDoesNotThrow(() -> exportateur = new Exportateur(8765, stockageExportateur));
+
 	}
 	
 	@Test
-	@BeforeEach
 	void testConstructeursEtConnexion() {
 		
 		stockageImportateur = new Stockage(new ArrayList<Salle>(),
@@ -82,12 +81,23 @@ public class TestImportateurExportateur {
 		
 		testExportateur();
 		new attenteServeur().start();
-		assertDoesNotThrow(() -> importateur = new Importateur("127.0.0.1", 6543, stockageImportateur));
-		
+		assertDoesNotThrow(() -> importateur = new Importateur("127.0.0.1", 8765, stockageImportateur));
+		importateur.closeConnexion();
+		exportateur.closeConnexion();
 	}
 
 	@Test
 	void testEnvoiMessageEtRecevoirMessage() {
+		
+		assertDoesNotThrow(() -> exportateur = new Exportateur(8765, new Stockage(new ArrayList<Salle>(),
+																	              new ArrayList<Activite>(),
+																	              new ArrayList<Employe>(),
+																	              new ArrayList<Reservation>())));
+		new attenteServeur().start();
+		assertDoesNotThrow(() -> importateur = new Importateur("127.0.0.1", 8765, new Stockage(new ArrayList<Salle>(),
+																				               new ArrayList<Activite>(),
+																				               new ArrayList<Employe>(),
+																				               new ArrayList<Reservation>())));
 		
 		importateur.envoiMessage("Test imp vers exp");
 		
@@ -98,17 +108,52 @@ public class TestImportateurExportateur {
 		assertDoesNotThrow(() -> assertEquals("Test exp vers imp", importateur.recevoirMessage()));
 		
 		importateur.closeConnexion();
+		exportateur.closeConnexion();
 		
 	}
 	
 	@Test
 	void testEchangeDonnees() {
 		
-		exportateur.envoiDonnee();
+		ArrayList<String> logiciels = new ArrayList<>();
+		ArrayList<Salle> listeSalles = new ArrayList<>();
+		ArrayList<Employe> listeEmployes = new ArrayList<>();
+		ArrayList<Activite> listeActivites = new ArrayList<>();
+		ArrayList<Reservation> listeReservations = new ArrayList<>();
 		
-		assertDoesNotThrow(() -> importateur.convertirReponseDonnee(importateur.recevoirDonnee()));
-		assertDoesNotThrow(() -> importateur.convertirReponseDonnee(importateur.recevoirDonnee()));
-		assertDoesNotThrow(() -> importateur.convertirReponseDonnee(importateur.recevoirDonnee()));
+		logiciels.add("bureautique");
+
+		listeSalles.add(new Salle("00000001", "Salle A", 50, true, false, 12,
+				                  "fixe", logiciels, true));
+		listeEmployes.add(new Employe("E000001", "Dupont", "Pierre", 2614));
+		listeActivites.add(new Activite("A0000001","réunion"));
+		listeReservations.add(new Reservation("R000001", "07/10/2024",
+				                              "17h00", "19h00",
+								              "club gym", "Legendre", "Noémie",
+								              600000000, "reunion", "E000001",
+								              "prêt", "1"));
+		
+		stockageExportateur = new Stockage(listeSalles, listeActivites,
+				                listeEmployes, listeReservations);
+		
+		stockageImportateur = new Stockage(new ArrayList<Salle>(),
+				                new ArrayList<Activite>(),
+				                new ArrayList<Employe>(),
+				                new ArrayList<Reservation>());
+		
+		RoomManager.stockage = new Stockage(new ArrayList<Salle>(),
+				               new ArrayList<Activite>(),
+				               new ArrayList<Employe>(),
+				               new ArrayList<Reservation>());
+						
+		assertDoesNotThrow(() ->  exportateur = new Exportateur(30000, stockageExportateur));
+		
+		new attenteServeur().start();
+		assertDoesNotThrow(() -> importateur = new Importateur("127.0.0.1", 30000, stockageImportateur));
+		
+		exportateur.envoiDonnee();
+		exportateur.closeConnexion();
+		
 		assertDoesNotThrow(() -> importateur.convertirReponseDonnee(importateur.recevoirDonnee()));
 		
 		// utilisation de toString() pour comparer les données
@@ -133,17 +178,8 @@ public class TestImportateurExportateur {
 					     stockageImportateur.getListeReservation().get(i).toString());
 		}
 		
+		importateur.closeConnexion();
+		
 	}
 	
-	/*
-	@Test
-	void testCloseConnexionImportateur() {
-		assertDoesNotThrow(() -> importateur.closeConnexion());
-	}
-	
-	@Test
-	void testCloseConnexionExportateur() {
-		assertDoesNotThrow(() -> exportateur.closeConnexion());
-	}
-*/
 }
