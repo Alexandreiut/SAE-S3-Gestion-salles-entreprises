@@ -6,7 +6,11 @@
 package controleurs;
 
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.InterfaceAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 
 import affichages.GestionAffichageMenu;
@@ -81,20 +85,33 @@ public class ExportateurControleur {
 	private void handleAfficherIP() {
         try {
         	
-            InetAddress ip = InetAddress.getLocalHost();
             Label label = new Label();
-            
             label.getStyleClass().add("texte");
             
-            InetAddress inet = InetAddress.getLocalHost();
-            InetAddress[] ips = InetAddress.getAllByName(inet.getCanonicalHostName());
-            if (ips != null && ips.length >= 2) {
-            	
-	            label.setText(ips[1].toString().split("/")[1]);
-	            
-            } else {
-            	label.setText(ip.getHostAddress());
+            InetAddress ip;
+    		ip = InetAddress.getLocalHost(); // valeur de base
+    		
+            // Énumérer toutes les interfaces réseau disponibles
+            for (NetworkInterface networkInterface :
+            	 (NetworkInterface[]) NetworkInterface.networkInterfaces().toArray()) {
+                
+            	// Vérifier si l'interface est active
+                if (networkInterface.isUp()) {
+                    
+                    // Obtenir les adresses IP associées à cette interface
+                    for (InterfaceAddress interfaceAddress : networkInterface.getInterfaceAddresses()) {
+                        InetAddress inetAddress = interfaceAddress.getAddress();
+                        
+                        // Nous cherchons des adresses IPv4 uniquement
+                        if (inetAddress instanceof Inet4Address) {
+                        	System.out.println(ip.getAddress());
+                            ip = inetAddress;
+                        }
+                    }
+                }
             }
+            
+            label.setText(ip.getHostAddress());
             
             if (!vboxDonnees.getChildren().contains(label)) {
                 int boutonIndex = vboxDonnees.getChildren().indexOf(boutonAfficherIP);
@@ -102,7 +119,7 @@ public class ExportateurControleur {
                 vboxDonnees.getChildren().add(boutonIndex + 1, label);
                 boutonAfficherIP.setDisable(true);
             }
-        } catch (UnknownHostException e) {
+        } catch (UnknownHostException | SocketException e) {
             System.out.println("Impossible de récupérer l'adresse IP de la machine locale.");
         }
 	}

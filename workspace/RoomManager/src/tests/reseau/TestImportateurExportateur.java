@@ -13,6 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import javafx.application.Application;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -66,10 +68,24 @@ public class TestImportateurExportateur {
 		
 		stockageExportateur = new Stockage(listeSalles, listeActivites,
 				                listeEmployes, listeReservations);
-
+		
+		// avec ip
+		InetAddress ip;
+		try {
+			ip = InetAddress.getLocalHost();
+			
+			assertDoesNotThrow(() -> exportateur = new Exportateur(8765, stockageExportateur, ip));
+		} catch (UnknownHostException e) {
+			System.out.println("Erreur obtention ip lors de testExportateur.");
+		}
+		
+		assertTrue(exportateur.closeConnexion());
+	
+		// sans ip
 		assertDoesNotThrow(() -> exportateur = new Exportateur(8765, stockageExportateur));
-
+		
 	}
+		
 	
 	@Test
 	void testConstructeursEtConnexion() {

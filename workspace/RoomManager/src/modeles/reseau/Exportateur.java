@@ -9,9 +9,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.InterfaceAddress;
+import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.StandardSocketOptions;
 import java.util.ArrayList;
 
@@ -49,12 +54,58 @@ public class Exportateur {
 	/**
 	 * instancie un exportateur et associe un socket de serveur à un port
 	 * @param port port d'écoute du socket
+	 * @param stockage stockage de lecture de l'exportateur
+	 * @throws IOException s'il y a un problème lors de la création du socket
 	 */
 	public Exportateur(int port, Stockage stockage) throws IOException {
 		
-		socketServeur = new ServerSocket();
+		InetAddress ip;
+		ip = InetAddress.getLocalHost(); // valeur de base
+		
+		// Énumérer toutes les interfaces réseau disponibles
+        try {
+			for (NetworkInterface networkInterface :
+				 (NetworkInterface[]) NetworkInterface.networkInterfaces().toArray()) {
+			    
+				System.out.println( networkInterface. );
+				
+				// Vérifier si l'interface est active
+			    if (networkInterface.isUp()) {
+			        
+			        // Obtenir les adresses IP associées à cette interface
+			        for (InterfaceAddress interfaceAddress : networkInterface.getInterfaceAddresses()) {
+			            InetAddress inetAddress = interfaceAddress.getAddress();
+			            
+			            // Nous cherchons des adresses IPv4 uniquement
+			            if (inetAddress instanceof Inet4Address) {
+			            	System.out.println(ip.getAddress());
+			                ip = inetAddress;
+			            }
+			        }
+			    }
+			}
+		} catch (SocketException e) {
+			throw new IOException();
+		}
+		
+		socketServeur = new ServerSocket(port, 1, ip);
 		socketServeur.setOption(StandardSocketOptions.SO_REUSEADDR, true);
-		socketServeur.bind(new InetSocketAddress(port));
+		System.out.println( socketServeur.getInetAddress());
+		
+		this.stockage = stockage;
+	}
+	
+	/**
+	 * instancie un exportateur et associe un socket de serveur à un port
+	 * @param port port d'écoute du socket
+	 * @param stockage stockage de lecture de l'exportateur
+	 * @param ip adresse ip du serveur
+	 * @throws IOException s'il y a un problème lors de la création du socket
+	 */
+	public Exportateur(int port, Stockage stockage, InetAddress ip) throws IOException {
+		
+		socketServeur = new ServerSocket(port, 1, ip);
+		socketServeur.setOption(StandardSocketOptions.SO_REUSEADDR, true);
 		System.out.println( socketServeur.getInetAddress());
 		
 		this.stockage = stockage;
@@ -187,7 +238,12 @@ public class Exportateur {
 	 */
 	public boolean closeConnexion() {
 		try {
-			socketCommunication.close();
+			try {
+				socketCommunication.close();
+			} catch (NullPointerException e) {
+				// cas dans lequel le socket est fermé
+				// avant la connexion avec l'importateur
+			}
 			socketServeur.close();
 			return true;
 		} catch (IOException e) {
