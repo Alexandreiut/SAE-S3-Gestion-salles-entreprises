@@ -22,6 +22,11 @@ public class Crypteur {
 	private String cle;
 	
 	/**
+	 * 
+	 */
+	private DiffieHellman diffieHellman;
+	
+	/**
 	 * Constructeur de la classe, associe un alphabet au cryptage
 	 * @param alphabet, l'alphabet utilisé pour le cryptage
 	 */
@@ -30,6 +35,7 @@ public class Crypteur {
             throw new IllegalArgumentException("L'alphabet ne peut pas être vide.");
         }
 		this.alphabet = alphabet;
+		this.diffieHellman = new DiffieHellman(); //Initialise une instance pour l'échange de clés
 	}
 	
 	/**
@@ -44,36 +50,53 @@ public class Crypteur {
 		return cle != null ? cle.length() : 0;
 	}
 	
+	
+	/**
+	 * Genere une clé pour le chiffrement en utilisant Diffie-Hellman et Vigenere
+	 * @return une clé de chiffrement
+	 */
+	public String genererCle() {
+		int gPuissanceX = diffieHellman.getGPuissanceX();
+		// Ici, on utiliserait `gPuissanceX` avec une clé partagée d'un autre DiffieHellman
+		
+		// Utilise la valeur calculée comme longueur de la clé à générer avec Vigenère
+		this.cle = Vigenere.genererClefAleatoire(gPuissanceX % alphabet.length());
+		return cle;
+		
+	}
+	
+	
+    /**
+	 * Crypte un message
+	 * @param messageACrypter le message a crypter
+	 * @return le message crypté
+	 */
+	public String crypteMessage(String messageACrypter) {
+		if (cle == null) {
+			throw new IllegalStateException("La clé n'est pas générée.");
+		}
+		
+		return Vigenere.encodageVigenere(cle, messageACrypter);
+	}
+	
+	
 	/**
 	 * Decrypte un message
 	 * @param messageCrypte le message crypté
 	 * @return le message décrypté
 	 */
 	public String decrypteMessage(String messageCrypte) {
-
+		if (cle == null) {
+			throw new IllegalStateException("la clé n'est pas générée.");
+		}
         
-		return ""; //STUB
+		
+		return Vigenere.decodageVigenere(cle, messageCrypte);
 	}
 	
 
-	/**
-	 * Crypte un message
-	 * @param messageACrypter le message a crypter
-	 * @return le message crypté
-	 */
-	public String crypteMessage(String messageACrypter) {
-		return ""; //STUB
-	}
+
 	
-	
-	/**
-	 * Genere une clé pour le chiffrement
-	 * @return une clé de chiffrement
-	 */
-	public String genererCle() {
-		return ""; //STUB
-		
-	}
 }
 	
 	
