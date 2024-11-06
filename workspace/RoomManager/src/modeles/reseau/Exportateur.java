@@ -55,6 +55,7 @@ public class Exportateur {
 		socketServeur = new ServerSocket();
 		socketServeur.setOption(StandardSocketOptions.SO_REUSEADDR, true);
 		socketServeur.bind(new InetSocketAddress(port));
+		System.out.println( socketServeur.getInetAddress());
 		
 		this.stockage = stockage;
 	}

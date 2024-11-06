@@ -98,11 +98,35 @@ public class ImportateurControleur {
 	                	showAlert(Alert.AlertType.ERROR, "Importation impossible", message);
 	                }
 
-	            } catch (IOException | WrongFileFormatException e) {
-	                alert.setContentText("Erreur de lecture du fichier : " + fichier.getName());
-	                alert.show();
-	            }
-	        }
+					if (listeItems.get(0) instanceof Employe) {
+						nomCSV = "Employés";
+						ArrayList<Employe> listeE = new ArrayList<>();
+						for(Object obj : listeItems) {
+							listeE.add((Employe) obj);
+						}
+						RoomManager.stockage.setListeEmploye(listeE);
+					} else if (listeItems.get(0) instanceof Activite) {
+						nomCSV = "Activités";
+						ArrayList<Activite> listeA = new ArrayList<>();
+						for(Object obj : listeItems) {
+							listeA.add((Activite) obj);
+						}
+						RoomManager.stockage.setListeActivite(listeA);
+					} else if (listeItems.get(0) instanceof Salle) {
+						nomCSV = "Salles";
+						ArrayList<Salle> listeS = new ArrayList<>();
+						for(Object obj : listeItems) {
+							listeS.add((Salle) obj);
+						}
+						RoomManager.stockage.setListeSalle(listeS);
+					} else {
+						nomCSV = "Réservations";
+						ArrayList<Reservation> listeR = new ArrayList<>();
+						for(Object obj : listeItems) {
+							listeR.add((Reservation) obj);
+						}
+						RoomManager.stockage.setListeReservation(listeR);
+					} 
 
 	        // Vérifie la présence des fichiers requis si "Réservation" est présent
 	        if (fichierReservationPresent) {

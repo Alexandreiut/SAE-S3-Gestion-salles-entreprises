@@ -69,7 +69,11 @@ public class ExportateurControleur {
 	                             "Veuillez vérifier la connexion réseau et réessayer.");
 	        alert.showAndWait();
 	    } finally {
-	    	exportateur.closeConnexion();
+	    	try {
+	    		exportateur.closeConnexion();
+	    	} catch (NullPointerException e) {
+	    		// ne rien faire car erreur déjà affichée
+	    	}
 	    }
 	}
 	

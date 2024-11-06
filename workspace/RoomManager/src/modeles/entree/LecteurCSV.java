@@ -47,8 +47,6 @@ public class LecteurCSV {
 		if(!getFileExtension(filePath).equals("csv")) {
 			throw new WrongFileFormatException();
 		}
-		
-		
 
 		try {
 			File file = new File(filePath);
@@ -271,6 +269,7 @@ public class LecteurCSV {
 				throw new LectureException();
 			}
 			if(!listeNomActivite.contains(activite)) {
+				System.out.println(listeNomActivite);
 				System.out.println(activite);
 				throw new LectureException();
 			} 
