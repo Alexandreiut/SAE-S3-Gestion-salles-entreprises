@@ -130,55 +130,49 @@ public class TestImportateurExportateur {
 		listeReservations.add(new Reservation("R000001", "07/10/2024",
 				                              "17h00", "19h00",
 								              "club gym", "Legendre", "Noémie",
-								              600000000, "reunion", "E000001",
-								              "prêt", "1"));
+								              600000000, "réunion", "E000001",
+								              "réunion", "00000001"));
 		
 		stockageExportateur = new Stockage(listeSalles, listeActivites,
 				                listeEmployes, listeReservations);
 		
-		stockageImportateur = new Stockage(new ArrayList<Salle>(),
+		RoomManager.stockage = new Stockage(new ArrayList<Salle>(),
 				                new ArrayList<Activite>(),
 				                new ArrayList<Employe>(),
 				                new ArrayList<Reservation>());
-		
-		RoomManager.stockage = new Stockage(new ArrayList<Salle>(),
-				               new ArrayList<Activite>(),
-				               new ArrayList<Employe>(),
-				               new ArrayList<Reservation>());
 						
 		assertDoesNotThrow(() ->  exportateur = new Exportateur(30000, stockageExportateur));
 		
 		new attenteServeur().start();
-		assertDoesNotThrow(() -> importateur = new Importateur("127.0.0.1", 30000, stockageImportateur));
+		assertDoesNotThrow(() -> importateur = new Importateur("127.0.0.1", 30000, RoomManager.stockage));
 		
 		exportateur.envoiDonnee();
-		exportateur.closeConnexion();
+		assertTrue(exportateur.closeConnexion());
 		
 		assertDoesNotThrow(() -> importateur.convertirReponseDonnee(importateur.recevoirDonnee()));
+		assertTrue(importateur.closeConnexion());
 		
 		// utilisation de toString() pour comparer les données
 		// car les toString() des items contiennent tous leurs attributs
 		for (int i = 0 ; i < stockageExportateur.getListeActivite().size() ; i++) {
 			assertEquals(stockageExportateur.getListeActivite().get(i).toString(),
-					     stockageImportateur.getListeActivite().get(i).toString());
+					RoomManager.stockage.getListeActivite().get(i).toString());
 		}
 		
 		for (int i = 0 ; i < stockageExportateur.getListeEmploye().size() ; i++) {
 			assertEquals(stockageExportateur.getListeEmploye().get(i).toString(),
-					     stockageImportateur.getListeEmploye().get(i).toString());
+					RoomManager.stockage.getListeEmploye().get(i).toString());
 		}
 		
 		for (int i = 0 ; i < stockageExportateur.getListeSalle().size() ; i++) {
 			assertEquals(stockageExportateur.getListeSalle().get(i).toString(),
-					     stockageImportateur.getListeSalle().get(i).toString());
+					RoomManager.stockage.getListeSalle().get(i).toString());
 		}
 		
 		for (int i = 0 ; i < stockageExportateur.getListeReservation().size() ; i++) {
 			assertEquals(stockageExportateur.getListeReservation().get(i).toString(),
-					     stockageImportateur.getListeReservation().get(i).toString());
+					RoomManager.stockage.getListeReservation().get(i).toString());
 		}
-		
-		importateur.closeConnexion();
 		
 	}
 	
