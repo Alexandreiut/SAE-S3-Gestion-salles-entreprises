@@ -22,7 +22,7 @@ import java.io.PrintWriter;
  * Représente un importateur, avec une adresse IP et un port
  * voulant recevoir des données distante
  */
-public class Importateur {
+public class Importateur implements AutoCloseable {
 	
 	/** socket associé à l'imortateur permettant une communication */
 	private Socket socketClient;
@@ -170,6 +170,16 @@ public class Importateur {
 		} catch (IOException e) {
 			return false;
 		}
+	}
+
+	@Override
+	public void close() throws Exception {
+		
+		try {
+			socketClient.close();
+		} catch (IOException e) {
+		}
+		
 	}
 	
 }
