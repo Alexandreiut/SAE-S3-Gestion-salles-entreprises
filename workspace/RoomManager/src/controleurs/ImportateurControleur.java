@@ -77,7 +77,25 @@ public class ImportateurControleur {
 			String nomCSV; //Pour l'affichage des fenetres
 
 			Alert alert = new Alert(Alert.AlertType.ERROR);
-
+			
+			ArrayList<File> fichierOrdonne;
+			
+			for (File fichier : fichierImporte) {
+				path = fichier.getAbsolutePath();
+				try {
+					String lignes = LecteurCSV.getRessource(path).get(0);
+					if(lignes.equals("Ident;salle;employe;activite;date;heuredebut;heurefin;;;;;")) {
+						fichierOrdonne = new ArrayList<File>();
+						// TODO avec indice
+					}
+					
+				} catch (WrongFileFormatException e) {
+					
+				} catch (IOException e) {
+					
+				}
+			}
+			
 			for (File fichier : fichierImporte) {
 				path = fichier.getAbsolutePath();
 				try {
