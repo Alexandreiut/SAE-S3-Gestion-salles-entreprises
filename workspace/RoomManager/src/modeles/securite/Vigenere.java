@@ -2,7 +2,7 @@ package modeles.securite;
 
 import java.util.Random;
 
-public class Vigenaire {
+public class Vigenere {
 	
 	/**
 	 * Génère un clef aléatoire de longueur variable
@@ -27,7 +27,7 @@ public class Vigenaire {
      * @param chaineACrypter chaîne de caractère
      * @return null si un des caractères n'est pas présent sinon renvoi la chaine cryptée
      */
-    public static String encodageVigenaire(String clef, String chaineACrypter) {
+    public static String encodageVigenere(String clef, String chaineACrypter) {
         StringBuilder chaineConstruite = new StringBuilder();
 
         for (int indexChaine = 0; indexChaine < chaineACrypter.length(); indexChaine++) {
@@ -51,7 +51,7 @@ public class Vigenaire {
      * @param chaineADecrypter chaîne de caractère encodée
      * @return null si un des caractères n'est pas présent sinon renvoi la chaine décryptée
      */
-    public static String decodageVigenaire(String clef, String chaineADecrypter) {
+    public static String decodageVigenere(String clef, String chaineADecrypter) {
         StringBuilder chaineConstruite = new StringBuilder();
 
         for (int indexChaine = 0; indexChaine < chaineADecrypter.length(); indexChaine++) {

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import modeles.securite.Vigenaire;
+import modeles.securite.Vigenere;
 
 /**
  * Classe de test de la classe Vigenaire 				03/11/2024
@@ -19,7 +19,7 @@ public class TestVigenaire {
 
     @BeforeEach
     public void setUp() {
-        clef = Vigenaire.genererClefAleatoire(5);
+        clef = Vigenere.genererClefAleatoire(5);
     }
 
     @Test
@@ -30,7 +30,7 @@ public class TestVigenaire {
     @Test
     public void testEncodageVigenaire_Encoding() {
         String texte = "Bonjour";
-        String texteEncode = Vigenaire.encodageVigenaire(clef, texte);
+        String texteEncode = Vigenere.encodageVigenere(clef, texte);
 
         assertNotNull(texteEncode);
         assertNotEquals(texte, texteEncode, "The encoded text should differ from the original");
@@ -39,8 +39,8 @@ public class TestVigenaire {
     @Test
     public void testDecodageVigenaire_Decoding() {
         String texte = "Bonjour";
-        String texteEncode = Vigenaire.encodageVigenaire(clef, texte);
-        String texteDecode = Vigenaire.decodageVigenaire(clef, texteEncode);
+        String texteEncode = Vigenere.encodageVigenere(clef, texte);
+        String texteDecode = Vigenere.decodageVigenere(clef, texteEncode);
 
         assertNotNull(texteDecode);
         assertEquals(texte, texteDecode, "The decoded text should match the original");
@@ -49,7 +49,7 @@ public class TestVigenaire {
     @Test
     public void testEncodageVigenaire_NonDictionnaireCharacter() {
         String texte = "Bonjour€";
-        String texteEncode = Vigenaire.encodageVigenaire(clef, texte);
+        String texteEncode = Vigenere.encodageVigenere(clef, texte);
 
         assertNull(texteEncode, "Encoding should return null for non-dictionary characters");
     }
@@ -57,7 +57,7 @@ public class TestVigenaire {
     @Test
     public void testDecodageVigenaire_NonDictionnaireCharacter() {
         String texte = "Bonjour€";
-        String texteDecode = Vigenaire.decodageVigenaire(clef, texte);
+        String texteDecode = Vigenere.decodageVigenere(clef, texte);
 
         assertNull(texteDecode, "Encoding should return null for non-dictionary characters");
     }
