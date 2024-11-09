@@ -93,7 +93,7 @@ public class Importateur implements AutoCloseable {
 	        ArrayList<Object> objetsAInserer;
 	        
 	        try {
-	            objetsAInserer = LecteurCSV.readFichier(donneesFichier);
+	            objetsAInserer = LecteurCSV.lireFichier(donneesFichier);
 	        } catch (Exception e) {
 	            return false;
 	        }

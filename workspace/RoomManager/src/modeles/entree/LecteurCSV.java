@@ -27,30 +27,23 @@ import modeles.items.Salle;
 public class LecteurCSV {
 
 	/**
-	 * Contient les informations du retour des lectures
-	 */
-	public static String log;
-
-
-	/**
-	 * @param filePath le chemin du fichier
+	 * @param chemin le chemin du fichier
 	 * @return Le contenu du fichier sous forme d'une liste de ligne.
 	 * @throws WrongFileFormatException si l'extension du fichier 
 	 * est incorrecte
 	 * @throws IOException
 	 */
-	public static ArrayList<String> getRessource(String filePath) 
+	public static ArrayList<String> getRessource(String chemin) 
 			throws WrongFileFormatException, IOException {
 		ArrayList<String> listeLignes = new ArrayList<>();
 
-		if (!getFileExtension(filePath).equals("csv")) {
+		if (!getExtensionFichier(chemin).equals("csv")) {
 			throw new WrongFileFormatException();
 		}
 
-		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(filePath)))) {
+		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(chemin)))) {
 			String ligne;
 			while ((ligne = bufferedReader.readLine()) != null) {
-				System.out.println(ligne);
 				listeLignes.add(ligne);
 			}
 		}
@@ -72,7 +65,7 @@ public class LecteurCSV {
 	 * @throws LectureException
 	 * @throws IOException
 	 */
-	public static ArrayList<Object> readFichier(ArrayList<String> listeLigneFichier) 
+	public static ArrayList<Object> lireFichier(ArrayList<String> listeLigneFichier) 
 			throws WrongFileFormatException, LectureException, IOException {
 
 		/**
@@ -104,19 +97,19 @@ public class LecteurCSV {
 
 		case EN_TETE_ACTIVITE :
 
-			return readActiviteCSV(listeLigneFichier);
+			return lireActiviteCSV(listeLigneFichier);
 
 		case EN_TETE_EMPLOYE :
 
-			return readEmployeCSV(listeLigneFichier);
+			return lireEmployeCSV(listeLigneFichier);
 
 		case EN_TETE_RESERVATION :
 
-			return readReservationCSV(listeLigneFichier);
+			return lireReservationCSV(listeLigneFichier);
 
 		case EN_TETE_SALLE :
 
-			return readSalleCSV(listeLigneFichier);
+			return lireSalleCSV(listeLigneFichier);
 
 		default :
 			throw new LectureException();
@@ -131,7 +124,7 @@ public class LecteurCSV {
 	 * @return Une liste de salles.
 	 * @throws LectureException si données incohérentes
 	 */
-	public static ArrayList<Object> readSalleCSV(ArrayList<String> listeLigneFichier) 
+	public static ArrayList<Object> lireSalleCSV(ArrayList<String> listeLigneFichier) 
 			throws LectureException { //INITIALEMENT PRIVATE
 
 		Salle salle;
@@ -188,7 +181,7 @@ public class LecteurCSV {
 	 * @return Une liste de réservations.
 	 * @throws LectureException si données incohérentes
 	 */
-	public static ArrayList<Object> readReservationCSV(ArrayList<String> listeLigneFichier) 
+	public static ArrayList<Object> lireReservationCSV(ArrayList<String> listeLigneFichier) 
 			throws LectureException { //INITIALEMENT PRIVATE
 
 		Reservation reservation;        
@@ -290,7 +283,7 @@ public class LecteurCSV {
 	 * @return Une liste d'employéss.
 	 * @throws LectureException si données incohérentes
 	 */
-	public static ArrayList<Object> readEmployeCSV(ArrayList<String> listeLigneFichier) 
+	public static ArrayList<Object> lireEmployeCSV(ArrayList<String> listeLigneFichier) 
 			throws LectureException { //INITIALEMENT PRIVATE
 
 		Employe employe;
@@ -331,7 +324,7 @@ public class LecteurCSV {
 	 * @return Une liste d'activitées.
 	 * @throws LectureException si données incohérentes
 	 */
-	public static ArrayList<Object> readActiviteCSV(ArrayList<String> listeLigneFichier) 
+	public static ArrayList<Object> lireActiviteCSV(ArrayList<String> listeLigneFichier) 
 			throws LectureException { //INITIALEMENT PRIVATE
 
 		Activite activite;
@@ -366,15 +359,15 @@ public class LecteurCSV {
 	 * @return l'extension du fichier
 	 */
 
-	private static String getFileExtension(String filePath) {
+	private static String getExtensionFichier(String cheminFichier) {
 
 		int indexPoint;
 
-		indexPoint = filePath.lastIndexOf('.');
+		indexPoint = cheminFichier.lastIndexOf('.');
 
-		if (indexPoint > 0 && indexPoint < filePath.length() - 1) {
+		if (indexPoint > 0 && indexPoint < cheminFichier.length() - 1) {
 
-			return filePath.substring(indexPoint + 1);
+			return cheminFichier.substring(indexPoint + 1);
 
 		}
 		return "";
