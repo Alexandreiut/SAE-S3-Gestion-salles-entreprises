@@ -121,12 +121,9 @@ public class LecteurCSV {
 		default :
 			throw new LectureException();
 		}
-
-
 	}
 
 	/**
-	 *
 	 * Créer une liste de salles, à partir des données de l'ArrayList
 	 * Ajoute une description du profil dans le log
 	 * @param listeLigneFichier une ArrayList 
@@ -183,7 +180,6 @@ public class LecteurCSV {
 	}
 
 	/**
-	 *
 	 * Créer une liste de réservations, 
 	 * à partir des données de l'ArrayList
 	 * Ajoute une description du profil dans le log
@@ -235,7 +231,7 @@ public class LecteurCSV {
 		for (Activite act : listeActivite) {
 			String nom = act.getNom().trim();
 			if(nom.equals("entretien de la salle")) {
-				nom= "entretien"; //Correction temporaire
+				nom= "entretien";
 			}
 			listeNomActivite.add(nom);
 		}
@@ -249,8 +245,7 @@ public class LecteurCSV {
 
 			ligneSplit  = ligne.split(";");
 
-			id = (ligneSplit.length > 0 && ligneSplit[0].length() > 1 && ligneSplit[0].charAt(0) == 'R') ? ligneSplit[0] : "Id inconnu";
-			// Vérification de l'existance des identifiants relever par la lecture pour garder une cohérence        
+			id = (ligneSplit.length > 0 && ligneSplit[0].length() > 1 && ligneSplit[0].charAt(0) == 'R') ? ligneSplit[0] : "Id inconnu";      
 			salleReservee = (ligneSplit.length > 1 && ligneSplit[1].length() == 8 && ligneSplit[1].matches("\\d+")) ? ligneSplit[1] : "-1";
 			reservant = (ligneSplit.length > 2 && ligneSplit[2].length() == 7 && ligneSplit[2].charAt(0) == 'E') ? ligneSplit[2] : "Employé inconnu";
 			activite = (ligneSplit.length > 3 && ligneSplit[3].length() > 1) ? ligneSplit[3] : "Activite inconnue";
@@ -269,7 +264,6 @@ public class LecteurCSV {
 				throw new LectureException();
 			} 
 
-			// Récupération de l'ensemble des élément pour constituer une réservation
 			date = (ligneSplit.length > 4 && ligneSplit[4].length() == 10 && ligneSplit[4].matches("\\d{2}/\\d{2}/\\d{4}")) ? ligneSplit[4] : "Date inconnu";
 			heureDebut = (ligneSplit.length > 5 && ligneSplit[5].length() == 5 && ligneSplit[5].matches("\\d{2}h\\d{2}")) ? ligneSplit[5] : "Heure début inconnu";
 			heureFin = (ligneSplit.length > 6 && ligneSplit[6].length() == 5 && ligneSplit[6].matches("\\d{2}h\\d{2}")) ? ligneSplit[6] : "Heure fin inconnu";
@@ -284,7 +278,6 @@ public class LecteurCSV {
 
 			listeReservation.add((Object) reservation);
 		}
-
 		return listeReservation;
 	}
 
