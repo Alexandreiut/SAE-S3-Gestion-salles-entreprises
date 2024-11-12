@@ -124,8 +124,7 @@ public class LecteurCSV {
 	 * @return Une liste de salles.
 	 * @throws LectureException si données incohérentes
 	 */
-	public static ArrayList<Object> lireSalleCSV(ArrayList<String> listeLigneFichier) 
-			throws LectureException { //INITIALEMENT PRIVATE
+	public static ArrayList<Object> lireSalleCSV(ArrayList<String> listeLigneFichier) { //INITIALEMENT PRIVATE
 
 		Salle salle;
 
@@ -148,22 +147,21 @@ public class LecteurCSV {
 		listeLigneFichier.remove(0);
 
 		for(String ligne : listeLigneFichier) {
-
 			ligneSplit  = ligne.split(";");
 
 			id = (ligneSplit.length > 0 && ligneSplit[0].matches("\\d+")) 
 					? ligneSplit[0] : "Id inconnu";
-			nom = (ligneSplit.length > 1) ? ligneSplit[1] : "Nom inconnu";
+			nom = (ligneSplit.length > 1 && ligneSplit[1].matches("^(?=.*[A-Za-z])(?=.*\\d).+$")) ? ligneSplit[1] : "Nom inconnu";
 			capacite = (ligneSplit.length > 2 && ligneSplit[2].matches("\\d+")) ? Integer.parseInt(ligneSplit[2]) : 0;
-			videoProjecteur = (ligneSplit.length > 3) && ligneSplit[3].equalsIgnoreCase("oui");
-			ecranXxl = (ligneSplit.length > 4) && ligneSplit[4].equalsIgnoreCase("oui");
+			videoProjecteur = (ligneSplit.length > 3) && (ligneSplit[3].equalsIgnoreCase("oui") ? true : false);
+			ecranXxl = (ligneSplit.length > 4) && (ligneSplit[4].equalsIgnoreCase("oui") ? true : false);
 			nombrePc = (ligneSplit.length > 5 && ligneSplit[5].matches("\\d+")) ? Integer.parseInt(ligneSplit[5]) : 0;
-			typePc = (ligneSplit.length > 6) ? ligneSplit[6] : "Type inconnu";
+			typePc = (ligneSplit.length > 6 && ligneSplit[6].matches("^[A-Za-z ]+$")) ? ligneSplit[6] : "Type inconnu";
 
 			logicielInstalle = (ligneSplit.length > 7) ?
 					new ArrayList<>(Arrays.asList(ligneSplit[7].split(","))) : new ArrayList<>();
 
-			imprimante = (ligneSplit.length > 8) && ligneSplit[8].equalsIgnoreCase("oui");
+			imprimante = (ligneSplit.length > 8) && (ligneSplit[8].equalsIgnoreCase("oui") ? true : false);
 
 			salle = new Salle(id, nom, capacite, videoProjecteur, ecranXxl, nombrePc, typePc, logicielInstalle, imprimante);
 			listeSalles.add((Object) salle);
@@ -205,8 +203,10 @@ public class LecteurCSV {
 
 		ArrayList<Object> listeReservation = new ArrayList<Object>();
 
-
-
+		if(listeLigneFichier.isEmpty()) {
+			throw new LectureException();
+		}
+		
 		listeLigneFichier.remove(0);
 
 		// Cast des listes
@@ -233,7 +233,6 @@ public class LecteurCSV {
 			listeIdSalle.add(sal.getIdentifiant().trim());
 		}
 
-
 		for(String ligne : listeLigneFichier) {
 
 			ligneSplit  = ligne.split(";");
@@ -244,16 +243,19 @@ public class LecteurCSV {
 			activite = (ligneSplit.length > 3 && ligneSplit[3].length() > 1) ? ligneSplit[3] : "Activite inconnue";
 
 			if(!listeIdSalle.contains(salleReservee)) {
-				System.out.println(salleReservee);
+				System.out.println("TEST");
 				throw new LectureException();
 			}
+			
+			System.out.println(listeIdEmploye);
+			
 			if(!listeIdEmploye.contains(reservant)) {
-				System.out.println(reservant);
 				throw new LectureException();
 			}
+			
+			System.out.println(listeNomActivite);
+			
 			if(!listeNomActivite.contains(activite)) {
-				System.out.println(listeNomActivite);
-				System.out.println(activite);
 				throw new LectureException();
 			} 
 
@@ -283,8 +285,7 @@ public class LecteurCSV {
 	 * @return Une liste d'employéss.
 	 * @throws LectureException si données incohérentes
 	 */
-	public static ArrayList<Object> lireEmployeCSV(ArrayList<String> listeLigneFichier) 
-			throws LectureException { //INITIALEMENT PRIVATE
+	public static ArrayList<Object> lireEmployeCSV(ArrayList<String> listeLigneFichier) { //INITIALEMENT PRIVATE
 
 		Employe employe;
 
@@ -324,8 +325,7 @@ public class LecteurCSV {
 	 * @return Une liste d'activitées.
 	 * @throws LectureException si données incohérentes
 	 */
-	public static ArrayList<Object> lireActiviteCSV(ArrayList<String> listeLigneFichier) 
-			throws LectureException { //INITIALEMENT PRIVATE
+	public static ArrayList<Object> lireActiviteCSV(ArrayList<String> listeLigneFichier)  { //INITIALEMENT PRIVATE
 
 		Activite activite;
 
@@ -359,7 +359,7 @@ public class LecteurCSV {
 	 * @return l'extension du fichier
 	 */
 
-	private static String getExtensionFichier(String cheminFichier) {
+	public static String getExtensionFichier(String cheminFichier) {
 
 		int indexPoint;
 

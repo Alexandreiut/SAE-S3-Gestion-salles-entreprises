@@ -67,7 +67,7 @@ public class JeuDonne {
 
     public ArrayList<Salle> setUpSalles() {
         ArrayList<Salle> salles = new ArrayList<>();
-        salles.add(new Salle("00000001", "A6", 15, true, false, 4, "PC portable", new ArrayList<>(), false));
+        salles.add(new Salle("00000001", "A6", 15, true, false, 4, "PC portable", new ArrayList<>(List.of("bureautique")), false));
         salles.add(new Salle("00000002", "salle bleue", 18, true, true, 0, "", new ArrayList<>(), false));
         salles.add(new Salle("00000003", "salle ronde", 14, true, false, 0, "", new ArrayList<>(), false));
         salles.add(new Salle("00000004", "salle Picasso", 15, false, false, 0, "", new ArrayList<>(), false));
