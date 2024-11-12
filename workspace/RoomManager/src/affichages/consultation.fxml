@@ -6,7 +6,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -32,14 +31,14 @@
             <ComboBox prefWidth="150.0" promptText="Élément recherché" styleClass="comboBox" />
          </children></VBox>
       <Button layoutX="467.0" layoutY="524.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="484.0" styleClass="boutons-ajouter" text="Ajouter au pdf" />
-      <VBox layoutX="225.0" layoutY="227.0" prefHeight="278.0" prefWidth="758.0" styleClass="bordureHBOX">
+      <VBox layoutX="225.0" layoutY="183.0" prefHeight="334.0" prefWidth="758.0">
          <children>
-            <ScrollPane prefHeight="276.0" prefWidth="754.0">
-         		<content>
-            		<GridPane fx:id="grille">
-              		</GridPane>
-              	</content>
-             </ScrollPane>
+            <ScrollPane prefHeight="337.0" prefWidth="758.0">
+    			<content>
+			        <VBox fx:id="vboxContent" spacing="10">
+			        </VBox>
+    			</content>
+			</ScrollPane>
          </children>
       </VBox>
       <Button fx:id="boutonRetour" layoutX="652.0" layoutY="370.0" mnemonicParsing="false" onAction="#handleRetour" scaleX="0.175" scaleY="0.175" styleClass="bouton-retour">

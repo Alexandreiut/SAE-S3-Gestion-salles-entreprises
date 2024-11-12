@@ -10,66 +10,222 @@ import java.util.HashMap;
 
 import affichages.GestionAffichageMenu;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import modeles.NavigationVues;
 import modeles.consultation.Consultation;
 import modeles.items.Activite;
 import modeles.items.Employe;
 import modeles.items.Reservation;
 import modeles.items.Salle;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.SVGPath;
+import javafx.stage.Stage;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.layout.Region;
 
-/**
- * Controleur de la vue consultation.fxml
- */
 public class ConsultationControleur {
-	
 	@FXML
 	private Pane panePrincipal;
-	
-	//@FXML
-	//private VBox vboxDonnees;
-	
-	@FXML 
-	private Button boutonRetour;
-	
-	@FXML
-	private GridPane grille;
 
-	
-	/**
-	 * Initialisation des données et affichage
-	 * par defaut lorsque l'on arrive sur la vue.
-	 */
-	@FXML
-	private void initialize() {
-		
-		Consultation consultation = new Consultation();
-		HashMap<String,  ArrayList<? extends Object>> donnees = consultation.fetchDonneesBrutes();
-		
-		if (donnees.containsKey("pas de données")) {
-			grille.addRow(0, new Label("Aucune données n'est encore enregistrée"));
-		
-		} else {	
-			int rowIndex = 0; // Index de ligne pour le GridPane
-			ArrayList<Object> listeDonnee = new ArrayList<>();
-			listeDonnee.addAll(donnees.get("Activitées"));	
-			listeDonnee.addAll(donnees.get("Employés"));
-			listeDonnee.addAll(donnees.get("Réservations"));
-			listeDonnee.addAll(donnees.get("Salles"));			
-            for (Object obj : listeDonnee) {
-            	if(obj instanceof Activite || obj instanceof Employe 
-            			|| obj instanceof Reservation || obj instanceof Salle) {
-            		ajoutItem(obj,rowIndex);   
-                    rowIndex ++;        		
-            	}// posibilité de signaler qu'un objet est problématique dans le stockage
-                
-            }       
-		}	
-	}
+    @FXML
+    private VBox vboxContent;
+    
+    @FXML
+    private Button boutonRetour;
+
+    @FXML
+    private void initialize() {
+        // Création des rectangles principaux pour chaque type d'objet
+        createMainRectangle("Salle", "Nombre de salle : ", "Salles");
+        createMainRectangle("Réservation", "Nombre de réservation : ", "Réservations");
+        createMainRectangle("Activité", "Nombre d’activité : ", "Activitées");
+        createMainRectangle("Employé", "Nombre d’employé : ", "Employés");
+    }
+
+    /**
+     * Fonction fictive pour obtenir le nombre d'éléments d'un type
+     */
+    private int fetchCount(String dataKey) {
+        Consultation consultation = new Consultation();
+        HashMap<String, ArrayList<? extends Object>> donnees = consultation.fetchDonneesBrutes();
+        return donnees.getOrDefault(dataKey, new ArrayList<>()).size();
+    }
+
+    /**
+     * Fonction fictive pour obtenir les éléments d'un type spécifique
+     */
+    private ArrayList<Object> fetchDataForKey(String dataKey) {
+        Consultation consultation = new Consultation();
+        HashMap<String, ArrayList<? extends Object>> donnees = consultation.fetchDonneesBrutes();
+        return (ArrayList<Object>) donnees.getOrDefault(dataKey, new ArrayList<>());
+    }
+
+    private void createMainRectangle(String label, String countText, String dataKey) {
+        VBox mainRectangleContainer = new VBox(); // Conteneur principal vertical pour ce rectangle
+        mainRectangleContainer.getStyleClass().add("itemPrincipalVBOX");
+        mainRectangleContainer.setSpacing(5);
+        SVGPath svg = new SVGPath();
+        svg.setContent("M 19.265625 21.765625 C 20.242188 20.789062 20.242188 19.203125 19.265625 18.226562 L 9.265625 8.226562 C 8.546875 7.507812 7.476562 7.296875 6.539062 7.6875 C 5.601562 8.078125 4.992188 8.984375 4.992188 10 L 4.992188 30 C 4.992188 31.007812 5.601562 31.921875 6.539062 32.3125 C 7.476562 32.703125 8.546875 32.484375 9.265625 31.773438 L 19.265625 21.773438 Z M 19.265625 21.765625 ");
+        
+        Label labelIntitule = new Label("    " + label);
+        labelIntitule.setPrefWidth(120);
+        Label labelNbItem = new Label(countText + fetchCount(dataKey));
+        labelNbItem.setPrefWidth(240);
+        
+        VBox subRectanglesContainer = new VBox(); // Conteneur pour les sous-rectangles
+        subRectanglesContainer.setVisible(false); // Cache les sous-rectangles par défaut
+        subRectanglesContainer.setManaged(false); // Retire l'espace occupé par les sous-rectangles par défaut
+        
+        Button graphicButton = new Button("Graphique");
+        //detailsButton.setOnAction(e -> showDetailsWindow(item));
+        graphicButton.getStyleClass().add("itemPrincipalBouton");
+        SVGPath svgGraphic = new SVGPath();
+        svgGraphic.setContent("M 6.332031 5.15625 L 6.332031 0.355469 C 6.332031 0.164062 6.480469 0 6.667969 0 C 9.242188 0 11.332031 2.15625 11.332031 4.8125 C 11.332031 5.007812 11.175781 5.15625 10.988281 5.15625 Z M 0.667969 5.84375 C 0.667969 3.238281 2.542969 1.082031 4.980469 0.738281 C 5.171875 0.710938 5.332031 0.867188 5.332031 1.066406 L 5.332031 6.1875 L 8.59375 9.550781 C 8.734375 9.695312 8.722656 9.929688 8.5625 10.046875 C 7.746094 10.648438 6.746094 11 5.667969 11 C 2.90625 11 0.667969 8.691406 0.667969 5.84375 Z M 11.632812 6.1875 C 11.828125 6.1875 11.980469 6.355469 11.953125 6.554688 C 11.792969 7.753906 11.234375 8.820312 10.414062 9.609375 C 10.289062 9.730469 10.09375 9.722656 9.972656 9.59375 L 6.667969 6.1875 Z M 11.632812 6.1875");
+        graphicButton.setGraphic(svgGraphic);
+        
+        Button btnAjoutPdf = new Button();
+        btnAjoutPdf.getStyleClass().add("itemPrincipalBouton");
+        btnAjoutPdf.setText("+");
+        Tooltip tooltip = new Tooltip("Ajouter l'ensemble des items au pdf");
+        btnAjoutPdf.setTooltip(tooltip);
+
+        HBox hbox = new HBox();
+        hbox.getChildren().addAll(new Label("    "),svg,labelIntitule,labelNbItem,graphicButton,new Label("    "),btnAjoutPdf);
+        mainRectangleContainer.getChildren().addAll(hbox);
+
+        // Gestion du clic sur le rectangle principal
+        mainRectangleContainer.setOnMouseClicked(event -> {
+            if (subRectanglesContainer.isVisible()) {
+            	((SVGPath) ((HBox) mainRectangleContainer.getChildren().get(0)).getChildren().get(1)).setContent("M 19.265625 21.765625 C 20.242188 20.789062 20.242188 19.203125 19.265625 18.226562 L 9.265625 8.226562 C 8.546875 7.507812 7.476562 7.296875 6.539062 7.6875 C 5.601562 8.078125 4.992188 8.984375 4.992188 10 L 4.992188 30 C 4.992188 31.007812 5.601562 31.921875 6.539062 32.3125 C 7.476562 32.703125 8.546875 32.484375 9.265625 31.773438 L 19.265625 21.773438 Z M 19.265625 21.765625 ");
+                subRectanglesContainer.setVisible(false);
+                subRectanglesContainer.setManaged(false);
+            } else {
+            	((SVGPath) ((HBox) mainRectangleContainer.getChildren().get(0)).getChildren().get(1)).setContent("M 8.585938 23.414062 C 9.367188 24.195312 10.636719 24.195312 11.417969 23.414062 L 19.417969 15.414062 C 19.992188 14.835938 20.164062 13.980469 19.851562 13.230469 C 19.539062 12.480469 18.8125 11.992188 18 11.992188 L 2 12 C 1.195312 12 0.460938 12.488281 0.148438 13.238281 C -0.164062 13.988281 0.0117188 14.84375 0.582031 15.417969 L 8.582031 23.417969 Z M 8.585938 23.414062");
+                subRectanglesContainer.getChildren().clear(); // Vide les sous-rectangles existants
+                ArrayList<Object> items = fetchDataForKey(dataKey);
+                for (Object item : items) {
+                    addSubRectangle(subRectanglesContainer, item);
+                    subRectanglesContainer.setSpacing(5);
+                }
+                subRectanglesContainer.setVisible(true);
+                subRectanglesContainer.setManaged(true);
+            }
+        });
+
+        // Ajoute le conteneur de sous-rectangles sous le rectangle principal
+        mainRectangleContainer.getChildren().add(subRectanglesContainer);
+        vboxContent.getChildren().add(mainRectangleContainer); // Ajoute le conteneur principal à la VBox de contenu
+    }
+
+
+    private void addSubRectangle(VBox subRectanglesContainer, Object item) {
+        HBox subRectangle = new HBox();
+        subRectangle.getStyleClass().add("itemSecondaireVBOX");
+        Label labelSub = new Label();
+        if(item instanceof Salle) {
+        	labelSub.setText(((Salle) item).getNom());
+        } else if(item instanceof Activite) {
+        	labelSub.setText(((Activite) item).getNom());
+        } else if(item instanceof Employe) {
+        	labelSub.setText(((Employe) item).getNom() + "    " + ((Employe) item).getPrenom());
+        } else  {
+        	labelSub.setText(((Reservation) item).getIdentifiant());
+        } 
+        labelSub.setPrefWidth(250);       
+        SVGPath svgPoint = new SVGPath();
+        svgPoint.setContent("M 5 10 C 7.761719 10 10 7.761719 10 5 C 10 2.238281 7.761719 0 5 0 C 2.238281 0 0 2.238281 0 5 C 0 7.761719 2.238281 10 5 10 Z M 5 10");
+        HBox centeredContainer = new HBox(svgPoint);
+        centeredContainer.getStyleClass().add("centeredContainer");
+
+        
+        Button detailsButton = new Button("Détails");
+        detailsButton.setOnAction(e -> showDetailsWindow(item));
+        detailsButton.getStyleClass().add("itemSecondaireBouton");
+
+        Button graphicButton = new Button("Graphique");
+        //detailsButton.setOnAction(e -> showDetailsWindow(item));
+        graphicButton.getStyleClass().add("itemSecondaireBouton");
+        SVGPath svgGraphic = new SVGPath();
+        svgGraphic.setContent("M 6.332031 5.15625 L 6.332031 0.355469 C 6.332031 0.164062 6.480469 0 6.667969 0 C 9.242188 0 11.332031 2.15625 11.332031 4.8125 C 11.332031 5.007812 11.175781 5.15625 10.988281 5.15625 Z M 0.667969 5.84375 C 0.667969 3.238281 2.542969 1.082031 4.980469 0.738281 C 5.171875 0.710938 5.332031 0.867188 5.332031 1.066406 L 5.332031 6.1875 L 8.59375 9.550781 C 8.734375 9.695312 8.722656 9.929688 8.5625 10.046875 C 7.746094 10.648438 6.746094 11 5.667969 11 C 2.90625 11 0.667969 8.691406 0.667969 5.84375 Z M 11.632812 6.1875 C 11.828125 6.1875 11.980469 6.355469 11.953125 6.554688 C 11.792969 7.753906 11.234375 8.820312 10.414062 9.609375 C 10.289062 9.730469 10.09375 9.722656 9.972656 9.59375 L 6.667969 6.1875 Z M 11.632812 6.1875");
+        graphicButton.setGraphic(svgGraphic);
+        
+        Button ajoutPdfButton = new Button("+");
+        Tooltip tooltip = new Tooltip("Ajouter l'item au pdf");
+        ajoutPdfButton.setTooltip(tooltip);
+        //detailsButton.setOnAction(e -> showDetailsWindow(item));
+        ajoutPdfButton.getStyleClass().add("itemSecondaireBouton");
+        
+        subRectangle.getChildren().addAll(centeredContainer,labelSub,detailsButton,graphicButton,ajoutPdfButton);
+        subRectanglesContainer.getChildren().add(subRectangle); 
+    }
+
+    /**
+     * Affiche une fenêtre avec les détails de l'objet sélectionné.
+     * Cette méthode utilise le type de l'objet pour déterminer quelles informations afficher.
+     */
+    private void showDetailsWindow(Object item) {
+        Stage detailStage = new Stage();
+        VBox detailsBox = new VBox();
+        detailsBox.setPadding(new Insets(10));
+
+        if (item instanceof Salle) {
+            String presenceVideoProjecteur = ((Salle) item).getVideoProjecteur() ? "oui" : "non";
+	        String presenceEcranXxl = ((Salle) item).getEcranXxl() ? "oui" : "non";
+	        String presenceImprimante = ((Salle) item).getImprimante() ? "oui" : "non";
+            detailsBox.getChildren().add(
+                new Label("Nom : " + ((Salle) item).getNom() +
+  		              "\nCapacité : " + ((Salle) item).getCapacite() +
+  		              "\nVidéo projecteur : " + presenceVideoProjecteur +
+  		              "\nÉcran XXL : " + presenceEcranXxl +
+  		              "\nNombre de poste : " + ((Salle) item).getNombrePc() + 
+  		              "\nType des postes : " + ((Salle) item).getTypePc() +
+  		              "\nLogiciel installés " + ((Salle) item).getLogicielInstalle() + 
+  		              "\nImprimante " + presenceImprimante)
+            );
+        } else if (item instanceof Activite) {
+            detailsBox.getChildren().add(
+                new Label("ID : " + ((Activite) item).getIdentifiant() +
+						"\nNom : " + ((Activite) item).getNom())
+            );
+        } else if (item instanceof Employe) {
+            detailsBox.getChildren().add(
+                new Label("ID : " + ((Employe) item).getIdentifiant() +
+                		"\nNom : " + ((Employe) item).getNom() +
+                		"\nPrénom : " + ((Employe) item).getPrenom() +
+                		"\nTéléphone : " + ((Employe) item).getTelephone())
+            );
+        } else if (item instanceof Reservation) {
+            detailsBox.getChildren().add(
+                new Label("ID : " + ((Reservation) item).getIdentifiant() +
+                        "\nDate : " + ((Reservation) item).getDate() +
+                        "\nHeure Début : " + ((Reservation) item).getHeureDebut() +
+                        "\nHeure Fin : " + ((Reservation) item).getHeureFin() +
+                        "\nObjet : " + ((Reservation) item).getObjetReservation() +
+                        "\nInterlocuteur Nom : " + ((Reservation) item).getNomInterlocuteur() +
+                        "\nInterlocuteur Prénom : " + ((Reservation) item).getPrenomInterlocuteur() +
+                        "\nInterlocuteur Téléphone : " + ((Reservation) item).getNumeroInterlocuteur() +
+                        "\nUsage Salle : " + ((Reservation) item).getUsageSalle() +
+                        "\nEmployé Réservant : " + ((Reservation) item).getEmploye() +
+                        "\nActivité : " + ((Reservation) item).getActivite() +
+                        "\nSalle Réservée : " + ((Reservation) item).getSalle())
+            );
+        } else {
+            detailsBox.getChildren().add(new Label("Détails non disponibles pour cet objet."));
+        }
+
+        Scene scene = new Scene(detailsBox, 300, 200);
+        detailStage.setScene(scene);
+        detailStage.setTitle("Détails de l'objet");
+        detailStage.show();
+    }
 	
 	@FXML
 	private void menu() {
@@ -80,65 +236,4 @@ public class ConsultationControleur {
     private void handleRetour() {
         NavigationVues.retourVuePrecedente();
     }
-	
-	private void ajoutItem(Object item, int numeroLigne) {
-		Button ajoutPdf = new Button("Ajouter au PDF");
-		Label labelConstruit = new Label("");
-		boolean activiteVide = false;
-		boolean employeVide = false;
-		boolean reservationVide = false;
-		boolean salleVide = false;
-		if (item instanceof Activite) {
-			activiteVide = true;
-			ajoutPdf.setId(((Activite) item).getIdentifiant() + "");
-			labelConstruit = new Label("Activité - ID : " + ((Activite) item).getIdentifiant() + 
-                    ", Nom : " + ((Activite) item).getNom());
-		}
-		if (item instanceof Employe) {
-			employeVide = true;
-			ajoutPdf.setId(((Employe) item).getIdentifiant() + "");
-			labelConstruit = new Label("Employé - ID : " + ((Employe) item).getIdentifiant() + 
-                    ", Nom : " + ((Employe) item).getNom() + 
-                    ", Prénom : " + ((Employe) item).getPrenom() +
-                    ", Téléphone : " + ((Employe) item).getTelephone());
-		}
-		if (item instanceof Reservation) {
-			reservationVide = true;
-			ajoutPdf.setId(((Reservation) item).getIdentifiant() + "");
-			labelConstruit = new Label("Réservation - ID : " + ((Reservation) item).getIdentifiant() +
-                    ", Date : " + ((Reservation) item).getDate() +
-                    ", Heure Début : " + ((Reservation) item).getHeureDebut() +
-                    ", Heure Fin : " + ((Reservation) item).getHeureFin() +
-                    ", Objet : " + ((Reservation) item).getObjetReservation() +
-                    ", Interlocuteur : " + ((Reservation) item).getNomInterlocuteur() +
-                    " / " + ((Reservation) item).getPrenomInterlocuteur() +
-                    ", Téléphone Interlocuteur : " + ((Reservation) item).getNumeroInterlocuteur() +
-                    ", Usage Salle : " + ((Reservation) item).getUsageSalle() +
-                    ", Employé Réservant : " + ((Reservation) item).getEmploye() +
-                    ", Activité : " + ((Reservation) item).getActivite() +
-                    ", Salle Réservée : " + ((Reservation) item).getSalle());
-		}
-		if (item instanceof Salle) {
-			salleVide = true;
-			ajoutPdf.setId(((Salle) item).getIdentifiant() + "");
-			String presenceVideoProjecteur = ((Salle) item).getVideoProjecteur() ? "oui" : "non";
-	        String presenceEcranXxl = ((Salle) item).getEcranXxl() ? "oui" : "non";
-	        String presenceImprimante = ((Salle) item).getImprimante() ? "oui" : "non";
-	        
-	        labelConstruit = new Label("Salle - Nom : " + ((Salle) item).getNom() +
-	              " capacité : " + ((Salle) item).getCapacite() + " vidéo projecteur : " + presenceVideoProjecteur +
-	              " écran XXL : " + presenceEcranXxl + " Nombre de poste : " + ((Salle) item).getNombrePc() + 
-	              " Type des postes : " + ((Salle) item).getTypePc() + " Logiciel installés " + ((Salle) item).getLogicielInstalle() + 
-	              " imprimante " + presenceImprimante);
-		}
-		ajoutPdf.setOnAction(events -> {
-        try {
-            //AjoutActivitePdf(ajoutPdf.getId());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    	});
-		grille.addRow(numeroLigne, labelConstruit, ajoutPdf);
-		
-	}
 }
