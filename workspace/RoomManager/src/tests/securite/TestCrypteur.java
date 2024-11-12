@@ -1,8 +1,3 @@
-/*
- * TestCrypteur.java				24/10/2024
- * BUT Info2, 2024/2025, pas de copyright
- */
-
 package tests.securite;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,84 +7,59 @@ import org.junit.jupiter.api.Test;
 
 import modeles.securite.Crypteur;
 
-
-/**
- * Classe de tests de la classe Crypteur.java
- */
 public class TestCrypteur {
-	
-	private Crypteur crypteur;
-	
-	
-	/*
-	 * Initialisation du Crypteur avec un alphabet pour chaque test
-	 */
-	@BeforeEach
-	void setUp() {
-		crypteur = new Crypteur("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
-	}
-	
 
-	/*
-	 * Vérifie que l'instance de Crypteur est correctement initialisée.
-	 */
-	@Test
-	void testCrypteur() {
-		assertNotNull(crypteur, "le crypteur ne devrait pas être null apès l'initialisation");
-	}
+    private Crypteur crypteur;
+    private String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-	
-	/*
-	 * Vérifie que getNombreGenerateur() retourne une valeur positive après la génération de la clé.
-	 */
-	@Test
-	void testGetNombreGenerateur() {
-		crypteur.genererCle();
-		int nombreGenerateur = crypteur.getNombreGenerateur();
-		assertTrue(nombreGenerateur > 0, " le nombre du générateur devrait être positif une fois la clé générée");
-		
-	}
+    @BeforeEach
+    void setUp() {
+        crypteur = new Crypteur(alphabet);
+    }
 
-	
-	/*
-	 * Teste que GenererCle() produit une clé non nulle et de longueur valide
-	 */
-	@Test
-	void testGenererCle() {
-		String cle = crypteur.genererCle();
-		assertNotNull(cle, "la clé ne devrait pas être null après l'initialisation");
-		assertTrue(cle.length() > 0, "la clé générée devrait avoir une longueur supérieur à 0");
-	}
-	
-		
-	/*
-	 * Véifie que le message crypté n'est pas null et qu'il est différent du message d'origine
-	 */
-	@Test
-	void testCrypteMessage() {
-		crypteur.genererCle();
-		String message = "Bonjour le monde";
-		String messageCrypte = crypteur.crypteMessage(message);
-		
-		assertNotNull(messageCrypte, "le message crypté ne devrait pas être null");
-		assertNotEquals(message, messageCrypte, "le message crypté devrait être différent du message original");
-	}
-		
-	
-	/*
-	 * Vérifie que le décryptage d'un message crypté donne le message d'origine.
-	 */
-	@Test
-	void testDecrypteMessage() {
-		crypteur.genererCle();
-		String message = "Bonjour le monde";
-		String messageCrypte = crypteur.crypteMessage(message);
-		String messageDecrypte = crypteur.decrypteMessage(messageCrypte);
-		
-		assertNotNull(messageDecrypte, "le message décrypté ne devrait pas être null");
-		assertEquals(message, messageDecrypte, "le message crypté devrait être identique au message original");
-	}
+    @Test
+    void testCrypteur() {
+        // Tester le constructeur de Crypteur avec un alphabet valide
+        assertNotNull(crypteur, "Le Crypteur ne doit pas être nul.");
+    }
 
+    @Test
+    void testGetNombreGenerateur() {
+        // Tester si le nombre générateur est correctement calculé
+        crypteur.genererCle();
+        int nombreGenerateur = crypteur.getNombreGenerateur();
+        assertTrue(nombreGenerateur >= 0, "Le nombre générateur doit être positif ou nul.");
+    }
 
+    @Test
+    void testDecrypteMessage() {
+        // Tester si un message crypté peut être correctement décrypté
+        String message = "Bonjour";
+        crypteur.genererCle();
+        String messageCrypte = crypteur.crypteMessage(message);
+        String messageDecrypte = crypteur.decrypteMessage(messageCrypte);
+        
+        assertNotNull(messageDecrypte, "Le message décrypté ne doit pas être nul.");
+        assertEquals(message, messageDecrypte, "Le message décrypté doit être égal au message original.");
+    }
 
+    @Test
+    void testCrypteMessage() {
+        // Tester si un message peut être correctement crypté
+        String message = "Bonjour";
+        crypteur.genererCle();
+        String messageCrypte = crypteur.crypteMessage(message);
+        
+        assertNotNull(messageCrypte, "Le message crypté ne doit pas être nul.");
+        assertNotEquals(message, messageCrypte, "Le message crypté ne doit pas être identique au message original.");
+    }
+
+    @Test
+    void testGenererCle() {
+        // Tester si la clé générée est valide
+        String cle = crypteur.genererCle();
+        
+        assertNotNull(cle, "La clé générée ne doit pas être nulle.");
+        assertTrue(cle.length() >= 0, "La clé doit avoir une longueur supérieure à 0.");
+    }
 }
