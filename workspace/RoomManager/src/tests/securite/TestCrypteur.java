@@ -67,19 +67,28 @@ public class TestCrypteur {
 	 */
 	@Test
 	void testCrypteMessage() {
-		fail("Not yet implemented");
+		crypteur.genererCle();
+		String message = "Bonjour le monde";
+		String messageCrypte = crypteur.crypteMessage(message);
+		
+		assertNotNull(messageCrypte, "le message crypté ne devrait pas être null");
+		assertNotEquals(message, messageCrypte, "le message crypté devrait être différent du message original");
 	}
 		
 	
 	/*
-	 * 
+	 * Vérifie que le décryptage d'un message crypté donne le message d'origine.
 	 */
 	@Test
 	void testDecrypteMessage() {
-		fail("Not yet implemented");
+		crypteur.genererCle();
+		String message = "Bonjour le monde";
+		String messageCrypte = crypteur.crypteMessage(message);
+		String messageDecrypte = crypteur.decrypteMessage(messageCrypte);
+		
+		assertNotNull(messageDecrypte, "le message décrypté ne devrait pas être null");
+		assertEquals(message, messageDecrypte, "le message crypté devrait être identique au message original");
 	}
-
-	
 
 
 
