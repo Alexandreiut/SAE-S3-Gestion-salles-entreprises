@@ -57,7 +57,7 @@ public class Crypteur {
 	 */
 	public String genererCle() {
 		int nombreSecret = diffieHellman.getNbSecret();
-		// Ici, on utiliserait `gPuissanceX` avec une clé partagée d'un autre DiffieHellman
+		// Ici, on utiliserait `nbSecret` avec une clé partagée d'un autre DiffieHellman
 		
 		// Utilise la valeur calculée comme longueur de la clé à générer avec Vigenère
 		this.cle = Vigenere.genererClefAleatoire(nombreSecret % alphabet.length());
