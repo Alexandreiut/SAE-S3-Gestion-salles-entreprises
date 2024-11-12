@@ -2,10 +2,17 @@ package tests.securite;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import modeles.securite.Crypteur;
+
+
+/**
+ * Classe de test de la classe Crypteur				12/11/2024
+ * @author lucas Boulouard
+ */
 
 public class TestCrypteur {
 
@@ -47,11 +54,13 @@ public class TestCrypteur {
     void testCrypteMessage() {
         // Tester si un message peut être correctement crypté
         String message = "Bonjour";
+        String message2 = "JeSuisEnButInformatique";
         crypteur.genererCle();
         String messageCrypte = crypteur.crypteMessage(message);
+        String messageCrypte1 = crypteur.crypteMessage(message2);
         
-        assertNotNull(messageCrypte, "Le message crypté ne doit pas être nul.");
-        assertNotEquals(message, messageCrypte, "Le message crypté ne doit pas être identique au message original.");
+        assertNotNull(messageCrypte1, "Le message crypté ne doit pas être nul.");
+        assertNotEquals(message, messageCrypte1, "Le message crypté ne doit pas être identique au message original.");
     }
 
     @Test
