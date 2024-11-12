@@ -58,16 +58,22 @@ public class Importateur implements AutoCloseable {
 	 * @return
 	 */
 	public ArrayList<ArrayList<String>> recevoirDonnee() throws IOException {
-	    ArrayList<ArrayList<String>> toutesDonnees = new ArrayList<>();
-	    String paquet;
+	    
+		String paquet;
+		
+		ArrayList<ArrayList<String>> toutesDonnees = new ArrayList<>();
 	    ArrayList<String> donneesSection = new ArrayList<>();
-
+	    
 	    while ((paquet = input.readLine()) != null) {
 	        if (paquet.equals("FIN")) {
 	            toutesDonnees.add(new ArrayList<>(donneesSection));
 	            donneesSection.clear();
 	        } else {
-	            donneesSection.add(paquet);
+	        	for (String ligne : paquet.split("\n")) {
+	        		if (!ligne.isBlank()) {
+	        			donneesSection.add(ligne);
+	        		}
+	        	}
 	        }
 	    }
 
@@ -106,18 +112,21 @@ public class Importateur implements AutoCloseable {
 	                    listeE.add((Employe) obj);
 	                }
 	                stockage.setListeEmploye(listeE);
+	                
 	            } else if (objetsAInserer.get(0) instanceof Activite) {
 	                ArrayList<Activite> listeA = new ArrayList<>();
 	                for (Object obj : objetsAInserer) {
 	                    listeA.add((Activite) obj);
 	                }
 	                stockage.setListeActivite(listeA);
+	                
 	            } else if (objetsAInserer.get(0) instanceof Salle) {
 	                ArrayList<Salle> listeS = new ArrayList<>();
 	                for (Object obj : objetsAInserer) {
 	                    listeS.add((Salle) obj);
 	                }
 	                stockage.setListeSalle(listeS);
+	                
 	            } else {
 	                ArrayList<Reservation> listeR = new ArrayList<>();
 	                for (Object obj : objetsAInserer) {

@@ -1,6 +1,7 @@
 /*
  * Crypteur.java 					24/10/2024
  * BUT Info2, 2024/2025, pas de copyright
+ * @author lucas Boulouard
  */
 
 package modeles.securite;
@@ -56,13 +57,16 @@ public class Crypteur {
 	 * @return une clé de chiffrement
 	 */
 	public String genererCle() {
-		int nombreSecret = diffieHellman.getNbSecret();
-		// Ici, on utiliserait `nbSecret` avec une clé partagée d'un autre DiffieHellman
-		
-		// Utilise la valeur calculée comme longueur de la clé à générer avec Vigenère
-		this.cle = Vigenere.genererClefAleatoire(nombreSecret % alphabet.length());
-		return cle;
-		
+	    int nombreSecret = diffieHellman.getNbSecret();
+	    
+	    // Vérifier que la longueur de la clé générée ne soit pas zéro
+	    int longueurCle = (nombreSecret % alphabet.length());
+	    if (longueurCle == 0) {
+	        longueurCle = 1; // Assurer que la clé ait au moins une longueur de 1
+	    }
+	    
+	    this.cle = Vigenere.genererClefAleatoire(longueurCle);
+	    return cle;
 	}
 	
 	

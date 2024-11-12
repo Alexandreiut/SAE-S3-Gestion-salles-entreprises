@@ -318,8 +318,8 @@ public class Importation {
 	 * En cas de problème de connexion ou de données manquantes, un message d'erreur est également affiché.
 	 * @param ip L'adresse IP du serveur distant à partir duquel les données seront importées.
 	 */
-	public void importerDonneesServeurDistant(String ip) {
-		try (Importateur importateur = new Importateur(ip, 6543, RoomManager.stockage)) {
+	public void importerDonneesServeurDistant(String ip, int port) {
+		try (Importateur importateur = new Importateur(ip, port, RoomManager.stockage)) {
 			ArrayList<ArrayList<String>> donnees = importateur.recevoirDonnee();
 
 			if (donnees == null || donnees.isEmpty()) {

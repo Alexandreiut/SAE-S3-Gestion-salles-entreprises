@@ -10,6 +10,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import lanceur.RoomManager;
 import modeles.NavigationVues;
@@ -37,6 +39,24 @@ public class ImportateurControleur {
     @FXML 
     private TextField saisieIP;
 
+	@FXML
+	private VBox vboxLocale;
+
+	@FXML 
+	private Button boutonRetour;
+
+	@FXML
+	private Text textSelection;
+
+	@FXML 
+	private Button importLocalButton;
+
+	@FXML
+	private Button boutonImportDistant;
+
+	@FXML
+	private TextField saisiePort;
+
     @FXML
     private void handleOuvertureExplorateurFichier() throws LectureException {
         Stage stage = (Stage) boutonImportationLocal.getScene().getWindow();
@@ -45,7 +65,7 @@ public class ImportateurControleur {
             List<File> fichierOrdonne = modeleImportation.traiterImportFichiers(fichiers);
             modeleImportation.traiterFichiers(fichierOrdonne, RoomManager.stockage);
         } catch (IllegalArgumentException e) {
-            System.out.println("Exception attrapée : " + e.getMessage());
+            // ne rien faire : aucun fichier sélectionné
         }
     }
     
@@ -80,7 +100,7 @@ public class ImportateurControleur {
 			AfficherAlerte.afficherAlerte(Alert.AlertType.ERROR, "Adresse IP incorrecte", MESSAGE_IP_INVALIDE);
 			return;
 		}
-		modeleImportation.importerDonneesServeurDistant(ip);
+		modeleImportation.importerDonneesServeurDistant(ip, Integer.parseInt(saisiePort.getText()));
 	}
     
     @FXML
