@@ -75,7 +75,6 @@ public class Exportateur {
         		NetworkInterface interfaceReseau
 				= (NetworkInterface) tableauInterface[i];
 				
-				//System.out.println(interfaceReseau.getInterfaceAddresses());
 				
 				// Vérifier si l'interface est active
 			    if (interfaceReseau.isUp()) {
@@ -143,6 +142,34 @@ public class Exportateur {
 	}
 	
 	/**
+	 * envoi les données d'un fichier
+	 * @param donneesAEnvoyer données du fichier à envoyer
+	 */
+	private void envoiFichier(ArrayList<String> donneesAEnvoyer) {
+		
+		int compteurOctets;
+		String paquet;
+		
+		compteurOctets = 0;
+		paquet = "";
+		for (String ligne : donneesAEnvoyer) {
+			
+			compteurOctets += ligne.length();
+			
+			paquet += ligne + "\n";
+			
+			if (compteurOctets > 1000) {
+				output.println(paquet);
+				compteurOctets = 0;
+				paquet = "";
+			}
+		}
+		
+		output.println(paquet);
+		output.println("FIN");
+	}
+	
+	/**
 	 * envoi les salles converties au format csv à l'importateur
 	 */
 	public void envoiSalles() {
@@ -153,13 +180,13 @@ public class Exportateur {
 		
 		donneesAEnvoyer = EcritureCSV.ecrireSalles(listeSalles);
 		
-		for (String ligne : donneesAEnvoyer) {
-			output.println(ligne);
-		}
+		envoiFichier(donneesAEnvoyer);
 		
-		output.println("FIN");
+		
 	}
 	
+	
+
 	/**
 	 * envoi les activités converties au format csv à l'importateur
 	 */
@@ -171,11 +198,7 @@ public class Exportateur {
 		
 		donneesAEnvoyer = EcritureCSV.ecrireActivites(listeActivites);
 		
-		for (String ligne : donneesAEnvoyer) {
-			output.println(ligne);
-		}
-		
-		output.println("FIN");
+		envoiFichier(donneesAEnvoyer);
 	}
 	
 	/**
@@ -189,11 +212,7 @@ public class Exportateur {
 		
 		donneesAEnvoyer = EcritureCSV.ecrireEmployes(listeEmployes);
 		
-		for (String ligne : donneesAEnvoyer) {
-			output.println(ligne);
-		}
-		
-		output.println("FIN");
+		envoiFichier(donneesAEnvoyer);
 	}
 	
 	/**
@@ -207,11 +226,7 @@ public class Exportateur {
 		
 		donneesAEnvoyer = EcritureCSV.ecrireReservations(listeReservations);
 		
-		for (String ligne : donneesAEnvoyer) {
-			output.println(ligne);
-		}
-		
-		output.println("FIN");
+		envoiFichier(donneesAEnvoyer);
 	}
 	
 
