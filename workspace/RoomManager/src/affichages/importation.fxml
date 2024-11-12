@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -10,7 +16,7 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="panePrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" styleClass="pane" xmlns="http://javafx.com/javafx/22.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleurs.ImportateurControleur">
+<Pane fx:id="panePrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" styleClass="pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleurs.ImportateurControleur">
    <children>
       <HBox prefHeight="0.0" prefWidth="0.0" styleClass="bandeau">
          <children>
@@ -26,11 +32,12 @@
             <Button fx:id="boutonImportationLocal" lineSpacing="20.0" mnemonicParsing="false" onAction="#handleOuvertureExplorateurFichier" styleClass="les-boutons-menu" text="Importer" />
          </children>
       </VBox>
-      <VBox alignment="CENTER" layoutX="507.0" layoutY="111.0" prefHeight="481.0" prefWidth="485.0" spacing="50.0" styleClass="bordureHBOX">
+      <VBox alignment="CENTER" layoutX="507.0" layoutY="111.0" prefHeight="481.0" prefWidth="485.0" spacing="30.0" styleClass="bordureHBOX">
          <children>
             <Label styleClass="texte-titre" text="Distante" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texte" text="Sélectionnez l’adresse IP de l’émetteur " textAlignment="CENTER" wrappingWidth="268.4482421875" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texte" text="Sélectionnez l’adresse IP et le port de l’émetteur " textAlignment="CENTER" wrappingWidth="268.4482421875" />
             <TextField fx:id="saisieIP" prefHeight="25.0" prefWidth="469.0" scaleX="0.75" styleClass="saisie-text" />
+            <TextField fx:id="saisiePort" prefHeight="25.0" prefWidth="469.0" scaleX="0.75" styleClass="saisie-text" />
             <Button fx:id="boutonImportDistant" alignment="CENTER" contentDisplay="CENTER" layoutX="652.0" layoutY="370.0" lineSpacing="20.0" mnemonicParsing="false" onAction="#handleImportDistant" styleClass="les-boutons-menu" text="Importer" />
          </children>
       </VBox>

@@ -39,6 +39,27 @@ public class ImportateurControleur {
     @FXML 
     private TextField saisieIP;
 
+	@FXML
+	private VBox vboxLocale;
+
+	@FXML 
+	private Button boutonRetour;
+
+	@FXML
+	private Text textSelection;
+
+	@FXML 
+	private Button importLocalButton;
+
+	@FXML
+	private Button boutonImportDistant;
+
+	@FXML
+	private TextField saisieIP;
+	
+	@FXML
+	private TextField saisiePort;
+
     @FXML
     private void handleOuvertureExplorateurFichier() throws LectureException {
         Stage stage = (Stage) boutonImportationLocal.getScene().getWindow();
@@ -58,7 +79,7 @@ public class ImportateurControleur {
 			modeleImportation.afficherAlerte(Alert.AlertType.ERROR, "Adresse IP incorrecte", MESSAGE_IP_INVALIDE);
 			return;
 		}
-		modeleImportation.importerDonneesServeurDistant(ip);
+		modeleImportation.importerDonneesServeurDistant(ip, Integer.parseInt(saisiePort.getText()));
 	}
     
     @FXML
