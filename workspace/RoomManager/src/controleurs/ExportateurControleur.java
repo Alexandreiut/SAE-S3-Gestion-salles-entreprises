@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import lanceur.RoomManager;
@@ -43,6 +44,15 @@ public class ExportateurControleur {
 	private VBox vboxDonnees;
 	
 	@FXML
+	private TextField saisieIP;
+	
+	@FXML
+	private TextField saisiePort;
+	
+	@FXML
+	private Button boutonExporterManuel;
+	
+	@FXML
 	private void handleExporter() {
 		Exportateur exportateur;
 		
@@ -50,6 +60,43 @@ public class ExportateurControleur {
 		
 		try {
 	        exportateur = new Exportateur(6543, RoomManager.stockage);
+	        
+	        exportateur.accepterConnexion();
+	        
+	        exportateur.envoiDonnee();
+	        
+	        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+	        alert.setTitle("Exportation réussie");
+	        alert.setHeaderText(null);
+	        alert.setContentText("Les données ont été exportées avec succès vers le client.");
+	        alert.showAndWait();
+	        
+	    } catch (IOException e) {
+	    	System.out.println(e);
+	        Alert alert = new Alert(Alert.AlertType.ERROR);
+	        alert.setTitle("Erreur d'exportation");
+	        alert.setContentText("Une erreur est survenue lors de l'exportation des données. " +
+	                             "Veuillez vérifier la connexion réseau et réessayer.");
+	        alert.showAndWait();
+	    } finally {
+	    	try {
+	    		exportateur.closeConnexion();
+	    	} catch (NullPointerException e) {
+	    		// ne rien faire car erreur déjà affichée
+	    	}
+	    }
+	}
+	
+	@FXML
+	private void handleExporterManuel() {
+		Exportateur exportateur;
+		
+		exportateur = null;
+		
+		try {
+	        exportateur = new Exportateur(Integer.parseInt(saisiePort.getText()),
+	        		                      RoomManager.stockage,
+	        		                      InetAddress.getByName(saisieIP.getText()));
 	        
 	        exportateur.accepterConnexion();
 	        

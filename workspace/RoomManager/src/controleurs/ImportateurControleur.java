@@ -62,6 +62,9 @@ public class ImportateurControleur {
 
 	@FXML
 	private TextField saisieIP;
+	
+	@FXML
+	private TextField saisiePort;
 
 	@FXML
 	private void handleOuvertureExplorateurFichier() throws LectureException {
@@ -175,7 +178,7 @@ public class ImportateurControleur {
 		}
 
 		try {
-			Importateur importateur = new Importateur(ip, 6543, RoomManager.stockage);
+			Importateur importateur = new Importateur(ip, Integer.parseInt(saisiePort.getText()), RoomManager.stockage);
 
 			ArrayList<ArrayList<String>> donnees = importateur.recevoirDonnee();
 
