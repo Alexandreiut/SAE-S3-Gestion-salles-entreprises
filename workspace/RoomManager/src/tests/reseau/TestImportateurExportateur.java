@@ -97,7 +97,8 @@ public class TestImportateurExportateur {
 		
 		testExportateur();
 		new attenteServeur().start();
-		assertDoesNotThrow(() -> importateur = new Importateur("127.0.0.1", 8765, stockageImportateur));
+		assertDoesNotThrow(() -> importateur = new Importateur(InetAddress.getLocalHost().getHostAddress(),
+				                                               8765, stockageImportateur));
 		importateur.closeConnexion();
 		exportateur.closeConnexion();
 	}
@@ -110,10 +111,11 @@ public class TestImportateurExportateur {
 																	              new ArrayList<Employe>(),
 																	              new ArrayList<Reservation>())));
 		new attenteServeur().start();
-		assertDoesNotThrow(() -> importateur = new Importateur("127.0.0.1", 8765, new Stockage(new ArrayList<Salle>(),
-																				               new ArrayList<Activite>(),
-																				               new ArrayList<Employe>(),
-																				               new ArrayList<Reservation>())));
+		assertDoesNotThrow(() -> importateur = new Importateur(InetAddress.getLocalHost().getHostAddress(),
+				                                               8765, new Stockage(new ArrayList<Salle>(),
+																	              new ArrayList<Activite>(),
+																	              new ArrayList<Employe>(),
+																	              new ArrayList<Reservation>())));
 		
 		importateur.envoiMessage("Test imp vers exp");
 		
@@ -160,7 +162,8 @@ public class TestImportateurExportateur {
 		assertDoesNotThrow(() ->  exportateur = new Exportateur(30000, stockageExportateur));
 		
 		new attenteServeur().start();
-		assertDoesNotThrow(() -> importateur = new Importateur("127.0.0.1", 30000, RoomManager.stockage));
+		assertDoesNotThrow(() -> importateur = new Importateur(InetAddress.getLocalHost().getHostAddress(),
+				                                               30000, RoomManager.stockage));
 		
 		exportateur.envoiDonnee();
 		assertTrue(exportateur.closeConnexion());

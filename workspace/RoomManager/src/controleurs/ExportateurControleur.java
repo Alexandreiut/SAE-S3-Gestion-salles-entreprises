@@ -10,8 +10,6 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 
 import affichages.GestionAffichageMenu;
 import javafx.fxml.FXML;
@@ -63,8 +61,6 @@ public class ExportateurControleur {
 	        alert.setContentText("Les données ont été exportées avec succès vers le client.");
 	        alert.showAndWait();
 	        
-            System.out.println( );
-	        
 	    } catch (IOException e) {
 	    	System.out.println(e);
 	        Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -91,25 +87,35 @@ public class ExportateurControleur {
             InetAddress ip;
     		ip = InetAddress.getLocalHost(); // valeur de base
     		
-            // Énumérer toutes les interfaces réseau disponibles
-            for (NetworkInterface networkInterface :
-            	 (NetworkInterface[]) NetworkInterface.networkInterfaces().toArray()) {
-                
-            	// Vérifier si l'interface est active
-                if (networkInterface.isUp()) {
-                    
-                    // Obtenir les adresses IP associées à cette interface
-                    for (InterfaceAddress interfaceAddress : networkInterface.getInterfaceAddresses()) {
-                        InetAddress inetAddress = interfaceAddress.getAddress();
-                        
-                        // Nous cherchons des adresses IPv4 uniquement
-                        if (inetAddress instanceof Inet4Address) {
-                        	System.out.println(ip.getAddress());
-                            ip = inetAddress;
-                        }
-                    }
-                }
-            }
+    		int i;
+        	
+        	Object[] tableauInterface = NetworkInterface
+        			                    .networkInterfaces().toArray();
+        	i = 0;
+        	while (i < tableauInterface.length && !ip.isReachable(100)) {
+        		
+        		NetworkInterface interfaceReseau
+				= (NetworkInterface) tableauInterface[i];
+				
+				//System.out.println(interfaceReseau.getInterfaceAddresses());
+				
+				// Vérifier si l'interface est active
+			    if (interfaceReseau.isUp()) {
+			        
+			        // Obtenir les adresses IP associées à cette interface
+			        for (InterfaceAddress adresseInterface :
+			        	 interfaceReseau.getInterfaceAddresses()) {
+			        	
+			            InetAddress inetAddress = adresseInterface.getAddress();
+			            
+			            // Nous cherchons des adresses IPv4 uniquement
+			            if (inetAddress instanceof Inet4Address) {
+			                ip = inetAddress;
+			            }
+			        }
+			    }
+        		
+        	}
             
             label.setText(ip.getHostAddress());
             
@@ -119,8 +125,12 @@ public class ExportateurControleur {
                 vboxDonnees.getChildren().add(boutonIndex + 1, label);
                 boutonAfficherIP.setDisable(true);
             }
-        } catch (UnknownHostException | SocketException e) {
-            System.out.println("Impossible de récupérer l'adresse IP de la machine locale.");
+        } catch (IOException e) {
+            System.out.println(e);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+	        alert.setTitle("Erreur d'obtention de l'adresse IP.");
+	        alert.setContentText("Une erreur est survenue lors de l'obtention de l'adresse IP.");
+	        alert.showAndWait();
         }
 	}
 	

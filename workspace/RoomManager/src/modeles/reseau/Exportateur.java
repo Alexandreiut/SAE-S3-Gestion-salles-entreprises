@@ -60,37 +60,47 @@ public class Exportateur {
 	public Exportateur(int port, Stockage stockage) throws IOException {
 		
 		InetAddress ip;
-		ip = InetAddress.getLocalHost(); // valeur de base
+		ip = InetAddress.getLocalHost(); // valeur par défaut
 		
-		// Énumérer toutes les interfaces réseau disponibles
+		// recherche une adresse ip utilisable si l'ip par défaut n'est pas utilisable
         try {
-			for (NetworkInterface networkInterface :
-				 (NetworkInterface[]) NetworkInterface.networkInterfaces().toArray()) {
-			    
-				System.out.println( networkInterface. );
+        	
+        	int i;
+        	
+        	Object[] tableauInterface = NetworkInterface
+        			                    .networkInterfaces().toArray();
+        	i = 0;
+        	while (i < tableauInterface.length && !ip.isReachable(100)) {
+        		
+        		NetworkInterface interfaceReseau
+				= (NetworkInterface) tableauInterface[i];
+				
+				//System.out.println(interfaceReseau.getInterfaceAddresses());
 				
 				// Vérifier si l'interface est active
-			    if (networkInterface.isUp()) {
+			    if (interfaceReseau.isUp()) {
 			        
 			        // Obtenir les adresses IP associées à cette interface
-			        for (InterfaceAddress interfaceAddress : networkInterface.getInterfaceAddresses()) {
-			            InetAddress inetAddress = interfaceAddress.getAddress();
+			        for (InterfaceAddress adresseInterface :
+			        	 interfaceReseau.getInterfaceAddresses()) {
+			        	
+			            InetAddress inetAddress = adresseInterface.getAddress();
 			            
 			            // Nous cherchons des adresses IPv4 uniquement
 			            if (inetAddress instanceof Inet4Address) {
-			            	System.out.println(ip.getAddress());
 			                ip = inetAddress;
 			            }
 			        }
 			    }
-			}
+        		
+        	}
+        	
 		} catch (SocketException e) {
 			throw new IOException();
 		}
 		
 		socketServeur = new ServerSocket(port, 1, ip);
 		socketServeur.setOption(StandardSocketOptions.SO_REUSEADDR, true);
-		System.out.println( socketServeur.getInetAddress());
 		
 		this.stockage = stockage;
 	}
@@ -106,7 +116,6 @@ public class Exportateur {
 		
 		socketServeur = new ServerSocket(port, 1, ip);
 		socketServeur.setOption(StandardSocketOptions.SO_REUSEADDR, true);
-		System.out.println( socketServeur.getInetAddress());
 		
 		this.stockage = stockage;
 	}
