@@ -32,12 +32,22 @@
             <Button fx:id="boutonImportationLocal" lineSpacing="20.0" mnemonicParsing="false" onAction="#handleOuvertureExplorateurFichier" styleClass="les-boutons-menu" text="Importer" />
          </children>
       </VBox>
-      <VBox alignment="CENTER" layoutX="507.0" layoutY="111.0" prefHeight="481.0" prefWidth="485.0" spacing="30.0" styleClass="bordureHBOX">
+      <VBox alignment="CENTER" layoutX="507.0" layoutY="111.0" prefHeight="481.0" prefWidth="485.0" spacing="20.0" styleClass="bordureHBOX">
          <children>
             <Label styleClass="texte-titre" text="Distante" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texte" text="Sélectionnez l’adresse IP et le port de l’émetteur " textAlignment="CENTER" wrappingWidth="268.4482421875" />
-            <TextField fx:id="saisieIP" prefHeight="25.0" prefWidth="469.0" scaleX="0.75" styleClass="saisie-text" />
-            <TextField fx:id="saisiePort" prefHeight="25.0" prefWidth="469.0" scaleX="0.75" styleClass="saisie-text" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texte" text="Sélectionnez l’adresse IP et le port de l’émetteur " textAlignment="CENTER" wrappingWidth="299.4482421875" />
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="481.0" spacing="30.0">
+               <children>
+                  <Label prefWidth="75.0" styleClass="texte" text="IP :" />
+                  <TextField fx:id="saisieIP" prefHeight="25.0" prefWidth="469.0" styleClass="saisie-text" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="481.0" spacing="30.0">
+               <children>
+                  <Label prefWidth="75.0" styleClass="texte" text="port : " />
+                  <TextField fx:id="saisiePort" prefHeight="25.0" prefWidth="469.0" styleClass="saisie-text" />
+               </children>
+            </HBox>
             <Button fx:id="boutonImportDistant" alignment="CENTER" contentDisplay="CENTER" layoutX="652.0" layoutY="370.0" lineSpacing="20.0" mnemonicParsing="false" onAction="#handleImportDistant" styleClass="les-boutons-menu" text="Importer" />
          </children>
       </VBox>

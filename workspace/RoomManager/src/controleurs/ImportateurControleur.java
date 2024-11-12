@@ -10,6 +10,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import lanceur.RoomManager;
 import modeles.NavigationVues;
@@ -55,9 +57,6 @@ public class ImportateurControleur {
 	private Button boutonImportDistant;
 
 	@FXML
-	private TextField saisieIP;
-	
-	@FXML
 	private TextField saisiePort;
 
     @FXML
@@ -68,7 +67,7 @@ public class ImportateurControleur {
             List<File> fichierOrdonne = modeleImportation.traiterImportFichiers(fichiers);
             modeleImportation.traiterFichiers(fichierOrdonne, RoomManager.stockage);
         } catch (IllegalArgumentException e) {
-            System.out.println("Exception attrapée : " + e.getMessage());
+            // ne rien faire : aucun fichier sélectionné
         }
     }
     

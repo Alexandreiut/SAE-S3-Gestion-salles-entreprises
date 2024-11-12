@@ -164,7 +164,7 @@ public class ExportateurControleur {
         		
         	}
             
-            label.setText(ip.getHostAddress());
+            label.setText(ip.getHostAddress() + "\tport : 6543");
             
             if (!vboxDonnees.getChildren().contains(label)) {
                 int boutonIndex = vboxDonnees.getChildren().indexOf(boutonAfficherIP);
