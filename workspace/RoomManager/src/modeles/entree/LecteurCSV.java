@@ -243,17 +243,12 @@ public class LecteurCSV {
 			activite = (ligneSplit.length > 3 && ligneSplit[3].length() > 1) ? ligneSplit[3] : "Activite inconnue";
 
 			if(!listeIdSalle.contains(salleReservee)) {
-				System.out.println("TEST");
 				throw new LectureException();
 			}
-			
-			System.out.println(listeIdEmploye);
 			
 			if(!listeIdEmploye.contains(reservant)) {
 				throw new LectureException();
 			}
-			
-			System.out.println(listeNomActivite);
 			
 			if(!listeNomActivite.contains(activite)) {
 				throw new LectureException();
