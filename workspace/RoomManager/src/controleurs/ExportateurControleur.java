@@ -53,22 +53,6 @@ public class ExportateurControleur {
 	@FXML
 	private Button boutonExporterManuel;
 	
-	private boolean annuler = false;
-	
-	/**
-	 * classe pour une pop-up d'attente et d'annulation de l'export des données
-	 */
-    private class AttenteExport extends Thread {   
-        
-    	@Override 
-        public void run() { 
-    		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    		alert.setTitle("Exportation en cours");
-    		alert.setContentText("Vueillez patienter.");
-    		alert.showAndWait();
-        }        
-    }
-	
 	@FXML
 	private void handleExporter() {
 		Exportateur exportateur;
@@ -79,19 +63,13 @@ public class ExportateurControleur {
 	        exportateur = new Exportateur(6543, RoomManager.stockage);
 	        
 	        exportateur.accepterConnexion();
-	        
+
 	        exportateur.envoiDonnee();
 	        
-	        if (annuler) {
-	        	AfficherAlerte.afficherAlerte(Alert.AlertType.INFORMATION,
-	                "Exportation annulée",
-	                "Les données n'ont pas été exportées.");
-	        } else {
-		        AfficherAlerte.afficherAlerte(Alert.AlertType.INFORMATION,
-	                    "Exportation réussie",
-	                    "Les données ont été exportées"
-	                    + " avec succès vers le client.");
-	        }
+	        AfficherAlerte.afficherAlerte(Alert.AlertType.INFORMATION,
+                    "Exportation réussie",
+                    "Les données ont été exportées"
+                    + " avec succès vers le client.");
 	        
 	    } catch (IOException e) {
 	    	AfficherAlerte.afficherAlerte(Alert.AlertType.ERROR,
@@ -120,16 +98,14 @@ public class ExportateurControleur {
 	        
 	        exportateur.accepterConnexion();
 	        
-	        new AttenteExport().start(); // pop-up d'attente de l'export
 	        exportateur.envoiDonnee();
 	        
-	        
 	        AfficherAlerte.afficherAlerte(Alert.AlertType.INFORMATION,
-	        		                      "Exportation réussie",
-	        		                      "Les données ont été exportées"
-	        		                      + " avec succès vers le client.");
+                    "Exportation réussie",
+                    "Les données ont été exportées"
+                    + " avec succès vers le client.");
 	        
-	    } catch (IOException e) {
+	    } catch (IOException | NumberFormatException e) {
 	    	AfficherAlerte.afficherAlerte(Alert.AlertType.ERROR,
                     "Erreur d'exportation",
                     "Une erreur est survenue lors de l'exportation des données."
