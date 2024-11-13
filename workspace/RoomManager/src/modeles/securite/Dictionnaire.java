@@ -19,7 +19,7 @@ public class Dictionnaire {
         '@', ')', ']', '=', '}', '¨', '^', '?', ',', '.', ';', ':', '§', '!', '<', '>', '…'
     };
     /**
-     * Renvoi le dictionnaire 
+     * Renvoie le dictionnaire 
      * @return tableau de char 
      */
     public static char[] getDictionnaire() {

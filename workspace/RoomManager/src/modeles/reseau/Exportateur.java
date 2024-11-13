@@ -9,9 +9,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.InterfaceAddress;
+import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.StandardSocketOptions;
 import java.util.ArrayList;
 
@@ -49,13 +54,67 @@ public class Exportateur {
 	/**
 	 * instancie un exportateur et associe un socket de serveur à un port
 	 * @param port port d'écoute du socket
+	 * @param stockage stockage de lecture de l'exportateur
+	 * @throws IOException s'il y a un problème lors de la création du socket
 	 */
 	public Exportateur(int port, Stockage stockage) throws IOException {
 		
-		socketServeur = new ServerSocket();
+		InetAddress ip;
+		ip = InetAddress.getLocalHost(); // valeur par défaut
+		
+		// recherche une adresse ip utilisable si l'ip par défaut n'est pas utilisable
+        try {
+        	
+        	int i;
+        	
+        	Object[] tableauInterface = NetworkInterface
+        			                    .networkInterfaces().toArray();
+        	i = 0;
+        	while (i < tableauInterface.length && !ip.isReachable(100)) {
+        		
+        		NetworkInterface interfaceReseau
+				= (NetworkInterface) tableauInterface[i];
+				
+				
+				// Vérifier si l'interface est active
+			    if (interfaceReseau.isUp()) {
+			        
+			        // Obtenir les adresses IP associées à cette interface
+			        for (InterfaceAddress adresseInterface :
+			        	 interfaceReseau.getInterfaceAddresses()) {
+			        	
+			            InetAddress inetAddress = adresseInterface.getAddress();
+			            
+			            // Nous cherchons des adresses IPv4 uniquement
+			            if (inetAddress instanceof Inet4Address) {
+			                ip = inetAddress;
+			            }
+			        }
+			    }
+        		
+        	}
+        	
+		} catch (SocketException e) {
+			throw new IOException();
+		}
+		
+		socketServeur = new ServerSocket(port, 1, ip);
 		socketServeur.setOption(StandardSocketOptions.SO_REUSEADDR, true);
-		socketServeur.bind(new InetSocketAddress(port));
-		System.out.println( socketServeur.getInetAddress());
+		
+		this.stockage = stockage;
+	}
+	
+	/**
+	 * instancie un exportateur et associe un socket de serveur à un port
+	 * @param port port d'écoute du socket
+	 * @param stockage stockage de lecture de l'exportateur
+	 * @param ip adresse ip du serveur
+	 * @throws IOException s'il y a un problème lors de la création du socket
+	 */
+	public Exportateur(int port, Stockage stockage, InetAddress ip) throws IOException {
+		
+		socketServeur = new ServerSocket(port, 1, ip);
+		socketServeur.setOption(StandardSocketOptions.SO_REUSEADDR, true);
 		
 		this.stockage = stockage;
 	}
@@ -83,6 +142,34 @@ public class Exportateur {
 	}
 	
 	/**
+	 * envoi les données d'un fichier
+	 * @param donneesAEnvoyer données du fichier à envoyer
+	 */
+	private void envoiFichier(ArrayList<String> donneesAEnvoyer) {
+		
+		int compteurOctets;
+		String paquet;
+		
+		compteurOctets = 0;
+		paquet = "";
+		for (String ligne : donneesAEnvoyer) {
+			
+			compteurOctets += ligne.length();
+			
+			paquet += ligne + "\n";
+			
+			if (compteurOctets > 1000) {
+				output.println(paquet);
+				compteurOctets = 0;
+				paquet = "";
+			}
+		}
+		
+		output.println(paquet);
+		output.println("FIN");
+	}
+	
+	/**
 	 * envoi les salles converties au format csv à l'importateur
 	 */
 	public void envoiSalles() {
@@ -93,13 +180,13 @@ public class Exportateur {
 		
 		donneesAEnvoyer = EcritureCSV.ecrireSalles(listeSalles);
 		
-		for (String ligne : donneesAEnvoyer) {
-			output.println(ligne);
-		}
+		envoiFichier(donneesAEnvoyer);
 		
-		output.println("FIN");
+		
 	}
 	
+	
+
 	/**
 	 * envoi les activités converties au format csv à l'importateur
 	 */
@@ -111,11 +198,7 @@ public class Exportateur {
 		
 		donneesAEnvoyer = EcritureCSV.ecrireActivites(listeActivites);
 		
-		for (String ligne : donneesAEnvoyer) {
-			output.println(ligne);
-		}
-		
-		output.println("FIN");
+		envoiFichier(donneesAEnvoyer);
 	}
 	
 	/**
@@ -129,11 +212,7 @@ public class Exportateur {
 		
 		donneesAEnvoyer = EcritureCSV.ecrireEmployes(listeEmployes);
 		
-		for (String ligne : donneesAEnvoyer) {
-			output.println(ligne);
-		}
-		
-		output.println("FIN");
+		envoiFichier(donneesAEnvoyer);
 	}
 	
 	/**
@@ -147,11 +226,7 @@ public class Exportateur {
 		
 		donneesAEnvoyer = EcritureCSV.ecrireReservations(listeReservations);
 		
-		for (String ligne : donneesAEnvoyer) {
-			output.println(ligne);
-		}
-		
-		output.println("FIN");
+		envoiFichier(donneesAEnvoyer);
 	}
 	
 
@@ -187,7 +262,12 @@ public class Exportateur {
 	 */
 	public boolean closeConnexion() {
 		try {
-			socketCommunication.close();
+			try {
+				socketCommunication.close();
+			} catch (NullPointerException e) {
+				// cas dans lequel le socket est fermé
+				// avant la connexion avec l'importateur
+			}
 			socketServeur.close();
 			return true;
 		} catch (IOException e) {

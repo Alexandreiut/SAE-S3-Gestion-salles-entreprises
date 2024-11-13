@@ -18,6 +18,7 @@ import modeles.items.Salle;
 import modeles.reseau.Importateur;
 import modeles.stockage.Stockage;
 import lanceur.RoomManager;
+import affichages.AfficherAlerte;
 
 import java.io.File;
 import java.io.IOException;
@@ -75,7 +76,8 @@ public class Importation {
 				String entete = LecteurCSV.getRessource(fichier.getAbsolutePath()).get(0);
 				classerFichier(entete, fichier, fichiersAvecEntete, fichiersSansEntete);
 			} catch (IOException | WrongFileFormatException e) {
-				afficherAlerte(Alert.AlertType.ERROR, "Erreur de lecture", "Erreur de lecture du fichier : " + fichier.getName() + "\n" + e.getMessage());
+				AfficherAlerte.afficherAlerte(Alert.AlertType.ERROR, "Erreur de lecture", 
+						"Erreur de lecture du fichier : " + fichier.getName() + "\n" + e.getMessage());
 			}
 		}
 
@@ -93,7 +95,8 @@ public class Importation {
 	 * @param fichiersAvecEntete Liste des fichiers avec en-tête où le fichier sera ajouté s'il correspond.
 	 * @param fichiersSansEntete Liste des fichiers sans en-tête où le fichier sera ajouté s'il correspond.
 	 */
-	private void classerFichier(String entete, File fichier, List<File> fichiersAvecEntete, List<File> fichiersSansEntete) {
+	public void classerFichier(String entete, File fichier, List<File> fichiersAvecEntete, 
+			List<File> fichiersSansEntete) { //INITIALEMENT private
 		switch (entete) {
 		case EN_TETE_EMPLOYE, EN_TETE_ACTIVITE, EN_TETE_SALLE : 
 			fichiersSansEntete.add(fichier);
@@ -102,7 +105,9 @@ public class Importation {
 			fichiersAvecEntete.add(fichier);
 			break;
 		default :
-			afficherAlerte(Alert.AlertType.ERROR, "Importation impossible", "Problème d'importation pour le fichier : " + fichier.getName());
+			AfficherAlerte.afficherAlerte(Alert.AlertType.ERROR, "Importation impossible", 
+					"Problème d'importation pour le fichier : " + fichier.getName()
+					+ "\nFichier incompatible");
 		}
 	}
 
@@ -114,13 +119,14 @@ public class Importation {
 	 * @param fichiersAvecEntete Liste des fichiers avec en-tête, qui peut être vidée si des fichiers sont manquants.
 	 * @param fichiersSansEntete Liste des fichiers sans en-tête, vérifiée pour la présence des fichiers requis.
 	 */
-	private void gererFichiersManquants(List<File> fichiersAvecEntete, List<File> fichiersSansEntete) {
+	public void gererFichiersManquants(List<File> fichiersAvecEntete, 
+			List<File> fichiersSansEntete) { //INITIALEMENT private
 		List<String> fichiersManquants;
 		if (!fichiersAvecEntete.isEmpty()) {
 			fichiersManquants = getNomsFichiersManquants(fichiersSansEntete);
 			if (!fichiersManquants.isEmpty()) {
 				fichiersAvecEntete.clear();
-				afficherAlerte(Alert.AlertType.WARNING, "Importation partielle", "L'importation du fichier 'Réservation' nécessite la présence des fichiers suivants :\n" + fichiersManquants);
+				AfficherAlerte.afficherAlerte(Alert.AlertType.WARNING, "Importation partielle", "L'importation du fichier 'Réservation' nécessite la présence des fichiers suivants :\n" + fichiersManquants);
 			}
 		}
 	}
@@ -132,7 +138,7 @@ public class Importation {
 	 * @param fichiersSansEntete Liste des fichiers sans en-tête à vérifier.
 	 * @return Une liste de noms de fichiers manquants requis pour une importation complète.
 	 */
-	private List<String> getNomsFichiersManquants(List<File> fichiersSansEntete) {
+	public List<String> getNomsFichiersManquants(List<File> fichiersSansEntete) { //INITIALEMENT private
 		List<String> fichiersManquants = new ArrayList<>();
 		
 		boolean correspondantActivite = true;
@@ -191,7 +197,7 @@ public class Importation {
 	 * @param typeEntete Le type d'en-tête attendu pour le fichier.
 	 * @return true si le fichier possède le bon en-tête, false sinon ou en cas d'erreur de lecture.
 	 */
-	private boolean estFichierDeType(File fichier, String typeEntete) {
+	public boolean estFichierDeType(File fichier, String typeEntete) { //INITIALEMENT private
 		try {
 			String entete = LecteurCSV.getRessource(fichier.getAbsolutePath()).get(0);
 			return entete.equals(typeEntete);
@@ -207,7 +213,8 @@ public class Importation {
 	 * @param fichiersAvecEntete Liste des fichiers avec en-tête à ajouter ensuite.
 	 * @return Une nouvelle liste contenant d'abord les fichiers sans en-tête, puis ceux avec en-tête.
 	 */
-	private List<File> fusionnerListesFichiers(List<File> fichiersSansEntete, List<File> fichiersAvecEntete) {
+	public List<File> fusionnerListesFichiers(List<File> fichiersSansEntete, 
+			List<File> fichiersAvecEntete) { //INITIALEMENT private
 		List<File> fichierOrdonne = new ArrayList<>();
 		fichierOrdonne.addAll(fichiersSansEntete);
 		fichierOrdonne.addAll(fichiersAvecEntete);
@@ -254,7 +261,8 @@ public class Importation {
 	 * @param stockage Le stockage dans lequel les objets seront importés.
 	 * @return Une liste des fichiers dont l'importation a réussi.
 	 */
-	private List<String> importerObjets(List<Object> objets, String nomFichier, List<String> fichiersDejaImportes, Stockage stockage) {
+	public List<String> importerObjets(List<Object> objets, String nomFichier, 
+			List<String> fichiersDejaImportes, Stockage stockage) { //INITIALEMENT private
 		List<String> fichiersReussis = new ArrayList<>();
 		boolean fichierImporte = false;
 
@@ -283,7 +291,7 @@ public class Importation {
 	 * @param stockage Le stockage dans lequel l'objet doit être ajouté.
 	 * @return true si l'objet a été ajouté avec succès, false si l'objet est déjà importé et n'a pas été ajouté.
 	 */
-	private boolean ajouterObjetAuStockage(Object objet, Stockage stockage) {
+	public boolean ajouterObjetAuStockage(Object objet, Stockage stockage) { //INITIALEMENT private
 		if (objet instanceof Employe employe && !estDejaImporte(employe, stockage.getListeEmploye())) {
 			stockage.getListeEmploye().add(employe);
 			return true;
@@ -310,23 +318,22 @@ public class Importation {
 	 * En cas de problème de connexion ou de données manquantes, un message d'erreur est également affiché.
 	 * @param ip L'adresse IP du serveur distant à partir duquel les données seront importées.
 	 */
-	public void importerDonneesServeurDistant(String ip) {
-		try (Importateur importateur = new Importateur(ip, 6543, RoomManager.stockage)) {
+	public void importerDonneesServeurDistant(String ip, int port) {
+		try (Importateur importateur = new Importateur(ip, port, RoomManager.stockage)) {
 			ArrayList<ArrayList<String>> donnees = importateur.recevoirDonnee();
 
 			if (donnees == null || donnees.isEmpty()) {
-				afficherAlerte(Alert.AlertType.ERROR, "Erreur d'importation", "Aucune donnée reçue du serveur.");
+				AfficherAlerte.afficherAlerte(Alert.AlertType.ERROR, "Erreur d'importation", "Aucune donnée reçue du serveur.");
 				return;
 			}
 
-			boolean succes = importateur.convertirReponseDonnee(donnees);
-			if (succes) {
-				afficherAlerte(Alert.AlertType.INFORMATION, "Importation réussie", MESSAGE_SUCCES_IMPORTATION);
+			if (importateur.convertirReponseDonnee(donnees)) {
+				AfficherAlerte.afficherAlerte(Alert.AlertType.INFORMATION, "Importation réussie", MESSAGE_SUCCES_IMPORTATION);
 			} else {
-				afficherAlerte(Alert.AlertType.ERROR, "Échec de l'importation", MESSAGE_ERREUR_IMPORTATION);
+				AfficherAlerte.afficherAlerte(Alert.AlertType.ERROR, "Échec de l'importation", MESSAGE_ERREUR_IMPORTATION);
 			}
 		} catch (Exception e) {
-			afficherAlerte(Alert.AlertType.ERROR, "Erreur de connexion", MESSAGE_ERREUR_CONNECTION + e.getMessage());
+			AfficherAlerte.afficherAlerte(Alert.AlertType.ERROR, "Erreur de connexion", MESSAGE_ERREUR_CONNECTION + e.getMessage());
 		}
 	}
 
@@ -337,7 +344,7 @@ public class Importation {
 	 * @param liste La liste des objets déjà importés dans laquelle on recherche une correspondance.
 	 * @return true si un objet avec le même identifiant existe déjà dans la liste, false sinon.
 	 */
-	private <T> boolean estDejaImporte(T objet, List<T> liste) {
+	public <T> boolean estDejaImporte(T objet, List<T> liste) { //INITIALEMENT private
 		String id;
 
 		if (objet instanceof Salle) {
@@ -383,18 +390,19 @@ public class Importation {
 	 * @param fichiersDejaImportes La liste des fichiers qui ont déjà été importés.
 	 * @param fichiersVides La liste des fichiers qui sont vides et n'ont pas été traités.
 	 */
-	private void afficherResultatsImportation(List<String> fichiersReussis, List<String> fichiersEchoues, List<String> fichiersDejaImportes, List<String> fichiersVides) {
+	public void afficherResultatsImportation(List<String> fichiersReussis, List<String> fichiersEchoues, 
+			List<String> fichiersDejaImportes, List<String> fichiersVides) { //INITIALEMENT private
 		if (!fichiersReussis.isEmpty()) {
-			afficherAlerte(Alert.AlertType.INFORMATION, "Importation réussie", "Les fichiers suivants ont été importés avec succès :\n" + fichiersReussis);
+			AfficherAlerte.afficherAlerte(Alert.AlertType.INFORMATION, "Importation réussie", "Les fichiers suivants ont été importés avec succès :\n" + fichiersReussis);
 		}
 		if (!fichiersEchoues.isEmpty()) {
-			afficherAlerte(Alert.AlertType.ERROR, "Erreurs d'importation", "Les erreurs suivantes sont survenues lors de l'importation :\n" + fichiersEchoues);
+			AfficherAlerte.afficherAlerte(Alert.AlertType.ERROR, "Erreurs d'importation", "Les erreurs suivantes sont survenues lors de l'importation :\n" + fichiersEchoues);
 		}
 		if (!fichiersDejaImportes.isEmpty()) {
-			afficherAlerte(Alert.AlertType.WARNING, "Fichiers déjà importés", "Les fichiers suivants ont déjà été importés :\n" + fichiersDejaImportes);
+			AfficherAlerte.afficherAlerte(Alert.AlertType.WARNING, "Fichiers déjà importés", "Les fichiers suivants ont déjà été importés :\n" + fichiersDejaImportes);
 		}
 		if (!fichiersVides.isEmpty()) {
-			afficherAlerte(Alert.AlertType.WARNING, "Fichiers vides", "Les fichiers suivants sont vides :\n" + fichiersVides);
+			AfficherAlerte.afficherAlerte(Alert.AlertType.WARNING, "Fichiers vides", "Les fichiers suivants sont vides :\n" + fichiersVides);
 		}
 	}
 
@@ -409,18 +417,5 @@ public class Importation {
 				"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
 				"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
 				"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
-	}
-
-	/**
-	 * Affiche une alerte avec un titre, un type et un contenu spécifiés.
-	 * @param type Le type d'alerte à afficher.
-	 * @param titre Le titre de l'alerte.
-	 * @param contenu Le contenu textuel de l'alerte, expliquant l'objet ou la raison de l'alerte.
-	 */
-	public void afficherAlerte(Alert.AlertType type, String titre, String contenu) {
-		Alert alert = new Alert(type);
-		alert.setTitle(titre);
-		alert.setContentText(contenu);
-		alert.show();
 	}
 }

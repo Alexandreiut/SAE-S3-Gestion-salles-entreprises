@@ -1,137 +1,228 @@
-/*
- * TestLecteurCSV.java				24/10/2024
- * BUT Info2, 2024/2025, pas de copyright
- */
-
 package tests.entree;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import lanceur.RoomManager;
 import modeles.entree.LecteurCSV;
+import modeles.erreur.LectureException;
 import modeles.erreur.WrongFileFormatException;
+import modeles.items.Employe;
+import modeles.items.Salle;
+import modeles.stockage.Stockage;
+import modeles.items.Activite;
+import modeles.items.Reservation;
 
-/**
- * Classe de tests de la classe LecteurCSV.java
- */
-public class TestLecteurCSV {
+import javafx.application.Application;
 
-	private static final String ACTIVITES_PATH = "/RoomManager/src/ressource/csv/activites 26_08_24 13_40.csv";
-	private static final String EMPLOYES_PATH = "/RoomManager/src/ressource/csv/employes 26_08_24 13_40.csv";
-	private static final String RESERVATIONS_PATH = "/RoomManager/src/ressource/csv/reservations 26_08_24 13_40.csv";
-	private static final String SALLES_PATH = "/RoomManager/src/ressource/csv/salles 26_08_24 13_40.csv";
-
-	private final String EXTENSION_INCORRECT = "/RoomManager/src/ressource/xls/activites 26_08_24 13_40.xls";
-	private final String PATH_INEXISTANT = "";
+class TestLecteurCSV {
 
 	@Test
-	private static void testGetRessource() {
+	void testGetRessource() {
+		String mauvaiseExtension = "src/ressource/xls/activites 26_08_24 13_40.xls";
+		String vide = "src/ressource/csv/testVide.csv";
+		
+		String cheminFonctionnel1 = "src/ressource/csv/activites 26_08_24 13_40.csv";
+		String cheminFonctionnel2 = "src/ressource/csv/reservations 26_08_24 13_40.csv";
+		
+		assertThrows(WrongFileFormatException.class, () -> LecteurCSV.getRessource(mauvaiseExtension));
+		assertThrows(IOException.class, () -> LecteurCSV.getRessource(vide));
+		assertDoesNotThrow(() -> LecteurCSV.getRessource(cheminFonctionnel1));
+		assertDoesNotThrow(() -> LecteurCSV.getRessource(cheminFonctionnel2));		
+	}
 
-		ArrayList<String> activites = new ArrayList<>();
-		ArrayList<String> employes = new ArrayList<>();
-		ArrayList<String> reservations = new ArrayList<>();
-		ArrayList<String> salles = new ArrayList<>();
-
-		ArrayList<String> extensionIncorrect = new ArrayList<>();
-		ArrayList<String> inexistant = new ArrayList<>();
-
+	@Test
+	void testLireFichier() {		
+		String mauvaiseEntete = "src/ressource/csv/testMauvaiseEnTete.csv";
+		String cheminFonctionnel = "src/ressource/csv/activites 26_08_24 13_40.csv";
+		
 		try {
-			activites = LecteurCSV.getRessource(ACTIVITES_PATH);
-			employes = LecteurCSV.getRessource(EMPLOYES_PATH);
-			reservations = LecteurCSV.getRessource(RESERVATIONS_PATH);
-			salles = LecteurCSV.getRessource(SALLES_PATH);
-
-			//extensionIncorrect = LecteurCSV.getRessource(EXTENSION_INCORRECT);
-			//inexistant = LecteurCSV.getRessource(PATH_INEXISTANT);
-		} catch(IOException e) {
-
-			System.out.println("Fichier inexistant");
-
-		} catch(WrongFileFormatException e) {
-
-			System.out.println("Extension incorrect");
+			ArrayList<String> vide = new ArrayList<String>();
+			ArrayList<String> enTeteIncompatible = LecteurCSV.getRessource(mauvaiseEntete);
+			ArrayList<String> fonctionnel = LecteurCSV.getRessource(cheminFonctionnel);
+			
+			assertThrows(IOException.class, () -> LecteurCSV.lireFichier(vide));
+			assertThrows(LectureException.class, () -> LecteurCSV.lireFichier(enTeteIncompatible));
+			assertDoesNotThrow(() -> LecteurCSV.lireFichier(fonctionnel));
+		} catch(Exception e) {
+			//pas attendu
 		}
-
-		if(activites.size() == 7) {
-			System.out.println("Ok");
-		} else {
-			System.out.println("NOk");
-		}
-
-		if(employes.size() == 9) {
-			System.out.println("Ok");
-		} else {
-			System.out.println("NOk");
-		}
-
-		if(reservations.size() == 19) {
-			System.out.println("Ok");
-		} else {
-			System.out.println("NOk");
-		}
-
-		if(salles.size() == 10) {
-			System.out.println("Ok");
-		} else {
-			System.out.println("NOk");
-		}
-	}
-
-
-	@Test
-	public static void testReadSalleCSV() throws Exception {
-		ArrayList<String> lignes = new ArrayList<>();
-		lignes.add("Ident;Nom;Capacite;videoproj;ecranXXL;ordinateur;type;logiciels;imprimante");
-		lignes.add("1;Salle A;50;Oui;Non;Oui;Salle de réunion;None;Oui");
-
-		ArrayList<Object> result = LecteurCSV.lireFichier(lignes);
-
-		Assertions.assertNotNull(result);
-		Assertions.assertEquals(1, result.size());
-	}
-
-	public static void testReadReservationCSV() throws Exception {
-		ArrayList<String> lignes = new ArrayList<>();
-		lignes.add("Ident;salle;employe;activite;date;heuredebut;heurefin;;;;;");
-		lignes.add("1;Salle 1;1;1;2024-10-21;09:00;10:00");
-
-		ArrayList<Object> result = LecteurCSV.lireFichier(lignes);
-
-		Assertions.assertNotNull(result);
-		Assertions.assertEquals(1, result.size());
 	}
 
 	@Test
-	public static void testReadEmployeCSV() throws Exception {
-		ArrayList<String> lignes = new ArrayList<>();
-		lignes.add("Ident;Nom;Prenom;Telephone");
-		lignes.add("1;Dupont;Jean;0123456789");
-
-		ArrayList<Object> result = LecteurCSV.lireFichier(lignes);
-
-		Assertions.assertNotNull(result);
-		Assertions.assertEquals(1, result.size());
+	void testLireSalleCSV() {
+		ArrayList<String> lignesSallesInvalide = new ArrayList<>();
+		ArrayList<String> lignesSallesValide = new ArrayList<>();
+		
+		ArrayList<Salle> attenduInvalide = new ArrayList<Salle>();
+		ArrayList<Salle> attenduValide	= new ArrayList<Salle>();
+		
+		ArrayList<String> logiciel1 = new ArrayList<String>();
+		ArrayList<String> logiciel2 = new ArrayList<String>();
+		
+		lignesSallesValide.add("entete");
+		lignesSallesValide.add("00000001;A6;15;oui;non;4;PC portable;bureautique;non");
+		
+		logiciel1.add("bureautique");
+		attenduValide.add(new Salle("00000001", "A6", 15, true, false, 4, "PC portable", logiciel1, false));
+		
+		lignesSallesInvalide.add("entete");
+		lignesSallesInvalide.add("0000000H;@;2e0;oui;non;e;PC4 Windows;bureautique,java,Intellij;non");
+		
+		logiciel2.add("bureautique");
+		logiciel2.add("java");
+		logiciel2.add("Intellij");
+		attenduInvalide.add(new Salle("Id inconnu", "Nom inconnu", 0, true, false, 0, "Type inconnu", logiciel2, false));
+		
+		ArrayList<Object> resultatValide = LecteurCSV.lireSalleCSV(lignesSallesValide);
+		
+		ArrayList<Object> resultatInvalide = LecteurCSV.lireSalleCSV(lignesSallesInvalide);
+		
+		assertTrue(attenduValide.toString().equals(resultatValide.toString()));
+		assertTrue(attenduInvalide.toString().equals(resultatInvalide.toString()));
 	}
 
 	@Test
-	public static void testReadActiviteCSV() throws Exception {
-		ArrayList<String> lignes = new ArrayList<>();
-		lignes.add("Ident;Activité");
-		lignes.add("1;Réunion");
+	void testLireReservationCSV() {
+		
+		RoomManager.stockage = new Stockage(new ArrayList<Salle>(),
+                new ArrayList<Activite>(),
+                new ArrayList<Employe>(),
+                new ArrayList<Reservation>());
+		
+		ArrayList<Salle> listeSalles = new ArrayList<Salle>();
+		ArrayList<Activite> listeActivites = new ArrayList<Activite>();
+		ArrayList<Employe> listeEmployes = new ArrayList<Employe>();
+		ArrayList<Reservation> listeReservations = new ArrayList<Reservation>();
+		ArrayList<String> logiciels = new ArrayList<>();
+		
+		logiciels.add("bureautique");
+		listeSalles.add(new Salle("00000001", "Salle A", 50, true, false, 12,
+                "fixe", logiciels, true));
+		listeEmployes.add(new Employe("E000001", "Dupont", "Pierre", 2614));
+		listeActivites.add(new Activite("A0000004","prêt"));
+		listeReservations.add(new Reservation("R000001", "07/10/2024",
+                            "17h00", "19h00",
+				              "club gym", "Legendre", "Noémie",
+				              600000000, "reunion", "E000001",
+				              "prêt", "1"));
+		
+		RoomManager.stockage.setListeActivite(listeActivites);
+		RoomManager.stockage.setListeEmploye(listeEmployes);
+		RoomManager.stockage.setListeReservation(listeReservations);
+		RoomManager.stockage.setListeSalle(listeSalles);
+		
+		ArrayList<String> lignesReservationsInvalide = new ArrayList<>();
+		ArrayList<String> lignesReservationsValide = new ArrayList<>();
+		
+		ArrayList<Reservation> attenduInvalide = new ArrayList<Reservation>();
+		ArrayList<Reservation> attenduValide	= new ArrayList<Reservation>();
+		
+		lignesReservationsValide.add("entete");
+		lignesReservationsValide.add("R000001;00000001;E000001;prêt;07/10/2024;17h00;19h00;club gym;Legendre;Noémie;0600000000;reunion");
+		
+		attenduValide.add(new Reservation("R000001", "7/10/2024", "17h00", "19h00", "club gym", "Legendre", "Noémie", 0600000000, "reunion", "E000001", "prêt", "00000001"));
+		
+		lignesReservationsInvalide.add("entete");
+		lignesReservationsInvalide.add("P000001;00000001;E000001;prêt;07-10-2024;1700;1900;c;e;i;0600U00000;u");
+		
+		attenduInvalide.add(new Reservation("Id inconnu", "Date inconnu", "Heure début inconnu", "Heure fin inconnu", "Objet réservation inconnu", "Nom inconnu", "Prenom inconnu", 0000000000, "Usage inconnu", "E000001", "prêt", "00000001"));
+		
+		try {
+			ArrayList<Object> resultatValide = LecteurCSV.lireReservationCSV(lignesReservationsValide);
+			
+			ArrayList<Object> resultatInvalide = LecteurCSV.lireReservationCSV(lignesReservationsInvalide);
+			
+			attenduValide.toString().equals(resultatValide.toString());
+			attenduInvalide.toString().equals(resultatInvalide.toString());
+		} catch (LectureException e) {
+			//Pas attendu
+		}
+		
+		ArrayList<String> testIdSalleInvalide = new ArrayList<String>();
+		ArrayList<String> testIdEmployeInvalide = new ArrayList<String>();
+		ArrayList<String> testIdActiviteInvalide = new ArrayList<String>();
+		
+		testIdActiviteInvalide.add("entete");
+		testIdActiviteInvalide.add("R000001;00000001;E000001;ménage;07/10/2024;17h00;19h00;club gym;Legendre;Noémie;0600000000;reunion");
+		
+		testIdEmployeInvalide.add("entete");
+		testIdEmployeInvalide.add("R000001;00000001;E000052;prêt;07/10/2024;17h00;19h00;club gym;Legendre;Noémie;0600000000;reunion");
+		
+		testIdSalleInvalide.add("entete");
+		testIdSalleInvalide.add("R000001;00000052;E000001;prêt;07/10/2024;17h00;19h00;club gym;Legendre;Noémie;0600000000;reunion");
+		
+		assertThrows(LectureException.class, () -> LecteurCSV.lireReservationCSV(testIdActiviteInvalide));
+		assertThrows(LectureException.class, () -> LecteurCSV.lireReservationCSV(testIdEmployeInvalide));
+		assertThrows(LectureException.class, () -> LecteurCSV.lireReservationCSV(testIdSalleInvalide));
+	}
 
-		ArrayList<Object> result = LecteurCSV.lireFichier(lignes);
+	@Test
+	void testLireEmployeCSV() {
+		ArrayList<String> lignesEmployesInvalide = new ArrayList<>();
+		ArrayList<String> lignesEmployesValide = new ArrayList<>();
+		
+		ArrayList<Employe> attenduInvalide = new ArrayList<Employe>();
+		ArrayList<Employe> attenduValide	= new ArrayList<Employe>();
+		
+		lignesEmployesValide.add("entete");
+		lignesEmployesValide.add("E000001;Dupont;Pierre;2614");
+		
+		attenduValide.add(new Employe("E000001", "Dupont", "Pierre", 2614));
+		
+		lignesEmployesInvalide.add("entete");
+		lignesEmployesInvalide.add("Z000001;e;r;ee");
+		
+		attenduInvalide.add(new Employe("Employe inconnu", "Nom inconnu", "Prenom inconnu", -1));
+		
+		ArrayList<Object> resultatValide = LecteurCSV.lireEmployeCSV(lignesEmployesValide);
+		
+		ArrayList<Object> resultatInvalide = LecteurCSV.lireEmployeCSV(lignesEmployesInvalide);
+		
+		assertTrue(attenduValide.toString().equals(resultatValide.toString()));
+		assertTrue(attenduInvalide.toString().equals(resultatInvalide.toString()));
+	}
 
-		Assertions.assertNotNull(result);
-		Assertions.assertEquals(1, result.size());
+	@Test
+	void testLireActiviteCSV() {
+		ArrayList<String> lignesActivitesInvalide = new ArrayList<>();
+		ArrayList<String> lignesActivitesValide = new ArrayList<>();
+		
+		ArrayList<Activite> attenduInvalide = new ArrayList<Activite>();
+		ArrayList<Activite> attenduValide	= new ArrayList<Activite>();
+		
+		lignesActivitesValide.add("entete");
+		lignesActivitesValide.add("A0000001;réunion");
+		
+		attenduValide.add(new Activite("A0000001", "réunion"));
+		
+		lignesActivitesInvalide.add("entete");
+		lignesActivitesInvalide.add("F0000001;e");
+		
+		attenduInvalide.add(new Activite("Activite inconnu", "Nom inconnu"));
+		
+		ArrayList<Object> resultatValide = LecteurCSV.lireActiviteCSV(lignesActivitesValide);
+		
+		ArrayList<Object> resultatInvalide = LecteurCSV.lireActiviteCSV(lignesActivitesInvalide);
+		
+		assertTrue(attenduValide.toString().equals(resultatValide.toString()));
+		assertTrue(attenduInvalide.toString().equals(resultatInvalide.toString()));
 	}
 	
-	/**
-	 * Appel des méthodes de tests
-	 * @param args inutilisé
-	 */
-	public static void main(String[] args) {
-		testGetRessource();
+	@Test
+	void testGetExtensionFichier() {
+		String csv = "/RoomManager/ressource/csv/activites 26_08_24 13_40.csv";
+		String xls ="/RoomManager/ressource/xls/activites 26_08_24 13_40.xls";
+		String vide = "";
+		
+		assertEquals(LecteurCSV.getExtensionFichier(csv), "csv");
+		assertEquals(LecteurCSV.getExtensionFichier(xls), "xls");
+		assertEquals(LecteurCSV.getExtensionFichier(vide), "");
+		
 	}
 }
