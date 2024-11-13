@@ -11,6 +11,7 @@ import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 
+import affichages.AfficherAlerte;
 import affichages.GestionAffichageMenu;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -52,6 +53,22 @@ public class ExportateurControleur {
 	@FXML
 	private Button boutonExporterManuel;
 	
+	private boolean annuler = false;
+	
+	/**
+	 * classe pour une pop-up d'attente et d'annulation de l'export des données
+	 */
+    private class AttenteExport extends Thread {   
+        
+    	@Override 
+        public void run() { 
+    		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    		alert.setTitle("Exportation en cours");
+    		alert.setContentText("Vueillez patienter.");
+    		alert.showAndWait();
+        }        
+    }
+	
 	@FXML
 	private void handleExporter() {
 		Exportateur exportateur;
@@ -65,19 +82,22 @@ public class ExportateurControleur {
 	        
 	        exportateur.envoiDonnee();
 	        
-	        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-	        alert.setTitle("Exportation réussie");
-	        alert.setHeaderText(null);
-	        alert.setContentText("Les données ont été exportées avec succès vers le client.");
-	        alert.showAndWait();
+	        if (annuler) {
+	        	AfficherAlerte.afficherAlerte(Alert.AlertType.INFORMATION,
+	                "Exportation annulée",
+	                "Les données n'ont pas été exportées.");
+	        } else {
+		        AfficherAlerte.afficherAlerte(Alert.AlertType.INFORMATION,
+	                    "Exportation réussie",
+	                    "Les données ont été exportées"
+	                    + " avec succès vers le client.");
+	        }
 	        
 	    } catch (IOException e) {
-	    	System.out.println(e);
-	        Alert alert = new Alert(Alert.AlertType.ERROR);
-	        alert.setTitle("Erreur d'exportation");
-	        alert.setContentText("Une erreur est survenue lors de l'exportation des données. " +
-	                             "Veuillez vérifier la connexion réseau et réessayer.");
-	        alert.showAndWait();
+	    	AfficherAlerte.afficherAlerte(Alert.AlertType.ERROR,
+                    "Erreur d'exportation",
+                    "Une erreur est survenue lors de l'exportation des données."
+                    + " Veuillez vérifier la connexion réseau et réessayer.");
 	    } finally {
 	    	try {
 	    		exportateur.closeConnexion();
@@ -100,21 +120,20 @@ public class ExportateurControleur {
 	        
 	        exportateur.accepterConnexion();
 	        
+	        new AttenteExport().start(); // pop-up d'attente de l'export
 	        exportateur.envoiDonnee();
 	        
-	        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-	        alert.setTitle("Exportation réussie");
-	        alert.setHeaderText(null);
-	        alert.setContentText("Les données ont été exportées avec succès vers le client.");
-	        alert.showAndWait();
+	        
+	        AfficherAlerte.afficherAlerte(Alert.AlertType.INFORMATION,
+	        		                      "Exportation réussie",
+	        		                      "Les données ont été exportées"
+	        		                      + " avec succès vers le client.");
 	        
 	    } catch (IOException e) {
-	    	System.out.println(e);
-	        Alert alert = new Alert(Alert.AlertType.ERROR);
-	        alert.setTitle("Erreur d'exportation");
-	        alert.setContentText("Une erreur est survenue lors de l'exportation des données. " +
-	                             "Veuillez vérifier la connexion réseau et réessayer.");
-	        alert.showAndWait();
+	    	AfficherAlerte.afficherAlerte(Alert.AlertType.ERROR,
+                    "Erreur d'exportation",
+                    "Une erreur est survenue lors de l'exportation des données."
+                    + " Veuillez vérifier la connexion réseau et réessayer.");
 	    } finally {
 	    	try {
 	    		exportateur.closeConnexion();
@@ -151,7 +170,7 @@ public class ExportateurControleur {
 			        
 			        // Obtenir les adresses IP associées à cette interface
 			        for (InterfaceAddress adresseInterface :
-			        	 interfaceReseau.getInterfaceAddresses()) {
+			        	interfaceReseau.getInterfaceAddresses()) {
 			        	
 			            InetAddress inetAddress = adresseInterface.getAddress();
 			            

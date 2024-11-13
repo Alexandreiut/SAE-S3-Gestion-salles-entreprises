@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import lanceur.RoomManager;
 import modeles.NavigationVues;
 import modeles.erreur.LectureException;
-import modeles.importation.Importation;
+import affichages.importation.Importation;
 import affichages.AfficherAlerte;
 
 import java.io.File;

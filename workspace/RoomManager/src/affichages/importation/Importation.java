@@ -3,7 +3,7 @@
  * BUT Info2, 2024/2025, pas de copyright
  */
 
-package modeles.importation;
+package affichages.importation;
 
 import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
