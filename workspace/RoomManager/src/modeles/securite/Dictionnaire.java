@@ -35,7 +35,7 @@ public class Dictionnaire {
     public static char getNextCharAt(char caractere, int decalage) {
         int positionCaractere = getPosition(caractere);
         if (positionCaractere == -1) {
-            return '¤'; // caractère non présent dans le dictionnaire
+            return '⍰'; // caractère non présent dans le dictionnaire
         }
         if (decalage == 0) return caractere;
 
