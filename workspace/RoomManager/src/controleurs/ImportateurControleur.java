@@ -18,6 +18,7 @@ import modeles.NavigationVues;
 import modeles.erreur.LectureException;
 import modeles.importation.Importation;
 import affichages.AfficherAlerte;
+import affichages.AfficherManuel;
 
 import java.io.File;
 import java.util.List;
@@ -56,6 +57,9 @@ public class ImportateurControleur {
 
 	@FXML
 	private TextField saisiePort;
+	
+	@FXML
+	private Button information;
 
     @FXML
     private void handleOuvertureExplorateurFichier() throws LectureException {
@@ -78,6 +82,11 @@ public class ImportateurControleur {
 		}
 		modeleImportation.importerDonneesServeurDistant(ip, Integer.parseInt(saisiePort.getText()));
 	}
+    
+    @FXML
+    private void handleAfficherAide() {
+    	AfficherManuel.afficherAide();
+    }
     
     @FXML
 	private void menu() {
