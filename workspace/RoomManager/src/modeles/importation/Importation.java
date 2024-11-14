@@ -3,7 +3,7 @@
  * BUT Info2, 2024/2025, pas de copyright
  */
 
-package affichages.importation;
+package modeles.importation;
 
 import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
@@ -42,7 +42,8 @@ public class Importation {
 	 * @return la liste des fichiers sélectionnés
 	 * @throws IllegalArgumentException si null
 	 */
-	public static List<File> ouvertureExplorateurFichier(Stage stage) throws IllegalArgumentException {
+	public static List<File> ouvertureExplorateurFichier(Stage stage) 
+			throws IllegalArgumentException {
 		FileChooser selecteurFichiers = new FileChooser();
 		selecteurFichiers.setTitle("Choisir des fichiers");
 
@@ -412,7 +413,7 @@ public class Importation {
 	 * @param ip L'adresse IP à valider sous forme de chaîne de caractères.
 	 * @return true si l'adresse IP est valide, false sinon.
 	 */
-	public boolean estIPValide(String ip) {
+	public boolean estIPValide(String ip) { //INITIALELEMENT pas Static
 		return ip.matches("^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
 				"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
 				"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +

@@ -78,6 +78,8 @@ public class ExportateurControleur {
 		try {
 	        exportateur = new Exportateur(6543, RoomManager.stockage);
 	        
+
+	        new AttenteExport().start(); // pop-up d'attente de l'export
 	        exportateur.accepterConnexion();
 	        
 	        exportateur.envoiDonnee();
@@ -124,10 +126,16 @@ public class ExportateurControleur {
 	        exportateur.envoiDonnee();
 	        
 	        
-	        AfficherAlerte.afficherAlerte(Alert.AlertType.INFORMATION,
-	        		                      "Exportation réussie",
-	        		                      "Les données ont été exportées"
-	        		                      + " avec succès vers le client.");
+	        if (annuler) {
+	        	AfficherAlerte.afficherAlerte(Alert.AlertType.INFORMATION,
+	                "Exportation annulée",
+	                "Les données n'ont pas été exportées.");
+	        } else {
+		        AfficherAlerte.afficherAlerte(Alert.AlertType.INFORMATION,
+	                    "Exportation réussie",
+	                    "Les données ont été exportées"
+	                    + " avec succès vers le client.");
+	        }
 	        
 	    } catch (IOException e) {
 	    	AfficherAlerte.afficherAlerte(Alert.AlertType.ERROR,
