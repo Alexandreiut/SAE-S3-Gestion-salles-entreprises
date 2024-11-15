@@ -8,6 +8,7 @@ package controleurs;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import affichages.AfficherManuel;
 import affichages.GestionAffichageMenu;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -29,9 +30,6 @@ public class ConsultationControleur {
 	
 	@FXML
 	private Pane panePrincipal;
-	
-	//@FXML
-	//private VBox vboxDonnees;
 	
 	@FXML 
 	private Button boutonRetour;
@@ -70,6 +68,12 @@ public class ConsultationControleur {
             }       
 		}	
 	}
+	
+	@FXML
+    private void handleAfficherAide() {
+        String cheminFichier = "src/ressource/aide/AidePageConsultation.pdf";
+        AfficherManuel.afficherAide(cheminFichier);
+    }
 	
 	@FXML
 	private void menu() {

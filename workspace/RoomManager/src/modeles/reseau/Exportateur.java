@@ -11,7 +11,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Inet4Address;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.net.ServerSocket;
@@ -99,6 +98,7 @@ public class Exportateur {
 		}
 		
 		socketServeur = new ServerSocket(port, 1, ip);
+		socketServeur.setSoTimeout(5000);
 		socketServeur.setOption(StandardSocketOptions.SO_REUSEADDR, true);
 		
 		this.stockage = stockage;
@@ -114,6 +114,7 @@ public class Exportateur {
 	public Exportateur(int port, Stockage stockage, InetAddress ip) throws IOException {
 		
 		socketServeur = new ServerSocket(port, 1, ip);
+		socketServeur.setSoTimeout(5000);
 		socketServeur.setOption(StandardSocketOptions.SO_REUSEADDR, true);
 		
 		this.stockage = stockage;

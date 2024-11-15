@@ -11,6 +11,8 @@ import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 
+import affichages.AfficherAlerte;
+import affichages.AfficherManuel;
 import affichages.GestionAffichageMenu;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -62,22 +64,19 @@ public class ExportateurControleur {
 	        exportateur = new Exportateur(6543, RoomManager.stockage);
 	        
 	        exportateur.accepterConnexion();
-	        
+
 	        exportateur.envoiDonnee();
 	        
-	        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-	        alert.setTitle("Exportation réussie");
-	        alert.setHeaderText(null);
-	        alert.setContentText("Les données ont été exportées avec succès vers le client.");
-	        alert.showAndWait();
+	        AfficherAlerte.afficherAlerte(Alert.AlertType.INFORMATION,
+                    "Exportation réussie",
+                    "Les données ont été exportées"
+                    + " avec succès vers le client.");
 	        
 	    } catch (IOException e) {
-	    	System.out.println(e);
-	        Alert alert = new Alert(Alert.AlertType.ERROR);
-	        alert.setTitle("Erreur d'exportation");
-	        alert.setContentText("Une erreur est survenue lors de l'exportation des données. " +
-	                             "Veuillez vérifier la connexion réseau et réessayer.");
-	        alert.showAndWait();
+	    	AfficherAlerte.afficherAlerte(Alert.AlertType.ERROR,
+                    "Erreur d'exportation",
+                    "Une erreur est survenue lors de l'exportation des données."
+                    + " Veuillez vérifier la connexion réseau et réessayer.");
 	    } finally {
 	    	try {
 	    		exportateur.closeConnexion();
@@ -102,19 +101,16 @@ public class ExportateurControleur {
 	        
 	        exportateur.envoiDonnee();
 	        
-	        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-	        alert.setTitle("Exportation réussie");
-	        alert.setHeaderText(null);
-	        alert.setContentText("Les données ont été exportées avec succès vers le client.");
-	        alert.showAndWait();
+	        AfficherAlerte.afficherAlerte(Alert.AlertType.INFORMATION,
+                    "Exportation réussie",
+                    "Les données ont été exportées"
+                    + " avec succès vers le client.");
 	        
-	    } catch (IOException e) {
-	    	System.out.println(e);
-	        Alert alert = new Alert(Alert.AlertType.ERROR);
-	        alert.setTitle("Erreur d'exportation");
-	        alert.setContentText("Une erreur est survenue lors de l'exportation des données. " +
-	                             "Veuillez vérifier la connexion réseau et réessayer.");
-	        alert.showAndWait();
+	    } catch (IOException | NumberFormatException e) {
+	    	AfficherAlerte.afficherAlerte(Alert.AlertType.ERROR,
+                    "Erreur d'exportation",
+                    "Une erreur est survenue lors de l'exportation des données."
+                    + " Veuillez vérifier la connexion réseau et réessayer.");
 	    } finally {
 	    	try {
 	    		exportateur.closeConnexion();
@@ -151,7 +147,7 @@ public class ExportateurControleur {
 			        
 			        // Obtenir les adresses IP associées à cette interface
 			        for (InterfaceAddress adresseInterface :
-			        	 interfaceReseau.getInterfaceAddresses()) {
+			        	interfaceReseau.getInterfaceAddresses()) {
 			        	
 			            InetAddress inetAddress = adresseInterface.getAddress();
 			            
@@ -180,6 +176,12 @@ public class ExportateurControleur {
 	        alert.showAndWait();
         }
 	}
+	
+	@FXML
+    private void handleAfficherAide() {
+        String cheminFichier = "src/ressource/aide/AidePageExportation.pdf";
+        AfficherManuel.afficherAide(cheminFichier);
+    }
 	
 	@FXML
 	private void menu() {

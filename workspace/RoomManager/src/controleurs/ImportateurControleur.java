@@ -18,6 +18,7 @@ import modeles.NavigationVues;
 import modeles.erreur.LectureException;
 import modeles.importation.Importation;
 import affichages.AfficherAlerte;
+import affichages.AfficherManuel;
 
 import java.io.File;
 import java.util.List;
@@ -56,6 +57,9 @@ public class ImportateurControleur {
 
 	@FXML
 	private TextField saisiePort;
+	
+	@FXML
+	private Button information;
 
     @FXML
     private void handleOuvertureExplorateurFichier() throws LectureException {
@@ -69,30 +73,6 @@ public class ImportateurControleur {
         }
     }
     
-    /**
-	 * Affiche les résultats de l'importation de fichiers sous forme de pop up.
-	 * La méthode génère des pop up pour les fichiers importés avec succès, les fichiers échoués, 
-	 * les fichiers déjà importés et les fichiers vides.
-	 * @param fichiersReussis La liste des fichiers qui ont été importés avec succès.
-	 * @param fichiersEchoues La liste des fichiers qui ont échoué lors de l'importation.
-	 * @param fichiersDejaImportes La liste des fichiers qui ont déjà été importés.
-	 * @param fichiersVides La liste des fichiers qui sont vides et n'ont pas été traités.
-	 */
-	private void afficherResultatsImportation(List<String> fichiersReussis, List<String> fichiersEchoues, List<String> fichiersDejaImportes, List<String> fichiersVides) {
-		if (!fichiersReussis.isEmpty()) {
-			AfficherAlerte.afficherAlerte(Alert.AlertType.INFORMATION, "Importation réussie", "Les fichiers suivants ont été importés avec succès :\n" + fichiersReussis);
-		}
-		if (!fichiersEchoues.isEmpty()) {
-			AfficherAlerte.afficherAlerte(Alert.AlertType.ERROR, "Erreurs d'importation", "Les erreurs suivantes sont survenues lors de l'importation :\n" + fichiersEchoues);
-		}
-		if (!fichiersDejaImportes.isEmpty()) {
-			AfficherAlerte.afficherAlerte(Alert.AlertType.WARNING, "Fichiers déjà importés", "Les fichiers suivants ont déjà été importés :\n" + fichiersDejaImportes);
-		}
-		if (!fichiersVides.isEmpty()) {
-			AfficherAlerte.afficherAlerte(Alert.AlertType.WARNING, "Fichiers vides", "Les fichiers suivants sont vides :\n" + fichiersVides);
-		}
-	}
-    
     @FXML
 	private void handleImportDistant() {
 		String ip = saisieIP.getText();
@@ -102,6 +82,12 @@ public class ImportateurControleur {
 		}
 		modeleImportation.importerDonneesServeurDistant(ip, Integer.parseInt(saisiePort.getText()));
 	}
+    
+    @FXML
+    private void handleAfficherAide() {
+        String cheminFichier = "src/ressource/aide/AidePageImportation.pdf";
+        AfficherManuel.afficherAide(cheminFichier);
+    }
     
     @FXML
 	private void menu() {

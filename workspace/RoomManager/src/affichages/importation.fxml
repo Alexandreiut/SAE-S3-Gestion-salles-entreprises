@@ -21,7 +21,7 @@
       <HBox prefHeight="0.0" prefWidth="0.0" styleClass="bandeau">
          <children>
             <Label styleClass="titre" text="Importation" />
-            <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" styleClass="bouton-aide" text="i" />
+            <Button fx:id="information" mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" styleClass="bouton-aide" text="i" onAction="#handleAfficherAide" />
          </children></HBox>
       <Button mnemonicParsing="false" onAction="#menu" prefHeight="0.0" prefWidth="0.0" styleClass="bouton-menu" text="Menu" />
       <HBox layoutX="225.0" layoutY="111.0" prefHeight="70.0" prefWidth="758.0" />

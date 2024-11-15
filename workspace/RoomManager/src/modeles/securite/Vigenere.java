@@ -43,7 +43,7 @@ public class Vigenere {
             if (decalage == -1) return null;
 
             char caractereEncode = Dictionnaire.getNextCharAt(caractereChaine, decalage);
-            if (caractereEncode == '¤') return null;
+            if (caractereEncode == '⍰') return null;
 
             chaineConstruite.append(caractereEncode);
         }
@@ -67,7 +67,7 @@ public class Vigenere {
             if (decalage == -1) return null;
 
             char caractereDecode = Dictionnaire.getNextCharAt(caractereChaine, -decalage);
-            if (caractereDecode == '¤') return null; // Cas où un caractère n'a pas été trouvée dans le dictionnaire
+            if (caractereDecode == '⍰') return null; // Cas où un caractère n'a pas été trouvée dans le dictionnaire
 
             chaineConstruite.append(caractereDecode);
         }

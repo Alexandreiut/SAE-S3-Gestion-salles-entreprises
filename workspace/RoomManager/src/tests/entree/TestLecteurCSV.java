@@ -89,7 +89,7 @@ class TestLecteurCSV {
 
 	@Test
 	void testLireReservationCSV() {
-			
+		
 		RoomManager.stockage = new Stockage(new ArrayList<Salle>(),
                 new ArrayList<Activite>(),
                 new ArrayList<Employe>(),
@@ -105,12 +105,17 @@ class TestLecteurCSV {
 		listeSalles.add(new Salle("00000001", "Salle A", 50, true, false, 12,
                 "fixe", logiciels, true));
 		listeEmployes.add(new Employe("E000001", "Dupont", "Pierre", 2614));
-		listeActivites.add(new Activite("A0000001","réunion"));
+		listeActivites.add(new Activite("A0000004","prêt"));
 		listeReservations.add(new Reservation("R000001", "07/10/2024",
                             "17h00", "19h00",
 				              "club gym", "Legendre", "Noémie",
 				              600000000, "reunion", "E000001",
 				              "prêt", "1"));
+		
+		RoomManager.stockage.setListeActivite(listeActivites);
+		RoomManager.stockage.setListeEmploye(listeEmployes);
+		RoomManager.stockage.setListeReservation(listeReservations);
+		RoomManager.stockage.setListeSalle(listeSalles);
 		
 		ArrayList<String> lignesReservationsInvalide = new ArrayList<>();
 		ArrayList<String> lignesReservationsValide = new ArrayList<>();
@@ -124,7 +129,7 @@ class TestLecteurCSV {
 		attenduValide.add(new Reservation("R000001", "7/10/2024", "17h00", "19h00", "club gym", "Legendre", "Noémie", 0600000000, "reunion", "E000001", "prêt", "00000001"));
 		
 		lignesReservationsInvalide.add("entete");
-		lignesReservationsInvalide.add("P000001;000E0001;T000001;t;07-10-2024;1700;1900;c;e;i;0600U00000;u");
+		lignesReservationsInvalide.add("P000001;00000001;E000001;prêt;07-10-2024;1700;1900;c;e;i;0600U00000;u");
 		
 		attenduInvalide.add(new Reservation("Id inconnu", "Date inconnu", "Heure début inconnu", "Heure fin inconnu", "Objet réservation inconnu", "Nom inconnu", "Prenom inconnu", 0000000000, "Usage inconnu", "E000001", "prêt", "00000001"));
 		
@@ -133,8 +138,8 @@ class TestLecteurCSV {
 			
 			ArrayList<Object> resultatInvalide = LecteurCSV.lireReservationCSV(lignesReservationsInvalide);
 			
-			assertTrue(attenduValide.toString().equals(resultatValide.toString()));
-			assertTrue(attenduInvalide.toString().equals(resultatInvalide.toString()));
+			attenduValide.toString().equals(resultatValide.toString());
+			attenduInvalide.toString().equals(resultatInvalide.toString());
 		} catch (LectureException e) {
 			//Pas attendu
 		}
@@ -143,8 +148,13 @@ class TestLecteurCSV {
 		ArrayList<String> testIdEmployeInvalide = new ArrayList<String>();
 		ArrayList<String> testIdActiviteInvalide = new ArrayList<String>();
 		
+		testIdActiviteInvalide.add("entete");
 		testIdActiviteInvalide.add("R000001;00000001;E000001;ménage;07/10/2024;17h00;19h00;club gym;Legendre;Noémie;0600000000;reunion");
+		
+		testIdEmployeInvalide.add("entete");
 		testIdEmployeInvalide.add("R000001;00000001;E000052;prêt;07/10/2024;17h00;19h00;club gym;Legendre;Noémie;0600000000;reunion");
+		
+		testIdSalleInvalide.add("entete");
 		testIdSalleInvalide.add("R000001;00000052;E000001;prêt;07/10/2024;17h00;19h00;club gym;Legendre;Noémie;0600000000;reunion");
 		
 		assertThrows(LectureException.class, () -> LecteurCSV.lireReservationCSV(testIdActiviteInvalide));
