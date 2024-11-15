@@ -85,7 +85,8 @@ public class ImportateurControleur {
     
     @FXML
     private void handleAfficherAide() {
-    	AfficherManuel.afficherAide();
+        String cheminFichier = "src/ressource/aide/AidePageImportation.pdf";
+        AfficherManuel.afficherAide(cheminFichier);
     }
     
     @FXML

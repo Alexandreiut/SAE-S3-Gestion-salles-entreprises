@@ -5,6 +5,7 @@
 
 package controleurs;
 
+import affichages.AfficherManuel;
 import javafx.fxml.FXML;
 import modeles.NavigationVues;
 
@@ -12,6 +13,12 @@ import modeles.NavigationVues;
  * Controleur de la vue accueil.fxml
  */
 public class AccueilControleur {
+	
+	@FXML
+    private void handleAfficherAide() {
+        String cheminFichier = "src/ressource/aide/AidePageAccueil.pdf";
+        AfficherManuel.afficherAide(cheminFichier);
+    }
 	
 	/**
 	 * Passer à la vue consultation

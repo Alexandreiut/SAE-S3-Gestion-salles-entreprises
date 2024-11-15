@@ -12,6 +12,7 @@ import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 
 import affichages.AfficherAlerte;
+import affichages.AfficherManuel;
 import affichages.GestionAffichageMenu;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -175,6 +176,12 @@ public class ExportateurControleur {
 	        alert.showAndWait();
         }
 	}
+	
+	@FXML
+    private void handleAfficherAide() {
+        String cheminFichier = "src/ressource/aide/AidePageExportation.pdf";
+        AfficherManuel.afficherAide(cheminFichier);
+    }
 	
 	@FXML
 	private void menu() {
