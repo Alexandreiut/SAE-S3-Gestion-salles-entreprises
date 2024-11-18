@@ -2,31 +2,29 @@ package tests.securite;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import modeles.securite.Crypteur;
 
-
 /**
- * Classe de test de la classe Crypteur				12/11/2024
- * @author lucas Boulouard
+ * Classe de test de la classe Crypteur
+ * 
+ * @version 12/11/2024
+ * Auteur : Lucas Boulouard
  */
-
 public class TestCrypteur {
 
     private Crypteur crypteur;
-    private String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
     @BeforeEach
     void setUp() {
-        crypteur = new Crypteur(alphabet);
+        crypteur = new Crypteur();
     }
 
     @Test
     void testCrypteur() {
-        // Tester le constructeur de Crypteur avec un alphabet valide
+        // Tester le constructeur de Crypteur
         assertNotNull(crypteur, "Le Crypteur ne doit pas être nul.");
     }
 
@@ -50,25 +48,57 @@ public class TestCrypteur {
         assertEquals(message, messageDecrypte, "Le message décrypté doit être égal au message original.");
     }
 
-    @Test
-    void testCrypteMessage() {
-        // Tester si un message peut être correctement crypté
-        String message = "Bonjour";
-        String message2 = "JeSuisEnButInformatique";
-        crypteur.genererCle();
-        String messageCrypte = crypteur.crypteMessage(message);
-        String messageCrypte1 = crypteur.crypteMessage(message2);
-        
-        assertNotNull(messageCrypte1, "Le message crypté ne doit pas être nul.");
-        assertNotEquals(message, messageCrypte1, "Le message crypté ne doit pas être identique au message original.");
-    }
-
-    @Test
+       @Test
     void testGenererCle() {
         // Tester si la clé générée est valide
         String cle = crypteur.genererCle();
         
         assertNotNull(cle, "La clé générée ne doit pas être nulle.");
-        assertTrue(cle.length() >= 0, "La clé doit avoir une longueur supérieure à 0.");
+        assertTrue(cle.length() > 0, "La clé doit avoir une longueur supérieure à 0.");
+        
     }
+    
+    @Test
+    void testCrypteMessage() {
+        // Tester si un message peut être correctement crypté
+        String message = "Bonjour";
+        crypteur.genererCle();
+        String messageCrypte = crypteur.crypteMessage(message);
+        
+        assertNotNull(messageCrypte, "Le message crypté ne doit pas être nul.");
+        assertNotEquals(message, messageCrypte, "Le message crypté ne doit pas être identique au message original.");
+       
+    }
+
+    @Test
+    void testCrypteMessageAvecCaracteresSpeciaux() {
+    	String message = "B*njoûr! Cômmënt çã vâ? & Je m'àppèlle Lù{@§";
+    	crypteur.genererCle();
+    	String messageCrypte = crypteur.crypteMessage(message);
+    	String messageDecrypte = crypteur.decrypteMessage(messageCrypte);
+    	
+    	assertNotNull(messageCrypte, "Le message crypté ne doit pas être nul.");
+    	assertNotEquals(message, messageCrypte, "Le message crypté ne doit pas être identique au message original.");
+    	assertEquals(message, messageDecrypte, "Le message décrypté doit être égal au message original.");
+    }
+    
+    @Test
+    void testCryotageMessageAvecChiffres() {
+    	String message = "Ceci est un test avec des chiffres: 1234567890";
+    	crypteur.genererCle();
+    	String messageCrypte = crypteur.crypteMessage(message);
+    	String messageDecrypte = crypteur.decrypteMessage(messageCrypte);
+    	
+    	assertNotNull(messageCrypte, "Le message crypté ne doit pas être nul.");
+    	assertNotEquals(message, messageCrypte, "Le message crypté ne doit pas être identique au message original.");
+    	assertEquals(message, messageDecrypte, "Le message décrypté doit être égal au message original.");
+    	
+    }
+    
+    
+    
+ 
+    
+    
 }
+

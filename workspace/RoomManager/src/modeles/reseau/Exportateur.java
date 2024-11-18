@@ -98,6 +98,7 @@ public class Exportateur {
 		}
 		
 		socketServeur = new ServerSocket(port, 1, ip);
+		socketServeur.setSoTimeout(5000);
 		socketServeur.setOption(StandardSocketOptions.SO_REUSEADDR, true);
 		
 		this.stockage = stockage;
@@ -113,6 +114,7 @@ public class Exportateur {
 	public Exportateur(int port, Stockage stockage, InetAddress ip) throws IOException {
 		
 		socketServeur = new ServerSocket(port, 1, ip);
+		socketServeur.setSoTimeout(5000);
 		socketServeur.setOption(StandardSocketOptions.SO_REUSEADDR, true);
 		
 		this.stockage = stockage;
@@ -254,10 +256,9 @@ public class Exportateur {
 	
 	
 	/**
-	 * renvoie true si la connexion avec l'importateur 
+	 * @return true si la connexion avec l'importateur 
 	 * a été correctement fermée,
-	 *  false sinon
-	 * @return
+	 * false sinon
 	 */
 	public boolean closeConnexion() {
 		try {

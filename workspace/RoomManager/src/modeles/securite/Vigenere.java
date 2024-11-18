@@ -5,6 +5,9 @@ import java.util.Random;
 public class Vigenere {
 	
 	/**
+	 * utiliser pour envoyer une clé en claire et non en privée donc 
+	 * cette méthode n'est plus utilisé dans la dernière version du crypteur
+	 * 
 	 * Génère un clef aléatoire de longueur variable
 	 * @param longueur taille de la clef à générer
 	 * @return renvoie une chaîne constitué de caractère aléatoire du dictionnaire
@@ -21,6 +24,8 @@ public class Vigenere {
         return chaine.toString();
     }
     
+    
+
     /**
      * Encode une chaîne de caractère et effectue un décalage en fonction de la clef
      * @param clef clé permettant de définir un décalage sur la chaîne

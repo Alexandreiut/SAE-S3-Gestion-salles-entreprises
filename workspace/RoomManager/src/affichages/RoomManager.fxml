@@ -12,7 +12,7 @@
  	<HBox prefHeight="0.0" prefWidth="0.0" styleClass="bandeau">
     <children>
        <Label styleClass="titre" text="Accueil" />
-       <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" styleClass="bouton-aide" text="i" />
+       <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" styleClass="bouton-aide" text="i" onAction="#handleAfficherAide"/>
     </children></HBox>
       <Label alignment="CENTER" layoutX="200.0" layoutY="144.0" text="Bienvenur sur l'application RoomManager">
          <font>

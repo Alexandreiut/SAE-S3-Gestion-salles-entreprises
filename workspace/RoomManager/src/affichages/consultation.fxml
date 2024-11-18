@@ -17,7 +17,7 @@
       <HBox prefHeight="0.0" prefWidth="0.0" styleClass="bandeau">
          <children>
             <Label styleClass="titre" text="Consultation" />
-            <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" styleClass="bouton-aide" text="i" />
+            <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" styleClass="bouton-aide" text="i" onAction="#handleAfficherAide"/>
          </children></HBox>
       <Button mnemonicParsing="false" onAction="#menu" prefHeight="0.0" prefWidth="0.0" styleClass="bouton-menu" text="Menu" />
       <VBox id="vboxFiltres" alignment="CENTER" layoutY="102.0" prefHeight="499.0" prefWidth="214.0" spacing="20.0" styleClass="FondVBox">

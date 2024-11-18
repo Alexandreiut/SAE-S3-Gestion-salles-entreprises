@@ -3,7 +3,7 @@
  * BUT Info2, 2024/2025, pas de copyright
  */
 
-package affichages.importation;
+package modeles.importation;
 
 import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
@@ -42,7 +42,8 @@ public class Importation {
 	 * @return la liste des fichiers sélectionnés
 	 * @throws IllegalArgumentException si null
 	 */
-	public static List<File> ouvertureExplorateurFichier(Stage stage) throws IllegalArgumentException {
+	public static List<File> ouvertureExplorateurFichier(Stage stage) 
+			throws IllegalArgumentException {
 		FileChooser selecteurFichiers = new FileChooser();
 		selecteurFichiers.setTitle("Choisir des fichiers");
 
@@ -95,8 +96,8 @@ public class Importation {
 	 * @param fichiersAvecEntete Liste des fichiers avec en-tête où le fichier sera ajouté s'il correspond.
 	 * @param fichiersSansEntete Liste des fichiers sans en-tête où le fichier sera ajouté s'il correspond.
 	 */
-	public void classerFichier(String entete, File fichier, List<File> fichiersAvecEntete, 
-			List<File> fichiersSansEntete) { //INITIALEMENT private
+	private void classerFichier(String entete, File fichier, List<File> fichiersAvecEntete, 
+			List<File> fichiersSansEntete) {
 		switch (entete) {
 		case EN_TETE_EMPLOYE, EN_TETE_ACTIVITE, EN_TETE_SALLE : 
 			fichiersSansEntete.add(fichier);
@@ -119,8 +120,8 @@ public class Importation {
 	 * @param fichiersAvecEntete Liste des fichiers avec en-tête, qui peut être vidée si des fichiers sont manquants.
 	 * @param fichiersSansEntete Liste des fichiers sans en-tête, vérifiée pour la présence des fichiers requis.
 	 */
-	public void gererFichiersManquants(List<File> fichiersAvecEntete, 
-			List<File> fichiersSansEntete) { //INITIALEMENT private
+	private void gererFichiersManquants(List<File> fichiersAvecEntete, 
+			List<File> fichiersSansEntete) {
 		List<String> fichiersManquants;
 		if (!fichiersAvecEntete.isEmpty()) {
 			fichiersManquants = getNomsFichiersManquants(fichiersSansEntete);
@@ -138,7 +139,7 @@ public class Importation {
 	 * @param fichiersSansEntete Liste des fichiers sans en-tête à vérifier.
 	 * @return Une liste de noms de fichiers manquants requis pour une importation complète.
 	 */
-	public List<String> getNomsFichiersManquants(List<File> fichiersSansEntete) { //INITIALEMENT private
+	private List<String> getNomsFichiersManquants(List<File> fichiersSansEntete) {
 		List<String> fichiersManquants = new ArrayList<>();
 		
 		boolean correspondantActivite = true;
@@ -197,7 +198,7 @@ public class Importation {
 	 * @param typeEntete Le type d'en-tête attendu pour le fichier.
 	 * @return true si le fichier possède le bon en-tête, false sinon ou en cas d'erreur de lecture.
 	 */
-	public boolean estFichierDeType(File fichier, String typeEntete) { //INITIALEMENT private
+	private boolean estFichierDeType(File fichier, String typeEntete) {
 		try {
 			String entete = LecteurCSV.getRessource(fichier.getAbsolutePath()).get(0);
 			return entete.equals(typeEntete);
@@ -213,8 +214,8 @@ public class Importation {
 	 * @param fichiersAvecEntete Liste des fichiers avec en-tête à ajouter ensuite.
 	 * @return Une nouvelle liste contenant d'abord les fichiers sans en-tête, puis ceux avec en-tête.
 	 */
-	public List<File> fusionnerListesFichiers(List<File> fichiersSansEntete, 
-			List<File> fichiersAvecEntete) { //INITIALEMENT private
+	private List<File> fusionnerListesFichiers(List<File> fichiersSansEntete, 
+			List<File> fichiersAvecEntete) {
 		List<File> fichierOrdonne = new ArrayList<>();
 		fichierOrdonne.addAll(fichiersSansEntete);
 		fichierOrdonne.addAll(fichiersAvecEntete);
@@ -261,8 +262,8 @@ public class Importation {
 	 * @param stockage Le stockage dans lequel les objets seront importés.
 	 * @return Une liste des fichiers dont l'importation a réussi.
 	 */
-	public List<String> importerObjets(List<Object> objets, String nomFichier, 
-			List<String> fichiersDejaImportes, Stockage stockage) { //INITIALEMENT private
+	private List<String> importerObjets(List<Object> objets, String nomFichier, 
+			List<String> fichiersDejaImportes, Stockage stockage) {
 		List<String> fichiersReussis = new ArrayList<>();
 		boolean fichierImporte = false;
 
@@ -291,7 +292,7 @@ public class Importation {
 	 * @param stockage Le stockage dans lequel l'objet doit être ajouté.
 	 * @return true si l'objet a été ajouté avec succès, false si l'objet est déjà importé et n'a pas été ajouté.
 	 */
-	public boolean ajouterObjetAuStockage(Object objet, Stockage stockage) { //INITIALEMENT private
+	private boolean ajouterObjetAuStockage(Object objet, Stockage stockage) {
 		if (objet instanceof Employe employe && !estDejaImporte(employe, stockage.getListeEmploye())) {
 			stockage.getListeEmploye().add(employe);
 			return true;
@@ -344,7 +345,7 @@ public class Importation {
 	 * @param liste La liste des objets déjà importés dans laquelle on recherche une correspondance.
 	 * @return true si un objet avec le même identifiant existe déjà dans la liste, false sinon.
 	 */
-	public <T> boolean estDejaImporte(T objet, List<T> liste) { //INITIALEMENT private
+	private <T> boolean estDejaImporte(T objet, List<T> liste) {
 		String id;
 
 		if (objet instanceof Salle) {
@@ -390,8 +391,8 @@ public class Importation {
 	 * @param fichiersDejaImportes La liste des fichiers qui ont déjà été importés.
 	 * @param fichiersVides La liste des fichiers qui sont vides et n'ont pas été traités.
 	 */
-	public void afficherResultatsImportation(List<String> fichiersReussis, List<String> fichiersEchoues, 
-			List<String> fichiersDejaImportes, List<String> fichiersVides) { //INITIALEMENT private
+	private void afficherResultatsImportation(List<String> fichiersReussis, List<String> fichiersEchoues, 
+			List<String> fichiersDejaImportes, List<String> fichiersVides) {
 		if (!fichiersReussis.isEmpty()) {
 			AfficherAlerte.afficherAlerte(Alert.AlertType.INFORMATION, "Importation réussie", "Les fichiers suivants ont été importés avec succès :\n" + fichiersReussis);
 		}
