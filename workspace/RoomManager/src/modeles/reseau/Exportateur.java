@@ -256,10 +256,9 @@ public class Exportateur {
 	
 	
 	/**
-	 * renvoie true si la connexion avec l'importateur 
+	 * @return true si la connexion avec l'importateur 
 	 * a été correctement fermée,
-	 *  false sinon
-	 * @return
+	 * false sinon
 	 */
 	public boolean closeConnexion() {
 		try {
