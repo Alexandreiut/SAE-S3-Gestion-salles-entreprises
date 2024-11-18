@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
@@ -21,18 +25,131 @@
       <Button mnemonicParsing="false" onAction="#menu" prefHeight="0.0" prefWidth="0.0" styleClass="bouton-menu" text="Menu" />
       <VBox id="vboxFiltres" alignment="CENTER" layoutY="102.0" prefHeight="499.0" prefWidth="214.0" spacing="20.0" styleClass="FondVBox">
          <children>
-            <ComboBox prefWidth="150.0" promptText="Type de recherche" styleClass="comboBox" />
-            <ComboBox prefWidth="150.0" promptText="Moyenne par jour" styleClass="comboBox" />
-            <ComboBox prefWidth="150.0" promptText="Réservé" styleClass="comboBox" />
-            <Button mnemonicParsing="false" styleClass="bouton-filtre" text="Date début" />
-            <Button mnemonicParsing="false" styleClass="bouton-filtre" text="Date fin" />
-            <Button mnemonicParsing="false" styleClass="bouton-filtre" text="Heure début" />
-            <Button mnemonicParsing="false" styleClass="bouton-filtre" text="Heure fin" />
-            <ComboBox prefWidth="150.0" promptText="Élément recherché" styleClass="comboBox" />
+            <Group fx:id="filterGroupId">
+               <children>
+                  <VBox prefHeight="364.0" prefWidth="199.0">
+                     <children>
+                        <HBox prefHeight="45.0" prefWidth="199.0">
+                           <children>
+                              <CheckBox fx:id="visualisationMoyenneId" mnemonicParsing="false" onAction="#visualisationMoyenne" prefHeight="17.0" prefWidth="139.0" text="Moyenne par :">
+                                 <padding>
+                                    <Insets left="10.0" right="10.0" />
+                                 </padding>
+                                 <HBox.margin>
+                                    <Insets top="3.0" />
+                                 </HBox.margin>
+                              </CheckBox>
+                              <ComboBox fx:id="focusMoyenneId" onAction="#switchFocusMoyenne" prefHeight="25.0" prefWidth="100.0" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="36.0" prefWidth="199.0">
+                           <children>
+                              <Label text="Du :  " />
+                              <TextField fx:id="dateDebutId" onAction="#checkDate" prefHeight="15.0" prefWidth="149.0" />
+                           </children>
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </HBox>
+                        <HBox prefHeight="52.0" prefWidth="199.0">
+                           <children>
+                              <Label text="Au :  " />
+                              <TextField fx:id="dateFinId" />
+                           </children>
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </HBox>
+                        <HBox prefHeight="54.0" prefWidth="199.0">
+                           <children>
+                              <Label text="De :">
+                                 <HBox.margin>
+                                    <Insets right="3.0" top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <ComboBox fx:id="heureDebutId" prefHeight="25.0" prefWidth="64.0" />
+                              <Label text=" à : ">
+                                 <HBox.margin>
+                                    <Insets left="3.0" right="3.0" top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <ComboBox fx:id="heureFinId" prefHeight="25.0" prefWidth="64.0" />
+                           </children>
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </HBox>
+                        <HBox prefHeight="53.0" prefWidth="199.0">
+                           <children>
+                              <ComboBox fx:id="roomStatusId" prefHeight="25.0" prefWidth="195.0" />
+                           </children>
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </HBox>
+                        <HBox prefHeight="61.0" prefWidth="214.0">
+                           <children>
+                              <Button fx:id="searchButtonId" mnemonicParsing="false" onAction="#throwSearch" prefHeight="297.0" prefWidth="204.0" styleClass="boutons-loupe" text="Rechercher ">
+                                 <graphic>
+                                    <SVGPath content="M 16.25 8.125 C 16.25 9.917969 15.667969 11.574219 14.6875 12.917969 L 19.632812 17.867188 C 20.121094 18.355469 20.121094 19.148438 19.632812 19.636719 C 19.144531 20.125 18.351562 20.125 17.863281 19.636719 L 12.917969 14.6875 C 11.574219 15.671875 9.917969 16.25 8.125 16.25 C 3.636719 16.25 0 12.613281 0 8.125 C 0 3.636719 3.636719 0 8.125 0 C 12.613281 0 16.25 3.636719 16.25 8.125 Z M 8.125 13.75 C 11.230469 13.75 13.75 11.230469 13.75 8.125 C 13.75 5.019531 11.230469 2.5 8.125 2.5 C 5.019531 2.5 2.5 5.019531 2.5 8.125 C 2.5 11.230469 5.019531 13.75 8.125 13.75 Z M 8.125 13.75" />
+                                 </graphic>
+                              </Button>
+                           </children>
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </Group>
          </children></VBox>
       <Button layoutX="467.0" layoutY="524.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="484.0" styleClass="boutons-ajouter" text="Ajouter au pdf" />
-      <VBox layoutX="225.0" layoutY="183.0" prefHeight="334.0" prefWidth="758.0">
+      <VBox layoutX="225.0" layoutY="108.0" prefHeight="409.0" prefWidth="758.0">
          <children>
+            <Group fx:id="searchGroupId">
+               <children>
+                  <HBox prefHeight="59.0" prefWidth="758.0">
+                     <children>
+                        <VBox prefHeight="27.0" prefWidth="188.0">
+                           <children>
+                              <TextField fx:id="searchRoomId" prefHeight="25.0" prefWidth="180.0" promptText="Nom salle">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </TextField>
+                              <ListView fx:id="roomListId" prefHeight="0.0" prefWidth="160.0" />
+                           </children>
+                           <HBox.margin>
+                              <Insets right="50.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox prefHeight="27.0" prefWidth="220.0">
+                           <children>
+                              <TextField fx:id="searchEmployeId" prefHeight="25.0" prefWidth="192.0" promptText="Nom ou prénom employé">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </TextField>
+                              <ListView fx:id="employeListId" prefHeight="0.0" prefWidth="160.0" />
+                           </children>
+                           <HBox.margin>
+                              <Insets right="50.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox prefHeight="25.0" prefWidth="160.0">
+                           <children>
+                              <TextField fx:id="searchActiviteId" prefHeight="25.0" prefWidth="150.0" promptText="Nom activité" />
+                              <ListView fx:id="activiteListId" prefHeight="0.0" prefWidth="160.0" />
+                           </children>
+                        </VBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="20.0" top="20.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </Group>
             <ScrollPane prefHeight="337.0" prefWidth="758.0">
     			<content>
 			        <VBox fx:id="vboxContent" spacing="10">
@@ -46,14 +163,14 @@
             <SVGPath content="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 288 480 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-370.7 0 73.4-73.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-128 128z" scaleX="0.5" scaleY="0.5" />
          </graphic>
       </Button>
-      <TextField layoutX="225.0" layoutY="123.0" prefHeight="25.0" prefWidth="173.0" promptText="Nom salle recherché " styleClass="saisie-text" />
-      <TextField layoutX="449.0" layoutY="123.0" prefHeight="25.0" prefWidth="176.0" promptText="Nom employé recherché" styleClass="saisie-text" />
-      <ComboBox layoutX="686.0" layoutY="129.0" prefWidth="150.0" promptText="Type d’activité" styleClass="comboBox" />
-      <Button layoutX="666.0" layoutY="-113.0" mnemonicParsing="false" scaleX="0.0625" scaleY="0.0625" styleClass="boutons-loupe" text=" ">
-         <graphic>
-            <SVGPath content="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
-         </graphic>
-      </Button>
+      <HBox layoutX="10.0" layoutY="115.0" prefHeight="45.0" prefWidth="199.0">
+         <children>
+         <ComboBox fx:id="rechercheTypeId" onAction="#switchDisplay" prefHeight="39.0" prefWidth="278.0" styleClass="comboBox" />               
+         </children>
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
+      </HBox>
    </children>
    <stylesheets>
       <URL value="@application.css" />
