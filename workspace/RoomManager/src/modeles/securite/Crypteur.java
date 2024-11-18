@@ -55,11 +55,16 @@ public class Crypteur {
 	 */
 	public String genererCle() {
 	    int nombreSecret = diffieHellman.getNbSecret();
+	   
 	    StringBuilder cleBuilder = new StringBuilder();
 	    
 	    // Assurer que la clé ait au moins une longueur de 1
+<<<<<<< HEAD
 	    int longueurCle = nombreSecret % 50 + 10; //longueur de 10 à 60
 	    System.out.println("nbS = " + nombreSecret);
+=======
+	    int longueurCle = Math.max(5, nombreSecret % alphabet.length);
+>>>>>>> cf7e386b7ae91941266d54bf78963d212b67f4bc
 	    
 	    for (int i = 0; i <= longueurCle; i++) {
 	    	char nextChar = alphabet[Math.abs((i + 1) * (nombreSecret + i))
@@ -79,13 +84,20 @@ public class Crypteur {
 	 * @return le message crypté
 	 */
 	public String crypteMessage(String messageACrypter) {
+		
+		
 		if (cle == null) {
 			throw new IllegalStateException("La clé de chiffrement n'a pas "
 			                                + "été générée. Veuillez générer"
 											+ " une clé avant de crypter.");
 		}
 		
-		return Vigenere.encodageVigenere(cle, messageACrypter);
+		System.out.println("Clé utilisée pour le cryptage: " + cle);
+		String messageCrypte = Vigenere.encodageVigenere(cle, messageACrypter);
+		System.out.println("Message original: " + messageACrypter);
+		System.out.println("Message crypté: " + messageCrypte);
+		
+		return messageCrypte;
 	}
 	
 	
