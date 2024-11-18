@@ -55,10 +55,11 @@ public class Crypteur {
 	 */
 	public String genererCle() {
 	    int nombreSecret = diffieHellman.getNbSecret();
+	   
 	    StringBuilder cleBuilder = new StringBuilder();
 	    
 	    // Assurer que la clé ait au moins une longueur de 1
-	    int longueurCle = Math.max(1, nombreSecret % alphabet.length);
+	    int longueurCle = Math.max(5, nombreSecret % alphabet.length);
 	    
 	    
 	    for (int i = 0; i < longueurCle; i++) {
@@ -77,11 +78,18 @@ public class Crypteur {
 	 * @return le message crypté
 	 */
 	public String crypteMessage(String messageACrypter) {
+		
+		
 		if (cle == null) {
 			throw new IllegalStateException("La clé de chiffrement n'a pas été générée. Veuillez générer une clé avant de crypter.");
 		}
 		
-		return Vigenere.encodageVigenere(cle, messageACrypter);
+		System.out.println("Clé utilisée pour le cryptage: " + cle);
+		String messageCrypte = Vigenere.encodageVigenere(cle, messageACrypter);
+		System.out.println("Message original: " + messageACrypter);
+		System.out.println("Message crypté: " + messageCrypte);
+		
+		return messageCrypte;
 	}
 	
 	

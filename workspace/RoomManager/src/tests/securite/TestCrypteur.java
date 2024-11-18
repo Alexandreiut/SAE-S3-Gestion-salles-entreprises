@@ -48,6 +48,16 @@ public class TestCrypteur {
         assertEquals(message, messageDecrypte, "Le message décrypté doit être égal au message original.");
     }
 
+       @Test
+    void testGenererCle() {
+        // Tester si la clé générée est valide
+        String cle = crypteur.genererCle();
+        
+        assertNotNull(cle, "La clé générée ne doit pas être nulle.");
+        assertTrue(cle.length() > 0, "La clé doit avoir une longueur supérieure à 0.");
+        
+    }
+    
     @Test
     void testCrypteMessage() {
         // Tester si un message peut être correctement crypté
@@ -57,14 +67,38 @@ public class TestCrypteur {
         
         assertNotNull(messageCrypte, "Le message crypté ne doit pas être nul.");
         assertNotEquals(message, messageCrypte, "Le message crypté ne doit pas être identique au message original.");
+       
     }
 
     @Test
-    void testGenererCle() {
-        // Tester si la clé générée est valide
-        String cle = crypteur.genererCle();
-        
-        assertNotNull(cle, "La clé générée ne doit pas être nulle.");
-        assertTrue(cle.length() > 0, "La clé doit avoir une longueur supérieure à 0.");
+    void testCrypteMessageAvecCaracteresSpeciaux() {
+    	String message = "B*njoûr! Cômmënt çã vâ? & Je m'àppèlle Lù{@§";
+    	crypteur.genererCle();
+    	String messageCrypte = crypteur.crypteMessage(message);
+    	String messageDecrypte = crypteur.decrypteMessage(messageCrypte);
+    	
+    	assertNotNull(messageCrypte, "Le message crypté ne doit pas être nul.");
+    	assertNotEquals(message, messageCrypte, "Le message crypté ne doit pas être identique au message original.");
+    	assertEquals(message, messageDecrypte, "Le message décrypté doit être égal au message original.");
     }
+    
+    @Test
+    void testCryotageMessageAvecChiffres() {
+    	String message = "Ceci est un test avec des chiffres: 1234567890";
+    	crypteur.genererCle();
+    	String messageCrypte = crypteur.crypteMessage(message);
+    	String messageDecrypte = crypteur.decrypteMessage(messageCrypte);
+    	
+    	assertNotNull(messageCrypte, "Le message crypté ne doit pas être nul.");
+    	assertNotEquals(message, messageCrypte, "Le message crypté ne doit pas être identique au message original.");
+    	assertEquals(message, messageDecrypte, "Le message décrypté doit être égal au message original.");
+    	
+    }
+    
+    
+    
+ 
+    
+    
 }
+
