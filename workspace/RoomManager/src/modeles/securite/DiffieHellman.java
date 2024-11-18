@@ -1,6 +1,7 @@
 package modeles.securite;
 
-import java.math.BigInteger;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Permet d'utiliser la méthode de chiffrement de Diffie Hellman.
@@ -20,7 +21,7 @@ public class DiffieHellman {
 	private int nbSecret;
 	
 	/**
-	 * Contructeur initialisant p et g
+	 * Contructeur initialisant x
 	 */
 	public DiffieHellman() {
 		this.x = choixAleatoireX();
@@ -36,19 +37,15 @@ public class DiffieHellman {
 		return (int) (Math.random() * P);
 		
 	}
+    	
 	
 	/**
 	 * Calcule G à la puissance x modulo P
 	 * @return G^x % P
 	 */
-	
 	public int getGPuissanceX() {
-	    BigInteger g = BigInteger.valueOf(G);
-	    BigInteger x = BigInteger.valueOf(this.x);
-	    BigInteger p = BigInteger.valueOf(P);
-	    
-	    BigInteger resultat = g.modPow(x, p);
-	    return resultat.intValue();
+	    int resultat = puissanceModulo(G, this.x, P);
+	    return resultat;
 	}
 	
 	/**
@@ -57,13 +54,9 @@ public class DiffieHellman {
 	 * choisi par l'autre intance de la classe modulo P
 	 */
 	public void calculeSecret(int gPuissanceB) {
-		BigInteger gPB = BigInteger.valueOf(gPuissanceB);
-		BigInteger x = BigInteger.valueOf(this.x);
-		BigInteger p = BigInteger.valueOf(P);
-		
-		BigInteger resultat = gPB.modPow(x, p);
-		this.nbSecret = resultat.intValue();
+		this.nbSecret = puissanceModulo(gPuissanceB, this.x, P); 
 	}
+	
 	
 
 	/**
@@ -73,5 +66,122 @@ public class DiffieHellman {
 	public int getNbSecret() {
 		return nbSecret;
 	}
+
+	/** @return P : la constante P (nombre premier) */
+	public static int getP() {
+		return P;
+	}
+
+	/** @return G : la constante G (nombre générateur de P) */
+	public static int getG() {
+		return G;
+	}
+	
+	/**
+	 * Fonction pour calculer a^b % p en utilisant l'exponentiation modulaire
+	 * @param nb le nb à élevé à une puissance
+	 * @param exposant l'exposant de la puissance
+	 * @param modulo le modulo à appliquer sur la puissance
+	 * @return nb^exposant % modulo
+	 */
+	public static int puissanceModulo(long nb, int exposant, int modulo) {
+		long resultat = 1;
+		nb = nb % modulo;
+		
+		while (exposant > 0) {
+			// Opérateur logique ET sur le bit de poid le plus faible de b et 1
+			// (permet de savoir si b est impair de facon plus efficace que : b % 2 == 1)
+			if ((exposant & 1) == 1) { 
+				resultat = (resultat * nb) % modulo;
+			}
+			// Décale les bits de b de 1 vers la droite (équivalent à b / 2 en plus optimisé)
+			exposant = exposant >> 1;
+			nb = (nb * nb) % modulo; // Élever a au carré
+		}
+		
+		// le résultat est modulo P, pas de risque de dépassement dans la conversion
+		return (int) resultat;
+	}
+		
+	
+	/** 
+	 * Permet de vérifier si le nombre n est bien un nombre premier
+	 * (permettant de savoir si l'attribut P est premier dans notre cas)
+	 * @param n : le nombre à tester
+	 * @return true si le nombre est premier, false sinon
+	 */
+	public static boolean isPremier(int n) {
+        // Cas particulier : les nombres <= 1 ne sont pas premiers
+        if (n <= 1) {
+            return false;
+        }
+        
+        // 2 est le seul nombre premier pair
+        if (n == 2) {
+            return true;
+        }
+        
+        // Exclure les autres nombres pairs
+        if (n % 2 == 0) {
+            return false;
+        }
+        
+        // Vérifier les diviseurs impairs jusqu'à la racine carrée de n
+        int sqrt = (int) Math.sqrt(n);
+        for (int i = 3; i <= sqrt; i += 2) {
+            if (n % i == 0) {
+                return false;
+            }
+        }
+        
+        // Si aucun diviseur trouvé, n est premier
+        return true;
+    }
+    
+    /**
+     * Fonction pour trouver les facteurs premiers de n 
+     * @param n nombre composé
+     * @return un ensemble contenant les facteurs premiers de n
+     */
+    public static Set<Integer> trouverFacteursPremiers(int n) {
+        Set<Integer> facteurs = new HashSet<>();
+        // Enlever les facteurs de 2
+        while (n % 2 == 0) {
+            facteurs.add(2);
+            n /= 2;
+        }
+        // Chercher les facteurs impairs
+        for (int i = 3; i <= Math.sqrt(n); i += 2) {
+            while (n % i == 0) {
+                facteurs.add(i);
+                n /= i;
+            }
+        }
+        // Si n est un nombre premier supérieur à 2
+        if (n > 2) {
+            facteurs.add((int) n);
+        }
+        return facteurs;
+    }
+    
+    /** 
+     * Fonction pour vérifier si g est un générateur de p
+     * @param g nombre a tester
+     * @param p nombre premier
+     * @return si g est un générateur de p
+     */
+    public static boolean isGenerateur(int g, int p) {
+        // Trouver les facteurs premiers de p-1
+        int phi = p - 1;
+        Set<Integer> facteursPremiers = trouverFacteursPremiers(phi);
+        
+        // Vérifier g^((p-1)/q) % p != 1 pour chaque facteur premier q de p-1
+        for (int facteur : facteursPremiers) {
+            if (puissanceModulo(g, phi / facteur, p) == 1) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 }
