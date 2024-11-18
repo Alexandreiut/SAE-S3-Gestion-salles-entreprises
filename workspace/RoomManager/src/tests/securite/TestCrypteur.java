@@ -62,9 +62,13 @@ public class TestCrypteur {
     @Test
     void testGenererCle() {
         // Tester si la clé générée est valide
-        String cle = crypteur.genererCle();
+    	crypteur.diffieHellman.calculeSecret(crypteur.diffieHellman
+    			                             .getGPuissanceX());
+        String cle1 = crypteur.genererCle();
+        String cle2 = crypteur.genererCle();
         
-        assertNotNull(cle, "La clé générée ne doit pas être nulle.");
-        assertTrue(cle.length() > 0, "La clé doit avoir une longueur supérieure à 0.");
+        assertNotNull(cle1, "La clé générée ne doit pas être nulle.");
+        assertTrue(cle1.length() > 0, "La clé doit avoir une longueur supérieure à 0.");
+        assertEquals(cle1, cle2);
     }
 }

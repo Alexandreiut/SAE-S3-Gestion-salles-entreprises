@@ -24,7 +24,6 @@ public class DiffieHellman {
 	 */
 	public DiffieHellman() {
 		this.x = choixAleatoireX();
-		System.out.println("x : " + this.x);
 	}
 	
 	/**

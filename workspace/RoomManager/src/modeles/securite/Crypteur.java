@@ -25,7 +25,7 @@ public class Crypteur {
 	/**
 	 * 
 	 */
-	private DiffieHellman diffieHellman;
+	public DiffieHellman diffieHellman;
 	
 	/**
 	 * Constructeur de la classe, associe un alphabet au cryptage
@@ -58,27 +58,31 @@ public class Crypteur {
 	    StringBuilder cleBuilder = new StringBuilder();
 	    
 	    // Assurer que la clé ait au moins une longueur de 1
-	    int longueurCle = Math.max(1, nombreSecret % alphabet.length);
+	    int longueurCle = nombreSecret % 50 + 10; //longueur de 10 à 60
+	    System.out.println("nbS = " + nombreSecret);
 	    
-	    
-	    for (int i = 0; i < longueurCle; i++) {
-	    	char nextChar = Dictionnaire.getNextCharAt(alphabet[i % alphabet.length], i);
+	    for (int i = 0; i <= longueurCle; i++) {
+	    	char nextChar = alphabet[Math.abs((i + 1) * (nombreSecret + i))
+	    			                 % alphabet.length];
+	    	System.out.println(Dictionnaire.getPosition(nextChar));
 	    	cleBuilder.append(nextChar);
 	    }
 	    
 	    this.cle = cleBuilder.toString();
+	    System.out.println("cle = " + cle + "\n");
 	    return cle;
 	}
-	
-	
-    /**
+		
+    /** 15352
 	 * Crypte un message
 	 * @param messageACrypter le message a crypter
 	 * @return le message crypté
 	 */
 	public String crypteMessage(String messageACrypter) {
 		if (cle == null) {
-			throw new IllegalStateException("La clé de chiffrement n'a pas été générée. Veuillez générer une clé avant de crypter.");
+			throw new IllegalStateException("La clé de chiffrement n'a pas "
+			                                + "été générée. Veuillez générer"
+											+ " une clé avant de crypter.");
 		}
 		
 		return Vigenere.encodageVigenere(cle, messageACrypter);
@@ -92,7 +96,9 @@ public class Crypteur {
 	 */
 	public String decrypteMessage(String messageCrypte) {
 		if (cle == null) {
-			throw new IllegalStateException("La clé de chiffrement n'a pas été générée. Veuillez générer une clé avant de décrypter.");
+			throw new IllegalStateException("La clé de chiffrement n'a pas été"
+			                                + " générée. Veuillez générer une "
+											+ "clé avant de décrypter.");
 		}
         
 		

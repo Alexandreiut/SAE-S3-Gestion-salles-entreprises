@@ -23,8 +23,6 @@ public class Vigenere {
         }
         return chaine.toString();
     }
-    
-    
 
     /**
      * Encode une chaîne de caractère et effectue un décalage en fonction de la clef
