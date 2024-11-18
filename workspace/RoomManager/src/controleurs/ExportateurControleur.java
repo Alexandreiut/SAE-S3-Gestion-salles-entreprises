@@ -30,6 +30,8 @@ import modeles.reseau.Exportateur;
  */
 public class ExportateurControleur {
 	
+	private static int PORT_DEFAUT = 50000;
+	
 	@FXML
 	private Pane panePrincipal;
 	
@@ -61,7 +63,7 @@ public class ExportateurControleur {
 		exportateur = null;
 		
 		try {
-	        exportateur = new Exportateur(6543, RoomManager.stockage);
+	        exportateur = new Exportateur(PORT_DEFAUT, RoomManager.stockage);
 	        
 	        exportateur.accepterConnexion();
 
@@ -160,7 +162,7 @@ public class ExportateurControleur {
         		
         	}
             
-            label.setText(ip.getHostAddress() + "\tport : 6543");
+            label.setText(ip.getHostAddress() + "\tport : " + PORT_DEFAUT);
             
             if (!vboxDonnees.getChildren().contains(label)) {
                 int boutonIndex = vboxDonnees.getChildren().indexOf(boutonAfficherIP);
