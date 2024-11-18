@@ -48,15 +48,6 @@ public class TestCrypteur {
         assertEquals(message, messageDecrypte, "Le message décrypté doit être égal au message original.");
     }
 
-       @Test
-    void testGenererCle() {
-        // Tester si la clé générée est valide
-        String cle = crypteur.genererCle();
-        
-        assertNotNull(cle, "La clé générée ne doit pas être nulle.");
-        assertTrue(cle.length() > 0, "La clé doit avoir une longueur supérieure à 0.");
-        
-    }
     
     @Test
     void testCrypteMessage() {
@@ -81,6 +72,7 @@ public class TestCrypteur {
         assertNotNull(cle1, "La clé générée ne doit pas être nulle.");
         assertTrue(cle1.length() > 0, "La clé doit avoir une longueur supérieure à 0.");
         assertEquals(cle1, cle2);
+    }
         
     void testCrypteMessageAvecCaracteresSpeciaux() {
     	String message = "B*njoûr! Cômmënt çã vâ? & Je m'àppèlle Lù{@§";
