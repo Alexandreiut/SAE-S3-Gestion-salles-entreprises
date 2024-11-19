@@ -141,7 +141,7 @@ public class TestImportateurExportateur {
 		
 		logiciels.add("bureautique");
 
-		listeSalles.add(new Salle("00000001", "Salle A", 50, true, false, 12,
+		listeSalles.add(new Salle("00000001", "A203", 50, true, false, 12,
 				                  "fixe", logiciels, true));
 		listeEmployes.add(new Employe("E000001", "Dupont", "Pierre", 2614));
 		listeActivites.add(new Activite("A0000001","réunion"));

@@ -36,8 +36,7 @@ public class DiffieHellman {
 		return (int) (Math.random() * P);
 		
 	}
-    	
-	
+    
 	/**
 	 * Calcule G à la puissance x modulo P
 	 * @return G^x % P
@@ -56,8 +55,6 @@ public class DiffieHellman {
 		this.nbSecret = puissanceModulo(gPuissanceB, this.x, P); 
 	}
 	
-	
-
 	/**
 	 * Renvoie le secret partagé entre 2 instances de la classe
 	 * @return nbSecret
@@ -102,7 +99,6 @@ public class DiffieHellman {
 		return (int) resultat;
 	}
 		
-	
 	/** 
 	 * Permet de vérifier si le nombre n est bien un nombre premier
 	 * (permettant de savoir si l'attribut P est premier dans notre cas)

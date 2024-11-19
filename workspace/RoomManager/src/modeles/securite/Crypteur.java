@@ -48,7 +48,6 @@ public class Crypteur {
 		return cle != null ? cle.length() : 0;
 	}
 	
-	
 	/**
 	 * Genere une clé pour le chiffrement en utilisant Diffie-Hellman et Vigenere
 	 * @return une clé de chiffrement
@@ -58,10 +57,10 @@ public class Crypteur {
 	   
 	    StringBuilder cleBuilder = new StringBuilder();
 	    
-	    int longueurCle = nombreSecret % 50 + 10; //longueur de 10 à 60
+	    int longueurCle = nombreSecret % 50 + 50; //longueur de 50 à 100
 	    
 	    for (int i = 0; i <= longueurCle; i++) {
-	    	char nextChar = alphabet[Math.abs((i + 1) * (nombreSecret + i))
+	    	char nextChar = alphabet[(i + 1) * ((nombreSecret + i) % alphabet.length)
 	    			                 % alphabet.length];
 	    	cleBuilder.append(nextChar);
 	    }
@@ -70,13 +69,12 @@ public class Crypteur {
 	    return cle;
 	}
 		
-    /** 15352
+    /**
 	 * Crypte un message
 	 * @param messageACrypter le message a crypter
 	 * @return le message crypté
 	 */
 	public String crypteMessage(String messageACrypter) {
-		
 		
 		if (cle == null) {
 			throw new IllegalStateException("La clé de chiffrement n'a pas "
@@ -102,12 +100,8 @@ public class Crypteur {
 											+ "clé avant de décrypter.");
 		}
         
-		
 		return Vigenere.decodageVigenere(cle, messageCrypte);
 	}
-	
-
-
 	
 }
 	
