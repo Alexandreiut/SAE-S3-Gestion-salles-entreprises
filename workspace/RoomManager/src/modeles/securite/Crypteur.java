@@ -59,7 +59,7 @@ public class Crypteur {
 	    
 	    int longueurCle = nombreSecret % 50 + 50; // longueur de 50 à 100
 	    
-	    for (int i = 0 ; i <= longueurCle ; i++) {
+	    for (int i = 0 ; i < longueurCle ; i++) {
 	    	char nextChar = alphabet[(i + 1) * ((nombreSecret + i)
 	    			                            % alphabet.length)
 	    			                 % alphabet.length];
