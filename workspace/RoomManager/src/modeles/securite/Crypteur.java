@@ -49,7 +49,7 @@ public class Crypteur {
 	}
 	
 	/**
-	 * Genere une clé pour le chiffrement en utilisant Diffie-Hellman et Vigenere
+	 * Génère une clé pour le chiffrement en utilisant Diffie-Hellman et Vigenere
 	 * @return une clé de chiffrement
 	 */
 	public String genererCle() {
@@ -57,10 +57,11 @@ public class Crypteur {
 	   
 	    StringBuilder cleBuilder = new StringBuilder();
 	    
-	    int longueurCle = nombreSecret % 50 + 50; //longueur de 50 à 100
+	    int longueurCle = nombreSecret % 50 + 50; // longueur de 50 à 100
 	    
-	    for (int i = 0; i <= longueurCle; i++) {
-	    	char nextChar = alphabet[(i + 1) * ((nombreSecret + i) % alphabet.length)
+	    for (int i = 0 ; i <= longueurCle ; i++) {
+	    	char nextChar = alphabet[(i + 1) * ((nombreSecret + i)
+	    			                            % alphabet.length)
 	    			                 % alphabet.length];
 	    	cleBuilder.append(nextChar);
 	    }

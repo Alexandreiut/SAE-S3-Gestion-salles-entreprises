@@ -14,6 +14,7 @@ import java.net.NetworkInterface;
 import affichages.AfficherAlerte;
 import affichages.AfficherManuel;
 import affichages.GestionAffichageMenu;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -65,8 +66,15 @@ public class ExportateurControleur {
 		try {
 	        exportateur = new Exportateur(PORT_DEFAUT, RoomManager.stockage);
 	        
+	        Alert attente = new Alert(Alert.AlertType.ERROR);
+	        attente.setTitle("Attente d'une connexion.");
+	        attente.setContentText("Pas de connexion !");
+	        attente.show();
+	        
 	        exportateur.accepterConnexion();
-
+	        
+	        attente.close();
+	        
 	        exportateur.envoiDonnee();
 	        
 	        AfficherAlerte.afficherAlerte(Alert.AlertType.INFORMATION,
@@ -78,7 +86,10 @@ public class ExportateurControleur {
 	    	AfficherAlerte.afficherAlerte(Alert.AlertType.ERROR,
                     "Erreur d'exportation",
                     "Une erreur est survenue lors de l'exportation des données."
-                    + " Veuillez vérifier la connexion réseau et réessayer.");
+                    + "\n\t-Soit vous n'êtes pas dans le même réseau"
+                    + "\n\t que l'importateur."
+                    + "\n\t-Soit l'importateur n'a pas utilisé la bonne adresse"
+                    + "\n\t et le bon port dans les 5 secondes d'attente.");
 	    } finally {
 	    	try {
 	    		exportateur.closeConnexion();
@@ -99,7 +110,14 @@ public class ExportateurControleur {
 	        		                      RoomManager.stockage,
 	        		                      InetAddress.getByName(saisieIP.getText()));
 	        
+	        Alert attente = new Alert(Alert.AlertType.ERROR);
+	        attente.setTitle("Attente d'une connexion.");
+	        attente.setContentText("Pas de connexion !");
+	        attente.show();
+	        
 	        exportateur.accepterConnexion();
+	        
+	        attente.close();
 	        
 	        exportateur.envoiDonnee();
 	        
@@ -112,7 +130,11 @@ public class ExportateurControleur {
 	    	AfficherAlerte.afficherAlerte(Alert.AlertType.ERROR,
                     "Erreur d'exportation",
                     "Une erreur est survenue lors de l'exportation des données."
-                    + " Veuillez vérifier la connexion réseau et réessayer.");
+                    + "\n\t-Soit vous n'avez pas entré une IP et un port valides."
+                    + "\n\t-Soit vous n'êtes pas dans le même réseau"
+                    + "\n\t que l'importateur."
+                    + "\n\t-Soit l'importateur n'a pas utilisé la bonne adresse"
+                    + "\n\t et le bon port dans les 5 secondes d'attente.");
 	    } finally {
 	    	try {
 	    		exportateur.closeConnexion();
