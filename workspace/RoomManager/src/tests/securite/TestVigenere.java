@@ -11,7 +11,7 @@ import modeles.securite.Vigenere;
  * Classe de test de la classe Vigenaire 				03/11/2024
  * @author alexandre brouzes
  */
-public class TestVigenaire {
+public class TestVigenere {
 
     private String clef;
 
