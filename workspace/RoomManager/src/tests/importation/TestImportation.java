@@ -24,5 +24,7 @@ class TestImportation {
 		assertFalse(modelImportation.estIPValide("1000.0.0.0"));
 		assertFalse(modelImportation.estIPValide("101.0.0"));
 	}
+	
+	
 
 }

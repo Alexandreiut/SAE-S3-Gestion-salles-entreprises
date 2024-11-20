@@ -7,7 +7,6 @@ package controleurs;
 
 import affichages.AfficherManuel;
 import javafx.fxml.FXML;
-import modeles.NavigationVues;
 
 /**
  * Controleur de la vue accueil.fxml

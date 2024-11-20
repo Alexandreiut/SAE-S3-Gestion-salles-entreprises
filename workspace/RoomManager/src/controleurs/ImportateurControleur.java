@@ -14,7 +14,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import lanceur.RoomManager;
-import modeles.NavigationVues;
 import modeles.erreur.LectureException;
 import modeles.importation.Importation;
 import affichages.AfficherAlerte;

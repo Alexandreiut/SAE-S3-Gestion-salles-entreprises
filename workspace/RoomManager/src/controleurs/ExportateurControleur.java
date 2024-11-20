@@ -23,7 +23,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import lanceur.RoomManager;
-import modeles.NavigationVues;
 import modeles.reseau.Exportateur;
 
 /**
