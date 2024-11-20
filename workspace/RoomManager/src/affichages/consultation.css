@@ -8,6 +8,76 @@
 	-fx-border-width : 2px;
 }
 
+.itemPrincipalVBOX {
+	-fx-pref-height: 20;
+	-fx-border-color: #000000;
+	-fx-border-radius: 20;
+	-fx-border-width: 2px;
+	-fx-background-color: #CCF5F3;
+	-fx-padding: 10;
+	-fx-font-size: 15px;
+	-fx-font-weight: bold;
+	-fx-background-radius: 20;
+}
+
+.itemSecondaireVBOX {
+	-fx-pref-width: 200;
+    -fx-pref-height: 10;
+    
+	-fx-border-color: #000000;
+	-fx-border-radius: 50px;
+	-fx-border-width: 2px;
+	-fx-background-color: #D9D9D9;
+	-fx-padding: 2;
+	-fx-spacing: 20;
+	
+	-fx-font-size: 15px;
+	-fx-font-weight: bold;
+	-fx-background-radius: 50;
+}
+
+.itemPrincipalBouton {
+    -fx-pref-height: 30;
+    
+	-fx-background-color: #FFFFFF;
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-background-radius: 50;
+    -fx-padding: 0;
+    
+    -fx-border-color: #00BBB0;
+    -fx-border-width: 3;
+    -fx-border-radius: 50;
+    -fx-border-style: solid;	
+}
+
+.itemPrincipalBouton:hover {
+	-fx-background-color: #00BBB0;
+    -fx-cursor: hand;
+}
+
+.itemSecondaireBouton {
+    -fx-pref-height: 13;
+    
+	-fx-background-color: #FFFFFF;
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-background-radius: 50;
+    -fx-padding: 0;
+    
+    -fx-border-color: #00BBB0;
+    -fx-border-width: 3;
+    -fx-border-radius: 50;
+    -fx-border-style: solid;	
+}
+
+.itemSecondaireBouton:hover {
+	-fx-background-color: #00BBB0;
+    -fx-cursor: hand;
+}
+
 .boutons-ajouter {
 	-fx-pref-width: 275;
     -fx-pref-height: 60;
@@ -97,4 +167,8 @@
 .bouton-filtre:hover {
 	-fx-background-color: #D9D9D9;
     -fx-cursor: hand;
+}
+
+.centeredContainer {
+    -fx-alignment: center;
 }
