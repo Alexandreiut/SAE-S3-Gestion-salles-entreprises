@@ -74,6 +74,7 @@ public class TestCrypteur {
         assertEquals(cle1, cle2);
     }
         
+    @Test
     void testCrypteMessageAvecCaracteresSpeciaux() {
     	String message = "B*njoûr! Cômmënt çã vâ? & Je m'àppèlle Lù{@§";
     	crypteur.genererCle();
@@ -86,7 +87,7 @@ public class TestCrypteur {
     }
     
     @Test
-    void testCryotageMessageAvecChiffres() {
+    void testCryptageMessageAvecChiffres() {
     	String message = "Ceci est un test avec des chiffres: 1234567890";
     	crypteur.genererCle();
     	String messageCrypte = crypteur.crypteMessage(message);
