@@ -172,3 +172,48 @@
 .centeredContainer {
     -fx-alignment: center;
 }
+
+/* Style général du CheckBox */
+.check-box {
+    -fx-padding: 5px;
+    -fx-font-size: 14px;
+    -fx-font-family: "Arial";
+    -fx-text-fill: #333333;
+}
+
+/* Bordure et arrière-plan pour la case à cocher */
+.check-box > .box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #666666;
+    -fx-border-width: 2px;
+    -fx-padding: 3px;
+    -fx-background-radius: 3px;
+    -fx-border-radius: 3px;
+}
+
+/* Lorsque la case est survolée */
+.check-box:hover > .box {
+    -fx-border-color: #0078d7; /* Bleu clair */
+}
+
+/* Lorsque la case est cochée */
+.check-box:selected > .box {
+    -fx-background-color: #0078d7; /* Bleu clair */
+    -fx-border-color: #0078d7;
+}
+
+/* Style pour le symbole de la coche */
+.check-box:selected > .box > .mark {
+    -fx-background-color: #ffffff; /* Couleur blanche pour le symbole de coche */
+}
+
+/* Lorsque le CheckBox est désactivé */
+.check-box:disabled {
+    -fx-opacity: 0.6;
+    -fx-text-fill: #999999;
+}
+
+.check-box:disabled > .box {
+    -fx-background-color: #cccccc;
+    -fx-border-color: #999999;
+}
