@@ -151,7 +151,7 @@ public class LecteurCSV {
 
 			id = (ligneSplit.length > 0 && ligneSplit[0].matches("\\d+")) 
 					? ligneSplit[0] : "Id inconnu";
-			nom = (ligneSplit.length > 1 && ligneSplit[1].matches("^(?=.*[A-Za-z])(?=.*\\d).+$")) ? ligneSplit[1] : "Nom inconnu";
+			nom = (ligneSplit.length > 1) ? ligneSplit[1] : "Nom inconnu";
 			capacite = (ligneSplit.length > 2 && ligneSplit[2].matches("\\d+")) ? Integer.parseInt(ligneSplit[2]) : 0;
 			videoProjecteur = (ligneSplit.length > 3) && (ligneSplit[3].equalsIgnoreCase("oui") ? true : false);
 			ecranXxl = (ligneSplit.length > 4) && (ligneSplit[4].equalsIgnoreCase("oui") ? true : false);
@@ -254,7 +254,7 @@ public class LecteurCSV {
 				throw new LectureException();
 			} 
 
-			date = (ligneSplit.length > 4 && ligneSplit[4].length() == 10 && ligneSplit[4].matches("\\d{2}/\\d{2}/\\d{4}")) ? ligneSplit[4] : "Date inconnu";
+			date = (ligneSplit.length > 4 && ligneSplit[4].length() == 10 && ligneSplit[4].matches("\\d{1,2}/\\d{1,2}/\\d{4}")) ? ligneSplit[4] : "Date inconnu";
 			heureDebut = (ligneSplit.length > 5 && ligneSplit[5].length() == 5 && ligneSplit[5].matches("\\d{2}h\\d{2}")) ? ligneSplit[5] : "Heure début inconnu";
 			heureFin = (ligneSplit.length > 6 && ligneSplit[6].length() == 5 && ligneSplit[6].matches("\\d{2}h\\d{2}")) ? ligneSplit[6] : "Heure fin inconnu";
 			objetReservation = (ligneSplit.length > 7 && ligneSplit[7].length() > 1) ? ligneSplit[7] : "Objet réservation inconnu";
