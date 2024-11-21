@@ -25,6 +25,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Adrien Astier
+ */
 public class Importation {
 
 	private static final String MESSAGE_SUCCES_IMPORTATION = "Les données ont été importées avec succès.";
@@ -257,13 +260,13 @@ public class Importation {
 	 * Si certains objets ne peuvent pas être ajoutés (par exemple, déjà présents), le nom du fichier est ajouté à une liste
 	 * de fichiers déjà importés.
 	 * @param objets La liste des objets à importer dans le stockage.
-	 * @param fileName Le nom du fichier contenant les objets à importer.
+	 * @param nomFichier Le nom du fichier contenant les objets à importer.
 	 * @param fichiersDejaImportes La liste des fichiers déjà importés, qui sera mise à jour si nécessaire.
 	 * @param stockage Le stockage dans lequel les objets seront importés.
 	 * @return Une liste des fichiers dont l'importation a réussi.
 	 */
-	private static List<String> importerObjets(List<Object> objets, String nomFichier, 
-			List<String> fichiersDejaImportes, Stockage stockage) {
+	public static List<String> importerObjets(List<Object> objets, String nomFichier, 
+			List<String> fichiersDejaImportes, Stockage stockage) { // initialement private
 		List<String> fichiersReussis = new ArrayList<>();
 		boolean fichierImporte = false;
 

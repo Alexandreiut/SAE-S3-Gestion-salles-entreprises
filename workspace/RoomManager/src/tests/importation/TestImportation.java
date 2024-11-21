@@ -68,4 +68,42 @@ class TestImportation {
 		
 		assertEquals(nomsFichiersAttendus, Importation.getNomsFichiersManquants(listeFichiersTest));
 	}
+	
+	@Test
+	void testImporterObjets() {
+		
+		ArrayList<Object> listeObjets = new ArrayList<>();
+		ArrayList<String> fichiersDejaImportes = new ArrayList<>();
+		
+		ArrayList<String> attendu = new ArrayList<>();
+		
+		Stockage stockage = new Stockage(new ArrayList<Salle>(),
+						                 new ArrayList<Activite>(),
+						                 new ArrayList<Employe>(),
+						                 new ArrayList<Reservation>());
+		
+		listeObjets.add(new Activite("A0000001", "réunion"));
+		
+		attendu.add("Activité");
+		
+		assertEquals(attendu, Importation.importerObjets(listeObjets, "Activité",
+				                                         fichiersDejaImportes, stockage));
+		
+		listeObjets.clear();
+		listeObjets.add(new Employe("E000001", "Dupont", "Pierre", 2614));
+		
+		attendu.clear();
+		attendu.add("Employé");
+		
+		fichiersDejaImportes.add("Activité");
+		
+		assertEquals(attendu, Importation.importerObjets(listeObjets, "Employé",
+				                                         fichiersDejaImportes, stockage));
+		
+		fichiersDejaImportes.clear();
+		attendu.clear();
+		
+		assertEquals(attendu, Importation.importerObjets(listeObjets, "Employé",
+                										 fichiersDejaImportes, stockage));
+	}
 }
