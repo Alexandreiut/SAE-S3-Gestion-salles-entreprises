@@ -23,10 +23,10 @@ public class GenerePDF {
 	
 	private HashMap<String, String> filtre;
 	
-	private ArrayList<String> donneesFiltrees;
+	private HashMap<String, ArrayList<String>> donneesFiltrees;
 
 	public GenerePDF(HashMap<String, ArrayList<Object>> donneesBrutes,
-			HashMap<String, String> filtre, ArrayList<String> donneesFiltrees) {
+			HashMap<String, String> filtre, HashMap<String, ArrayList<String>> donneesFiltrees) {
 		
 		this.donneesBrutes = donneesBrutes;
 		this.filtre = filtre;

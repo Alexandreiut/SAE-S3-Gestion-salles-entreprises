@@ -5,17 +5,10 @@ import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Image;
-//import com.itextpdf.io.IOException;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.layout.property.HorizontalAlignment;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.element.Div;
-import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.kernel.pdf.PdfPage;
 
@@ -27,21 +20,8 @@ import java.net.MalformedURLException;
 public class TestGenerationPdf2 {
 
     public static void main(String[] args) throws IOException, FileNotFoundException, MalformedURLException {
-    	/*
-    	String outputFile = "./hello-pdf.pdf";
-    	PdfWriter writer = new PdfWriter(outputFile);
-    	PdfDocument pdfDoc = new PdfDocument(writer);
-    	 
-    	try (Document document = new Document(pdfDoc)) {
-             // Ajout de contenu au PDF
-             document.add(new Paragraph("Hello PDF!"));
-             document.add(new Paragraph("Ceci est un autre paragraphe."));
-    	}
-    	 */
-    
+    	// Chemin de création du pdf
         String outputFile = "./donnees_brutes.pdf";
-        String logoTopRight = "src/ressource/image/logo-app.png";
-        String logoBottomLeft = "src/ressource/image/iut-rodez.png";
 
         // Création du PDF
         PdfWriter writer = new PdfWriter(outputFile);
@@ -50,10 +30,6 @@ public class TestGenerationPdf2 {
         
         // Ajout d'une marge pour le contenue
         document.setMargins(100, 50, 120, 50);
-
-        // Ajout du logo en haut à droite
-        ImageData imgTopData = ImageDataFactory.create(logoTopRight);
-        Image imgTopRight = new Image(imgTopData).setFixedPosition(460, 740).scaleAbsolute(100, 80);
 
         // Contenu des sections
         document.add(new Paragraph("\nEmployés :")
@@ -112,11 +88,14 @@ public class TestGenerationPdf2 {
         document.add(new Paragraph("e"));
         document.add(new Paragraph("e"));*/
 
-        // Ajout du logo en bas à gauche
-        ImageData imgBottomData = ImageDataFactory.create(logoBottomLeft);
-        Image imgBottomLeft = new Image(imgBottomData).setFixedPosition(30, 30).scaleAbsolute(150, 80);
-        //document.add(imgBottomLeft);
+        // Chemin et conteneur des logo
+        String cheminLogoApp = "src/ressource/image/logo-app.png";
+        String cheminLogoIUT = "src/ressource/image/iut-rodez.png";
         
+        ImageData logoIUT = ImageDataFactory.create(cheminLogoIUT);
+        ImageData logoApp = ImageDataFactory.create(cheminLogoApp);
+        
+        // Ajout du titre, logo, date et pagination sur chaque page
         for (int i = 1; i <= pdfDoc.getNumberOfPages(); i++) {
         	
         	// Ajout date et pagination
@@ -129,48 +108,32 @@ public class TestGenerationPdf2 {
                   .endText();
             
 
-            // Ajout des images
-            canvas.addImage(imgTopData, new Rectangle(460, 740, 100, 80), false);
-
-            canvas.addImage(imgBottomData, new Rectangle(30, 30, 150, 80), false);
+            // Ajout des logo
+            canvas.addImage(logoApp, new Rectangle(460, 740, 100, 80), false);
+            canvas.addImage(logoIUT, new Rectangle(30, 30, 150, 80), false);
             
-            // Ajout du Titre
+            // Largeur de la page
             float pageWidth = page.getPageSize().getWidth();
-            
-            // Dessiner le rectangle centré
-            PdfFont font = PdfFontFactory.createFont();
-            float fontSize = 20;
 
-            // Calcul de la largeur du texte
-            float textWidth = font.getWidth("Données Brutes", fontSize);
-
-            // Calcul pour centrer le texte horizontalement dans le rectangle
-            float centeredTextPosition = (pageWidth - textWidth) / 2;
-            
+            // Ajout de l'encadré centré horizontalement
             float titleWidth = 220;  // Largeur fixe de l'encadré
             float xPosition = (pageWidth - titleWidth) / 2;
-            canvas.rectangle(xPosition, 750, titleWidth, 50);  // Encadré
+            canvas.rectangle(xPosition, 750, titleWidth, 50);
             canvas.stroke();
 
-            // Ajouter le texte centré dynamiquement
+            // Calcul de la largeur du texte
+            float fontSize = 20;
+            PdfFont font = PdfFontFactory.createFont();
+            float textWidth = font.getWidth("Données Brutes", fontSize);
+            
+            // Ajout du texte centré horizontalement dans l'encadré
+            float centeredTextPosition = (pageWidth - textWidth) / 2;
             canvas.beginText()
                   .setFontAndSize(font, fontSize)
-                  .moveText(centeredTextPosition, 770)  // Position X calculée pour centrer le texte
+                  .moveText(centeredTextPosition, 770)
                   .showText("Données Brutes")
                   .endText();
-            
-            /*Paragraph title = new Paragraph("Données Brutes")
-                    .setFontSize(20)
-                    .setBold()
-                    .setTextAlignment(TextAlignment.CENTER);
-            
-            new Canvas(canvas, pdfDoc, new Rectangle(xPosition, 750, titleWidth, 50))
-            .add(title);*/
         }
-
-        // Pied de page (date et numéro de page)
-        //document.showTextAligned(new Paragraph("23/11/2024      1/1"),
-                //520, 20, 1, TextAlignment.RIGHT, null, 0);
 
         // Fermeture du document
         document.close();
