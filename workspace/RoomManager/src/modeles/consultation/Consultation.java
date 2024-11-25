@@ -19,7 +19,6 @@ import modeles.items.Employe;
 import modeles.items.Reservation;
 import modeles.items.Salle;
 import modeles.stockage.Stockage;
-import java.time.LocalDate;
 import java.time.DayOfWeek;
 import java.time.temporal.ChronoUnit;
 
@@ -91,27 +90,34 @@ public class Consultation {
 
 	public ArrayList<ArrayList<Object>> getSalleFound(LocalDate dateDebut, LocalDate dateFin, String heureDebut,
 			String heureFin, String chaineSalle, String chaineEmploye,
-			String chaineActivite) {
-		ArrayList<Object> listeSalleRenvoyee = new ArrayList<>();
-		ArrayList<Double> totalHeuresReservations = new ArrayList<>();
+			String chaineActivite, String itemRecherche) {
+		ArrayList<Object> listeItemRenvoye = new ArrayList<>();
 		ArrayList<Double> totalHeuresCritere = new ArrayList<>();
-
-		for (Object salleRecherchee : fetchDataForKey("Salles")) {
-			Salle salle = (Salle) salleRecherchee;
-			double totalHeuresSalle = 0.0; // Compte toutes les heures de réservation de la salle
-			double heuresCritereSalle = 0.0; // Compte seulement les heures correspondant aux critères
+		for (Object itemTeste : fetchDataForKey(itemRecherche)) {
+			double heuresCritereItem = 0.0; // Compte seulement les heures correspondant aux critères
 
 			for (Object reservationTestee : fetchDataForKey("Réservations")) {
 				Reservation reservation = (Reservation) reservationTestee;
-
-				if (!reservation.getSalle().equals(salle.getIdentifiant())) {
-					continue;
+				String infoJointureReservation = "";
+				String idItem = "";
+				if(itemTeste instanceof Salle) {
+					if (!reservation.getSalle().equals(((Salle) itemTeste).getIdentifiant())) {
+						continue;
+					}
+				} else if (itemTeste instanceof Employe) {
+					if (!reservation.getEmploye().equals(((Employe) itemTeste).getIdentifiant())) {
+						continue;
+					}
+				} else {
+					if (!reservation.getActivite().equals(((Activite) itemTeste).getNom())) {
+						continue;
+					}
 				}
+				
 
 				// Calcule le nombre total d'heures de réservation pour cette salle
 				double dureeReservation = extractHeureInInt(reservation.getHeureFin()) 
 						- extractHeureInInt(reservation.getHeureDebut());
-				totalHeuresSalle += dureeReservation;
 
 				// Vérifie si la réservation respecte les critères
 				if (getSalleById(reservation.getSalle()).contains(chaineSalle) &&
@@ -119,22 +125,20 @@ public class Consultation {
 						reservation.getActivite().contains(chaineActivite) && 
 						dateInRange(reservation.getDate(),dateDebut,dateFin) &&
 						heureInRange(reservation.getHeureDebut(),reservation.getHeureFin(),heureDebut,heureFin)) {
-					heuresCritereSalle += dureeReservation; // Ajoute les heures si les critères sont respectés
+					heuresCritereItem += dureeReservation; // Ajoute les heures si les critères sont respectés
 				}
 			}
 
 			// Si la salle satisfait au moins une réservation répondant aux critères, on l'ajoute
-			if (heuresCritereSalle > 0.0) {
-				listeSalleRenvoyee.add(salle);
-				totalHeuresReservations.add(totalHeuresSalle);
-				totalHeuresCritere.add(heuresCritereSalle);
+			if (heuresCritereItem > 0.0) {
+				listeItemRenvoye.add(itemTeste);
+				totalHeuresCritere.add(heuresCritereItem);
 			}
 		}
 
 		// Prépare la liste de retour avec les trois listes
 		ArrayList<ArrayList<Object>> resultats = new ArrayList<>();
-		resultats.add(listeSalleRenvoyee);
-		resultats.add(new ArrayList<>(totalHeuresReservations));
+		resultats.add(listeItemRenvoye);
 		resultats.add(new ArrayList<>(totalHeuresCritere));
 
 		return resultats;
@@ -243,4 +247,45 @@ public class Consultation {
 
 		return listeSalleDisponible;
 	}
+	
+	public ArrayList<ArrayList<Object>> orderList(ArrayList<ArrayList<Object>> listeAOrdonnee, boolean typeTri) {
+	    ArrayList<ArrayList<Object>> listeArrangee = new ArrayList<ArrayList<Object>>();
+
+	    // Récupérer la liste des heures à trier
+	    ArrayList<Object> listeHeure = listeAOrdonnee.get(1);
+	    
+	    // Créer des structures pour stocker les indices et les heures castées
+	    ArrayList<Integer> indices = new ArrayList<>();
+	    ArrayList<Double> listeCastHeure = new ArrayList<>();
+	    
+	    // Remplir les indices et les valeurs castées
+	    for (int i = 0; i < listeHeure.size(); i++) {
+	        indices.add(i);
+	        listeCastHeure.add((Double) listeHeure.get(i));  // Cast des objets en Double
+	    }
+	    // Trier les indices en fonction des valeurs de listeCastHeure
+	    indices.sort((i, j) -> {
+	        if (typeTri) {
+	            return Double.compare(listeCastHeure.get(i), listeCastHeure.get(j)); // Croissant
+	        } else {
+	            return Double.compare(listeCastHeure.get(j), listeCastHeure.get(i)); // Décroissant
+	        }
+	    });
+	    // Créer les listes réorganisées
+	    ArrayList<Object> listeItem = new ArrayList<>();
+	    ArrayList<Object> listeHeureCritere = new ArrayList<>();
+
+	    // Réorganiser les éléments en fonction des indices triés
+	    for (int ordre : indices) {
+	        listeItem.add(listeAOrdonnee.get(0).get(ordre));        // Liste 1 réorganisée
+	        listeHeureCritere.add(listeAOrdonnee.get(1).get(ordre)); // Liste 3 réorganisée
+	    }
+
+	    // Ajouter les listes réorganisées à la liste finale
+	    listeArrangee.add(listeItem);
+	    listeArrangee.add(listeHeureCritere);
+
+	    return listeArrangee;
+	}
+
 }

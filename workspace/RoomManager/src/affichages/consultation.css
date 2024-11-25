@@ -126,7 +126,7 @@
 	-fx-pref-width: 200;
     -fx-pref-height: 30;
     
-    -fx-font-size: 15px;
+    -fx-font-size: 10px;
     -fx-text-fill: #000000;
 	
     -fx-background-color: white; /* Fond blanc */
@@ -174,10 +174,8 @@
 }
 
 .comboBox-moyenne {
-	-fx-pref-width: 50;
-    -fx-pref-height: 25;
     
-    -fx-font-size: 15px;
+    -fx-font-size: 9px;
     -fx-text-fill: #000000;
 	
     -fx-background-color: white; /* Fond blanc */
@@ -215,10 +213,8 @@
 }
 
 .comboBox-heure {
-	-fx-pref-width: 50;
-    -fx-pref-height: 25;
     
-    -fx-font-size: 15px;
+    -fx-font-size: 10px;
     -fx-text-fill: #000000;
 	
     -fx-background-color: white;

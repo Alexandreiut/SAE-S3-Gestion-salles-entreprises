@@ -5,6 +5,7 @@
 
 package controleurs;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -19,7 +20,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -50,6 +53,20 @@ public class ConsultationControleur {
     
     @FXML
     private ComboBox rechercheTypeId;
+    
+    @FXML
+    private Group classementGroupId;
+    
+    @FXML
+    private ComboBox objectItemId;
+    
+    ToggleGroup toggleGroup;
+    
+    @FXML 
+    private RadioButton croissantId;
+    
+    @FXML 
+    private RadioButton decroissantId;
     
     @FXML 
     private Group filterGroupId;
@@ -102,6 +119,8 @@ public class ConsultationControleur {
     LocalDate dateDebut;
     LocalDate dateFin;
     
+    DecimalFormat df = new DecimalFormat("0.00");
+    
     double totalMoyenne;
     @FXML
     private void initialize() {
@@ -110,75 +129,101 @@ public class ConsultationControleur {
         ObservableList<String> hourDebutItems = FXCollections.observableArrayList("7h","8h","9h","10h","11h","12h","13h","14h","15h","16h","17h","18h","19h");
         ObservableList<String> hourFinItems = FXCollections.observableArrayList("8h","9h","10h","11h","12h","13h","14h","15h","16h","17h","18h","19h","20h");
         ObservableList<String> etatItems = FXCollections.observableArrayList("Réservé","Disponible");
+        ObservableList<String> objectItems = FXCollections.observableArrayList("Salle","Activité","Employé");
         
         rechercheTypeId.setItems(typeItems);
         focusMoyenneId.setItems(periodeItems);
         heureDebutId.setItems(hourDebutItems);
         heureFinId.setItems(hourFinItems);
         roomStatuId.setItems(etatItems);
+        objectItemId.setItems(objectItems);
+        
         
         rechercheTypeId.getSelectionModel().select(0);
-        switchDisplay();
         focusMoyenneId.getSelectionModel().select(0);
         heureDebutId.getSelectionModel().select(0);
         heureFinId.getSelectionModel().select(12);
         roomStatuId.getSelectionModel().select(0);
+        objectItemId.getSelectionModel().select(0);
+        
+        ToggleGroup toggleGroup = new ToggleGroup();
+        croissantId.setToggleGroup(toggleGroup);
+        decroissantId.setToggleGroup(toggleGroup);
+        
+        decroissantId.setSelected(true);
+        
+        switchDisplay();
+        
     }
 
 
 
-    private void createMainRectangle(String label, String countText, ArrayList<Object> listeItem, ArrayList<Object> listeHeureTotale, ArrayList<Object> listeHeureCritere) {
+    private void createMainRectangle(String label, String countText, ArrayList<Object> listeItem, ArrayList<Object> listeHeureCritere) {
         double sommeHeure = 0;
-        Label nbTotalHeure = new Label("");
-        
-        Label nbTotalMoyenne;
+        Label labelTotalHeure = new Label("");
+        Label labelIndicateur = new Label("");
         Label labelIntitule = new Label("    " + label);        
-        labelIntitule.setPrefWidth(160);
         Label labelNbItem = new Label(countText + listeItem.size());
-        labelNbItem.setPrefWidth(200);
+        
+        Button graphicButton = new Button();
+        
+        VBox mainRectangleContainer = new VBox();
+        VBox subRectanglesContainer = new VBox();
+        
+        SVGPath svg = new SVGPath();
+        
+        SVGPath svgGraphic = new SVGPath();
+        
+        Button btnAjoutPdf = new Button();
+        
+        Tooltip tooltip = new Tooltip("Ajouter l'ensemble des items au pdf");
+        
+        HBox hbox = new HBox();
+        
+        mainRectangleContainer.getStyleClass().add("itemPrincipalVBOX");
+        mainRectangleContainer.setSpacing(5);
+        mainRectangleContainer.setPrefWidth(745);
+        
+        svg.setContent("M 19.265625 21.765625 C 20.242188 20.789062 20.242188 19.203125 19.265625 18.226562 L 9.265625 8.226562 C 8.546875 7.507812 7.476562 7.296875 6.539062 7.6875 C 5.601562 8.078125 4.992188 8.984375 4.992188 10 L 4.992188 30 C 4.992188 31.007812 5.601562 31.921875 6.539062 32.3125 C 7.476562 32.703125 8.546875 32.484375 9.265625 31.773438 L 19.265625 21.773438 Z M 19.265625 21.765625 ");
+        
+        
+        subRectanglesContainer.setVisible(false);
+        subRectanglesContainer.setManaged(false); // Retire l'espace occupé par les sous-rectangles par défaut
+        
+        graphicButton.getStyleClass().add("itemPrincipalBouton");
+        
+        svgGraphic.setContent("M 6.332031 5.15625 L 6.332031 0.355469 C 6.332031 0.164062 6.480469 0 6.667969 0 C 9.242188 0 11.332031 2.15625 11.332031 4.8125 C 11.332031 5.007812 11.175781 5.15625 10.988281 5.15625 Z M 0.667969 5.84375 C 0.667969 3.238281 2.542969 1.082031 4.980469 0.738281 C 5.171875 0.710938 5.332031 0.867188 5.332031 1.066406 L 5.332031 6.1875 L 8.59375 9.550781 C 8.734375 9.695312 8.722656 9.929688 8.5625 10.046875 C 7.746094 10.648438 6.746094 11 5.667969 11 C 2.90625 11 0.667969 8.691406 0.667969 5.84375 Z M 11.632812 6.1875 C 11.828125 6.1875 11.980469 6.355469 11.953125 6.554688 C 11.792969 7.753906 11.234375 8.820312 10.414062 9.609375 C 10.289062 9.730469 10.09375 9.722656 9.972656 9.59375 L 6.667969 6.1875 Z M 11.632812 6.1875");
+        graphicButton.setGraphic(svgGraphic);
+        
+        
+        btnAjoutPdf.getStyleClass().add("itemPrincipalBouton");
+        btnAjoutPdf.setText("+");
+        
+        btnAjoutPdf.setTooltip(tooltip);
+        
+        
         
         if(listeHeureCritere != null) {
         	for(Object nbHeureAjouter: listeHeureCritere) {
             	sommeHeure += (double) nbHeureAjouter;       	
-            }
-        	nbTotalHeure = new Label("Nb heure totale : " + (int)sommeHeure);
-        	labelIntitule.setPrefWidth(70);
-        	labelNbItem.setPrefWidth(130);
-        	nbTotalHeure.setPrefWidth(155);
-        } 
+        	}
+        }
         
-    	VBox mainRectangleContainer = new VBox(); // Conteneur principal vertical pour ce rectangle
-        mainRectangleContainer.getStyleClass().add("itemPrincipalVBOX");
-        mainRectangleContainer.setSpacing(5);
-        mainRectangleContainer.setPrefWidth(745);
-        SVGPath svg = new SVGPath();
-        svg.setContent("M 19.265625 21.765625 C 20.242188 20.789062 20.242188 19.203125 19.265625 18.226562 L 9.265625 8.226562 C 8.546875 7.507812 7.476562 7.296875 6.539062 7.6875 C 5.601562 8.078125 4.992188 8.984375 4.992188 10 L 4.992188 30 C 4.992188 31.007812 5.601562 31.921875 6.539062 32.3125 C 7.476562 32.703125 8.546875 32.484375 9.265625 31.773438 L 19.265625 21.773438 Z M 19.265625 21.765625 ");
-        
-        VBox subRectanglesContainer = new VBox(); // Conteneur pour les sous-rectangles
-        subRectanglesContainer.setVisible(false); // Cache les sous-rectangles par défaut
-        subRectanglesContainer.setManaged(false); // Retire l'espace occupé par les sous-rectangles par défaut
-        
-        Button graphicButton = new Button("Graphique");
-        graphicButton.getStyleClass().add("itemPrincipalBouton");
-        SVGPath svgGraphic = new SVGPath();
-        svgGraphic.setContent("M 6.332031 5.15625 L 6.332031 0.355469 C 6.332031 0.164062 6.480469 0 6.667969 0 C 9.242188 0 11.332031 2.15625 11.332031 4.8125 C 11.332031 5.007812 11.175781 5.15625 10.988281 5.15625 Z M 0.667969 5.84375 C 0.667969 3.238281 2.542969 1.082031 4.980469 0.738281 C 5.171875 0.710938 5.332031 0.867188 5.332031 1.066406 L 5.332031 6.1875 L 8.59375 9.550781 C 8.734375 9.695312 8.722656 9.929688 8.5625 10.046875 C 7.746094 10.648438 6.746094 11 5.667969 11 C 2.90625 11 0.667969 8.691406 0.667969 5.84375 Z M 11.632812 6.1875 C 11.828125 6.1875 11.980469 6.355469 11.953125 6.554688 C 11.792969 7.753906 11.234375 8.820312 10.414062 9.609375 C 10.289062 9.730469 10.09375 9.722656 9.972656 9.59375 L 6.667969 6.1875 Z M 11.632812 6.1875");
-        graphicButton.setGraphic(svgGraphic);
-        
-        Button btnAjoutPdf = new Button();
-        btnAjoutPdf.getStyleClass().add("itemPrincipalBouton");
-        btnAjoutPdf.setText("+");
-        Tooltip tooltip = new Tooltip("Ajouter l'ensemble des items au pdf");
-        btnAjoutPdf.setTooltip(tooltip);
         totalMoyenne = 0.0;
         subRectanglesContainer.getChildren().clear(); // Vide les sous-rectangles 
-    	
         int indexListe = 0;
         for (Object item : listeItem) {
-        	if (listeHeureTotale != null) {
-        		addSubRectangle(subRectanglesContainer, item, listeHeureCritere.get(indexListe));
-        		indexListe ++;
+        	if (listeHeureCritere != null) {
+        		if(((String) rechercheTypeId.getSelectionModel().getSelectedItem()).equals("Consultation statistique")) {
+        			addSubRectangle(subRectanglesContainer, item, sommeHeure, listeHeureCritere.get(indexListe));
+            		indexListe ++;
+        		} else {
+        			addSubRectangle(subRectanglesContainer, item, 0.0, listeHeureCritere.get(indexListe));
+            		indexListe ++;
+        		}
+        		
         	} else {
-        		addSubRectangle(subRectanglesContainer, item,  null);
+        		addSubRectangle(subRectanglesContainer, item, 0.0,  null);
         	}                
             subRectanglesContainer.setSpacing(5);
         }
@@ -194,24 +239,36 @@ public class ConsultationControleur {
                 subRectanglesContainer.setManaged(true);
             }
         });
-        if(totalMoyenne != 0.0) {
-        	nbTotalMoyenne = new Label("Temps moyen : " + dateOutil.convertDoubleToStr((double) totalMoyenne /listeItem.size()));        	
-        } else {
-        	nbTotalMoyenne = new Label("");
+        if(sommeHeure != 0.0) {
+        	labelTotalHeure = new Label("Temps total : " + sommeHeure + "h");
         }
-        nbTotalMoyenne.setPrefWidth(190);
+        if(totalMoyenne != 0.0) {
+        	labelIndicateur = new Label("Temps moyen : " + dateOutil.convertDoubleToStr((double) totalMoyenne /listeItem.size()));
+        }
         
-        HBox hbox = new HBox();
-        hbox.getChildren().addAll(new Label("    "), svg, labelIntitule, labelNbItem, nbTotalHeure, nbTotalMoyenne, graphicButton, new Label("    "), btnAjoutPdf);
+        if(((String) rechercheTypeId.getSelectionModel().getSelectedItem()).equals("Consultation brute")) {
+        	labelIntitule.setPrefWidth(140);
+        	labelNbItem.setPrefWidth(510);
+        	labelTotalHeure.setPrefWidth(0);
+        	labelIndicateur.setPrefWidth(0);
+        } else {
+        	labelIntitule.setPrefWidth(100);
+        	labelNbItem.setPrefWidth(150);
+        	labelTotalHeure.setPrefWidth(160);
+        	labelIndicateur.setPrefWidth(240);
+        }
+        
+        
+        
+        hbox.getChildren().addAll(new Label(" "), svg, labelIntitule, labelNbItem, labelTotalHeure, labelIndicateur, graphicButton, new Label(" "), btnAjoutPdf);
         mainRectangleContainer.getChildren().addAll(hbox);
-        
-        // Ajoute le conteneur de sous-rectangles sous le rectangle principal
+
         mainRectangleContainer.getChildren().add(subRectanglesContainer);
-        vboxContent.getChildren().add(mainRectangleContainer); // Ajoute le conteneur principal à la VBox de contenu
+        vboxContent.getChildren().add(mainRectangleContainer);
     }
 
 
-    private void addSubRectangle(VBox subRectanglesContainer, Object item, Object heureCritere) {
+    private void addSubRectangle(VBox subRectanglesContainer, Object item, double heureTotale, Object heureCritere) {
     	double heureCritereDouble = 0.0;
     	if(heureCritere != null) {
         	heureCritereDouble = (double) heureCritere;
@@ -232,8 +289,9 @@ public class ConsultationControleur {
     	        totalMoyenne += moyenneCalcule;
     	        labelMoyenne = new Label(dateOutil.convertDoubleToStr(moyenneCalcule) + "/semaine");
     	    }
+    	} else if (((String) rechercheTypeId.getSelectionModel().getSelectedItem()).equals("Consultation statistique")) {
+    		labelMoyenne = new Label(df.format((double) heureCritere / heureTotale * 100) + " %");
     	}
-
     	labelMoyenne.setPrefWidth(140);
         HBox subRectangle = new HBox();
         subRectangle.getStyleClass().add("itemSecondaireVBOX");
@@ -246,21 +304,20 @@ public class ConsultationControleur {
         	labelSub.setText(((Employe) item).getNom() + "    " + ((Employe) item).getPrenom());
         } else  {
         	labelSub.setText(((Reservation) item).getDate());
-        } 
+        }
         labelSub.setPrefWidth(100);       
         SVGPath svgPoint = new SVGPath();
         svgPoint.setContent("M 5 10 C 7.761719 10 10 7.761719 10 5 C 10 2.238281 7.761719 0 5 0 C 2.238281 0 0 2.238281 0 5 C 0 7.761719 2.238281 10 5 10 Z M 5 10");
         HBox centeredContainer = new HBox(svgPoint);
         centeredContainer.getStyleClass().add("centeredContainer");
 
-        
         Button detailsButton = new Button("Détails");
         detailsButton.setOnAction(e -> showDetailsWindow(item));
         detailsButton.getStyleClass().add("itemSecondaireBouton");
         detailsButton.setPrefWidth(100);
 
         Button graphicButton = new Button("Graphique");
-        //detailsButton.setOnAction(e -> showDetailsWindow(item));
+        //graphicButton.setOnAction(e -> showDetailsWindow(item));
         graphicButton.getStyleClass().add("itemSecondaireBouton");
         SVGPath svgGraphic = new SVGPath();
         svgGraphic.setContent("M 6.332031 5.15625 L 6.332031 0.355469 C 6.332031 0.164062 6.480469 0 6.667969 0 C 9.242188 0 11.332031 2.15625 11.332031 4.8125 C 11.332031 5.007812 11.175781 5.15625 10.988281 5.15625 Z M 0.667969 5.84375 C 0.667969 3.238281 2.542969 1.082031 4.980469 0.738281 C 5.171875 0.710938 5.332031 0.867188 5.332031 1.066406 L 5.332031 6.1875 L 8.59375 9.550781 C 8.734375 9.695312 8.722656 9.929688 8.5625 10.046875 C 7.746094 10.648438 6.746094 11 5.667969 11 C 2.90625 11 0.667969 8.691406 0.667969 5.84375 Z M 11.632812 6.1875 C 11.828125 6.1875 11.980469 6.355469 11.953125 6.554688 C 11.792969 7.753906 11.234375 8.820312 10.414062 9.609375 C 10.289062 9.730469 10.09375 9.722656 9.972656 9.59375 L 6.667969 6.1875 Z M 11.632812 6.1875");
@@ -271,7 +328,7 @@ public class ConsultationControleur {
         Button ajoutPdfButton = new Button("+");
         Tooltip tooltip = new Tooltip("Ajouter l'item au pdf");
         ajoutPdfButton.setTooltip(tooltip);
-        //detailsButton.setOnAction(e -> showDetailsWindow(item));
+        //ajoutPdfButton.setOnAction(e -> showDetailsWindow(item));
         ajoutPdfButton.getStyleClass().add("itemSecondaireBouton");
         Label heureCrit = new Label();
         
@@ -281,7 +338,7 @@ public class ConsultationControleur {
         }
         
         
-        subRectangle.getChildren().addAll(centeredContainer,labelSub,labelMoyenne,heureCrit,detailsButton,graphicButton,ajoutPdfButton);
+        subRectangle.getChildren().addAll(centeredContainer,labelSub,heureCrit,labelMoyenne,detailsButton,graphicButton,ajoutPdfButton);
         subRectanglesContainer.getChildren().add(subRectangle); 
     }
 
@@ -354,16 +411,35 @@ public class ConsultationControleur {
             filterGroupId.setManaged(false);
             searchGroupId.setVisible(false);
             searchGroupId.setManaged(false);
-            createMainRectangle("Salles", "Salle trouvée : ", consultation.fetchDataForKey("Salles"), null, null);
-            createMainRectangle("Réservations", "Réservation trouvée : ", consultation.fetchDataForKey("Réservations"), null, null);
-            createMainRectangle("Activitées", "Activité trouvée : ", consultation.fetchDataForKey("Activitées"), null, null);
-            createMainRectangle("Employés", "Employé trouvée : ", consultation.fetchDataForKey("Employés"), null, null);
+            classementGroupId.setVisible(false);
+            classementGroupId.setManaged(false);
+            createMainRectangle("Salles", "Salle trouvée : ", consultation.fetchDataForKey("Salles"), null);
+            createMainRectangle("Réservations", "Réservation trouvée : ", consultation.fetchDataForKey("Réservations"), null);
+            createMainRectangle("Activitées", "Activité trouvée : ", consultation.fetchDataForKey("Activitées"), null);
+            createMainRectangle("Employés", "Employé trouvée : ", consultation.fetchDataForKey("Employés"), null);
         } else if ("Recherche par filtre".equals(selectedType)) {
             filterGroupId.setVisible(true);
             filterGroupId.setManaged(true);
             searchGroupId.setVisible(true);
             searchGroupId.setManaged(true);
-            totalMoyenne = 0.0;
+            classementGroupId.setVisible(false);
+            classementGroupId.setManaged(false);
+            roomStatuId.setVisible(true);
+            roomStatuId.setManaged(true);
+            moyenneCheckBoxId.setVisible(true);
+            focusMoyenneId.setVisible(true);
+            throwSearch();
+        } else {
+        	filterGroupId.setVisible(true);
+            filterGroupId.setManaged(true);
+            searchGroupId.setVisible(true);
+            searchGroupId.setManaged(true);
+            classementGroupId.setVisible(true);
+            classementGroupId.setManaged(true);
+            roomStatuId.setVisible(false);
+            roomStatuId.setManaged(false);
+            moyenneCheckBoxId.setVisible(false);
+            focusMoyenneId.setVisible(false);
             throwSearch();
         }
     }
@@ -378,6 +454,7 @@ public class ConsultationControleur {
     @FXML
     private void throwSearch() {
     	vboxContent.getChildren().clear();
+    	totalMoyenne = 0.0;
         dateDebut = dateDebutId.getValue();
         dateFin = dateFinId.getValue();
         if (dateDebut == null) {
@@ -392,22 +469,60 @@ public class ConsultationControleur {
         String chaineEmploye = searchEmployeId.getText();
         String chaineActivite = searchActiviteId.getText();
         Consultation consultation = new Consultation();
-        if(((String)roomStatuId.getValue()).equals("Disponible")) {
-        	ArrayList<Object> salle = consultation.getSalleDisponible(dateDebut, dateFin, heureDebut, heureFin, chaineSalle);
-        	createMainRectangle("Salles", "Salle trouvée : ", salle, null ,null);
+        if("Consultation statistique".equals((String) rechercheTypeId.getSelectionModel().getSelectedItem())){
+        	ArrayList<ArrayList<Object>> infosItem;
+    		ArrayList<Object> item;
+            ArrayList<Object> listeHeureCriteres;
+        	if(((String)objectItemId.getValue()).equals("Salle")) {
+        		infosItem = consultation.getSalleFound(dateDebut, dateFin, heureDebut, heureFin, chaineSalle, chaineEmploye, chaineActivite, "Salles");
+        		if (croissantId.isSelected()) {
+        			infosItem = consultation.orderList(infosItem,true);
+        		} else {
+        			infosItem = consultation.orderList(infosItem,false);
+        		}
+        		item = infosItem.get(0);
+                listeHeureCriteres = infosItem.get(1);
+            	createMainRectangle("Salles", "Salle trouvée : ", item, listeHeureCriteres);
+        	} else if(((String)objectItemId.getValue()).equals("Employé")) {
+        		infosItem = consultation.getSalleFound(dateDebut, dateFin, heureDebut, heureFin, chaineSalle, chaineEmploye, chaineActivite, "Employés");
+                
+        		if (croissantId.isSelected()) {
+        			infosItem = consultation.orderList(infosItem,true);
+        		} else {
+        			infosItem = consultation.orderList(infosItem,false);
+        		}
+        		item = infosItem.get(0);
+                listeHeureCriteres = infosItem.get(1);
+            	createMainRectangle("Employés", "Employé trouvé : ", item ,listeHeureCriteres);	
+        	} else {
+        		infosItem = consultation.getSalleFound(dateDebut, dateFin, heureDebut, heureFin, chaineSalle, chaineEmploye, chaineActivite, "Activitées");
+        		if (croissantId.isSelected()) {
+        			infosItem = consultation.orderList(infosItem,true);
+        		} else {
+        			infosItem = consultation.orderList(infosItem,false);
+        		}
+        		item = infosItem.get(0);
+                listeHeureCriteres = infosItem.get(1);
+            	createMainRectangle("Activités", "Activité trouvé : ", item ,listeHeureCriteres);	
+        	}
         } else {
-        	ArrayList<ArrayList<Object>> infosSalle = consultation.getSalleFound(dateDebut, dateFin, heureDebut, heureFin, chaineSalle, chaineEmploye, chaineActivite);
-            ArrayList<Object> salle = infosSalle.get(0);
-            ArrayList<Object> listeHeureTotales = infosSalle.get(1);
-            ArrayList<Object> listeHeureCriteres = infosSalle.get(2);
-        	createMainRectangle("Salles", "Salle trouvée : ", salle, listeHeureTotales ,listeHeureCriteres);
+        	if(((String)roomStatuId.getValue()).equals("Disponible")) {
+            	ArrayList<Object> salle = consultation.getSalleDisponible(dateDebut, dateFin, heureDebut, heureFin, chaineSalle);
+            	createMainRectangle("Salles", "Salle trouvée : ", salle,null);
+            } else {
+            	ArrayList<ArrayList<Object>> infosSalle = consultation.getSalleFound(dateDebut, dateFin, heureDebut, heureFin, chaineSalle, chaineEmploye, chaineActivite, "Salles");
+                ArrayList<Object> salle = infosSalle.get(0);
+                ArrayList<Object> listeHeureCriteres = infosSalle.get(1);
+            	createMainRectangle("Salles", "Salle trouvée : ", salle ,listeHeureCriteres);
+            }
         }
+        
     }
         
         
     @FXML 
     private void enablerSearch(){
-    	if(((String)roomStatuId.getValue()).equals("Disponible")) {
+    	if(((String)roomStatuId.getValue()).equals("Disponible") && "Consultation statistique".equals((String) rechercheTypeId.getSelectionModel().getSelectedItem())) {
     		searchActiviteId.setVisible(false);
     		searchEmployeId.setVisible(false);
     		moyenneCheckBoxId.setSelected(false);
