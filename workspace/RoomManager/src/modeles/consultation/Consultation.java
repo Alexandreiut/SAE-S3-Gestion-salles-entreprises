@@ -182,7 +182,7 @@ public class Consultation {
 			return false;
 		}
 	}
-	public boolean heureInRange(String heureDebutTarget, String heureFinTarget, String heureDebut, String heureFin) {
+	public static boolean heureInRange(String heureDebutTarget, String heureFinTarget, String heureDebut, String heureFin) {
 		int heureTargetDebutInt = extractHeureInInt(heureDebutTarget);
 		int heureTargetFinInt = extractHeureInInt(heureFinTarget);
 		int heureDebutInt = extractHeureInInt(heureDebut);
@@ -202,7 +202,7 @@ public class Consultation {
 		return false;
 	}
 
-	public int extractHeureInInt(String chaineContenantHeure) {
+	public static int extractHeureInInt(String chaineContenantHeure) {
 		String heureConstruite = "";
 		for (char c : chaineContenantHeure.toCharArray()) {
 			if (c == 'h') {
