@@ -127,7 +127,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="53.0" prefWidth="199.0">
                            <children>
-                              <ComboBox fx:id="roomStatuId" onAction="#enablerSearch" prefHeight="25.0" prefWidth="195.0" styleClass="comboBox" />
+                              <ComboBox fx:id="roomStatuId" onAction="#gestionRecherche" prefHeight="25.0" prefWidth="195.0" styleClass="comboBox" />
                            </children>
                            <padding>
                               <Insets left="10.0" right="10.0" />
@@ -135,7 +135,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="61.0" prefWidth="214.0">
                            <children>
-                              <Button fx:id="searchButtonId" mnemonicParsing="false" onAction="#throwSearch" prefHeight="297.0" prefWidth="204.0" styleClass="boutons-loupe" text="Rechercher ">
+                              <Button fx:id="searchButtonId" mnemonicParsing="false" onAction="#recherche" prefHeight="297.0" prefWidth="204.0" styleClass="boutons-loupe" text="Rechercher ">
                                  <graphic>
                                     <SVGPath content="M 16.25 8.125 C 16.25 9.917969 15.667969 11.574219 14.6875 12.917969 L 19.632812 17.867188 C 20.121094 18.355469 20.121094 19.148438 19.632812 19.636719 C 19.144531 20.125 18.351562 20.125 17.863281 19.636719 L 12.917969 14.6875 C 11.574219 15.671875 9.917969 16.25 8.125 16.25 C 3.636719 16.25 0 12.613281 0 8.125 C 0 3.636719 3.636719 0 8.125 0 C 12.613281 0 16.25 3.636719 16.25 8.125 Z M 8.125 13.75 C 11.230469 13.75 13.75 11.230469 13.75 8.125 C 13.75 5.019531 11.230469 2.5 8.125 2.5 C 5.019531 2.5 2.5 5.019531 2.5 8.125 C 2.5 11.230469 5.019531 13.75 8.125 13.75 Z M 8.125 13.75" />
                                  </graphic>
@@ -200,7 +200,7 @@
       </Button>
       <HBox layoutX="10.0" layoutY="115.0" prefHeight="39.0" prefWidth="199.0">
          <children>
-         <ComboBox fx:id="rechercheTypeId" onAction="#switchDisplay" prefHeight="39.0" prefWidth="278.0" style="-fx-font-size: 11px;" styleClass="comboBox" />               
+         <ComboBox fx:id="rechercheTypeId" onAction="#changeAffichage" prefHeight="39.0" prefWidth="278.0" style="-fx-font-size: 11px;" styleClass="comboBox" />               
          </children>
          <padding>
             <Insets left="10.0" right="10.0" />

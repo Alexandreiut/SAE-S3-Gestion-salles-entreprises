@@ -567,7 +567,7 @@ public class ConsultationControleur {
      * pour une recherche de disponibilité    
      */
     @FXML 
-    private void enablerSearch(){
+    private void gestionRecherche(){
     	if(((String)roomStatuId.getValue()).equals("Disponible") &&
     		"Consultation statistique".equals((String) rechercheTypeId.getSelectionModel().getSelectedItem())) {
     		searchActiviteId.setVisible(false);
