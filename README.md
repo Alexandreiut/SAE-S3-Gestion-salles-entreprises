@@ -14,11 +14,11 @@ L'application permet :
 
 |             | email iut     | Identifiant Github | 
 |-------------|---------------|---------------|
-| Adrien | adrien.astier@iut-rodez.fr | Adrien Astier |
-| Noé | noe.arcier@iut-rodez.fr | Arcier Noé |
-| Lucas | lucas.boulouard@iut-rodez.fr | LucasBoulouard |
-| Samuel | samuel.lacam@iut-rodez.fr | SamuelLacam |
-| Alexandre   | alexandre.brouzes@iut-rodez.fr | Alexandreiut  | 
+| ASTIER Adrien | adrien.astier@iut-rodez.fr | Adrien Astier |
+| ARCIER Noé | noe.arcier@iut-rodez.fr | Arcier Noé |
+| BOULOUARD Lucas | lucas.boulouard@iut-rodez.fr | LucasBoulouard |
+| LACAM Samuel | samuel.lacam@iut-rodez.fr | SamuelLacam |
+| BROUZES Alexandre   | alexandre.brouzes@iut-rodez.fr | Alexandreiut  | 
 
 
 Lien vers le dossier google drive : [Lien drive](https://drive.google.com/drive/folders/0ABZxIVAYBVO2Uk9PVA)
