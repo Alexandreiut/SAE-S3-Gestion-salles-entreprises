@@ -12,14 +12,15 @@ L'application permet :
 
 Équipe de dévelopemment :
 
-|             | email iut     | Identifiant Github | 
+|             | Email iut     | Identifiant Github | 
 |-------------|---------------|---------------|
 | ASTIER Adrien | adrien.astier@iut-rodez.fr | Adrien Astier |
 | ARCIER Noé | noe.arcier@iut-rodez.fr | Arcier Noé |
 | BOULOUARD Lucas | lucas.boulouard@iut-rodez.fr | LucasBoulouard |
 | LACAM Samuel | samuel.lacam@iut-rodez.fr | SamuelLacam |
 | BROUZES Alexandre   | alexandre.brouzes@iut-rodez.fr | Alexandreiut  | 
-
+<br/>
+<br/>
 Répartition des rôles : 
 | Membres équipes | ARCIER Noé | ASTIER Adrien | BOULOUARD Lucas | BROUZES Alexandre | LACAM Samuel |
 |-----------------|------------|---------------|-----------------|-------------------|--------------|
