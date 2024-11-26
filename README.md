@@ -21,6 +21,5 @@ L'application permet :
 | BROUZES Alexandre   | alexandre.brouzes@iut-rodez.fr | Alexandreiut  | 
 
 
-Lien vers le board : [Lien board](https://github.com/users/Alexandreiut/projects/3)
+Lien vers le board : [Lien board](https://github.com/users/Alexandreiut/projects/3) <br/>
 Lien vers le dossier google drive : [Lien drive](https://drive.google.com/drive/folders/0ABZxIVAYBVO2Uk9PVA)
-
