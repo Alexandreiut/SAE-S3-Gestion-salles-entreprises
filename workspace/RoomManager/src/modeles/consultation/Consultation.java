@@ -12,15 +12,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import javafx.scene.control.Label;
 import lanceur.RoomManager;
 import modeles.items.Activite;
 import modeles.items.Employe;
 import modeles.items.Reservation;
 import modeles.items.Salle;
 import modeles.stockage.Stockage;
-import java.time.DayOfWeek;
-import java.time.temporal.ChronoUnit;
 
 /**
  * Modele de la consultation gère la partie métier concernat l'affichage et le calcul des données
