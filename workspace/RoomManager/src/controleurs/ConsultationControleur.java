@@ -32,7 +32,6 @@ import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 
-import modeles.NavigationVues;
 import modeles.consultation.Consultation;
 import modeles.items.Activite;
 import modeles.items.Employe;
@@ -363,6 +362,9 @@ public class ConsultationControleur {
         // Définition du style et du dimensionnement
         labelMoyenne.setPrefWidth(140);
         labelSub.setPrefWidth(100);
+        if (((String) rechercheTypeId.getSelectionModel().getSelectedItem()).equals("Consultation brute")) {
+        	labelSub.setPrefWidth(200);
+        }
         graphicButton.setPrefWidth(130);
         detailsButton.setPrefWidth(100);
         

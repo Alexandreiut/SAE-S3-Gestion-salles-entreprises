@@ -9,10 +9,10 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.itextpdf.kernel.pdf.PdfDocument;
+/*import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Paragraph;*/
 
 /**
  * Génere un PDF des données consulté
@@ -33,7 +33,7 @@ public class GenerePDF {
 		this.donneesFiltrees = donneesFiltrees;
 	}
 	
-	public void generationPDF() {
+	/*public void generationPDF() {
 		String outputFile = "./hello-pdf.pdf";
     	 
     	try {
@@ -49,6 +49,6 @@ public class GenerePDF {
     		// TODO: voir comment gérer l'erreur
 			System.out.println("la génération du PDF ne marche pas");
 		}
-	}
+	}*/
 	
 }
