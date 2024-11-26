@@ -19,16 +19,17 @@ L'application permet :
 | BOULOUARD Lucas | lucas.boulouard@iut-rodez.fr | LucasBoulouard |
 | LACAM Samuel | samuel.lacam@iut-rodez.fr | SamuelLacam |
 | BROUZES Alexandre   | alexandre.brouzes@iut-rodez.fr | Alexandreiut  | 
+
 <br/>
-<br/>
+
 Répartition des rôles : 
 | Membres équipes | ARCIER Noé | ASTIER Adrien | BOULOUARD Lucas | BROUZES Alexandre | LACAM Samuel |
 |-----------------|------------|---------------|-----------------|-------------------|--------------|
-| **25/09 au 04/10** | Développeur | Développeur | Développeur | Product Owner | Scrum master |
-| **05/10 au 16/10** | Scrum master | Développeur | Développeur | Développeur | Product Owner |
-| **17/10 au 25/10** | Product Owner | Scrum master | Développeur | Développeur | Développeur |
-| **26/10 au 13/11** | Développeur | Product Owner | Scrum master | Développeur | Développeur |
-| **14/11 au 22/11** | Développeur | Développeur | Product Owner | Scrum master | Développeur |
+| **25/09 au 04/10** | Développeur | Développeur | Développeur | *Product Owner* | *Scrum master* |
+| **05/10 au 16/10** | *Scrum master* | Développeur | Développeur | Développeur | *Product Owner* |
+| **17/10 au 25/10** | *Product Owner* | *Scrum master* | Développeur | Développeur | Développeur |
+| **26/10 au 13/11** | Développeur | *Product Owner* | *Scrum master* | Développeur | Développeur |
+| **14/11 au 22/11** | Développeur | Développeur | *Product Owner* | *Scrum master* | Développeur |
 
 Lien vers le board : [Lien board](https://github.com/users/Alexandreiut/projects/3) <br/>
 Lien vers le dossier google drive : [Lien drive](https://drive.google.com/drive/folders/0ABZxIVAYBVO2Uk9PVA)
