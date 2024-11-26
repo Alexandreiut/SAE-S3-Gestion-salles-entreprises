@@ -526,11 +526,11 @@ public class ConsultationControleur {
     		ArrayList<Object> item;
             ArrayList<Object> listeHeureCriteres;
         	if(((String)objectItemId.getValue()).equals("Salle")) { // si les salles sont selectionnées
-        		infosItem = consultation.getSalleFound(dateDebut, dateFin, heureDebut, heureFin, chaineSalle, chaineEmploye, chaineActivite, "Salles");  		
+        		infosItem = consultation.getItemCritere(dateDebut, dateFin, heureDebut, heureFin, chaineSalle, chaineEmploye, chaineActivite, "Salles");  		
         	} else if(((String)objectItemId.getValue()).equals("Employé")) { // si les employés sont selectionnés
-        		infosItem = consultation.getSalleFound(dateDebut, dateFin, heureDebut, heureFin, chaineSalle, chaineEmploye, chaineActivite, "Employés");
+        		infosItem = consultation.getItemCritere(dateDebut, dateFin, heureDebut, heureFin, chaineSalle, chaineEmploye, chaineActivite, "Employés");
         	} else { // si les activités sont selectionnées
-        		infosItem = consultation.getSalleFound(dateDebut, dateFin, heureDebut, heureFin, chaineSalle, chaineEmploye, chaineActivite, "Activitées");
+        		infosItem = consultation.getItemCritere(dateDebut, dateFin, heureDebut, heureFin, chaineSalle, chaineEmploye, chaineActivite, "Activitées");
         	}
         	
         	if (croissantId.isSelected()) {
@@ -554,7 +554,7 @@ public class ConsultationControleur {
             	ArrayList<Object> salle = consultation.getSalleDisponible(dateDebut, dateFin, heureDebut, heureFin, chaineSalle);
             	creerRectanglePrincipal("Salles", "Salle trouvée : ", salle,null);
             } else { // Recherche des réservations
-            	ArrayList<ArrayList<Object>> infosSalle = consultation.getSalleFound(dateDebut, dateFin, heureDebut, heureFin, chaineSalle, chaineEmploye, chaineActivite, "Salles");
+            	ArrayList<ArrayList<Object>> infosSalle = consultation.getItemCritere(dateDebut, dateFin, heureDebut, heureFin, chaineSalle, chaineEmploye, chaineActivite, "Salles");
                 ArrayList<Object> salle = infosSalle.get(0);
                 ArrayList<Object> listeHeureCriteres = infosSalle.get(1);
                 creerRectanglePrincipal("Salles", "Salle trouvée : ", salle ,listeHeureCriteres);

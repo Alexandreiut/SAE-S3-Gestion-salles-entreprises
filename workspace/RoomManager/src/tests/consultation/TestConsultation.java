@@ -96,7 +96,7 @@ class ConsultationTest {
         String chaineActivite = "formation";
         String itemRecherche = "Employés";
 
-        ArrayList<ArrayList<Object>> resultats = consultation.getSalleFound(
+        ArrayList<ArrayList<Object>> resultats = consultation.getItemCritere(
                 dateDebut, dateFin, heureDebut, heureFin, chaineSalle, chaineEmploye, chaineActivite, itemRecherche
         );
 
