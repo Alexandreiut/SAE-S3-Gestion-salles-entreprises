@@ -37,6 +37,6 @@ public class TestDictionnaire {
 
     @Test
     public void testGetNextCharAt_CharNotInDictionary() {
-        assertEquals('¤', Dictionnaire.getNextCharAt('€', 1));
+        assertEquals('⍰', Dictionnaire.getNextCharAt('€', 1));
     }
 }

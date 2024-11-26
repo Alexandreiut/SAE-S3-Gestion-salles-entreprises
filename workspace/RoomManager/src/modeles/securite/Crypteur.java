@@ -25,7 +25,7 @@ public class Crypteur {
 	/**
 	 * 
 	 */
-	private DiffieHellman diffieHellman;
+	public DiffieHellman diffieHellman;
 	
 	/**
 	 * Constructeur de la classe, associe un alphabet au cryptage
@@ -48,9 +48,8 @@ public class Crypteur {
 		return cle != null ? cle.length() : 0;
 	}
 	
-	
 	/**
-	 * Genere une clé pour le chiffrement en utilisant Diffie-Hellman et Vigenere
+	 * Génère une clé pour le chiffrement en utilisant Diffie-Hellman et Vigenere
 	 * @return une clé de chiffrement
 	 */
 	public String genererCle() {
@@ -58,20 +57,19 @@ public class Crypteur {
 	   
 	    StringBuilder cleBuilder = new StringBuilder();
 	    
-	    // Assurer que la clé ait au moins une longueur de 1
-	    int longueurCle = Math.max(5, nombreSecret % alphabet.length);
+	    int longueurCle = nombreSecret % 50 + 50; // longueur de 50 à 100
 	    
-	    
-	    for (int i = 0; i < longueurCle; i++) {
-	    	char nextChar = Dictionnaire.getNextCharAt(alphabet[i % alphabet.length], i);
+	    for (int i = 0 ; i < longueurCle ; i++) {
+	    	char nextChar = alphabet[(i + 1) * ((nombreSecret + i)
+	    			                            % alphabet.length)
+	    			                 % alphabet.length];
 	    	cleBuilder.append(nextChar);
 	    }
 	    
 	    this.cle = cleBuilder.toString();
 	    return cle;
 	}
-	
-	
+		
     /**
 	 * Crypte un message
 	 * @param messageACrypter le message a crypter
@@ -79,15 +77,13 @@ public class Crypteur {
 	 */
 	public String crypteMessage(String messageACrypter) {
 		
-		
 		if (cle == null) {
-			throw new IllegalStateException("La clé de chiffrement n'a pas été générée. Veuillez générer une clé avant de crypter.");
+			throw new IllegalStateException("La clé de chiffrement n'a pas "
+			                                + "été générée. Veuillez générer"
+											+ " une clé avant de crypter.");
 		}
 		
-		System.out.println("Clé utilisée pour le cryptage: " + cle);
 		String messageCrypte = Vigenere.encodageVigenere(cle, messageACrypter);
-		System.out.println("Message original: " + messageACrypter);
-		System.out.println("Message crypté: " + messageCrypte);
 		
 		return messageCrypte;
 	}
@@ -100,15 +96,13 @@ public class Crypteur {
 	 */
 	public String decrypteMessage(String messageCrypte) {
 		if (cle == null) {
-			throw new IllegalStateException("La clé de chiffrement n'a pas été générée. Veuillez générer une clé avant de décrypter.");
+			throw new IllegalStateException("La clé de chiffrement n'a pas été"
+			                                + " générée. Veuillez générer une "
+											+ "clé avant de décrypter.");
 		}
         
-		
 		return Vigenere.decodageVigenere(cle, messageCrypte);
 	}
-	
-
-
 	
 }
 	

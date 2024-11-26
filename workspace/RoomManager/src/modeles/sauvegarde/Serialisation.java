@@ -31,7 +31,7 @@ public class Serialisation {
      */
     private static final String NOM_FICHIER = "donnees.ser";
     
-    private static Stockage stockage;
+    public static Stockage stockage; //public pour test, initialement private
 	
     /**
      * Sérialise un objet
@@ -90,7 +90,7 @@ public class Serialisation {
 	 * Initialise le stockage avec des liste vide
 	 * @param s le stockage a initialisé
 	 */
-	private static void initialiseStockage() {
+	public static void initialiseStockage() { // initialement private
 		if (stockage == null) {
 			stockage = new Stockage(new ArrayList<Salle>(), new ArrayList<Activite>(),
 					   new ArrayList<Employe>(), new ArrayList<Reservation>());

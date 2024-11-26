@@ -5,13 +5,13 @@
 
 package lanceur;
 
+import controleurs.NavigationVues;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import modeles.NavigationVues;
 import modeles.sauvegarde.Serialisation;
 import modeles.stockage.Stockage;
 import javafx.scene.Parent;
