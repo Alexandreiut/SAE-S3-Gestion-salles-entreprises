@@ -126,7 +126,7 @@
 	-fx-pref-width: 200;
     -fx-pref-height: 30;
     
-    -fx-font-size: 15px;
+    -fx-font-size: 10px;
     -fx-text-fill: #000000;
 	
     -fx-background-color: white; /* Fond blanc */
@@ -173,47 +173,63 @@
     -fx-alignment: center;
 }
 
-/* Style général du CheckBox */
-.check-box {
-    -fx-padding: 5px;
-    -fx-font-size: 14px;
-    -fx-font-family: "Arial";
-    -fx-text-fill: #333333;
+.comboBox-moyenne {
+    
+    -fx-font-size: 9px;
+    -fx-text-fill: #000000;
+	
+    -fx-background-color: white; /* Fond blanc */
+    -fx-border-color: black; /* Bordure noire */
+    -fx-font-weight: bold;
+    -fx-border-width: 2px; /* Épaisseur de la bordure */
+    -fx-background-radius: 10px; /* Coins arrondis pour le bouton */
+    -fx-border-radius: 10px;
+    -fx-border-style: solid; 
 }
 
-/* Bordure et arrière-plan pour la case à cocher */
 .check-box > .box {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #666666;
+	-fx-font-weight: bold;
+    -fx-border-color: black;
     -fx-border-width: 2px;
-    -fx-padding: 3px;
-    -fx-background-radius: 3px;
     -fx-border-radius: 3px;
+    -fx-padding: 3px;
+    -fx-background-color: transparent;
 }
 
-/* Lorsque la case est survolée */
+.check-box {
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+    -fx-font-size: 12px;
+}
+
 .check-box:hover > .box {
-    -fx-border-color: #0078d7; /* Bleu clair */
+	-fx-cursor: hand;
 }
 
-/* Lorsque la case est cochée */
-.check-box:selected > .box {
-    -fx-background-color: #0078d7; /* Bleu clair */
-    -fx-border-color: #0078d7;
+.dateText {
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+    -fx-font-size: 12px;
 }
 
-/* Style pour le symbole de la coche */
-.check-box:selected > .box > .mark {
-    -fx-background-color: #ffffff; /* Couleur blanche pour le symbole de coche */
+.comboBox-heure {
+    
+    -fx-font-size: 10px;
+    -fx-text-fill: #000000;
+	
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-font-weight: bold;
+    -fx-border-width: 2px;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-style: solid; 
 }
 
-/* Lorsque le CheckBox est désactivé */
-.check-box:disabled {
-    -fx-opacity: 0.6;
-    -fx-text-fill: #999999;
-}
-
-.check-box:disabled > .box {
-    -fx-background-color: #cccccc;
-    -fx-border-color: #999999;
+.text-field-consultation {
+	-fx-font-weight: bold;
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+    -fx-border-radius: 3px;
+    -fx-padding: 3px;
 }

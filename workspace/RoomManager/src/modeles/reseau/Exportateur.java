@@ -20,6 +20,7 @@ import java.net.StandardSocketOptions;
 import java.util.ArrayList;
 
 import modeles.items.*;
+import modeles.securite.Crypteur;
 import modeles.sortie.EcritureCSV;
 import modeles.stockage.Stockage;
 
@@ -49,6 +50,11 @@ public class Exportateur {
 	 * sortie de l'exportateur 
 	 */
 	private PrintWriter output;
+	
+	/**
+	 * crypteur utilisé lors des échanges
+	 */
+	private Crypteur crypteur;
 	
 	/**
 	 * instancie un exportateur et associe un socket de serveur à un port
@@ -121,15 +127,30 @@ public class Exportateur {
 	}
 	
 	/**
-	 * accepte la connexion d'un client et instancie 
-	 * socketCommunication et output
+	 * accepte la connexion d'un client, instancie 
+	 * socketCommunication et output et établie le cryptage
 	 * afin de permettre la communication avec le client
 	 * @throws IOException s'il y a erreur lors de la création 
 	 * de la communication
 	 */
 	public void accepterConnexion() throws IOException {
+		
+		int clePubExp;
+		int clePubImp;
+		
 		socketCommunication = socketServeur.accept();
+		
 		output = new PrintWriter(socketCommunication.getOutputStream(), true);
+		
+		crypteur = new Crypteur();
+		clePubExp = crypteur.diffieHellman.getGPuissanceX();
+		
+		envoiMessage(Integer.toString(clePubExp));
+		
+		clePubImp = Integer.parseInt(recevoirMessage());
+		
+		crypteur.diffieHellman.calculeSecret(clePubImp);
+		crypteur.genererCle();
 	}
 	
 	/**
@@ -157,17 +178,21 @@ public class Exportateur {
 			
 			compteurOctets += ligne.length();
 			
-			paquet += ligne + "\n";
+			paquet += ligne + " ;sep:α; ";
 			
 			if (compteurOctets > 1000) {
-				output.println(paquet);
+				
+				//envoi paquet crypté
+				output.println(crypteur.crypteMessage(paquet));
+				
 				compteurOctets = 0;
 				paquet = "";
 			}
 		}
 		
-		output.println(paquet);
-		output.println("FIN");
+		// flush de fin
+		output.println(crypteur.crypteMessage(paquet));
+		output.println(crypteur.crypteMessage("FIN"));
 	}
 	
 	/**

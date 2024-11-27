@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import modeles.entree.LecteurCSV;
 import modeles.items.*;
+import modeles.securite.Crypteur;
 import modeles.stockage.Stockage;
 
 import java.io.PrintWriter;
@@ -34,6 +35,11 @@ public class Importateur implements AutoCloseable {
 	private Stockage stockage;
 	
 	/**
+	 * crypteur utilisé lors des échanges
+	 */
+	private Crypteur crypteur;
+	
+	/**
 	 * instancie un importateur, le socket est instancié 
 	 * selon l'adresse ip et le port 
 	 * @param adresseIp du serveur
@@ -43,13 +49,25 @@ public class Importateur implements AutoCloseable {
 	public Importateur(String adresseIp, int port, Stockage stockage) 
 			throws IOException {
 		
+		int clePubExp;
+		int clePubImp;
+		
 		socketClient = new Socket(adresseIp, port);
 		
 		input = new BufferedReader (
                 new InputStreamReader(socketClient.getInputStream()));
 		
 		this.stockage = stockage;
-	
+		
+		crypteur = new Crypteur();
+		clePubImp = crypteur.diffieHellman.getGPuissanceX();
+		
+		clePubExp = Integer.parseInt(recevoirMessage());
+		
+		envoiMessage(Integer.toString(clePubImp));
+		
+		crypteur.diffieHellman.calculeSecret(clePubExp);
+		crypteur.genererCle();
 	}
 	
 	/**
@@ -60,16 +78,20 @@ public class Importateur implements AutoCloseable {
 	public ArrayList<ArrayList<String>> recevoirDonnee() throws IOException {
 	    
 		String paquet;
+		String paquetCrypte;
 		
 		ArrayList<ArrayList<String>> toutesDonnees = new ArrayList<>();
 	    ArrayList<String> donneesSection = new ArrayList<>();
 	    
-	    while ((paquet = input.readLine()) != null) {
+	    while ((paquetCrypte = input.readLine()) != null) {
+	    	
+	    	paquet = crypteur.decrypteMessage(paquetCrypte);
+	    	
 	        if (paquet.equals("FIN")) {
 	            toutesDonnees.add(new ArrayList<>(donneesSection));
 	            donneesSection.clear();
 	        } else {
-	        	for (String ligne : paquet.split("\n")) {
+	        	for (String ligne : paquet.split(" ;sep:α; ")) {
 	        		if (!ligne.isBlank()) {
 	        			donneesSection.add(ligne);
 	        		}
@@ -95,6 +117,7 @@ public class Importateur implements AutoCloseable {
 	 * @param donneAConvertir
 	 */
 	public boolean convertirReponseDonnee(ArrayList<ArrayList<String>> toutesDonnees) {
+		
 	    for (ArrayList<String> donneesFichier : toutesDonnees) {
 	        ArrayList<Object> objetsAInserer;
 	        

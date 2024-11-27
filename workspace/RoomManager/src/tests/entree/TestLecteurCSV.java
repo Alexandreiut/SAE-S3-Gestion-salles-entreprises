@@ -83,7 +83,7 @@ class TestLecteurCSV {
 		
 		ArrayList<Object> resultatInvalide = LecteurCSV.lireSalleCSV(lignesSallesInvalide);
 		
-		assertEquals(attenduValide.toString(),resultatValide.toString());
+		assertEquals(attenduValide.toString(), resultatValide.toString());
 		assertEquals(attenduInvalide.toString(), resultatInvalide.toString());
 	}
 
@@ -124,12 +124,12 @@ class TestLecteurCSV {
 		ArrayList<Reservation> attenduValide	= new ArrayList<Reservation>();
 		
 		lignesReservationsValide.add("entete");
-		lignesReservationsValide.add("R000001;00000001;E000001;prêt;07/10/2024;17h00;19h00;club gym;Legendre;Noémie;0600000000;reunion");
+		lignesReservationsValide.add("R000001;00000001;E000001;prêt;07/10/2024;17h00;19h00;club gym;Legendre;Noémie;4;reunion");
 		
-		attenduValide.add(new Reservation("R000001", "7/10/2024", "17h00", "19h00", "club gym", "Legendre", "Noémie", 0600000000, "reunion", "E000001", "prêt", "00000001"));
+		attenduValide.add(new Reservation("R000001", "07/10/2024", "17h00", "19h00", "club gym", "Legendre", "Noémie", 0, "reunion", "E000001", "prêt", "00000001"));
 		
 		lignesReservationsInvalide.add("entete");
-		lignesReservationsInvalide.add("P000001;00000001;E000001;prêt;07-10-2024;1700;1900;c;e;i;0600U00000;u");
+		lignesReservationsInvalide.add("P000001;00000001;E000001;prêt;07-10-2024;1700;1900;c;e;i;0;u");
 		
 		attenduInvalide.add(new Reservation("Id inconnu", "Date inconnu", "Heure début inconnu", "Heure fin inconnu", "Objet réservation inconnu", "Nom inconnu", "Prenom inconnu", 0000000000, "Usage inconnu", "E000001", "prêt", "00000001"));
 		
@@ -138,8 +138,8 @@ class TestLecteurCSV {
 			
 			ArrayList<Object> resultatInvalide = LecteurCSV.lireReservationCSV(lignesReservationsInvalide);
 			
-			attenduValide.toString().equals(resultatValide.toString());
-			attenduInvalide.toString().equals(resultatInvalide.toString());
+			assertEquals(attenduValide.toString(), resultatValide.toString());
+			assertEquals(attenduInvalide.toString(), resultatInvalide.toString());
 		} catch (LectureException e) {
 			//Pas attendu
 		}
@@ -184,8 +184,8 @@ class TestLecteurCSV {
 		
 		ArrayList<Object> resultatInvalide = LecteurCSV.lireEmployeCSV(lignesEmployesInvalide);
 		
-		assertTrue(attenduValide.toString().equals(resultatValide.toString()));
-		assertTrue(attenduInvalide.toString().equals(resultatInvalide.toString()));
+		assertEquals(attenduValide.toString(), resultatValide.toString());
+		assertEquals(attenduInvalide.toString(), resultatInvalide.toString());
 	}
 
 	@Test
@@ -210,8 +210,8 @@ class TestLecteurCSV {
 		
 		ArrayList<Object> resultatInvalide = LecteurCSV.lireActiviteCSV(lignesActivitesInvalide);
 		
-		assertTrue(attenduValide.toString().equals(resultatValide.toString()));
-		assertTrue(attenduInvalide.toString().equals(resultatInvalide.toString()));
+		assertEquals(attenduValide.toString(), resultatValide.toString());
+		assertEquals(attenduInvalide.toString(), resultatInvalide.toString());
 	}
 	
 	@Test

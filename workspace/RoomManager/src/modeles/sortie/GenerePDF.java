@@ -5,9 +5,85 @@
 
 package modeles.sortie;
 
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import modeles.items.Activite;
+import modeles.items.Employe;
+import modeles.items.Reservation;
+import modeles.items.Salle;
+
+/*import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;*/
+
 /**
  * Génere un PDF des données consulté
  */
 public class GenerePDF {
+	
+	private HashMap<String, ArrayList<Object>> donneesBrutes;
+	
+	private HashMap<String, String> filtre;
+	
+	private HashMap<String, ArrayList<String>> donneesFiltrees;
+	
+	private HashMap<String, ArrayList<ArrayList<Object>>> donneesClassements;
+
+	public GenerePDF(HashMap<String, ArrayList<Object>> donneesBrutes,
+			HashMap<String, String> filtre, HashMap<String, ArrayList<String>> donneesFiltrees,
+			HashMap<String, ArrayList<ArrayList<Object>>> donneesClassements) {
+		
+		this.donneesBrutes = donneesBrutes;
+		this.filtre = filtre;
+		this.donneesFiltrees = donneesFiltrees;
+		this.donneesClassements = donneesClassements;
+	}
+	public void ajoutDonneBrute(ArrayList<Object> listeActivite,
+			ArrayList<Object> listeEmploye, ArrayList<Object> listeReservation, ArrayList<Object> listeSalle) {
+		this.donneesBrutes.put("Activités", listeActivite);
+		this.donneesBrutes.put("Employés", listeEmploye);
+		this.donneesBrutes.put("Réservations", listeReservation);
+		this.donneesBrutes.put("Salles", listeSalle);
+	}
+	
+	/**
+	 * 
+	 * @param listeItems liste 
+	 * @param infosFiltre
+	 * @param infosCalcule
+	 */
+	public void ajoutEnsembleItems(HashMap<String,String> infosFiltre,
+			double sommeHeure, String moyenne) {
+		
+	}
+	
+	public void ajoutItem(String identifiantItem, HashMap<String,String> infosFiltre,
+			double heureTotale, double heureCritere, double moyenneCalcule) {
+		
+	}
+	public void ajoutClassement(ArrayList<String> listeIdentifiantItem, HashMap<String,String> infosFiltre,
+			double sommeHeure, ArrayList<Object> listeHeure) {
+		
+	}
+	/*public void generationPDF() {
+		String outputFile = "./hello-pdf.pdf";
+    	 
+    	try {
+    		PdfWriter writer = new PdfWriter(outputFile);
+    		PdfDocument pdfDoc = new PdfDocument(writer);
+    		Document document = new Document(pdfDoc);
+    		
+             // Ajout de contenu au PDF
+             document.add(new Paragraph("Hello PDF!"));
+             document.add(new Paragraph("Ceci est un autre paragraphe."));
+             document.close();
+    	} catch (FileNotFoundException e) {
+    		// TODO: voir comment gérer l'erreur
+			System.out.println("la génération du PDF ne marche pas");
+		}
+	}*/
 	
 }

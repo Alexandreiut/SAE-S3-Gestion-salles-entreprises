@@ -11,7 +11,7 @@ import modeles.securite.Vigenere;
  * Classe de test de la classe Vigenaire 				03/11/2024
  * @author alexandre brouzes
  */
-public class TestVigenaire {
+public class TestVigenere {
 
     private String clef;
 
@@ -49,7 +49,7 @@ public class TestVigenaire {
         String texte = "Bonjour€";
         String texteEncode = Vigenere.encodageVigenere(clef, texte);
 
-        assertNull(texteEncode, "Encoding should return null for non-dictionary characters");
+        assertNull(texteEncode, "Retour non null");
     }
     
     @Test
@@ -57,7 +57,7 @@ public class TestVigenaire {
         String texte = "Bonjour€";
         String texteDecode = Vigenere.decodageVigenere(clef, texte);
 
-        assertNull(texteDecode, "Encoding should return null for non-dictionary characters");
+        assertNull(texteDecode, "Retour non null");
     }
 }
 

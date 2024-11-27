@@ -69,7 +69,7 @@ public class TestSerialisation {
 
 	@Test
 	void testSerialiser() {
-		Serialisation.serialiser(stockage);
+		assertDoesNotThrow(() -> Serialisation.serialiser(stockage));
 	}
 
 	@Test
@@ -82,7 +82,25 @@ public class TestSerialisation {
 		System.out.println(stockage.getListeSalle());
 		System.out.println(stockage.getListeReservation());
 		
+	}
+	
+	@Test
+	void testInitialiseStockage() {
+
+		Serialisation.stockage = null;
+		Serialisation.initialiseStockage();
 		
+		assertTrue(Serialisation.stockage.getListeActivite() != null);
+		assertTrue(Serialisation.stockage.getListeEmploye() != null);
+		assertTrue(Serialisation.stockage.getListeSalle() != null);
+		assertTrue(Serialisation.stockage.getListeReservation() != null);
+		
+		Serialisation.stockage = new Stockage(null, null, null, null);
+		Serialisation.initialiseStockage();
+		assertTrue(Serialisation.stockage.getListeActivite() != null);
+		assertTrue(Serialisation.stockage.getListeEmploye() != null);
+		assertTrue(Serialisation.stockage.getListeSalle() != null);
+		assertTrue(Serialisation.stockage.getListeReservation() != null);
 	}
 
 }

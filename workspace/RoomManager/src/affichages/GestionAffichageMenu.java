@@ -2,10 +2,10 @@ package affichages;
 
 import java.util.Arrays;
 
+import controleurs.NavigationVues;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import modeles.NavigationVues;
 
 /**
  * Permet d'afficher et de retirer le Menu latéral.

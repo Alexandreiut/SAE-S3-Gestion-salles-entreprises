@@ -25,6 +25,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Adrien Astier
+ */
 public class Importation {
 
 	private static final String MESSAGE_SUCCES_IMPORTATION = "Les données ont été importées avec succès.";
@@ -68,7 +71,7 @@ public class Importation {
 	 * @return Une liste combinée des fichiers avec et sans en-tête.
 	 * @throws LectureException si une erreur de lecture spécifique survient.
 	 */
-	public List<File> traiterImportFichiers(List<File> fichiers) throws LectureException {
+	public static List<File> traiterImportFichiers(List<File> fichiers) throws LectureException {
 		List<File> fichiersAvecEntete = new ArrayList<>();
 		List<File> fichiersSansEntete = new ArrayList<>();
 
@@ -96,7 +99,7 @@ public class Importation {
 	 * @param fichiersAvecEntete Liste des fichiers avec en-tête où le fichier sera ajouté s'il correspond.
 	 * @param fichiersSansEntete Liste des fichiers sans en-tête où le fichier sera ajouté s'il correspond.
 	 */
-	private void classerFichier(String entete, File fichier, List<File> fichiersAvecEntete, 
+	private static void classerFichier(String entete, File fichier, List<File> fichiersAvecEntete, 
 			List<File> fichiersSansEntete) {
 		switch (entete) {
 		case EN_TETE_EMPLOYE, EN_TETE_ACTIVITE, EN_TETE_SALLE : 
@@ -120,7 +123,7 @@ public class Importation {
 	 * @param fichiersAvecEntete Liste des fichiers avec en-tête, qui peut être vidée si des fichiers sont manquants.
 	 * @param fichiersSansEntete Liste des fichiers sans en-tête, vérifiée pour la présence des fichiers requis.
 	 */
-	private void gererFichiersManquants(List<File> fichiersAvecEntete, 
+	private static void gererFichiersManquants(List<File> fichiersAvecEntete, 
 			List<File> fichiersSansEntete) {
 		List<String> fichiersManquants;
 		if (!fichiersAvecEntete.isEmpty()) {
@@ -139,7 +142,7 @@ public class Importation {
 	 * @param fichiersSansEntete Liste des fichiers sans en-tête à vérifier.
 	 * @return Une liste de noms de fichiers manquants requis pour une importation complète.
 	 */
-	private List<String> getNomsFichiersManquants(List<File> fichiersSansEntete) {
+	public static List<String> getNomsFichiersManquants(List<File> fichiersSansEntete) { // initialement en private
 		List<String> fichiersManquants = new ArrayList<>();
 		
 		boolean correspondantActivite = true;
@@ -198,7 +201,7 @@ public class Importation {
 	 * @param typeEntete Le type d'en-tête attendu pour le fichier.
 	 * @return true si le fichier possède le bon en-tête, false sinon ou en cas d'erreur de lecture.
 	 */
-	private boolean estFichierDeType(File fichier, String typeEntete) {
+	private static boolean estFichierDeType(File fichier, String typeEntete) {
 		try {
 			String entete = LecteurCSV.getRessource(fichier.getAbsolutePath()).get(0);
 			return entete.equals(typeEntete);
@@ -214,7 +217,7 @@ public class Importation {
 	 * @param fichiersAvecEntete Liste des fichiers avec en-tête à ajouter ensuite.
 	 * @return Une nouvelle liste contenant d'abord les fichiers sans en-tête, puis ceux avec en-tête.
 	 */
-	private List<File> fusionnerListesFichiers(List<File> fichiersSansEntete, 
+	private static List<File> fusionnerListesFichiers(List<File> fichiersSansEntete, 
 			List<File> fichiersAvecEntete) {
 		List<File> fichierOrdonne = new ArrayList<>();
 		fichierOrdonne.addAll(fichiersSansEntete);
@@ -229,7 +232,7 @@ public class Importation {
 	 * @param fichiers La liste des fichiers à traiter.
 	 * @param stockage Le stockage dans lequel les objets seront importés.
 	 */
-	public void traiterFichiers(List<File> fichiers, Stockage stockage) {
+	public static void traiterFichiers(List<File> fichiers, Stockage stockage) {
 		List<String> fichiersReussis = new ArrayList<>();
 		List<String> fichiersEchoues = new ArrayList<>();
 		List<String> fichiersDejaImportes = new ArrayList<>();
@@ -257,13 +260,13 @@ public class Importation {
 	 * Si certains objets ne peuvent pas être ajoutés (par exemple, déjà présents), le nom du fichier est ajouté à une liste
 	 * de fichiers déjà importés.
 	 * @param objets La liste des objets à importer dans le stockage.
-	 * @param fileName Le nom du fichier contenant les objets à importer.
+	 * @param nomFichier Le nom du fichier contenant les objets à importer.
 	 * @param fichiersDejaImportes La liste des fichiers déjà importés, qui sera mise à jour si nécessaire.
 	 * @param stockage Le stockage dans lequel les objets seront importés.
 	 * @return Une liste des fichiers dont l'importation a réussi.
 	 */
-	private List<String> importerObjets(List<Object> objets, String nomFichier, 
-			List<String> fichiersDejaImportes, Stockage stockage) {
+	public static List<String> importerObjets(List<Object> objets, String nomFichier, 
+			List<String> fichiersDejaImportes, Stockage stockage) { // initialement private
 		List<String> fichiersReussis = new ArrayList<>();
 		boolean fichierImporte = false;
 
@@ -292,7 +295,7 @@ public class Importation {
 	 * @param stockage Le stockage dans lequel l'objet doit être ajouté.
 	 * @return true si l'objet a été ajouté avec succès, false si l'objet est déjà importé et n'a pas été ajouté.
 	 */
-	private boolean ajouterObjetAuStockage(Object objet, Stockage stockage) {
+	private static boolean ajouterObjetAuStockage(Object objet, Stockage stockage) {
 		if (objet instanceof Employe employe && !estDejaImporte(employe, stockage.getListeEmploye())) {
 			stockage.getListeEmploye().add(employe);
 			return true;
@@ -319,7 +322,7 @@ public class Importation {
 	 * En cas de problème de connexion ou de données manquantes, un message d'erreur est également affiché.
 	 * @param ip L'adresse IP du serveur distant à partir duquel les données seront importées.
 	 */
-	public void importerDonneesServeurDistant(String ip, int port) {
+	public static void importerDonneesServeurDistant(String ip, int port) {
 		try (Importateur importateur = new Importateur(ip, port, RoomManager.stockage)) {
 			ArrayList<ArrayList<String>> donnees = importateur.recevoirDonnee();
 
@@ -345,7 +348,7 @@ public class Importation {
 	 * @param liste La liste des objets déjà importés dans laquelle on recherche une correspondance.
 	 * @return true si un objet avec le même identifiant existe déjà dans la liste, false sinon.
 	 */
-	private <T> boolean estDejaImporte(T objet, List<T> liste) {
+	private static <T> boolean estDejaImporte(T objet, List<T> liste) {
 		String id;
 
 		if (objet instanceof Salle) {
@@ -391,7 +394,7 @@ public class Importation {
 	 * @param fichiersDejaImportes La liste des fichiers qui ont déjà été importés.
 	 * @param fichiersVides La liste des fichiers qui sont vides et n'ont pas été traités.
 	 */
-	private void afficherResultatsImportation(List<String> fichiersReussis, List<String> fichiersEchoues, 
+	private static void afficherResultatsImportation(List<String> fichiersReussis, List<String> fichiersEchoues, 
 			List<String> fichiersDejaImportes, List<String> fichiersVides) {
 		if (!fichiersReussis.isEmpty()) {
 			AfficherAlerte.afficherAlerte(Alert.AlertType.INFORMATION, "Importation réussie", "Les fichiers suivants ont été importés avec succès :\n" + fichiersReussis);
@@ -413,7 +416,7 @@ public class Importation {
 	 * @param ip L'adresse IP à valider sous forme de chaîne de caractères.
 	 * @return true si l'adresse IP est valide, false sinon.
 	 */
-	public boolean estIPValide(String ip) {
+	public static boolean estIPValide(String ip) {
 		return ip.matches("^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
 				"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
 				"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +

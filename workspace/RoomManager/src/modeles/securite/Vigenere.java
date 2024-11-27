@@ -23,8 +23,6 @@ public class Vigenere {
         }
         return chaine.toString();
     }
-    
-    
 
     /**
      * Encode une chaîne de caractère et effectue un décalage en fonction de la clef
@@ -34,7 +32,7 @@ public class Vigenere {
      */
     public static String encodageVigenere(String clef, String chaineACrypter) {
         StringBuilder chaineConstruite = new StringBuilder();
-
+        
         for (int indexChaine = 0; indexChaine < chaineACrypter.length(); indexChaine++) {
             char caractereChaine = chaineACrypter.charAt(indexChaine);
             char caractereClef = clef.charAt(indexChaine % clef.length());
@@ -58,7 +56,7 @@ public class Vigenere {
      */
     public static String decodageVigenere(String clef, String chaineADecrypter) {
         StringBuilder chaineConstruite = new StringBuilder();
-
+        
         for (int indexChaine = 0; indexChaine < chaineADecrypter.length(); indexChaine++) {
             char caractereChaine = chaineADecrypter.charAt(indexChaine);
             char caractereClef = clef.charAt(indexChaine % clef.length());

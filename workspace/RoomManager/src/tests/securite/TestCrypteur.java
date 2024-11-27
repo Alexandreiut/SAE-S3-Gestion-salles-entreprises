@@ -48,15 +48,6 @@ public class TestCrypteur {
         assertEquals(message, messageDecrypte, "Le message décrypté doit être égal au message original.");
     }
 
-       @Test
-    void testGenererCle() {
-        // Tester si la clé générée est valide
-        String cle = crypteur.genererCle();
-        
-        assertNotNull(cle, "La clé générée ne doit pas être nulle.");
-        assertTrue(cle.length() > 0, "La clé doit avoir une longueur supérieure à 0.");
-        
-    }
     
     @Test
     void testCrypteMessage() {
@@ -71,6 +62,19 @@ public class TestCrypteur {
     }
 
     @Test
+    void testGenererCle() {
+        // Tester si la clé générée est valide
+    	crypteur.diffieHellman.calculeSecret(crypteur.diffieHellman
+    			                             .getGPuissanceX());
+        String cle1 = crypteur.genererCle();
+        String cle2 = crypteur.genererCle();
+        
+        assertNotNull(cle1, "La clé générée ne doit pas être nulle.");
+        assertTrue(cle1.length() > 0, "La clé doit avoir une longueur supérieure à 0.");
+        assertEquals(cle1, cle2);
+    }
+        
+    @Test
     void testCrypteMessageAvecCaracteresSpeciaux() {
     	String message = "B*njoûr! Cômmënt çã vâ? & Je m'àppèlle Lù{@§";
     	crypteur.genererCle();
@@ -83,7 +87,7 @@ public class TestCrypteur {
     }
     
     @Test
-    void testCryotageMessageAvecChiffres() {
+    void testCryptageMessageAvecChiffres() {
     	String message = "Ceci est un test avec des chiffres: 1234567890";
     	crypteur.genererCle();
     	String messageCrypte = crypteur.crypteMessage(message);
