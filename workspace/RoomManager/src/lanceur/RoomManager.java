@@ -5,6 +5,10 @@
 
 package lanceur;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.MalformedURLException;
+
 import controleurs.NavigationVues;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -13,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import modeles.sauvegarde.Serialisation;
+import modeles.sortie.TestGenerationPdf3;
 import modeles.stockage.Stockage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

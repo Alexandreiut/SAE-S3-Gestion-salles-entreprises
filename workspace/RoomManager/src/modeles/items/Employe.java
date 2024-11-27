@@ -77,7 +77,7 @@ public class Employe implements Serializable {
     
     @Override
     public String toString() {
-    	return ("Id : " + this.identifiant + ", Nom : " + this.nom
-    			+ ", Prenom : " + this.prenom + ", tel : " + this.telephone);
+    	return (this.identifiant + ", " + this.nom + ", "
+    			+ this.prenom + ", " + this.telephone);
     }
 }

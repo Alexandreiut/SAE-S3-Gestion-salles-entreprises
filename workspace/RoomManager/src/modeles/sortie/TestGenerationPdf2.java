@@ -77,16 +77,11 @@ public class TestGenerationPdf2 {
                 "• R000013, 00000008, E000003, entretien, 11/10/2024, 08h00, 17h00"
                 + "\nmise à jour logiciels"));
         
-        /*document.add(new Paragraph("e"));
         document.add(new Paragraph("e"));
         document.add(new Paragraph("e"));
         document.add(new Paragraph("e"));
         document.add(new Paragraph("e"));
         document.add(new Paragraph("e"));
-        document.add(new Paragraph("e"));
-        document.add(new Paragraph("e"));
-        document.add(new Paragraph("e"));
-        document.add(new Paragraph("e"));*/
 
         // Chemin et conteneur des logo
         String cheminLogoApp = "src/ressource/image/logo-app.png";
