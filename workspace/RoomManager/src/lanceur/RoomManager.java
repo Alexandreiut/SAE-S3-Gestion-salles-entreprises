@@ -43,12 +43,8 @@ public class RoomManager extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			
-			//stockage = new Stockage(new ArrayList<Salle>(), new ArrayList<Activite>()
-			//		, new ArrayList<Employe>(), new ArrayList<Reservation>());
 			// Charge le fichier FXML	
 			Parent root = FXMLLoader.load(getClass().getResource("/affichages/RoomManager.fxml"));
-			//Parent root = FXMLLoader.load(getClass().getResource("/affichages/TestMenuLateral.fxml"));
-			//Parent root = FXMLLoader.load(getClass().getResource("/affichages/consultation.fxml"));
 
 			// Crée la scène avec la racine FXML
 			Scene scene = new Scene(root);

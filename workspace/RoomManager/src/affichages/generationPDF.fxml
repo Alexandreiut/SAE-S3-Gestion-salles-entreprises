@@ -36,6 +36,6 @@
    </children>
    <stylesheets>
       <URL value="@application.css" />
-      <URL value="@consultation.css" />
+      
    </stylesheets>
 </Pane>

@@ -17,6 +17,7 @@ import modeles.items.Activite;
 import modeles.items.Employe;
 import modeles.items.Reservation;
 import modeles.items.Salle;
+import modeles.sortie.GenerePDF;
 import modeles.stockage.Stockage;
 
 /**
@@ -30,6 +31,7 @@ public class Consultation {
 	// Initialisation du stockage
 	private void initialisationStockage() {
 		stockage = RoomManager.stockage;
+		
 	}
 
 	/**
