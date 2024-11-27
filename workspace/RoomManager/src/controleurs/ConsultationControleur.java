@@ -186,6 +186,7 @@ public class ConsultationControleur {
         Label labelNbItem = new Label(countText + listeItem.size());
         
         Button graphicButton = new Button();
+        graphicButton.setDisable(true);
         
         VBox mainRectangleContainer = new VBox();
         VBox subRectanglesContainer = new VBox();
@@ -334,6 +335,7 @@ public class ConsultationControleur {
     	
     	Button detailsButton = new Button("Détails");
     	Button graphicButton = new Button("Graphique");
+    	graphicButton.setDisable(true);
     	Button ajoutPdfButton = new Button("+");
     	   	
         Tooltip tooltip = new Tooltip("Ajouter l'item au pdf");
