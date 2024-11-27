@@ -1,67 +1,141 @@
 package controleurs;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.SVGPath;
+import javafx.stage.Stage;
+
+import lanceur.RoomManager;
+
+import modeles.sortie.GenerePDF;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GenerationControleur {
+import affichages.AfficherManuel;
+import affichages.GestionAffichageMenu;
 
+public class GenerationControleur {
+	@FXML
+	private Pane panePrincipal;
+	
     @FXML
     private VBox vboxContent; // VBox pour contenir les lignes dynamiques
 
-    // Modèle pour stocker les données associées aux éléments
-    private final ArrayList<HashMap<String, String>> donneesLignes = new ArrayList<>();
+    private GenerePDF generePDF;
+    
+    @FXML
+    private Button boutonRetour;
+    
     @FXML
     private void initialize() {
-    	
+    	generePDF = RoomManager.generePdf;
+    	creerListeItem();
     }
     
-    /**
-     * Ajoute une nouvelle ligne dans le VBox principal.
-     */
-    public void ajouterLigne(String categorie, String information) {
-        // Création d'une HBox pour la ligne
-        HBox ligne = new HBox();
-        ligne.setSpacing(10);
-        ligne.getStyleClass().add("ligne");
+    private void creerListeItem() {
+    	HashMap<String, ArrayList<Object>> mapBrute = generePDF.getDonneesBrutes();
+    	HashMap<String, ArrayList<String>> mapFiltre = generePDF.getDonneesFiltrees();
+    	HashMap<String, ArrayList<String>> mapClassement = generePDF.getDonneesClassement();
+    	Label cleLabel;
+		Label sourceDonnee;
+		Button information;
+		Button retirerDuPdf;
+		Tooltip tooltipSupprimer = new Tooltip("Supprimer cette ligne");
+		
+    	for(String cle: mapBrute.keySet()) {
+    		HBox hbox = new HBox();
+    		hbox.getStyleClass().add("itemSecondaireVBOX");
+    		cleLabel = new Label(cle);
+    		sourceDonnee = new Label("Consultation brute");
+    		information = new Button("Informations");
+    		information.setVisible(false);
+    		retirerDuPdf = new Button("-");
+    		retirerDuPdf.setTooltip(tooltipSupprimer);
+    		retirerDuPdf.setOnAction(e -> {
+    			removeItem(hbox,cle,"Consultation brute");
+            });
+    		cleLabel.setPrefWidth(150);
+    		sourceDonnee.setPrefWidth(150);
+    		information.setPrefWidth(150);
+    		retirerDuPdf.setPrefWidth(150);
+    		hbox.getChildren().addAll(cleLabel,sourceDonnee,information,retirerDuPdf);
+    		vboxContent.getChildren().add(hbox);
+    	}
+    	for(String cle: mapFiltre.keySet()) {
+    		HBox hbox = new HBox();
+    		hbox.getStyleClass().add("itemSecondaireVBOX");
+    		cleLabel = new Label(cle);
+    		sourceDonnee = new Label("Filtre"); 
+    		information = new Button("Informations");
+    		information.setOnAction(e -> {
+    			afficheInfo(generePDF.getInfoFiltre(cle,"Filtre"));
+            });
+    		retirerDuPdf = new Button("-");
+    		retirerDuPdf.setTooltip(tooltipSupprimer);
+    		retirerDuPdf.setOnAction(e -> {
+    			removeItem(hbox,cle,"Filtre");
+            });
+    		cleLabel.setPrefWidth(150);
+    		sourceDonnee.setPrefWidth(150);
+    		information.setPrefWidth(150);
+    		retirerDuPdf.setPrefWidth(150);
+    		hbox.getChildren().addAll(cleLabel,sourceDonnee,information,retirerDuPdf);
+    		vboxContent.getChildren().add(hbox);
+    	}
+    	for(String cle: mapClassement.keySet()) {
+    		HBox hbox = new HBox();
+    		hbox.getStyleClass().add("itemSecondaireVBOX");
+    		cleLabel = new Label(cle);
+    		sourceDonnee = new Label("Statistique"); 
+    		information = new Button("Informations");
+    		information.setOnAction(e -> {
+    			afficheInfo(generePDF.getInfoFiltre(cle,"Classement"));
+            });
+    		retirerDuPdf = new Button("-");
+    		retirerDuPdf.setTooltip(tooltipSupprimer);
+    		retirerDuPdf.setOnAction(e -> {
+    			removeItem(hbox,cle,"Statistique");
+            });
+    		cleLabel.setPrefWidth(150);
+    		sourceDonnee.setPrefWidth(150);
+    		information.setPrefWidth(150);
+    		retirerDuPdf.setPrefWidth(150);
+    		hbox.getChildren().addAll(cleLabel,sourceDonnee,information,retirerDuPdf);
+    		vboxContent.getChildren().add(hbox);
+    	}
+	}
 
-        // Création des composants de la ligne
-        Label labelCategorie = new Label(categorie);
-        Label labelInformation = new Label(information);
-
-        Button boutonSupprimer = new Button("-");
-        Tooltip tooltipSupprimer = new Tooltip("Supprimer cette ligne");
-        boutonSupprimer.setTooltip(tooltipSupprimer);
-
-        // SVG pour icône
-        SVGPath svgPoint = new SVGPath();
-        svgPoint.setContent("M 5 10 C 7.761719 10 10 7.761719 10 5 C 10 2.238281 7.761719 0 5 0 C 2.238281 0 0 2.238281 0 5 C 0 7.761719 2.238281 10 5 10 Z M 5 10");
-
-        // Ajout d'un HashMap pour stocker les données de la ligne
-        HashMap<String, String> ligneDonnees = new HashMap<>();
-        ligneDonnees.put("categorie", categorie);
-        ligneDonnees.put("information", information);
-        donneesLignes.add(ligneDonnees);
-
-        // Action du bouton de suppression
-        boutonSupprimer.setOnAction(e -> {
-            vboxContent.getChildren().remove(ligne);
-            donneesLignes.remove(ligneDonnees);
-        });
-
-        // Ajout des composants dans la ligne
-        ligne.getChildren().addAll(svgPoint, labelCategorie, labelInformation, boutonSupprimer);
-
-        // Ajout de la ligne dans le VBox principal
-        vboxContent.getChildren().add(ligne);
+    private void afficheInfo(String texteAffiche) {
+    	// Créer une nouvelle fenêtre
+        Stage detailStage = new Stage();
+        VBox detailsBox = new VBox();
+        detailsBox.setPadding(new Insets(10));
+        
+        detailsBox.getChildren().add(new Label(texteAffiche));
+        
+        Scene scene = new Scene(detailsBox, 300, 250);
+        detailStage.setScene(scene);
+        detailStage.setTitle("Filtres appliqués");
+        detailStage.show();
     }
+
+	private void removeItem(HBox contenerARetirer, String cle, String typeRetire) {
+		if(typeRetire.equals("Consultation brute")) {
+			generePDF.getDonneesBrutes().remove(cle);		
+		} else if(typeRetire.equals("Filtre")) {
+			generePDF.getDonneesFiltrees().remove(cle);		
+		} else {
+			generePDF.getDonneesClassement().remove(cle);
+		}
+		vboxContent.getChildren().remove(contenerARetirer);	
+	}
 
     /**
      * Vide toutes les lignes ajoutées.
@@ -69,7 +143,9 @@ public class GenerationControleur {
     @FXML
     public void viderContenu() {
         vboxContent.getChildren().clear();
-        donneesLignes.clear();
+        generePDF.getDonneesBrutes().clear();
+        generePDF.getDonneesFiltrees().clear();
+        generePDF.getDonneesClassement().clear();
     }
 
     /**
@@ -77,17 +153,30 @@ public class GenerationControleur {
      */
     @FXML
     public void genererPDF() {
-        if (donneesLignes.isEmpty()) {
-            // TODO message
-            return;
-        }
-
-        System.out.println("Génération du PDF avec les données suivantes :");
-        for (HashMap<String, String> ligneDonnees : donneesLignes) {
-            System.out.println("Catégorie: " + ligneDonnees.get("categorie") + ", Information: " + ligneDonnees.get("information"));
-        }
-
-        // Logique pour générer le PDF (implémenter selon vos besoins, ex. Apache PDFBox ou iText)
-        // Exemple : PDFGenerator.generate(donneesLignes);
+        //TODO appeler truc samuel
+    }
+    /**
+     * Gestion du menu
+     */
+	@FXML
+	private void menu() {
+		GestionAffichageMenu.affichageMenu(panePrincipal);
+	}
+	
+	/**
+	 * Gestion du bouton retour
+	 */
+	@FXML
+    private void handleRetour() {
+        NavigationVues.retourVuePrecedente();
+    }
+	
+	/**
+	 * Gestion de l'affichage de l'aide
+	 */
+    @FXML
+    private void handleAfficherAide() {
+        String cheminFichier = "src/ressource/aide/AidePageConsultation.pdf";
+        AfficherManuel.afficherAide(cheminFichier);
     }
 }

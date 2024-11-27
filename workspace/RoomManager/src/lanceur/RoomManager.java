@@ -5,6 +5,9 @@
 
 package lanceur;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import controleurs.NavigationVues;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -13,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import modeles.sauvegarde.Serialisation;
+import modeles.sortie.GenerePDF;
 import modeles.stockage.Stockage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,12 +27,14 @@ import javafx.scene.Scene;
 public class RoomManager extends Application {
 	
 	public static Stockage stockage;
+	
+	public static GenerePDF generePdf;
 
 	public static void processusFermetureApp(Stage stageCourant) {
 		stageCourant.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent event) {
-				Serialisation.serialiser(stockage);
+				Serialisation.serialiser(stockage);				
 				Platform.exit();
 				event.consume();
 			}
@@ -42,7 +48,11 @@ public class RoomManager extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			
+			generePdf = new GenerePDF(new HashMap<String, ArrayList<Object>>(),
+					new HashMap<String, ArrayList<String>>(),
+					new HashMap<String, String>(),
+					new HashMap<String, ArrayList<String>>(),
+					new HashMap<String, String>());
 			// Charge le fichier FXML	
 			Parent root = FXMLLoader.load(getClass().getResource("/affichages/RoomManager.fxml"));
 
@@ -51,9 +61,6 @@ public class RoomManager extends Application {
 			NavigationVues.setSceneCourante(scene);
 			
 			processusFermetureApp(primaryStage);
-
-			// Ajoute la feuille de style CSS
-			//scene.getStylesheets().add(getClass().getResource("affichages/RoomManager.css").toExternalForm());
 
 			// Configure et affiche la fenêtre
 			primaryStage.setScene(scene);

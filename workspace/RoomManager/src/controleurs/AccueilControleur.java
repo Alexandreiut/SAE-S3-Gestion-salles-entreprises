@@ -32,7 +32,7 @@ public class AccueilControleur {
 	 */
 	@FXML
 	public void versVueGenererPDF() {
-		NavigationVues.changerVue("consultation", false);
+		NavigationVues.changerVue("generationPDF", false);
 	}
 	
 	/**

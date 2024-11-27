@@ -31,12 +31,6 @@ public class GestionAffichageMenu {
 			GestionAffichageMenu.retirerMenu(panePrincipal);
 		});
 		
-		Button btnAccueil = new Button("Accueil");
-		btnAccueil.getStyleClass().add("les-boutons-menu");
-		btnAccueil.setOnAction(event -> {
-			NavigationVues.changerVue("RoomManager", false);
-		});
-		
 		Button btnConsultation = new Button("Consultation");
 		btnConsultation.getStyleClass().add("les-boutons-menu");
 		btnConsultation.setOnAction(event -> {
@@ -46,7 +40,7 @@ public class GestionAffichageMenu {
 		Button btnGenererPDF = new Button("Générer PDF");
 		btnGenererPDF.getStyleClass().add("les-boutons-menu");
 		btnGenererPDF.setOnAction(event -> {
-			NavigationVues.changerVue("genererPDF", false);
+			NavigationVues.changerVue("generationPDF", false);
 		});
 		
 		Button btnImportation = new Button("Importation");
@@ -61,7 +55,7 @@ public class GestionAffichageMenu {
 			NavigationVues.changerVue("exportation", false);
 		});
 		
-		menu.getChildren().addAll(Arrays.asList(btnMenu, btnAccueil, btnConsultation, btnGenererPDF, btnImportation, btnExportation));
+		menu.getChildren().addAll(Arrays.asList(btnMenu, btnConsultation, btnGenererPDF, btnImportation, btnExportation));
 		
 		panePrincipal.getChildren().add(bandeauBleu);
 		panePrincipal.getChildren().add(menu);

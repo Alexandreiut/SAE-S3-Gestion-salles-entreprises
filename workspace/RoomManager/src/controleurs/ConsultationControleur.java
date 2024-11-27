@@ -7,6 +7,7 @@ package controleurs;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -31,6 +32,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
+import lanceur.RoomManager;
 import javafx.geometry.Insets;
 
 import modeles.consultation.Consultation;
@@ -129,6 +131,7 @@ public class ConsultationControleur {
     @FXML
     private void initialize() {
     	consultation = new Consultation();
+    	generePdf = RoomManager.generePdf;
     	// Définition du contenu des comboBox
     	ObservableList<String> typeItems = FXCollections.observableArrayList("Consultation brute", "Recherche par filtre", "Consultation statistique");
         ObservableList<String> periodeItems = FXCollections.observableArrayList("jour","semaine");
@@ -160,9 +163,8 @@ public class ConsultationControleur {
         
         // Selection d'un affichage des classements par défaut sur décroissant
         decroissantId.setSelected(true);
-        // attribution de date par defaut
-        dateDebut = LocalDate.of(1970, 1, 1);
-        dateFin = LocalDate.of(2099, 12, 31);
+        dateDebut = LocalDate.of(1970,1,1);
+        dateFin = LocalDate.of(2099,12,31);
         changeAffichage();       
     }
 
@@ -297,7 +299,7 @@ public class ConsultationControleur {
         // défini une action particulière pour l'ajout au pdf
         if(((String) rechercheTypeId.getSelectionModel().getSelectedItem()).equals("Consultation statistique")) {       	
         	btnAjoutPdf.setOnAction(e -> generePdf.ajoutClassement(listeId,getFiltreInfos(),valeurSomme,listeHeureCritere));
-        } else if(((String) rechercheTypeId.getSelectionModel().getSelectedItem()).equals("Consultation statistique")) {
+        } else if(((String) rechercheTypeId.getSelectionModel().getSelectedItem()).equals("Recherche par filtre")) {
         	double nbJour = dateOutil.getWorkingDaysBetween(dateDebut, dateFin);
         	btnAjoutPdf.setOnAction(e -> generePdf.ajoutEnsembleItems(listeId,listeHeureCritere,getFiltreInfos(),
         			valeurSomme, (double) totalMoyenne / listeItem.size(), nbJour));      	
@@ -395,8 +397,6 @@ public class ConsultationControleur {
         // définition des actions des boutons
         detailsButton.setOnAction(e -> showDetailsWindow(item));
         //graphicButton.setOnAction(e -> showDetailsWindow(item));
-        double heure = heureCritereDouble;
-        double moyenne = moyenneCalcule;
         
         // Ajout de node à d'autre
         graphicButton.setGraphic(svgGraphic);
@@ -724,8 +724,8 @@ public class ConsultationControleur {
     		infoFiltres.put("moyenne","non");
     	}   	
     	infoFiltres.put("focusMoyenne",(String)focusMoyenneId.getValue());
-    	infoFiltres.put("dateDebut",dateDebutId.getValue().toString());
-    	infoFiltres.put("dateFin",dateFinId.getValue().toString());
+    	infoFiltres.put("dateDebut", dateDebut.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+    	infoFiltres.put("dateFin", dateFin.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
     	infoFiltres.put("heureDebut",heureDebutId.getValue());
     	infoFiltres.put("heureFin",heureFinId.getValue());
     	infoFiltres.put("reservé", roomStatuId.getValue());

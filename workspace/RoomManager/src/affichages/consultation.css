@@ -21,8 +21,6 @@
 }
 
 .itemSecondaireVBOX {
-	-fx-pref-width: 200;
-    -fx-pref-height: 10;
     
 	-fx-border-color: #000000;
 	-fx-border-radius: 50px;

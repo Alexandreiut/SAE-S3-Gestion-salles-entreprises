@@ -18,7 +18,6 @@
       <VBox prefHeight="0.0" prefWidth="0.0" styleClass="menu">
          <children>
             <Button mnemonicParsing="false" styleClass="bouton-menu-modifier" text="Menu" />
-            <Button mnemonicParsing="false" styleClass="les-boutons-menu" text="Accueil" />
             <Button mnemonicParsing="false" styleClass="les-boutons-menu" text="Consultation" />
             <Button mnemonicParsing="false" styleClass="les-boutons-menu" text="Générer PDF" />
             <Button mnemonicParsing="false" styleClass="les-boutons-menu" text="Importation" />
