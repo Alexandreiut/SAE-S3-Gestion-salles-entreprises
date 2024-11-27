@@ -32,7 +32,7 @@
                      <children>
                         <HBox prefHeight="67.0" prefWidth="200.0">
                            <children>
-                              <ComboBox fx:id="objectItemId" prefHeight="35.0" prefWidth="207.0" styleClass="comboBox-heure">
+                              <ComboBox fx:id="objectItemId" prefHeight="35.0" prefWidth="207.0" styleClass="comboBox-heure" onAction="#recherche">
                                  <HBox.margin>
                                     <Insets top="40.0" />
                                  </HBox.margin>
@@ -46,7 +46,7 @@
                                     <Insets right="10.0" top="5.0" />
                                  </padding>
                               </Label>
-                              <RadioButton fx:id="croissantId" mnemonicParsing="false">
+                              <RadioButton fx:id="croissantId" mnemonicParsing="false" onAction="#recherche">
                                  <graphic>
                                     <SVGPath content="M 8.382812 1.617188 C 7.894531 1.128906 7.101562 1.128906 6.613281 1.617188 L 0.363281 7.867188 C -0.125 8.355469 -0.125 9.148438 0.363281 9.636719 C 0.851562 10.125 1.644531 10.125 2.132812 9.636719 L 6.25 5.515625 L 6.25 17.5 C 6.25 18.191406 6.808594 18.75 7.5 18.75 C 8.191406 18.75 8.75 18.191406 8.75 17.5 L 8.75 5.519531 L 12.867188 9.632812 C 13.355469 10.121094 14.148438 10.121094 14.636719 9.632812 C 15.125 9.144531 15.125 8.351562 14.636719 7.863281 L 8.386719 1.613281 Z M 8.382812 1.617188" />
                                  </graphic>
@@ -57,7 +57,7 @@
                                     <Insets top="7.0" />
                                  </HBox.margin>
                               </RadioButton>
-                              <RadioButton fx:id="decroissantId" mnemonicParsing="false">
+                              <RadioButton fx:id="decroissantId" mnemonicParsing="false" onAction="#recherche">
                                  <graphic>
                                     <SVGPath content="M 6.617188 18.382812 C 7.105469 18.871094 7.898438 18.871094 8.386719 18.382812 L 14.636719 12.132812 C 15.125 11.644531 15.125 10.851562 14.636719 10.363281 C 14.148438 9.875 13.355469 9.875 12.867188 10.363281 L 8.75 14.484375 L 8.75 2.5 C 8.75 1.808594 8.191406 1.25 7.5 1.25 C 6.808594 1.25 6.25 1.808594 6.25 2.5 L 6.25 14.480469 L 2.132812 10.367188 C 1.644531 9.878906 0.851562 9.878906 0.363281 10.367188 C -0.125 10.855469 -0.125 11.648438 0.363281 12.136719 L 6.613281 18.386719 Z M 6.617188 18.382812" />
                                  </graphic>
@@ -85,7 +85,7 @@
                                     <Insets top="3.0" />
                                  </HBox.margin>
                               </CheckBox>
-                              <ComboBox fx:id="focusMoyenneId" prefHeight="35.0" prefWidth="110.0" styleClass="comboBox-moyenne">
+                              <ComboBox fx:id="focusMoyenneId" prefHeight="35.0" prefWidth="110.0" styleClass="comboBox-moyenne" onAction="#recherche">
                                  <HBox.margin>
                                     <Insets top="5.0" />
                                  </HBox.margin></ComboBox>
@@ -133,24 +133,12 @@
                               <Insets left="10.0" right="10.0" />
                            </padding>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="61.0" prefWidth="214.0">
-                           <children>
-                              <Button fx:id="searchButtonId" mnemonicParsing="false" onAction="#recherche" prefHeight="297.0" prefWidth="204.0" styleClass="boutons-loupe" text="Rechercher ">
-                                 <graphic>
-                                    <SVGPath content="M 16.25 8.125 C 16.25 9.917969 15.667969 11.574219 14.6875 12.917969 L 19.632812 17.867188 C 20.121094 18.355469 20.121094 19.148438 19.632812 19.636719 C 19.144531 20.125 18.351562 20.125 17.863281 19.636719 L 12.917969 14.6875 C 11.574219 15.671875 9.917969 16.25 8.125 16.25 C 3.636719 16.25 0 12.613281 0 8.125 C 0 3.636719 3.636719 0 8.125 0 C 12.613281 0 16.25 3.636719 16.25 8.125 Z M 8.125 13.75 C 11.230469 13.75 13.75 11.230469 13.75 8.125 C 13.75 5.019531 11.230469 2.5 8.125 2.5 C 5.019531 2.5 2.5 5.019531 2.5 8.125 C 2.5 11.230469 5.019531 13.75 8.125 13.75 Z M 8.125 13.75" />
-                                 </graphic>
-                              </Button>
-                           </children>
-                           <padding>
-                              <Insets left="10.0" right="10.0" />
-                           </padding>
-                        </HBox>
                      </children>
                   </VBox>
                </children>
             </Group>
          </children></VBox>
-      <Button layoutX="467.0" layoutY="524.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="484.0" styleClass="boutons-ajouter" text="Ajouter au pdf" />
+      <Button fx:id="ajouterTousId" layoutX="467.0" layoutY="524.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="484.0" styleClass="boutons-ajouter" text="Ajouter au pdf" onAction="#ajoutTousItems"/>
       <VBox layoutX="225.0" layoutY="108.0" prefHeight="409.0" prefWidth="758.0">
          <children>
             <Group fx:id="searchGroupId">
@@ -159,7 +147,7 @@
                      <children>
                         <VBox prefHeight="27.0" prefWidth="188.0">
                            <children>
-                              <TextField fx:id="searchRoomId" prefHeight="25.0" prefWidth="180.0" promptText="Nom salle" styleClass="text-field-consultation" />
+                              <TextField fx:id="searchRoomId" prefHeight="25.0" prefWidth="180.0" promptText="Nom salle" styleClass="text-field-consultation" onKeyReleased="#recherche"/>
                            </children>
                            <HBox.margin>
                               <Insets right="50.0" />
@@ -167,7 +155,7 @@
                         </VBox>
                         <VBox prefHeight="27.0" prefWidth="220.0">
                            <children>
-                              <TextField fx:id="searchEmployeId" prefHeight="25.0" prefWidth="192.0" promptText="Nom ou prénom employé" styleClass="text-field-consultation" />
+                              <TextField fx:id="searchEmployeId" prefHeight="25.0" prefWidth="192.0" promptText="Nom ou prénom employé" styleClass="text-field-consultation" onKeyReleased="#recherche"/>
                            </children>
                            <HBox.margin>
                               <Insets right="50.0" />
@@ -175,7 +163,7 @@
                         </VBox>
                         <VBox prefHeight="25.0" prefWidth="160.0">
                            <children>
-                              <TextField fx:id="searchActiviteId" prefHeight="25.0" prefWidth="150.0" promptText="Nom activité" styleClass="text-field-consultation" />
+                              <TextField fx:id="searchActiviteId" prefHeight="25.0" prefWidth="150.0" promptText="Nom activité" styleClass="text-field-consultation" onKeyReleased="#recherche"/>
                            </children>
                         </VBox>
                      </children>

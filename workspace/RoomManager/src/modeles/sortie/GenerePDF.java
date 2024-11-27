@@ -9,6 +9,11 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import modeles.items.Activite;
+import modeles.items.Employe;
+import modeles.items.Reservation;
+import modeles.items.Salle;
+
 /*import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
@@ -24,15 +29,45 @@ public class GenerePDF {
 	private HashMap<String, String> filtre;
 	
 	private HashMap<String, ArrayList<String>> donneesFiltrees;
+	
+	private HashMap<String, ArrayList<ArrayList<Object>>> donneesClassements;
 
 	public GenerePDF(HashMap<String, ArrayList<Object>> donneesBrutes,
-			HashMap<String, String> filtre, HashMap<String, ArrayList<String>> donneesFiltrees) {
+			HashMap<String, String> filtre, HashMap<String, ArrayList<String>> donneesFiltrees,
+			HashMap<String, ArrayList<ArrayList<Object>>> donneesClassements) {
 		
 		this.donneesBrutes = donneesBrutes;
 		this.filtre = filtre;
 		this.donneesFiltrees = donneesFiltrees;
+		this.donneesClassements = donneesClassements;
+	}
+	public void ajoutDonneBrute(ArrayList<Object> listeActivite,
+			ArrayList<Object> listeEmploye, ArrayList<Object> listeReservation, ArrayList<Object> listeSalle) {
+		this.donneesBrutes.put("Activités", listeActivite);
+		this.donneesBrutes.put("Employés", listeEmploye);
+		this.donneesBrutes.put("Réservations", listeReservation);
+		this.donneesBrutes.put("Salles", listeSalle);
 	}
 	
+	/**
+	 * 
+	 * @param listeItems liste 
+	 * @param infosFiltre
+	 * @param infosCalcule
+	 */
+	public void ajoutEnsembleItems(HashMap<String,String> infosFiltre,
+			double sommeHeure, String moyenne) {
+		
+	}
+	
+	public void ajoutItem(String identifiantItem, HashMap<String,String> infosFiltre,
+			double heureTotale, double heureCritere, double moyenneCalcule) {
+		
+	}
+	public void ajoutClassement(ArrayList<String> listeIdentifiantItem, HashMap<String,String> infosFiltre,
+			double sommeHeure, ArrayList<Object> listeHeure) {
+		
+	}
 	/*public void generationPDF() {
 		String outputFile = "./hello-pdf.pdf";
     	 

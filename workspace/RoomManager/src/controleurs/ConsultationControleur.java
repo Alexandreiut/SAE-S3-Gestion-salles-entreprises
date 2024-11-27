@@ -8,6 +8,7 @@ package controleurs;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import affichages.AfficherManuel;
 import affichages.GestionAffichageMenu;
@@ -37,6 +38,7 @@ import modeles.items.Activite;
 import modeles.items.Employe;
 import modeles.items.Reservation;
 import modeles.items.Salle;
+import modeles.sortie.GenerePDF;
 import outilDate.dateOutil;
 
 public class ConsultationControleur {
@@ -48,6 +50,9 @@ public class ConsultationControleur {
     
     @FXML
     private Button boutonRetour;
+    
+    @FXML 
+    private Button ajouterTousId;
     
     
     // Selection du type de la recherche
@@ -100,8 +105,7 @@ public class ConsultationControleur {
     @FXML 
     private RadioButton decroissantId; 
     
-    DecimalFormat df = new DecimalFormat("0.00"); // Format utilisé pour l'affichage des pourcentages
-       
+    DecimalFormat df = new DecimalFormat("0.00"); // Format utilisé pour l'affichage des pourcentages       
     
     // Champs de saisie facilitant la recherche d'item    
     @FXML
@@ -116,12 +120,16 @@ public class ConsultationControleur {
     @FXML
     private TextField searchActiviteId;
     
+    private Consultation consultation;
     
+    private GenerePDF generePdf;
     /**
      * Initialise les différents élément de l'affichage pour la vue de la consultation
      */
     @FXML
     private void initialize() {
+    	consultation = new Consultation();
+    	generePdf = new GenerePDF(null, null, null, null);
     	// Définition du contenu des comboBox
     	ObservableList<String> typeItems = FXCollections.observableArrayList("Consultation brute", "Recherche par filtre", "Consultation statistique");
         ObservableList<String> periodeItems = FXCollections.observableArrayList("Jour","Semaine");
@@ -169,7 +177,7 @@ public class ConsultationControleur {
      */
     private void creerRectanglePrincipal(String label, String countText, ArrayList<Object> listeItem, ArrayList<Object> listeHeureCritere) {
     	// total des heures respectant les critères
-    	double sommeHeure = 0;
+    	double sommeHeure = 0.0;
     	
     	//Déclaratoion de tous les éléments affichés sur le container
         Label labelTotalHeure = new Label("");
@@ -271,9 +279,33 @@ public class ConsultationControleur {
         	labelTotalHeure.setPrefWidth(160);
         	labelIndicateur.setPrefWidth(240);
         }
+        ArrayList<String> listeId = new ArrayList<>();
+    	for(Object item : listeItem) {
+    		if(item instanceof Salle) {
+    			listeId.add(((Salle)item).getNom());
+    		} else if (item instanceof Employe) {
+    			listeId.add(((Employe)item).getNom() + " " + ((Employe)item).getPrenom());
+    		} else if (item instanceof Activite) {
+    			listeId.add(((Activite)item).getNom());
+    		} else {
+    			listeId.add(((Reservation)item).getIdentifiant());
+    		}
+    	}
+    	double valeurSomme = sommeHeure;
+        // défini une action particulière pour l'ajout au pdf
+        if(((String) rechercheTypeId.getSelectionModel().getSelectedItem()).equals("Consultation statistique")) {       	
+        	btnAjoutPdf.setOnAction(e -> generePdf.ajoutClassement(listeId,getFiltreInfos(),valeurSomme,listeHeureCritere));
+        } else {
+        	btnAjoutPdf.setOnAction(e -> generePdf.ajoutEnsembleItems(getFiltreInfos(),
+        			valeurSomme, dateOutil.convertDoubleToStr((double) totalMoyenne / listeItem.size())));      	
+        }
         
-        // création du contener principal        
-        hbox.getChildren().addAll(new Label(" "), svg, labelIntitule, labelNbItem, labelTotalHeure, labelIndicateur, graphicButton, new Label(" "), btnAjoutPdf);
+        // création du contener principal  
+        if (((String) rechercheTypeId.getSelectionModel().getSelectedItem()).equals("Consultation brute")) {
+        	hbox.getChildren().addAll(new Label(" "), svg, labelIntitule, labelNbItem, labelTotalHeure, labelIndicateur, graphicButton);
+        } else {
+        	hbox.getChildren().addAll(new Label(" "), svg, labelIntitule, labelNbItem, labelTotalHeure, labelIndicateur, graphicButton, new Label(" "), btnAjoutPdf);
+        }
         mainRectangleContainer.getChildren().addAll(hbox); // ajout du contener à la liste d'affichage
         mainRectangleContainer.getChildren().add(subRectanglesContainer); // ajout du sous-contener à la liste d'affichage
         vboxContent.getChildren().add(mainRectangleContainer); // Ajout du tous à la zone d'affichage
@@ -347,13 +379,15 @@ public class ConsultationControleur {
         } else if(item instanceof Employe) {
         	labelSub.setText(((Employe) item).getNom() + "    " + ((Employe) item).getPrenom());
         } else  {
-        	labelSub.setText(((Reservation) item).getDate());
+        	labelSub.setText(((Reservation) item).getIdentifiant());
         }
                
         // définition des actions des boutons
         detailsButton.setOnAction(e -> showDetailsWindow(item));
         //graphicButton.setOnAction(e -> showDetailsWindow(item));
-        //ajoutPdfButton.setOnAction(e -> showDetailsWindow(item));
+        double heure = heureCritereDouble;
+        double moyenne = moyenneCalcule;
+        ajoutPdfButton.setOnAction(e -> generePdf.ajoutItem(labelSub.getText(), getFiltreInfos(), heureTotale, heure, moyenne));
         
         // Ajout de node à d'autre
         ajoutPdfButton.setTooltip(tooltip);
@@ -375,7 +409,12 @@ public class ConsultationControleur {
         centeredContainer.getStyleClass().add("centeredContainer");
         
         // Ajout de l'ensemble au hBox puis au contener passer en paramètre
-        subRectangle.getChildren().addAll(centeredContainer,labelSub,heureCrit,labelMoyenne,detailsButton,graphicButton,ajoutPdfButton);
+        // Dans le cas d'un classement les items ne peuvent pas être ajouté 1 par 1
+        if (((String) rechercheTypeId.getSelectionModel().getSelectedItem()).equals("Consultation statistique")) {
+        	subRectangle.getChildren().addAll(centeredContainer,labelSub,heureCrit,labelMoyenne,detailsButton,graphicButton);
+        } else {
+        	subRectangle.getChildren().addAll(centeredContainer,labelSub,heureCrit,labelMoyenne,detailsButton,graphicButton,ajoutPdfButton);
+        }      
         subRectanglesContainer.getChildren().add(subRectangle); 
     }
 
@@ -446,11 +485,11 @@ public class ConsultationControleur {
      */
     @FXML
     private void changeAffichage() {
-    	Consultation consultation = new Consultation();
     	// Vide la zone dédié à l'affichage des résultat
     	vboxContent.getChildren().clear();
         String selectedType = (String) rechercheTypeId.getSelectionModel().getSelectedItem();
         if ("Consultation brute".equals(selectedType)) { // Affichage pour les données brutes
+        	ajouterTousId.setVisible(true);
             filterGroupId.setVisible(false);
             filterGroupId.setManaged(false);
             searchGroupId.setVisible(false);
@@ -462,6 +501,7 @@ public class ConsultationControleur {
             creerRectanglePrincipal("Activitées", "Activité trouvée : ", consultation.fetchDataForKey("Activitées"), null);
             creerRectanglePrincipal("Employés", "Employé trouvée : ", consultation.fetchDataForKey("Employés"), null);
         } else if ("Recherche par filtre".equals(selectedType)) { // Affichage pour les données calculées simples
+        	ajouterTousId.setVisible(false);
             filterGroupId.setVisible(true);
             filterGroupId.setManaged(true);
             searchGroupId.setVisible(true);
@@ -474,6 +514,7 @@ public class ConsultationControleur {
             focusMoyenneId.setVisible(true);
             recherche();
         } else { // Affichage pour statistique et classement
+        	ajouterTousId.setVisible(false);
         	filterGroupId.setVisible(true);
             filterGroupId.setManaged(true);
             searchGroupId.setVisible(true);
@@ -496,6 +537,7 @@ public class ConsultationControleur {
     	if (moyenneCheckBoxId.isSelected()) {
     		roomStatuId.getSelectionModel().select(0);
     	}
+    	recherche();
     }
     
     @FXML
@@ -520,7 +562,6 @@ public class ConsultationControleur {
         String chaineEmploye = searchEmployeId.getText();
         String chaineActivite = searchActiviteId.getText();
         
-        Consultation consultation = new Consultation();
         // Consultation des statistique et classement
         if("Consultation statistique".equals((String) rechercheTypeId.getSelectionModel().getSelectedItem())){
         	ArrayList<ArrayList<Object>> infosItem;
@@ -553,7 +594,7 @@ public class ConsultationControleur {
         } else { // Consultation des données calculées simple
         	if(((String)roomStatuId.getValue()).equals("Disponible")) { // Recherche des disponibilités
             	ArrayList<Object> salle = consultation.getSalleDisponible(dateDebut, dateFin, heureDebut, heureFin, chaineSalle);
-            	creerRectanglePrincipal("Salles", "Salle trouvée : ", salle,null);
+            	creerRectanglePrincipal("Salles", "Salle trouvée : ", salle, null);
             } else { // Recherche des réservations
             	ArrayList<ArrayList<Object>> infosSalle = consultation.getItemCritere(dateDebut, dateFin, heureDebut, heureFin, chaineSalle, chaineEmploye, chaineActivite, "Salles");
                 ArrayList<Object> salle = infosSalle.get(0);
@@ -580,6 +621,7 @@ public class ConsultationControleur {
     		searchActiviteId.setVisible(true);
     		searchEmployeId.setVisible(true);
     	}
+    	recherche();
     }
         
 
@@ -637,6 +679,7 @@ public class ConsultationControleur {
             heureDebutId.setValue(heureFin);
             heureFinId.setValue(heureDebut);
         }
+        recherche();
     }
     /**
      * si la date de fin est avant la date de début
@@ -656,5 +699,32 @@ public class ConsultationControleur {
                 end = dateFinId.getValue();
             }
         }
+        recherche();
+    }
+    
+    /**
+     * Ajoute l'ensemble des données brutes au PDF
+     */
+    @FXML
+    private void ajoutTousItems() {
+    	generePdf.ajoutDonneBrute(consultation.fetchDataForKey("Activitées"),consultation.fetchDataForKey("Employés"),
+    			consultation.fetchDataForKey("Réservations"),consultation.fetchDataForKey("Salles"));
+    }
+    /**
+     * Renvoi l'ensemble les états des filtres sélectionné par l'utilisateur
+     * @return liste des états des filtres
+     */
+    private HashMap<String, String> getFiltreInfos(){
+    	HashMap<String, String> infoFiltres= new HashMap<String, String>();
+    	infoFiltres.put("focusMoyenne",(String)focusMoyenneId.getValue());
+    	infoFiltres.put("dateDebut",dateDebutId.getValue().toString());
+    	infoFiltres.put("dateFin",dateFinId.getValue().toString());
+    	infoFiltres.put("heureDebut",heureDebutId.getValue());
+    	infoFiltres.put("heureFin",heureFinId.getValue());
+    	infoFiltres.put("reservé", roomStatuId.getValue());
+    	infoFiltres.put("chaineSalle",searchRoomId.getText());
+    	infoFiltres.put("chaineEmployé",searchEmployeId.getText());
+    	infoFiltres.put("chaineActivité",searchActiviteId.getText());
+    	return infoFiltres;  	
     }
 }
