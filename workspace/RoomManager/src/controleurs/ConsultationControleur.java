@@ -187,7 +187,8 @@ public class ConsultationControleur {
         Label labelNbItem = new Label(countText + listeItem.size());
         
         Button graphicButton = new Button();
-        graphicButton.setDisable(true);      
+        graphicButton.setDisable(true);
+        
         VBox mainRectangleContainer = new VBox();
         VBox subRectanglesContainer = new VBox();
         

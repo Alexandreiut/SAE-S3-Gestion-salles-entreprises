@@ -72,12 +72,12 @@ class TestLecteurCSV {
 		attenduValide.add(new Salle("00000001", "A6", 15, true, false, 4, "PC portable", logiciel1, false));
 		
 		lignesSallesInvalide.add("entete");
-		lignesSallesInvalide.add("0000000H;@;2e0;oui;non;e;PC4 Windows;bureautique,java,Intellij;non");
+		lignesSallesInvalide.add("0000000H;#;2e0;oui;non;e;PC4 Windows;bureautique,java,Intellij;non");
 		
 		logiciel2.add("bureautique");
 		logiciel2.add("java");
 		logiciel2.add("Intellij");
-		attenduInvalide.add(new Salle("Id inconnu", "Nom inconnu", 0, true, false, 0, "Type inconnu", logiciel2, false));
+		attenduInvalide.add(new Salle("Id inconnu", "#", 0, true, false, 0, "Type inconnu", logiciel2, false));
 		
 		ArrayList<Object> resultatValide = LecteurCSV.lireSalleCSV(lignesSallesValide);
 		
