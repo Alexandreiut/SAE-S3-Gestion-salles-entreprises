@@ -8,6 +8,7 @@ package modeles.sortie;
 import java.text.DecimalFormat;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -66,8 +67,9 @@ public class GenerePDF {
 								                 + "\ninfos supplémentaires");
 	}
 	
-	int indexDonneeFiltre = 0;
-	int indexCleClassement = 0;
+	private int indexDonneeFiltre = 1;
+	private int indexCleClassement = 1;
+	
 	public GenerePDF(
 			HashMap<String, ArrayList<? extends Object>> donneesBrutes,			
 			HashMap<String, ArrayList<String>> donneesFiltrees,
@@ -91,7 +93,7 @@ public class GenerePDF {
 	public void ajoutDonneBrute(ArrayList<Object> listeActivite,
 			ArrayList<Object> listeEmploye, ArrayList<Object> listeReservation, ArrayList<Object> listeSalle) {
 		if (listeActivite != null) {
-			this.donneesBrutes.put("Activités", listeActivite);
+			this.donneesBrutes.put("Activitées", listeActivite);
 		}
 		if (listeEmploye != null) {
 			this.donneesBrutes.put("Employés", listeEmploye);
@@ -127,10 +129,13 @@ public class GenerePDF {
      * @throws PDFGenerationException Si une erreur survient lors de la génération des fichiers PDF.
      */
 	public void generationPDF() throws PDFGenerationException {
+		indexCleClassement = 1;
+		indexDonneeFiltre = 1;
+		
 		// Chemin de création du pdf
     	final String CHEMIN_PDF_BRUTES = "./donnees_brutes_sans_mise_en_page.pdf";
     	final String CHEMIN_PDF_FILTREES = "./donnees_filtrées_sans_mise_en_page.pdf";
-    	final String CHEMIN_PDF_CLASSEMENTS = "./donnees_filtrées_sans_mise_en_page.pdf";
+    	final String CHEMIN_PDF_CLASSEMENTS = "./donnees_classements_sans_mise_en_page.pdf";
     	
     	if (!donneesBrutes.isEmpty()) {
     		generation(CHEMIN_PDF_BRUTES, "ajoutDonneesBrutes", "Données Brutes");    		
@@ -167,8 +172,9 @@ public class GenerePDF {
     		document.setMargins(120, 50, 120, 50);
     		
     		// Ajoute ton contenu ici
-    		Method method = TestGenerationPdf3.class.getDeclaredMethod(nomMethode);
-    		method.invoke(TestGenerationPdf3.class);
+    		Method method = GenerePDF.class.getDeclaredMethod(nomMethode);
+    		method.setAccessible(true);
+    		method.invoke(this);
     		
     		// fermeture du doc
     		document.close();
@@ -176,7 +182,12 @@ public class GenerePDF {
     		// modification du pdf pour ajouter les en-têtes et les pieds de pages
     		ajoutEnteteEtPiedDePage(chemin, titrePDF);
     		
-    	} catch(Exception e) {
+    	} catch (InvocationTargetException e) {
+    		Throwable cause = e.getCause();  // Récupère l'erreur interne
+    	    System.err.println("Erreur interne : " + cause.getMessage());
+    	    cause.printStackTrace();
+    	    
+		} catch(Exception e) {
     		throw new PDFGenerationException("Impossible de générer le PDF", e);
     	}
     }
@@ -197,7 +208,7 @@ public class GenerePDF {
      */
     private void ajoutDonneesFiltrees() {
     	for (Entry<String, ArrayList<String>> set : donneesFiltrees.entrySet()) {
-    		affichageDonneesCalcules(set.getKey());    		
+    		affichageDonneesCalcules(set.getKey(), donneesFiltrees);    		
     	}
     }
     
@@ -206,7 +217,7 @@ public class GenerePDF {
      */
     private void ajoutDonneesClassements() {
     	for (Entry<String, ArrayList<String>> set : donneesClassements.entrySet()) {
-    		affichageDonneesCalcules(set.getKey());    		
+    		affichageDonneesCalcules(set.getKey(), donneesClassements);    		
     	}
     }
     
@@ -232,14 +243,14 @@ public class GenerePDF {
      *
      * @param key La clé correspondant à la section des données filtrées/classements.
      */
-    private void affichageDonneesCalcules(String key) {
+    private void affichageDonneesCalcules(String key, HashMap<String, ArrayList<String>> donnees) {
 		document.add(new Paragraph(key + " :")
             .setBold()
             .setFontSize(14));
 		
-		Paragraph p = new Paragraph(donneesFiltrees.get(key).getFirst() + "\n");
-		for (int i = 1; i < donneesFiltrees.get(key).size(); i++) {
-			p.add("• " + donneesFiltrees.get(key).get(i) + "\n");
+		Paragraph p = new Paragraph(donnees.get(key).getFirst() + "\n");
+		for (int i = 1; i < donnees.get(key).size(); i++) {
+			p.add("• " + donnees.get(key).get(i) + "\n");
 			
 		}
 		document.add(p);
@@ -314,7 +325,7 @@ public class GenerePDF {
 	 */
 	public void ajoutEnsembleItems(ArrayList<String> listeId, ArrayList<Object> listeHeure,HashMap<String,String> infosFiltre,
 			double sommeHeure, double moyenne, double nbJour) {
-		String cle = "Filtre" + indexDonneeFiltre;
+		String cle = "Filtre " + indexDonneeFiltre;
 		ArrayList<String> listeDonnee = new ArrayList<>();
 		String entete = "";
 		entete += "Filtres : ";
@@ -336,8 +347,8 @@ public class GenerePDF {
 		if (infosFiltre.get("moyenne").equals("oui")) {
 			entete += "\nMoyenne pour l'ensemble des salles : " + moyenne;
 		}
+		entete+= "\n";
 		listeDonnee.add(entete);
-		listeDonnee.add("\n");
 		int indexLecture = 0;
 		for(String id : listeId) {
 			String lignePdf = "La salle : " + id + " est réservée : " + listeHeure.get(indexLecture);
@@ -350,12 +361,10 @@ public class GenerePDF {
 						dateOutil.convertDoubleToStr((double) listeHeure.get(indexLecture) / nbJour / 5) + " par semaine";
 				}			
 			}
-			lignePdf += "\n";
 			
 			listeDonnee.add(lignePdf);
 			indexLecture ++;
 		}
-		listeDonnee.add("\n\n\n");
 
 		this.donneesFiltrees.put(cle, listeDonnee);
 		this.listeEnteteFiltre.put(cle, entete);
@@ -365,7 +374,7 @@ public class GenerePDF {
 
 	public void ajoutClassement(ArrayList<String> listeIdentifiantItem, HashMap<String,String> infosFiltre,
 			double sommeHeure, ArrayList<Object> listeHeure) {
-		String cle = infosFiltre.get("typeItem") + indexCleClassement;
+		String cle = infosFiltre.get("typeItem") + " " + indexCleClassement;
 		ArrayList<String> listeDonnee = new ArrayList<>();
 		String entete = "";
 		entete += "Filtres : ";
@@ -387,11 +396,10 @@ public class GenerePDF {
 		DecimalFormat df = new DecimalFormat("0.00");
 		for(String id : listeIdentifiantItem) {
 			String lignePdf = cle +" : " + id + " est/à réservée : " + listeHeure.get(indexLecture);
-			lignePdf += " soit " + df.format((double) listeHeure.get(indexLecture) / sommeHeure * 100)+ "% du temps total\n";
+			lignePdf += " soit " + df.format((double) listeHeure.get(indexLecture) / sommeHeure * 100)+ "% du temps total";
 			listeDonnee.add(lignePdf);
 			indexLecture ++;
 		}
-		listeDonnee.add("\n\n\n");
 
 		this.donneesClassements.put(cle, listeDonnee);
 		this.listeEnteteClassement.put(cle, entete);

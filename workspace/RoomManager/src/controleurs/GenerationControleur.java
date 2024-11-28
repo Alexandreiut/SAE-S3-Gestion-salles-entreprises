@@ -3,6 +3,7 @@ package controleurs;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -12,12 +13,13 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import lanceur.RoomManager;
-
+import modeles.erreur.PDFGenerationException;
 import modeles.sortie.GenerePDF;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import affichages.AfficherAlerte;
 import affichages.AfficherManuel;
 import affichages.GestionAffichageMenu;
 
@@ -153,7 +155,11 @@ public class GenerationControleur {
      */
     @FXML
     public void genererPDF() {
-        
+        try {
+			generePDF.generationPDF();
+		} catch (PDFGenerationException e) {
+			AfficherAlerte.afficherAlerte(AlertType.ERROR, "Génération PDF", e.getMessage());
+		}
     }
     /**
      * Gestion du menu
