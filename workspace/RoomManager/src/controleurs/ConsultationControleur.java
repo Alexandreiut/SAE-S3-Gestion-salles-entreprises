@@ -11,11 +11,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import affichages.AfficherAlerte;
 import affichages.AfficherManuel;
 import affichages.GestionAffichageMenu;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -125,12 +127,22 @@ public class ConsultationControleur {
     private Consultation consultation;
     
     private GenerePDF generePdf;
+    
+    public boolean etatStockage;
     /**
      * Initialise les différents élément de l'affichage pour la vue de la consultation
      */
     @FXML
     private void initialize() {
+    	if(RoomManager.stockage.getListeActivite().isEmpty() &&
+        		RoomManager.stockage.getListeEmploye().isEmpty() && 
+        		RoomManager.stockage.getListeReservation().isEmpty() && 
+        		RoomManager.stockage.getListeSalle().isEmpty()) {
+    		AfficherAlerte.afficherAlerte(Alert.AlertType.WARNING,"Importation de fichier manquant",
+    				"Veuiller importer tous les fichiers avant d'effectué une consultation des données");
+        }
     	consultation = new Consultation();
+    	
     	generePdf = RoomManager.generePdf;
     	// Définition du contenu des comboBox
     	ObservableList<String> typeItems = FXCollections.observableArrayList("Consultation brute", "Recherche par filtre", "Consultation statistique");
@@ -165,7 +177,8 @@ public class ConsultationControleur {
         decroissantId.setSelected(true);
         dateDebut = LocalDate.of(1970,1,1);
         dateFin = LocalDate.of(2099,12,31);
-        changeAffichage();       
+        changeAffichage();
+               
     }
 
 
@@ -297,7 +310,7 @@ public class ConsultationControleur {
     	}
     	double valeurSomme = sommeHeure;
         // défini une action particulière pour l'ajout au pdf
-        if(((String) rechercheTypeId.getSelectionModel().getSelectedItem()).equals("Consultation statistique")) {       	
+        if(((String) rechercheTypeId.getSelectionModel().getSelectedItem()).equals("Consultation statistique")) {     
         	btnAjoutPdf.setOnAction(e -> generePdf.ajoutClassement(listeId,getFiltreInfos(),valeurSomme,listeHeureCritere));
         } else if(((String) rechercheTypeId.getSelectionModel().getSelectedItem()).equals("Recherche par filtre")) {
         	double nbJour = dateOutil.getWorkingDaysBetween(dateDebut, dateFin);
@@ -498,10 +511,16 @@ public class ConsultationControleur {
             searchGroupId.setManaged(false);
             classementGroupId.setVisible(false);
             classementGroupId.setManaged(false);
-            creerRectanglePrincipal("Salles", "Salle trouvée : ", consultation.fetchDataForKey("Salles"), null);
-            creerRectanglePrincipal("Réservations", "Réservation trouvée : ", consultation.fetchDataForKey("Réservations"), null);
-            creerRectanglePrincipal("Activitées", "Activité trouvée : ", consultation.fetchDataForKey("Activitées"), null);
-            creerRectanglePrincipal("Employés", "Employé trouvée : ", consultation.fetchDataForKey("Employés"), null);
+            
+            if(!RoomManager.stockage.getListeActivite().isEmpty() &&
+            		!RoomManager.stockage.getListeEmploye().isEmpty() && 
+            		!RoomManager.stockage.getListeReservation().isEmpty() && 
+            		!RoomManager.stockage.getListeSalle().isEmpty()) {
+            	creerRectanglePrincipal("Salles", "Salle trouvée : ", consultation.fetchDataForKey("Salles"), null);
+                creerRectanglePrincipal("Réservations", "Réservation trouvée : ", consultation.fetchDataForKey("Réservations"), null);
+                creerRectanglePrincipal("Activitées", "Activité trouvée : ", consultation.fetchDataForKey("Activitées"), null);
+                creerRectanglePrincipal("Employés", "Employé trouvée : ", consultation.fetchDataForKey("Employés"), null);                
+            }
         } else if ("Recherche par filtre".equals(selectedType)) { // Affichage pour les données calculées simples
         	ajouterTousId.setVisible(false);
             filterGroupId.setVisible(true);
@@ -514,7 +533,13 @@ public class ConsultationControleur {
             roomStatuId.setManaged(true);
             moyenneCheckBoxId.setVisible(true);
             focusMoyenneId.setVisible(true);
-            recherche();
+            if(!RoomManager.stockage.getListeActivite().isEmpty() &&
+            		!RoomManager.stockage.getListeEmploye().isEmpty() && 
+            		!RoomManager.stockage.getListeReservation().isEmpty() && 
+            		!RoomManager.stockage.getListeSalle().isEmpty()) {
+            	recherche();
+            }
+            
         } else { // Affichage pour statistique et classement
         	ajouterTousId.setVisible(false);
         	filterGroupId.setVisible(true);
@@ -527,7 +552,12 @@ public class ConsultationControleur {
             roomStatuId.setManaged(false);
             moyenneCheckBoxId.setVisible(false);
             focusMoyenneId.setVisible(false);
-            recherche();
+            if(!RoomManager.stockage.getListeActivite().isEmpty() &&
+            		!RoomManager.stockage.getListeEmploye().isEmpty() && 
+            		!RoomManager.stockage.getListeReservation().isEmpty() && 
+            		!RoomManager.stockage.getListeSalle().isEmpty()) {
+            	recherche();
+            }
         }
     }
     /**
