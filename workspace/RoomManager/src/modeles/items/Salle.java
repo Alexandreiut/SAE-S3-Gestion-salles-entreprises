@@ -160,10 +160,16 @@ public class Salle implements Serializable {
     
     @Override
     public String toString() {
-    	return ("Id : " + this.identifiant + ", Nom : " + this.nom
-    			+ ", Capacite : " + this.capacite + ", VideoPro ? " + this.videoProjecteur
-    			+ ",\nEcranXxl : " + this.ecranXxl + ", NombrePc : " + this.nombrePc
-    			+ ", TypePc : " + this.typePc + ", Logiciels : " + this.logicielInstalle
-    			+ ",\nImprimante ? " + this.imprimante);
+    	String proj = this.videoProjecteur ? "oui" : "non";
+    	String ecranXXL = this.ecranXxl ? "oui" : "non";
+    	String logiciels = this.logicielInstalle.isEmpty() ? 
+    			"pas de logicielle" : this.logicielInstalle.toString();
+    	String imprimante = this.imprimante ? "oui" : "non";
+    	
+    	return this.identifiant + ", " + this.nom
+    			+ ", " + this.capacite + ", " + proj
+    			+ ", " + ecranXXL + ", " + this.nombrePc
+    			+ ", "+ this.typePc + ", " + logiciels
+    			+ ", " + imprimante;
     }
 }

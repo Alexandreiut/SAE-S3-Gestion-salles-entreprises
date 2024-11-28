@@ -7,6 +7,8 @@ package modeles.items;
 
 import java.io.Serializable;
 
+import lanceur.RoomManager;
+
 
 /**
  * Objet réservation de salle représenté par un identifiant, une date,
@@ -206,11 +208,19 @@ public class Reservation implements Serializable {
     
     @Override
     public String toString() {
-    	return ("Id : " + this.identifiant + ", Date : " + this.date
+    	return this.identifiant + ", " + this.salleReservee + ", "
+    		   + this.reservant + ", " + this.activite + ", "
+    		   + this.date + ", " + this.heureDebut + ", " + this.heureFin;
+    			
+    			
+    			
+    			
+    			
+    			/*", Date : " + this.date
     			+ ", HeureDebut : " + this.heureDebut + ", HeureFin : " + this.heureFin
     			+ ",Object : " + this.objetReservation + ", NomInterlo : " + this.nomInterlocuteur
     			+ ", PrenomInterlo : " + this.prenomInterlocuteur + ", NumInterlo : " + this.numeroInterlocuteur
     			+ ",Usage ? " + this.usageSalle + ", Reservant : " + this.reservant
-    			+ ", Activite  : " + this.activite + ", SalleReserv : " + this.salleReservee);
+    			+ ", Activite  : " + this.activite + ", SalleReserv : " + this.salleReservee;*/
     }
 }

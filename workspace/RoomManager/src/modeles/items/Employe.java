@@ -76,8 +76,10 @@ public class Employe implements Serializable {
     }
     
     @Override
-    public String toString() {
-    	return (this.identifiant + ", " + this.nom + ", "
-    			+ this.prenom + ", " + this.telephone);
+    public String toString() { 
+    	String numero = this.telephone == -1 ? "numéro inconnu" : String.valueOf(this.telephone);
+    	
+    	return this.identifiant + ", " + this.nom + ", "
+    			+ this.prenom + ", " + numero;
     }
 }

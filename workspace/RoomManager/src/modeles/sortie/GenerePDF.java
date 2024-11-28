@@ -60,11 +60,9 @@ public class GenerePDF {
 	
 	static {
 		enteteDonneesbrutes.put("Employés", "ID, Nom, Prénom, Téléphone");
-		enteteDonneesbrutes.put("Salles", "ID, Nom, Capacité, proj, ecranXXL, ordinateur, type, "
-										   + "\n[logiciels], imprimante");
+		enteteDonneesbrutes.put("Salles", "ID, Nom, Capacité, proj, ecranXXL, nombre ordinateur, type, [logiciels], imprimante");
 		enteteDonneesbrutes.put("Activitées", "ID, Activité");
-		enteteDonneesbrutes.put("Réservations", "ID, salle, employé, activité, date, heure début, heure fin, "
-								                 + "\ninfos supplémentaires");
+		enteteDonneesbrutes.put("Réservations", "ID, salle, employé, activité, date, heure début, heure fin");
 	}
 	
 	private int indexDonneeFiltre = 1;
@@ -133,9 +131,9 @@ public class GenerePDF {
 		indexDonneeFiltre = 1;
 		
 		// Chemin de création du pdf
-    	final String CHEMIN_PDF_BRUTES = "./donnees_brutes_sans_mise_en_page.pdf";
-    	final String CHEMIN_PDF_FILTREES = "./donnees_filtrées_sans_mise_en_page.pdf";
-    	final String CHEMIN_PDF_CLASSEMENTS = "./donnees_classements_sans_mise_en_page.pdf";
+    	final String CHEMIN_PDF_BRUTES = "./génération PDF/donnees_brutes_sans_mise_en_page.pdf";
+    	final String CHEMIN_PDF_FILTREES = "./génération PDF/donnees_filtrées_sans_mise_en_page.pdf";
+    	final String CHEMIN_PDF_CLASSEMENTS = "./génération PDF/donnees_classements_sans_mise_en_page.pdf";
     	
     	if (!donneesBrutes.isEmpty()) {
     		generation(CHEMIN_PDF_BRUTES, "ajoutDonneesBrutes", "Données Brutes");    		

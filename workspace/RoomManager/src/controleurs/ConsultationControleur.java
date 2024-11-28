@@ -643,16 +643,17 @@ public class ConsultationControleur {
      */
     @FXML 
     private void gestionRecherche(){
+    	moyenneCheckBoxId.setSelected(false);
     	if(((String)roomStatuId.getValue()).equals("Disponible") &&
     		"Consultation statistique".equals((String) rechercheTypeId.getSelectionModel().getSelectedItem())) {
     		searchActiviteId.setVisible(false);
     		searchEmployeId.setVisible(false);
-    		moyenneCheckBoxId.setSelected(false);
     		
     	} else {
     		searchActiviteId.setVisible(true);
     		searchEmployeId.setVisible(true);
     	}
+    	
     	recherche();
     }
         

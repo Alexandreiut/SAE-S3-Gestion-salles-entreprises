@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 
-public class TestGenerationPdf3 {
+public class TestGenerationPdf {
 	
 	private static HashMap<String, ArrayList<? extends Object>> donneesBrutes;
 	
@@ -104,8 +104,8 @@ public class TestGenerationPdf3 {
     	document.setMargins(120, 50, 120, 50);
     	
     	// Ajoute ton contenu ici
-    	Method method = TestGenerationPdf3.class.getDeclaredMethod(nomMethode);
-    	method.invoke(TestGenerationPdf3.class);
+    	Method method = TestGenerationPdf.class.getDeclaredMethod(nomMethode);
+    	method.invoke(TestGenerationPdf.class);
     	
     	// fermeture du doc
     	document.close();

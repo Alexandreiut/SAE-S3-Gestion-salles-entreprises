@@ -182,7 +182,7 @@ public class GenerationControleur {
 	 */
     @FXML
     private void handleAfficherAide() {
-        String cheminFichier = "src/ressource/aide/AidePageConsultation.pdf";
+        String cheminFichier = "src/ressource/aide/AidePageGenerationPDF.pdf";
         AfficherManuel.afficherAide(cheminFichier);
     }
 }

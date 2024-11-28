@@ -57,7 +57,7 @@ public class Activite implements Serializable {
      */
     @Override
     public String toString() {
-		return ("Id : " + this.identifiant + ", Nom : " + this.nom);
+		return this.identifiant + ", " + this.nom;
     	
     }
 }
