@@ -48,7 +48,7 @@ public class RoomManager extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			generePdf = new GenerePDF(new HashMap<String, ArrayList<Object>>(),
+			generePdf = new GenerePDF(new HashMap<String, ArrayList<? extends Object>>(),
 					new HashMap<String, ArrayList<String>>(),
 					new HashMap<String, String>(),
 					new HashMap<String, ArrayList<String>>(),

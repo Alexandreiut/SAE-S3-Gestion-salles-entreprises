@@ -40,7 +40,7 @@ public class GenerationControleur {
     }
     
     private void creerListeItem() {
-    	HashMap<String, ArrayList<Object>> mapBrute = generePDF.getDonneesBrutes();
+    	HashMap<String, ArrayList<? extends Object>> mapBrute = generePDF.getDonneesBrutes();
     	HashMap<String, ArrayList<String>> mapFiltre = generePDF.getDonneesFiltrees();
     	HashMap<String, ArrayList<String>> mapClassement = generePDF.getDonneesClassement();
     	Label cleLabel;
@@ -153,7 +153,7 @@ public class GenerationControleur {
      */
     @FXML
     public void genererPDF() {
-        //TODO appeler truc samuel
+        
     }
     /**
      * Gestion du menu

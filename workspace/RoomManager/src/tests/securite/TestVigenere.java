@@ -31,7 +31,7 @@ public class TestVigenere {
         String texteEncode = Vigenere.encodageVigenere(clef, texte);
 
         assertNotNull(texteEncode);
-        assertNotEquals(texte, texteEncode, "The encoded text should differ from the original");
+        assertNotEquals(texte, texteEncode, "Test de encodage vigenaire Nok");
     }
 
     @Test
@@ -41,7 +41,7 @@ public class TestVigenere {
         String texteDecode = Vigenere.decodageVigenere(clef, texteEncode);
 
         assertNotNull(texteDecode);
-        assertEquals(texte, texteDecode, "The decoded text should match the original");
+        assertEquals(texte, texteDecode, "Test de décodage vigenaire Nok");
     }
 
     @Test
@@ -49,7 +49,7 @@ public class TestVigenere {
         String texte = "Bonjour€";
         String texteEncode = Vigenere.encodageVigenere(clef, texte);
 
-        assertNull(texteEncode, "Retour non null");
+        assertNull(texteEncode, "Test encodage vigenaire avec caractère caractère non présent dans le dictionnaire");
     }
     
     @Test
@@ -57,7 +57,7 @@ public class TestVigenere {
         String texte = "Bonjour€";
         String texteDecode = Vigenere.decodageVigenere(clef, texte);
 
-        assertNull(texteDecode, "Retour non null");
+        assertNull(texteDecode, "Test décodage vigenaire avec caractère caractère non présent dans le dictionnaire");
     }
 }
 

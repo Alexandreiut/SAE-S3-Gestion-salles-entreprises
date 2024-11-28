@@ -15,9 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import outilDate.dateOutil;
-
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.font.PdfFont;
@@ -39,16 +37,39 @@ import modeles.erreur.PDFGenerationException;
  */
 public class GenerePDF {
 	
-	private HashMap<String, ArrayList<Object>> donneesBrutes;
 	
+	
+	/** Données brutes à inclure dans le PDF. */
+	private HashMap<String, ArrayList<? extends Object>> donneesBrutes;
+	
+    /** Données filtrées à inclure dans le PDF. */
 	private HashMap<String, ArrayList<String>> donneesFiltrees;
-	private HashMap<String, String> listeEnteteFiltre;
+
+	/** Données classées à inclure dans le PDF. */
 	private HashMap<String, ArrayList<String>> donneesClassements;
+	
+    /** Objet Document utilisé pour la création de PDF. */
+	private Document document;
+	
+	private HashMap<String, String> listeEnteteFiltre;
 	private HashMap<String, String> listeEnteteClassement;
+	
+    /** En-têtes des données brutes à afficher dans le PDF. */
+	private static final Map<String, String> enteteDonneesbrutes = new HashMap<String, String>();
+	
+	static {
+		enteteDonneesbrutes.put("Employés", "ID, Nom, Prénom, Téléphone");
+		enteteDonneesbrutes.put("Salles", "ID, Nom, Capacité, proj, ecranXXL, ordinateur, type, "
+										   + "\n[logiciels], imprimante");
+		enteteDonneesbrutes.put("Activitées", "ID, Activité");
+		enteteDonneesbrutes.put("Réservations", "ID, salle, employé, activité, date, heure début, heure fin, "
+								                 + "\ninfos supplémentaires");
+	}
+	
 	int indexDonneeFiltre = 0;
 	int indexCleClassement = 0;
 	public GenerePDF(
-			HashMap<String, ArrayList<Object>> donneesBrutes,			
+			HashMap<String, ArrayList<? extends Object>> donneesBrutes,			
 			HashMap<String, ArrayList<String>> donneesFiltrees,
 			HashMap<String, String> listeEnteteFiltre,
 			HashMap<String, ArrayList<String>> donneesClassements,
@@ -80,30 +101,9 @@ public class GenerePDF {
 		}
 		if (listeSalle != null) {
 			this.donneesBrutes.put("Salles", listeSalle);
-    /** Données brutes à inclure dans le PDF. */
-	private HashMap<String, ArrayList<? extends Object>> donneesBrutes;
-	
-    /** Données filtrées à inclure dans le PDF. */
-	private HashMap<String, ArrayList<String>> donneesFiltrees;
-
-	/** Données classées à inclure dans le PDF. */
-	private HashMap<String, ArrayList<String>> donneesClassements;
-	
-    /** Objet Document utilisé pour la création de PDF. */
-	private Document document;
-	
-    /** En-têtes des données brutes à afficher dans le PDF. */
-	private static final Map<String, String> enteteDonneesbrutes = new HashMap<String, String>();
-	
-	static {
-		enteteDonneesbrutes.put("Employés", "ID, Nom, Prénom, Téléphone");
-		enteteDonneesbrutes.put("Salles", "ID, Nom, Capacité, proj, ecranXXL, ordinateur, type, "
-										   + "\n[logiciels], imprimante");
-		enteteDonneesbrutes.put("Activitées", "ID, Activité");
-		enteteDonneesbrutes.put("Réservations", "ID, salle, employé, activité, date, heure début, heure fin, "
-								                 + "\ninfos supplémentaires");
+    
+		}
 	}
-
 	/**
      * Constructeur de la classe GenerePDF.
      *
@@ -398,7 +398,7 @@ public class GenerePDF {
 		indexCleClassement ++;
 	}
 	
-	public HashMap<String, ArrayList<Object>> getDonneesBrutes(){
+	public HashMap<String, ArrayList<? extends Object>> getDonneesBrutes(){
 		return this.donneesBrutes;
 	}
 	public HashMap<String, ArrayList<String>> getDonneesFiltrees(){
