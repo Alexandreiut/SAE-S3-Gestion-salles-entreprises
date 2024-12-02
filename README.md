@@ -31,5 +31,4 @@ Répartition des rôles :
 | **26/10 au 13/11** | Développeur | *Product Owner* | *Scrum master* | Développeur | Développeur |
 | **14/11 au 22/11** | Développeur | Développeur | *Product Owner* | *Scrum master* | Développeur |
 
-Lien vers le board : [Lien board](https://github.com/users/Alexandreiut/projects/3) <br/>
 Lien vers le dossier google drive : [Lien drive](https://drive.google.com/drive/folders/0ABZxIVAYBVO2Uk9PVA)
